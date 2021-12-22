@@ -34,7 +34,7 @@ const DataTable = () => {
         key="action"
         render={() => (
           <Popconfirm title='Sure to delete'>
-            <a>Delete</a>
+            <a href='#?'>Delete</a>
           </Popconfirm>
         )}
       />

@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Datatable from './datatable'
 import { Layout, Menu } from 'antd'
-import { COLLAPSED_CHANGE } from './store/actionType'
 import { Link, Route, Routes } from 'react-router-dom'
+import Datatable from './datatable'
+import { COLLAPSED_CHANGE } from './store/actionType'
 import 'antd/dist/antd.min.css'
 
 const { Content, Sider } = Layout
