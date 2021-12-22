@@ -1,0 +1,1 @@
+export const COLLAPSED_CHANGE = 'collapsed_change'
