@@ -1,5 +1,5 @@
 {
-  "name": "carview_project",
+  "name": "cariew_project",
   "version": "1.0.0",
   "description": "Web application using React, Node.js, Express and Webpack.",
   "main": "src/server/index.js",
@@ -10,16 +10,18 @@
     "server": "nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Enchi Chang",
+  "author": "EnChi Chang",
   "license": "ISC",
   "dependencies": {
     "antd": "^4.17.4",
     "babel-polyfill": "^6.26.0",
     "express": "^4.16.3",
+    "mysql": "^2.18.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
+    "typeorm": "^0.2.41",
     "web-vitals": "^2.1.2"
   },
   "devDependencies": {
