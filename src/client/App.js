@@ -2,17 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Layout, Menu } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
-import Datatable from './datatable'
+import Datatable from '../datatable'
 import { COLLAPSED_CHANGE } from './store/actionType'
 import 'antd/dist/antd.min.css'
 
 const { Content, Sider } = Layout
 
 const App = (props) => {
-  const {
-    collapsed,
-    onCollapse,
-  } = props
+  const { collapsed, onCollapse } = props
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -38,7 +35,7 @@ const App = (props) => {
           </Routes>
         </Content>
       </Layout>
-    </Layout>
+    </Layout >
   )
 }
 
