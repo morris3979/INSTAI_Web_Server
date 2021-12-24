@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Layout, Menu } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
-import Datatable from '../datatable'
+import Datatable from './page/datatable'
 import { COLLAPSED_CHANGE } from './store/actionType'
 import 'antd/dist/antd.min.css'
 
