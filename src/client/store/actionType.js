@@ -1,3 +1,5 @@
 export const COLLAPSED_CHANGE = 'collapsed_change'
 export const OPEN_MODAL = 'open_modal'
-export const CLOSE_MODAL = 'close_modal'
+export const CLOSE_MODAL_OK = 'close_modal_ok'
+export const CLOSE_MODAL_CANCEL = 'close_modal_cancel'
+export const CHANGE_INPUT_VALUE = 'change_input_value'
