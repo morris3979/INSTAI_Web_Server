@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Table, Popconfirm } from 'antd'
-import 'antd/dist/antd.min.css'
 
 const { Column } = Table
 

@@ -4,7 +4,8 @@ import { Layout, Menu } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
 import Datatable from './page/datatable'
 import { COLLAPSED_CHANGE } from './store/actionType'
-import 'antd/dist/antd.min.css'
+import TableModal from './component/tableModal'
+import 'antd/dist/antd.css'
 
 const { Content, Sider } = Layout
 
@@ -14,7 +15,7 @@ const App = (props) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <Menu theme='dark' mode='inline' defaultSelectedKeys={['/']} selectedKeys={[]}>
+        <Menu theme='dark' defaultSelectedKeys={['/']} selectedKeys={[]}>
           <Menu.Item key='/'>
             <Link to='/'>
               主畫面
@@ -31,7 +32,7 @@ const App = (props) => {
         <Content>
           <Routes>
             <Route path='/' element={<Datatable />} />
-            <Route path='/test' element={<div>test</div>} />
+            <Route path='/test' element={<TableModal />} />
           </Routes>
         </Content>
       </Layout>
