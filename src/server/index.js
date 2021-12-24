@@ -1,5 +1,4 @@
 const express = require('express');
-const os = require('os');
 const { createConnection } = require('typeorm');
 
 const app = express();

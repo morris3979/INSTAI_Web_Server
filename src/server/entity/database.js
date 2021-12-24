@@ -1,4 +1,4 @@
-var EntitySchema = require("typeorm").EntitySchema;
+const EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
     name: "Test", // Will use table name `Test` as default behaviour.
