@@ -15,16 +15,9 @@
   "dependencies": {
     "antd": "^4.17.4",
     "babel-polyfill": "^6.26.0",
-<<<<<<< HEAD
     "express": "^4.17.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-=======
-    "express": "^4.16.3",
-    "mysql": "^2.18.1",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
->>>>>>> 14e6b29522bcc5ec6ce88f3d01e1f8504ed99016
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "typeorm": "^0.2.41",
