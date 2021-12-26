@@ -4,7 +4,8 @@ import { Layout, Menu } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
 import Datatable from './page/datatable'
 import { COLLAPSED_CHANGE } from './store/actionType'
-import TableModal from './component/tableModal'
+import MaintainModal from './component/maintainModal'
+import MaintainCard from './component/maintainCard'
 import 'antd/dist/antd.css'
 
 const { Content, Sider } = Layout
@@ -32,7 +33,7 @@ const App = (props) => {
         <Content>
           <Routes>
             <Route path='/' element={<Datatable />} />
-            <Route path='/test' element={<TableModal />} />
+            <Route path='/test' element={<MaintainModal />} />
           </Routes>
         </Content>
       </Layout>

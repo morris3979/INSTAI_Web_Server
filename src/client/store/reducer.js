@@ -1,15 +1,16 @@
 import {
   COLLAPSED_CHANGE,
-  OPEN_MODAL,
-  CLOSE_MODAL_OK,
-  CLOSE_MODAL_CANCEL,
-  CHANGE_INPUT_VALUE
+  OPEN_MAINTAIN_MODAL,
+  CLOSE_MAINTAIN_MODAL_OK,
+  CLOSE_MAINTAIN_MODAL_CANCEL,
+  CHANGE_MAINTAIN_MODAL_INPUT_VALUE
 } from './actionType'
 
 const defaultState = {
   collapsed: false,
-  isModalVisible: false,
-  inputValue: ''
+  isMaintainModalVisible: false,
+  maintainModalInputValue: '',
+  maintainCardName: []
 }
 
 const reducer = (state = defaultState, action) => {
@@ -19,30 +20,33 @@ const reducer = (state = defaultState, action) => {
       newState.collapsed = !newState.collapsed
       return newState
     }
-    case OPEN_MODAL: {
+    case OPEN_MAINTAIN_MODAL: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.isModalVisible = true
+      newState.isMaintainModalVisible = true
       return newState
     }
-    case CLOSE_MODAL_OK: {
+    case CLOSE_MAINTAIN_MODAL_OK: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.isModalVisible = false
-      newState.inputValue = ''
+      newState.isMaintainModalVisible = false
+      newState.maintainCardName.push(newState.maintainModalInputValue)
+      newState.maintainModalInputValue = ''
       return newState
     }
-    case CLOSE_MODAL_CANCEL: {
+    case CLOSE_MAINTAIN_MODAL_CANCEL: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.isModalVisible = false
-      newState.inputValue = ''
+      newState.isMaintainModalVisible = false
+      newState.maintainModalInputValue = ''
       return newState
     }
-    case CHANGE_INPUT_VALUE: {
+    case CHANGE_MAINTAIN_MODAL_INPUT_VALUE: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.inputValue = action.value
+      newState.maintainModalInputValue = action.value
       return newState
+    }
+    default: {
+      return state
     }
   }
-  return state
 }
 
 export default reducer
