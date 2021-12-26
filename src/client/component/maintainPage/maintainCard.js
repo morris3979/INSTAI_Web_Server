@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Card, Button, Table, Popconfirm } from 'antd'
+import { EditOutlined } from '@ant-design/icons'
 
 const { Column } = Table
 
@@ -14,9 +15,10 @@ const MaintainCard = (props) => {
           <Card
             title={cardName}
             extra={
-              <Button>
-                編輯
-              </Button>
+              <Button
+                icon={<EditOutlined style={{ color: 'black' }} />}
+                size='large'
+              />
             }
           >
           </Card>

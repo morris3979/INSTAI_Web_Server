@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button, Input } from 'antd'
+import { PlusCircleOutlined } from '@ant-design/icons'
 import {
   CHANGE_MAINTAIN_MODAL_INPUT_VALUE,
   CLOSE_MAINTAIN_MODAL_CANCEL,
@@ -21,9 +22,11 @@ const MaintainModal = (props) => {
   return (
     <Fragment>
       <div style={{ textAlign: 'center' }}>
-        <Button onClick={openMaintainModal} >
-          新增表單
-        </Button>
+        <Button
+          icon={<PlusCircleOutlined style={{ color: 'black' }} />}
+          size='large'
+          onClick={openMaintainModal}
+        />
       </div>
       <Modal
         title='新增表單名稱'
@@ -76,7 +79,7 @@ const mapDispatchToProps = (dispatch) => {
         value: event.target.value
       }
       dispatch(action)
-    },
+    }
   }
 }
 
