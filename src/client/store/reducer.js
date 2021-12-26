@@ -10,7 +10,7 @@ const defaultState = {
   collapsed: false,
   isMaintainModalVisible: false,
   maintainModalInputValue: '',
-  maintainCardName: []
+  maintainCardName: ['test1', 'test2']
 }
 
 const reducer = (state = defaultState, action) => {

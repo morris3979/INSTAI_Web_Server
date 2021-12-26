@@ -33,7 +33,7 @@ const App = (props) => {
         <Content>
           <Routes>
             <Route path='/' element={<Datatable />} />
-            <Route path='/test' element={<MaintainModal />} />
+            <Route path='/test' element={<MaintainCard />} />
           </Routes>
         </Content>
       </Layout>
