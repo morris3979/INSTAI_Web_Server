@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button, Input } from 'antd'
 import {
@@ -6,7 +6,7 @@ import {
   CLOSE_MAINTAIN_MODAL_CANCEL,
   CLOSE_MAINTAIN_MODAL_OK,
   OPEN_MAINTAIN_MODAL
-} from '../store/actionType'
+} from '../../store/actionType'
 
 const MaintainModal = (props) => {
   const {
@@ -15,14 +15,14 @@ const MaintainModal = (props) => {
     closeMaintainModalOk,
     closeMaintainModalCancel,
     maintainModalInputValue,
-    changeMaintainModalInputValue,
+    changeMaintainModalInputValue
   } = props
 
   return (
-    <>
+    <Fragment>
       <div style={{ textAlign: 'center' }}>
         <Button onClick={openMaintainModal} >
-          編輯
+          新增表單
         </Button>
       </div>
       <Modal
@@ -36,7 +36,7 @@ const MaintainModal = (props) => {
           onChange={changeMaintainModalInputValue}
         />
       </Modal>
-    </>
+    </Fragment>
   )
 }
 
