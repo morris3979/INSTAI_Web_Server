@@ -4,15 +4,15 @@ import {
   CLOSE_MAINTAIN_MODAL_OK,
   CLOSE_MAINTAIN_MODAL_CANCEL,
   CHANGE_MAINTAIN_MODAL_INPUT_VALUE,
-  CHANGE_MAINTAIN_CARD_KEY
+  CHANGE_MAINTAIN_MODEL_CARD_KEY
 } from './actionType'
 
 const defaultState = {
   collapsed: false,
   isMaintainModalVisible: false,
   maintainModalInputValue: '',
-  maintainCardName: [],
-  maintainCardKey: ''
+  maintainModelCardName: [],
+  maintainModelCardKey: ''
 }
 
 const reducer = (state = defaultState, action) => {
@@ -30,11 +30,11 @@ const reducer = (state = defaultState, action) => {
     case CLOSE_MAINTAIN_MODAL_OK: {
       const newState = JSON.parse(JSON.stringify(state))
       newState.isMaintainModalVisible = false
-      newState.maintainCardName.push({
+      newState.maintainModelCardName.push({
         key: newState.maintainModalInputValue,
         tab: newState.maintainModalInputValue
       })
-      newState.maintainCardKey = newState.maintainModalInputValue
+      newState.maintainModelCardKey = newState.maintainModalInputValue
       newState.maintainModalInputValue = ''
       return newState
     }
@@ -49,9 +49,9 @@ const reducer = (state = defaultState, action) => {
       newState.maintainModalInputValue = action.value
       return newState
     }
-    case CHANGE_MAINTAIN_CARD_KEY: {
+    case CHANGE_MAINTAIN_MODEL_CARD_KEY: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.maintainCardKey = action.value
+      newState.maintainModelCardKey = action.value
       console.log(newState)
       return newState
     }

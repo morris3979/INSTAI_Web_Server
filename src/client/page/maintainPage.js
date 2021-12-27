@@ -1,16 +1,18 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Col, Row } from 'antd'
-import MaintainCard from '../component/maintainPage/maintainCard'
+import MaintainModelCard from '../component/maintainPage/maintainModelCard'
 import MaintainModal from '../component/maintainPage/maintainModal'
+import MaintainCarCard from '../component/maintainPage/maintainCarCard'
 
 const MaintainPage = () => {
   return (
     <Row>
-      <Col>
-        <MaintainCard />
+      <Col span={12}>
+        <MaintainCarCard />
       </Col>
-      <Col>
+      <Col span={12}>
+        <MaintainModelCard />
         <MaintainModal />
       </Col>
     </Row>
