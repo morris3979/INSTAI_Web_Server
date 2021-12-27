@@ -2,4 +2,10 @@ export const OPEN_MAINTAIN_MODAL = 'open_maintain_modal'
 export const CLOSE_MAINTAIN_MODAL_OK = 'close_maintain_modal_ok'
 export const CLOSE_MAINTAIN_MODAL_CANCEL = 'close_maintain_modal_cancel'
 export const CHANGE_MAINTAIN_MODAL_INPUT_VALUE = 'change_maintain_modal_input_value'
+
 export const CHANGE_MAINTAIN_MODEL_CARD_KEY = 'change_maintain_model_card_key'
+
+export const OPEN_MAINTAIN_CAR_CARD_MODAL = 'open_maintain_car_card_modal'
+export const CLOSE_MAINTAIN_CAR_CARD_MODAL_OK = 'close_maintain_car_card_modal_ok'
+export const CLOSE_MAINTAIN_CAR_CARD_MODAL_CANCEL = 'close_maintain_car_card_modal_cancel'
+export const CHANGE_MAINTAIN_CAR_CARD_MODAL_INPUT_VALUE = 'change_maintain_car_card_modal_input_value'

@@ -11,11 +11,11 @@ import {
 
 const MaintainModal = (props) => {
   const {
-    isModalVisible,
+    isMaintainModalVisible,
     openMaintainModal,
     closeMaintainModalOk,
     closeMaintainModalCancel,
-    inputValue,
+    maintainModalInputValue,
     changeMaintainModalInputValue
   } = props
 
@@ -30,12 +30,12 @@ const MaintainModal = (props) => {
       </div>
       <Modal
         title='新增表單名稱'
-        visible={isModalVisible}
+        visible={isMaintainModalVisible}
         onOk={closeMaintainModalOk}
         onCancel={closeMaintainModalCancel}
       >
         <Input
-          value={inputValue}
+          value={maintainModalInputValue}
           onChange={changeMaintainModalInputValue}
         />
       </Modal>
@@ -46,8 +46,8 @@ const MaintainModal = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    isModalVisible: state.isModalVisible,
-    inputValue: state.inputValue
+    isMaintainModalVisible: state.isMaintainModalVisible,
+    maintainModalInputValue: state.maintainModalInputValue
     //props裡的參數與store的數據對應關係
   }
 }
@@ -74,6 +74,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action)
     },
     changeMaintainModalInputValue(event) {
+      console.log(event)
       const action = {
         type: CHANGE_MAINTAIN_MODAL_INPUT_VALUE,
         value: event.target.value
