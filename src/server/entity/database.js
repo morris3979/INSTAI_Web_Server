@@ -9,7 +9,10 @@ module.exports = new EntitySchema({
             type: "int",
             generated: true
         },
-        name: {
+        boardId: {
+            type: "varchar"
+        },
+        modelName: {
             type: "varchar"
         }
     }
