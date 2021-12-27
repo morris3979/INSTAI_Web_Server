@@ -1,4 +1,3 @@
-export const COLLAPSED_CHANGE = 'collapsed_change'
 export const OPEN_MAINTAIN_MODAL = 'open_maintain_modal'
 export const CLOSE_MAINTAIN_MODAL_OK = 'close_maintain_modal_ok'
 export const CLOSE_MAINTAIN_MODAL_CANCEL = 'close_maintain_modal_cancel'

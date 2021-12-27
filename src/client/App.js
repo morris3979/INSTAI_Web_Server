@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Layout, Menu } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
 import Datatable from './page/datatable'
-import { COLLAPSED_CHANGE } from './store/actionType'
 import MaintainPage from './page/maintainPage'
 import 'antd/dist/antd.css'
 
@@ -11,12 +10,10 @@ const { Content, Sider } = Layout
 
 const { Item } = Menu
 
-const App = (props) => {
-  const { collapsed, onCollapse } = props
-
+const App = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
+      <Sider breakpoint='xl' collapsedWidth='0'>
         <Menu theme='dark' defaultSelectedKeys={['/']} selectedKeys={[]}>
           <Item key='/'>
             <Link to='/'>
@@ -42,24 +39,4 @@ const App = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  //state指的是store裡的數據
-  return {
-    collapsed: state.collapsed
-    //props裡的參數與store的數據對應關係
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  //dispatch指store.dispatch這個方法
-  return {
-    onCollapse() {
-      const action = {
-        type: COLLAPSED_CHANGE
-      }
-      dispatch(action)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(null, null)(App)
