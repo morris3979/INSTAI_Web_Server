@@ -1,5 +1,4 @@
 import {
-  COLLAPSED_CHANGE,
   OPEN_MAINTAIN_MODAL,
   CLOSE_MAINTAIN_MODAL_OK,
   CLOSE_MAINTAIN_MODAL_CANCEL,
@@ -8,45 +7,39 @@ import {
 } from './actionType'
 
 const defaultState = {
-  collapsed: false,
-  isMaintainModalVisible: false,
-  maintainModalInputValue: '',
+  isModalVisible: false,
+  inputValue: '',
   maintainModelCardName: [],
   maintainModelCardKey: ''
 }
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
-    case COLLAPSED_CHANGE: {
-      const newState = JSON.parse(JSON.stringify(state))
-      newState.collapsed = !newState.collapsed
-      return newState
-    }
     case OPEN_MAINTAIN_MODAL: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.isMaintainModalVisible = true
+      newState.isModalVisible = true
       return newState
     }
     case CLOSE_MAINTAIN_MODAL_OK: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.isMaintainModalVisible = false
+      newState.isModalVisible = false
       newState.maintainModelCardName.push({
-        key: newState.maintainModalInputValue,
-        tab: newState.maintainModalInputValue
+        key: newState.inputValue,
+        tab: newState.inputValue
       })
-      newState.maintainModelCardKey = newState.maintainModalInputValue
-      newState.maintainModalInputValue = ''
+      newState.maintainModelCardKey = newState.inputValue
+      newState.inputValue = ''
       return newState
     }
     case CLOSE_MAINTAIN_MODAL_CANCEL: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.isMaintainModalVisible = false
-      newState.maintainModalInputValue = ''
+      newState.isModalVisible = false
+      newState.inputValue = ''
       return newState
     }
     case CHANGE_MAINTAIN_MODAL_INPUT_VALUE: {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.maintainModalInputValue = action.value
+      newState.inputValue = action.value
       return newState
     }
     case CHANGE_MAINTAIN_MODEL_CARD_KEY: {
