@@ -8,6 +8,7 @@ import MaintainPage from './page/maintainPage'
 import 'antd/dist/antd.css'
 
 const { Content, Sider } = Layout
+
 const { Item } = Menu
 
 const App = (props) => {
