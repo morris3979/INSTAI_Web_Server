@@ -74,7 +74,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action)
     },
     changeMaintainModalInputValue(event) {
-      console.log(event)
       const action = {
         type: CHANGE_MAINTAIN_MODAL_INPUT_VALUE,
         value: event.target.value

@@ -8,10 +8,10 @@ import MaintainCarCard from '../component/maintainPage/maintainCarCard'
 const MaintainPage = () => {
   return (
     <Row>
-      <Col xs={24} sm={24} xl={12}>
+      <Col xs={24} sm={24} xl={8}>
         <MaintainCarCard />
       </Col>
-      <Col xs={24} sm={24} xl={12}>
+      <Col xs={24} sm={24} xl={16}>
         <MaintainModelCard />
         <MaintainModal />
       </Col>
