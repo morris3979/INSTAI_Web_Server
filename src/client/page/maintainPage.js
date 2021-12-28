@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { Fragment, lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Col, Row } from 'antd'
 
@@ -8,23 +8,32 @@ const MaintainModelCard = lazy(() => import('../component/maintainPage/maintainM
 
 const MaintainPage = () => {
   return (
-    <Row>
-      <Suspense
-        fallback={
+    <Fragment>
+      <Row>
+        <Suspense
+          fallback={
+            <div style={{ textAlign: 'center', fontSize: 100 }}>
+              載入中...
+            </div>
+          }
+        >
+          <Col xs={24} sm={24} xl={8}>
+            <MaintainCarCard />
+          </Col>
+          <Col xs={24} sm={24} xl={16}>
+            <MaintainModelCard />
+            <MaintainModal />
+          </Col>
+        </Suspense>
+      </Row>
+      <Row>
+        <Col span={24}>
           <div style={{ textAlign: 'center', fontSize: 100 }}>
-            載入中...
+            to be continued
           </div>
-        }
-      >
-        <Col xs={24} sm={24} xl={8}>
-          <MaintainCarCard />
         </Col>
-        <Col xs={24} sm={24} xl={16}>
-          <MaintainModelCard />
-          <MaintainModal />
-        </Col>
-      </Suspense>
-    </Row>
+      </Row>
+    </Fragment>
   )
 }
 
