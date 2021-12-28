@@ -31,9 +31,7 @@ const App = () => {
         <Content>
           <Suspense
             fallback={
-              <div
-                style={{ textAlign: 'center', fontSize: 100 }}
-              >
+              <div style={{ textAlign: 'center', fontSize: 100 }}>
                 載入中...
               </div>
             }

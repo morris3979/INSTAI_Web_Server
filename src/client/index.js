@@ -9,13 +9,13 @@ const App = lazy(() => import('./App'))
 const app = (
   <Provider store={store}>
     <BrowserRouter>
-      <Suspense fallback={
-        <div
-          style={{ textAlign: 'center', fontSize: 100 }}
-        >
-          載入中...
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div style={{ textAlign: 'center', fontSize: 100 }}>
+            載入中...
+          </div>
+        }
+      >
         <App />
       </Suspense>
     </BrowserRouter>

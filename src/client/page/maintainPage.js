@@ -9,7 +9,13 @@ const MaintainModelCard = lazy(() => import('../component/maintainPage/maintainM
 const MaintainPage = () => {
   return (
     <Row>
-      <Suspense>
+      <Suspense
+        fallback={
+          <div style={{ textAlign: 'center', fontSize: 100 }}>
+            載入中...
+          </div>
+        }
+      >
         <Col xs={24} sm={24} xl={8}>
           <MaintainCarCard />
         </Col>
