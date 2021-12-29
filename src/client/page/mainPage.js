@@ -5,7 +5,7 @@ import { FileOutlined } from '@ant-design/icons'
 const MainPage = () => {
   return (
     <div style={{ textAlign: 'center', fontSize: 100 }}>
-      <FileOutlined style={{ color: 'black' }} />
+      <FileOutlined />
       <div>
         to be continued
       </div>

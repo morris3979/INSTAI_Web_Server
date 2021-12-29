@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { LoadingOutlined } from '@ant-design/icons'
 
-const MaintainCarCard = lazy(() => import('../component/maintainPage/maintainCarCard'))
+const MaintainBoardCard = lazy(() => import('../component/maintainPage/maintainBoardCard'))
 
 const MaintainPage = () => {
   return (
@@ -13,7 +13,7 @@ const MaintainPage = () => {
         </div>
       }
     >
-      <MaintainCarCard />
+      <MaintainBoardCard />
     </Suspense>
   )
 }
