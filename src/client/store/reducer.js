@@ -34,7 +34,7 @@ const reducer = (state = defaultState, action) => {
       return newState
     }
     default: {
-      return state
+      return newState
     }
   }
 }

@@ -26,7 +26,7 @@ const MaintainCarCard = (props) => {
       extra={
         <Fragment>
           <Button
-            icon={<EditOutlined style={{ color: 'black' }} />}
+            icon={<EditOutlined />}
             size='large'
             onClick={openMaintainCarCardModal}
           />
