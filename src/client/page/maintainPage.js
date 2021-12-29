@@ -1,39 +1,11 @@
-import React, { Fragment, lazy, Suspense } from 'react'
+import React, { lazy } from 'react'
 import { connect } from 'react-redux'
-import { Col, Row } from 'antd'
 
 const MaintainCarCard = lazy(() => import('../component/maintainPage/maintainCarCard'))
-const MaintainModal = lazy(() => import('../component/maintainPage/maintainModal'))
-const MaintainModelCard = lazy(() => import('../component/maintainPage/maintainModelCard'))
 
 const MaintainPage = () => {
   return (
-    <Fragment>
-      <Row>
-        <Suspense
-          fallback={
-            <div style={{ textAlign: 'center', fontSize: 100 }}>
-              載入中...
-            </div>
-          }
-        >
-          <Col xs={24} sm={24} xl={8}>
-            <MaintainCarCard />
-          </Col>
-          <Col xs={24} sm={24} xl={16}>
-            <MaintainModelCard />
-            <MaintainModal />
-          </Col>
-        </Suspense>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <div style={{ textAlign: 'center', fontSize: 100 }}>
-            to be continued
-          </div>
-        </Col>
-      </Row>
-    </Fragment>
+    <MaintainCarCard />
   )
 }
 
