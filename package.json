@@ -13,7 +13,7 @@
   "author": "EnChi Chang",
   "license": "ISC",
   "dependencies": {
-    "antd": "^4.18.0",
+    "antd": "^4.18.2",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
