@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { FileOutlined } from '@ant-design/icons'
+import { LoadingOutlined } from '@ant-design/icons'
+
+const MainMap = lazy(() => import('../component/mainPage/mainMap'))
 
 const MainPage = () => {
   return (
-    <div style={{ textAlign: 'center', fontSize: 100 }}>
-      <FileOutlined />
-      <div>
-        to be continued
-      </div>
-    </div>
+    <Suspense
+      fallback={
+        <div style={{ textAlign: 'center', fontSize: 100 }}>
+          <LoadingOutlined />
+        </div>
+      }
+    >
+      <MainMap />
+    </Suspense>
   )
 }
 
