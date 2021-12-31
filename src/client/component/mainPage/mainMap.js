@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css'
 
 class MainMap extends Component {
   componentDidMount() {
-    const mymap = L.map("mapid").setView([25.03418, 121.564517], 17)
+    const mymap = L.map("mapid").setView([25.0426, 121.537], 17)
     const OSMUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     L.tileLayer(OSMUrl).addTo(mymap)
   }
