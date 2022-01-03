@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Layout, Menu } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
-import Datatable from './page/datatable'
-import MaintainPage from './page/maintainPage'
+import { LoadingOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 
-const { Content, Sider } = Layout
+const MainPage = lazy(() => import('./page/mainPage'))
+const MaintainPage = lazy(() => import('./page/maintainPage'))
 
+const { Content, Sider } = Layout
 const { Item } = Menu
 
 const App = () => {
@@ -20,19 +21,27 @@ const App = () => {
               主畫面
             </Link>
           </Item>
-          <Item key='/test'>
-            <Link to='/test'>
-              測試
+          <Item key='/maintain'>
+            <Link to='/maintain'>
+              頁面維護
             </Link>
           </Item>
         </Menu>
       </Sider>
       <Layout>
         <Content>
-          <Routes>
-            <Route path='/' element={<Datatable />} />
-            <Route path='/test' element={<MaintainPage />} />
-          </Routes>
+          <Suspense
+            fallback={
+              <div style={{ textAlign: 'center', fontSize: 100 }}>
+                <LoadingOutlined />
+              </div>
+            }
+          >
+            <Routes>
+              <Route path='/' element={<MainPage />} />
+              <Route path='/maintain' element={<MaintainPage />} />
+            </Routes>
+          </Suspense>
         </Content>
       </Layout>
     </Layout >

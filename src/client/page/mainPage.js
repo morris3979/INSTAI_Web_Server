@@ -2,9 +2,9 @@ import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { LoadingOutlined } from '@ant-design/icons'
 
-const MaintainBoardCard = lazy(() => import('../component/maintainPage/maintainBoardCard'))
+const MainMap = lazy(() => import('../component/mainPage/mainMap'))
 
-const MaintainPage = () => {
+const MainPage = () => {
   return (
     <Suspense
       fallback={
@@ -13,9 +13,9 @@ const MaintainPage = () => {
         </div>
       }
     >
-      <MaintainBoardCard />
+      <MainMap />
     </Suspense>
   )
 }
 
-export default connect(null, null)(MaintainPage)
+export default connect(null, null)(MainPage)
