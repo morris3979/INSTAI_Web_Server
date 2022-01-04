@@ -1,20 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import L from 'leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
-class MainMap extends Component {
-  componentDidMount() {
-    const mymap = L.map("mapid").setView([25.0426, 121.537], 17)
-    const OSMUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    L.tileLayer(OSMUrl).addTo(mymap)
-  }
-
-  render() {
-    return (
-      <div id="mapid" style={{ height: "100vh", width: "100vw" }} />
-    )
-  }
+const MainMap = () => {
+  return (
+    <MapContainer
+      center={[25.0426, 121.537]}
+      zoom={17}
+      style={{ height: "100vh" }}
+    >
+      <TileLayer
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+    </MapContainer>
+  )
 }
 
 export default connect(null, null)(MainMap)
