@@ -15,12 +15,7 @@ const MainPage = () => {
           </div>
         }
       >
-        <Col span={8}>
-          <div>
-            test
-          </div>
-        </Col>
-        <Col span={16}>
+        <Col span={24}>
           <MainMap />
         </Col>
       </Suspense>
