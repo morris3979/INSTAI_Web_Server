@@ -10,28 +10,25 @@ module.exports = new CarNumber({
             generated: true
         },
         boardId: {
-            type: "varchar"
+            type: "varchar",
         },
         modelName: {
-            type: "varchar"
+            type: "varchar",
         },
         version: {
-            type: "int"
+            type: "varchar",
         },
         driverlicense: {
-            type: "varchar"
+            type: "varchar",
         },
-        event: {
-            type: "varchar"
+        creareAt: {
+            type: "datetime",
         },
-        position: {
-            type: "varchar"
+    },
+    relations: {
+        Details: {
+            type: "one-to-many",
+            target: "Details",
         },
-        startingTime: {
-            type: "timestamp"
-        },
-        endTime: {
-            type: "timestamp"
-        },
-    }
+    },
 });
