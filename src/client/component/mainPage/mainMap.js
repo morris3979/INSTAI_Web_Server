@@ -8,7 +8,7 @@ const MainMap = () => {
     <MapContainer
       center={[25.0426, 121.537]}
       zoom={17}
-      style={{ height: "100vh", width: "100vw" }}
+      style={{ height: "100vh" }}
     >
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
