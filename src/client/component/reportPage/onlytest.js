@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, Image } from 'antd'
 import { FileImageOutlined } from '@ant-design/icons'
+import ReactPlayer from 'react-player/lazy'
 
 const { PreviewGroup } = Image
 
@@ -25,8 +26,13 @@ const OnlyTest = (props) => {
         visible={isModalVisible}
         onOk={closeModal}
         onCancel={closeModal}
-        width={300}
+        width={700}
+        destroyOnClose={true}
       >
+        <ReactPlayer
+          url='https://www.youtube.com/watch?v=zSOJk7ggJts#t=53s'
+          controls={true}
+        />
         <PreviewGroup>
           {
             imageList.map((item) => {
@@ -48,7 +54,8 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     isModalVisible: state.isModalVisible,
-    imageList: state.imageList
+    imageList: state.imageList,
+    playing: state.playing
     //props裡的參數與store的數據對應關係
   }
 }
