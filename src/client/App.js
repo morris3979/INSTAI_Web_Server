@@ -7,6 +7,7 @@ import 'antd/dist/antd.css'
 
 const MainPage = lazy(() => import('./page/mainPage'))
 const MaintainPage = lazy(() => import('./page/maintainPage'))
+const OnlyTest = lazy(() => import('./component/reportPage/onlytest'))
 
 const { Content, Sider } = Layout
 const { Item } = Menu
@@ -26,6 +27,11 @@ const App = () => {
               頁面維護
             </Link>
           </Item>
+          <Item key='/test'>
+            <Link to='/test'>
+              測試用
+            </Link>
+          </Item>
         </Menu>
       </Sider>
       <Layout>
@@ -40,6 +46,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<MainPage />} />
               <Route path='/maintain' element={<MaintainPage />} />
+              <Route path='/test' element={<OnlyTest />} />
             </Routes>
           </Suspense>
         </Content>
