@@ -7,11 +7,11 @@ const { Column } = Table
 const data = [
   {
     status: '1',
-    description: '行駛中(10分內有動)',
+    description: '行駛中(10分內有動)'
   },
   {
     status: '0',
-    description: '怠速中(10分內未動)',
+    description: '怠速中(10分內未動)'
   }
 ]
 
