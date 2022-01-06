@@ -23,7 +23,6 @@ const MaintainBoardCard = (props) => {
   return (
     <Card
       title={maintainBoardCardName}
-      loading={true}
       extra={
         <Fragment>
           <Button

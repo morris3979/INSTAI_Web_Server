@@ -54,8 +54,7 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     isModalVisible: state.isModalVisible,
-    imageList: state.imageList,
-    playing: state.playing
+    imageList: state.imageList
     //props裡的參數與store的數據對應關係
   }
 }

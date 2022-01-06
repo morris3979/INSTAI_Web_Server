@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from 'react'
-import { connect } from 'react-redux'
 import { Layout, Menu } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
@@ -55,4 +54,4 @@ const App = () => {
   )
 }
 
-export default connect(null, null)(App)
+export default App

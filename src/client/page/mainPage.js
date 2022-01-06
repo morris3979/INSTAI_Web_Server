@@ -1,9 +1,9 @@
 import React, { lazy, Suspense } from 'react'
-import { connect } from 'react-redux'
 import { Row, Col } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 const MainMap = lazy(() => import('../component/mainPage/mainMap'))
+const MainMapLegend = lazy(() => import('../component/mainPage/mainMapLegend'))
 
 const MainPage = () => {
   return (
@@ -15,7 +15,10 @@ const MainPage = () => {
           </div>
         }
       >
-        <Col span={24}>
+        <Col xs={24} sm={24} xl={8}>
+          <MainMapLegend />
+        </Col>
+        <Col xs={24} sm={24} xl={16}>
           <MainMap />
         </Col>
       </Suspense>
@@ -23,4 +26,4 @@ const MainPage = () => {
   )
 }
 
-export default connect(null, null)(MainPage)
+export default MainPage
