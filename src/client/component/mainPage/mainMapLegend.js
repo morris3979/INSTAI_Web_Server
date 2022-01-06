@@ -12,7 +12,7 @@ const data = [
   {
     status: '0',
     description: '怠速中(10分內未動)',
-  },
+  }
 ]
 
 const iconStyle = (text) => {
@@ -29,14 +29,8 @@ const iconStyle = (text) => {
 
 const MainMapLegend = () => {
   return (
-    <Table
-      dataSource={data}
-      pagination={false}
-    >
-      <Column
-        title='圖示'
-        render={iconStyle}
-      />
+    <Table dataSource={data} pagination={false}>
+      <Column title='圖示' render={iconStyle} />
       <Column title='說明' dataIndex='description' />
     </Table>
   )
