@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from 'react'
-import { connect } from 'react-redux'
 import { LoadingOutlined } from '@ant-design/icons'
 
 const MaintainBoardCard = lazy(() => import('../component/maintainPage/maintainBoardCard'))
@@ -18,4 +17,4 @@ const MaintainPage = () => {
   )
 }
 
-export default connect(null, null)(MaintainPage)
+export default MaintainPage

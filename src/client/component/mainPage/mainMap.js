@@ -1,11 +1,37 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-const icon = L.icon({
-  iconUrl: require('leaflet/dist/images/marker-icon.png')
+const greenIcon = L.icon({
+  iconUrl: require('../../icon image/green car.png'),
+  iconSize: [48, 48]
+})
+
+const redIcon = L.icon({
+  iconUrl: require('../../icon image/red car.png'),
+  iconSize: [48, 48]
+})
+
+const location = [
+  { 'position': [25.0427, 121.5357], 'icon': '1' },
+  { 'position': [25.0431, 121.5357], 'icon': '0' }
+]
+location.forEach((item, index, lrr) => {
+  if (item.icon == '1') {
+    lrr[index].icon = greenIcon
+  } else {
+    lrr[index].icon = redIcon
+  }
+})
+
+const markerGroup = location.map((item) => {
+  return (
+    <Marker
+      position={item.position}
+      icon={item.icon}
+    />
+  )
 })
 
 const MainMap = () => {
@@ -13,18 +39,15 @@ const MainMap = () => {
     <MapContainer
       center={[25.0426, 121.537]}
       zoom={17}
-      style={{ height: "100vh" }}
+      style={{ height: '100vh' }}
     >
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker
-        position={[25.0427, 121.5357]}
-        icon={icon}
-      />
+      {markerGroup}
     </MapContainer>
   )
 }
 
-export default connect(null, null)(MainMap)
+export default MainMap
