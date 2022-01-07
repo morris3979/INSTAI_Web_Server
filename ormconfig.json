@@ -1,8 +1,8 @@
 {
     "type": "mysql",
-    "host": "testdb.cvprqxu67qc8.us-east-1.rds.amazonaws.com",
-    "port": 3300,
-    "username": "admin",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
     "password": "12345678",
     "database": "test",
     "synchronize": true,

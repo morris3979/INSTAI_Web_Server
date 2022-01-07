@@ -11,18 +11,23 @@ module.exports = new Details({
         },
         startingTime: {
             type: "timestamp",
+            default: "2022-01-01 12:00:00",
         },
         endTime: {
             type: "timestamp",
+            default: "2022-01-01 12:00:00",
         },
         event: {
             type: "varchar",
+            default: "/s3/image"
         },
         position: {
             type: "varchar",
+            default: "25.042884, 121.532950",
         },
-        creareAt: {
+        createAt: {
             type: "datetime",
+            default: "2022-01-01 12:00:00",
         },
     },
     relations: {

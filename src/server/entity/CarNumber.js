@@ -11,18 +11,23 @@ module.exports = new CarNumber({
         },
         boardId: {
             type: "varchar",
+            default: "0x0001",
         },
         modelName: {
             type: "varchar",
+            default: "A",
         },
         version: {
             type: "varchar",
+            default: "0.1",
         },
         driverlicense: {
             type: "varchar",
+            default: "AAA-001",
         },
-        creareAt: {
+        createAt: {
             type: "datetime",
+            default: "2022-01-01 12:00:00",
         },
     },
     relations: {
