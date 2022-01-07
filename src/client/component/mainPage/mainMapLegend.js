@@ -1,6 +1,5 @@
 import React from 'react'
-import { Table } from 'antd'
-import { CarOutlined } from '@ant-design/icons'
+import { Table, Image } from 'antd'
 
 const { Column } = Table
 
@@ -18,11 +17,19 @@ const data = [
 const iconStyle = (text) => {
   if (text.status == '1') {
     return (
-      <CarOutlined style={{ color: 'green' }} />
+      <Image
+        width={32}
+        src={require('../../icon image/green car.png')}
+        preview={false}
+      />
     )
   } else {
     return (
-      <CarOutlined style={{ color: 'red' }} />
+      <Image
+        width={32}
+        src={require('../../icon image/red car.png')}
+        preview={false}
+      />
     )
   }
 }
