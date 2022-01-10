@@ -5,7 +5,7 @@
     "username": "root",
     "password": "12345678",
     "database": "test",
-    "synchronize": true,
+    "synchronize": false,
     "logging": false,
     "entities": [
        "src/server/entity/*.js"

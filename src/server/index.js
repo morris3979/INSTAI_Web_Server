@@ -17,6 +17,11 @@ async function app() {
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use("/api", apiRouter); // mount api router
 
+    process.on('unhandledRejection', error => {
+        console.error('unhandledRejection', error);
+        process.exit(1) // To exit with a 'failure' code
+    });
+
     app.listen(port, () => console.log(`Listening on port ${port}!`));
 }
 
