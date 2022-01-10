@@ -5,8 +5,9 @@
     "username": "root",
     "password": "12345678",
     "database": "test",
-    "synchronize": false,
+    "synchronize": true,
     "logging": false,
+    "keepConnectionAlive": true,
     "entities": [
        "src/server/entity/*.js"
     ],
