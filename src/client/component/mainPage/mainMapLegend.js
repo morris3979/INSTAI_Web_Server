@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Table, Image } from 'antd'
 
 const { Column } = Table
@@ -36,10 +36,15 @@ const iconStyle = (text) => {
 
 const MainMapLegend = () => {
   return (
-    <Table dataSource={data} pagination={false}>
-      <Column title='圖示' render={iconStyle} />
-      <Column title='說明' dataIndex='description' />
-    </Table>
+    <Fragment>
+      <Table dataSource={data} pagination={false}>
+        <Column title='圖示' render={iconStyle} />
+        <Column title='說明' dataIndex='description' />
+      </Table>
+      <div>
+        Icons made by <a href="https://www.flaticon.com/authors/aquariid" title="AquariiD">AquariiD</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+      </div>
+    </Fragment>
   )
 }
 
