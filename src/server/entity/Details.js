@@ -1,8 +1,23 @@
-const Details = require("typeorm").EntitySchema;
+const typeorm = require('typeorm');
+const EntitySchema = require("typeorm").EntitySchema;
 
-module.exports = new Details({
+class Details {
+    constructor(id, startingTime, endTime, event, position, createAt, updateAt, deleteAt) {
+        this.id = id;
+        this.startingTime = startingTime;
+        this.endTime = endTime;
+        this.event = event;
+        this.position = position;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.deleteAt = deleteAt;
+    }
+}
+
+const DetailsSchema = new EntitySchema({
     name: "Test1", // Will use table name `Test` as default behaviour.
     tableName: "Details", // Optional: Provide `tableName` property to override the default behaviour for table name.
+    target: Details,
     columns: {
         id: {
             primary: true,
@@ -28,6 +43,17 @@ module.exports = new Details({
         createAt: {
             type: "datetime",
             default: "2022-01-01 12:00:00",
+            name: "created_at",
+        },
+        updateAt: {
+            type: "datetime",
+            default: "2022-01-01 12:00:00",
+            name: "update_at",
+        },
+        deleteAt: {
+            type: "datetime",
+            default: "2022-01-01 12:00:00",
+            name: "delete_at",
         },
     },
     relations: {
@@ -37,3 +63,36 @@ module.exports = new Details({
         },
     },
 });
+
+async function getConnection() {
+    return await typeorm.createConnection();
+}
+
+async function getDetails() {
+    const connection = await getConnection();
+    const detailRepo = connection.getRepository(Details);
+    const details = await detailRepo.find();
+    connection.close();
+    return details;
+}
+
+async function insertDetail(id, startingTime, endTime, event, position) {
+    const connection = await getConnection();
+    //create
+    const details = new Details();
+    details.id = id;
+    details.startingTime = startingTime;
+    details.endTime = endTime;
+    details.event = event;
+    details.position = position;
+    //save
+    const detailRepo = connection.getRepository(Details);
+    const res = await detailRepo.save(details);
+    console.log("save", res);
+    //return new list
+    const allDetails = await detailRepo.find();
+    connection.close();
+    return allDetails;
+}
+
+module.exports = { DetailsSchema, getDetails, insertDetail };
