@@ -15,8 +15,8 @@ class Details {
 }
 
 const DetailsSchema = new EntitySchema({
-    name: "Test1", // Will use table name `Test` as default behaviour.
-    tableName: "Details", // Optional: Provide `tableName` property to override the default behaviour for table name.
+    name: "Test1", // Will use table name `Test` as default behavior.
+    tableName: "Details", // Optional: Provide `tableName` property to override the default behavior for table name.
     target: Details,
     columns: {
         id: {
