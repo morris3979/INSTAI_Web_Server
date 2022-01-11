@@ -10,7 +10,13 @@ const App = lazy(() => import('./App'))
 const app = (
   <Provider store={store}>
     <BrowserRouter>
-      <Suspense fallback={<Spin size='large' />}>
+      <Suspense
+        fallback={
+          <div style={{ textaligh: 'center', lineheight: '100vh' }}>
+            <Spin size='large' />
+          </div>
+        }
+      >
         <App />
       </Suspense>
     </BrowserRouter>

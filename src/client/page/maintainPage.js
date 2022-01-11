@@ -5,7 +5,13 @@ const MaintainBoardCard = lazy(() => import('../component/maintainPage/maintainB
 
 const MaintainPage = () => {
   return (
-    <Suspense fallback={<Spin size='large' />}>
+    <Suspense
+      fallback={
+        <div style={{ textaligh: 'center', lineheight: '100vh' }}>
+          <Spin size='large' />
+        </div>
+      }
+    >
       <MaintainBoardCard />
     </Suspense>
   )
