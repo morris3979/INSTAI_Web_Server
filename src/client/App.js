@@ -8,7 +8,6 @@ const InitialPage = lazy(() => import('./page/initialPage'))
 const MainPage = lazy(() => import('./page/mainPage'))
 const MaintainPage = lazy(() => import('./page/maintainPage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
-const OnlyTest = lazy(() => import('./component/reportPage/onlytest'))
 
 const { Content, Sider } = Layout
 const { Item } = Menu
@@ -33,11 +32,6 @@ const App = () => {
               帳號登入
             </Link>
           </Item>
-          <Item key='/test'>
-            <Link to='/test'>
-              測試用
-            </Link>
-          </Item>
         </Menu>
       </Sider>
       <Layout>
@@ -54,7 +48,6 @@ const App = () => {
               <Route path='/main' element={<MainPage />} />
               <Route path='/maintain' element={<MaintainPage />} />
               <Route path='/login' element={<LoginPage />} />
-              <Route path='/test' element={<OnlyTest />} />
             </Routes>
           </Suspense>
         </Content>
