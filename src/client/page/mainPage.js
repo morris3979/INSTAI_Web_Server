@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from 'react'
-import { Row, Col } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Row, Col, Spin } from 'antd'
 
 const MainMap = lazy(() => import('../component/mainPage/mainMap'))
 const MainMapLegend = lazy(() => import('../component/mainPage/mainMapLegend'))
@@ -8,13 +7,7 @@ const MainMapLegend = lazy(() => import('../component/mainPage/mainMapLegend'))
 const MainPage = () => {
   return (
     <Row>
-      <Suspense
-        fallback={
-          <LoadingOutlined
-            style={{ textAlign: 'center', fontSize: 10 }}
-          />
-        }
-      >
+      <Suspense fallback={<Spin size='large' />}>
         <Col xs={24} sm={24} xl={8}>
           <MainMapLegend />
         </Col>

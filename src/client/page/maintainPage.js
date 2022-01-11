@@ -1,17 +1,11 @@
 import React, { lazy, Suspense } from 'react'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
 
 const MaintainBoardCard = lazy(() => import('../component/maintainPage/maintainBoardCard'))
 
 const MaintainPage = () => {
   return (
-    <Suspense
-      fallback={
-        <LoadingOutlined
-          style={{ textAlign: 'center', fontSize: 10 }}
-        />
-      }
-    >
+    <Suspense fallback={<Spin size='large' />}>
       <MaintainBoardCard />
     </Suspense>
   )

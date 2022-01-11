@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from 'react'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Spin } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
-import { LoadingOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
@@ -36,13 +35,7 @@ const App = () => {
       </Sider>
       <Layout>
         <Content>
-          <Suspense
-            fallback={
-              <LoadingOutlined
-                style={{ textAlign: 'center', fontSize: 10 }}
-              />
-            }
-          >
+          <Suspense fallback={<Spin size='large' />}>
             <Routes>
               <Route path='/' element={<InitialPage />} />
               <Route path='/main' element={<MainPage />} />
