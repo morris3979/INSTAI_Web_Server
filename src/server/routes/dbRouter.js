@@ -1,7 +1,6 @@
 const express = require('express');
 const carnumberRouter = express.Router();
-const { getCarNumbers, insertCarNumber } = require('../entity/CarNumber');
-const { Details } = require("../entity/Details");
+const db = require('../entity/db');
 
 carnumberRouter.get('/test', async(req, res) => {
   try{
@@ -12,9 +11,9 @@ carnumberRouter.get('/test', async(req, res) => {
   }
 });
 
-carnumberRouter.get('/', async(req, res) => {
+carnumberRouter.get('/carnumber', async(req, res) => {
   try{
-    const carnumbers = await getCarNumbers();
+    const carnumbers = await db.getCarNumbers();
     res.json(carnumbers);
   } catch (e) {
     console.log(e);
@@ -24,7 +23,7 @@ carnumberRouter.get('/', async(req, res) => {
 
 carnumberRouter.post("/upload", async (req, res) => {
   try{
-    const carnumbers = await insertCarNumber();
+    const carnumbers = await db.insertCarNumber();
     res.status(200).json(carnumbers);
   } catch (e) {
     console.log(e);

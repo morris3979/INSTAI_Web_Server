@@ -1,8 +1,8 @@
 const express = require('express');
 const apiRouter = express.Router();
-const carnumberRouter = require('./carnumberRouter');
+const dbRouter = require('./dbRouter');
 
 
-apiRouter.use("/carnumber", carnumberRouter);
+apiRouter.use("/db", dbRouter);
 
 module.exports = apiRouter;

@@ -69,7 +69,19 @@ const UserSchema = new EntitySchema({
 });
 
 async function getConnection() {
-    return await typeorm.createConnection();
+    return await typeorm.createConnection({
+        type: "mysql",
+        host: "localhost",
+        port: 3306,
+        username: "root",
+        password: "12345678",
+        database: "test",
+        synchronize: true,
+        logging: false,
+        entities: [
+            UserSchema
+        ]
+    })
 }
 
 async function getUsers() {
