@@ -4,10 +4,11 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 
+const InitialPage = lazy(() => import('./page/initialPage'))
 const MainPage = lazy(() => import('./page/mainPage'))
 const MaintainPage = lazy(() => import('./page/maintainPage'))
+const LoginPage = lazy(() => import('./page/loginPage'))
 const OnlyTest = lazy(() => import('./component/reportPage/onlytest'))
-const InitialPage = lazy(() => import('./page/initialPage'))
 
 const { Content, Sider } = Layout
 const { Item } = Menu
@@ -25,6 +26,11 @@ const App = () => {
           <Item key='/maintain'>
             <Link to='/maintain'>
               頁面維護
+            </Link>
+          </Item>
+          <Item key='/login'>
+            <Link to='/login'>
+              帳號登入
             </Link>
           </Item>
           <Item key='/test'>
@@ -47,6 +53,7 @@ const App = () => {
               <Route path='/' element={<InitialPage />} />
               <Route path='/main' element={<MainPage />} />
               <Route path='/maintain' element={<MaintainPage />} />
+              <Route path='/login' element={<LoginPage />} />
               <Route path='/test' element={<OnlyTest />} />
             </Routes>
           </Suspense>

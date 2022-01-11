@@ -2,19 +2,29 @@ import React from 'react'
 import { Form, Input, Button } from 'antd'
 
 const { Item } = Form
+const { Password } = Input
 
 const LoginForm = () => {
   return (
     <Form>
       <Item
-        rules={{ required: true, message: '請輸入名稱' }}
+        label='Username'
+        name='username'
+        rules={[{ required: true, message: '請輸入名稱' }]}
       >
         <Input />
       </Item>
       <Item
-        rules={{ required: true, message: '請輸入名稱' }}
+        label='Password'
+        name='password'
+        rules={[{ required: true, message: '請輸入名稱' }]}
       >
-        <Input />
+        <Password />
+      </Item>
+      <Item>
+        <Button>
+          確定
+        </Button>
       </Item>
     </Form>
   )
