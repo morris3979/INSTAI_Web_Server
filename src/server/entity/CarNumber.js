@@ -2,13 +2,15 @@ const typeorm = require('typeorm');
 const EntitySchema = require("typeorm").EntitySchema;
 
 class CarNumber {
-    constructor(id, boardId, modelName, version, driverlicense, createAt) {
+    constructor(id, boardId, modelName, version, driverlicense, createAt, updateAt, deleteAt) {
         this.id = id;
         this.boardId = boardId;
         this.modelName = modelName;
         this.version = version;
         this.driverlicense = driverlicense;
         this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.deleteAt = deleteAt;
     }
 }
 
@@ -41,6 +43,17 @@ const CarNumberSchema = new EntitySchema({
         createAt: {
             type: "datetime",
             default: "2022-01-01 12:00:00",
+            name: "created_at",
+        },
+        updateAt: {
+            type: "datetime",
+            default: "2022-01-01 12:00:00",
+            name: "update_at",
+        },
+        deleteAt: {
+            type: "datetime",
+            default: "2022-01-01 12:00:00",
+            name: "delete_at",
         },
     },
     relations: {
@@ -82,4 +95,4 @@ async function insertCarNumber(id, boardId, modelName, version, driverlicense) {
     return allCarnumbers;
 }
 
-module.exports = {CarNumberSchema, getCarNumbers, insertCarNumber};
+module.exports = { CarNumberSchema, getCarNumbers, insertCarNumber };
