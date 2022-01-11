@@ -7,7 +7,13 @@ const MainMapLegend = lazy(() => import('../component/mainPage/mainMapLegend'))
 const MainPage = () => {
   return (
     <Row>
-      <Suspense fallback={<Spin size='large' />}>
+      <Suspense
+        fallback={
+          <div style={{ textaligh: 'center', lineheight: '100vh' }}>
+            <Spin size='large' />
+          </div>
+        }
+      >
         <Col xs={24} sm={24} xl={8}>
           <MainMapLegend />
         </Col>
