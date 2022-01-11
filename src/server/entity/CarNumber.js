@@ -15,8 +15,8 @@ class CarNumber {
 }
 
 const CarNumberSchema = new EntitySchema({
-    name: "CarNumber", // Will use table name `Test` as default behaviour.
-    tableName: "CarNumber", // Optional: Provide `tableName` property to override the default behaviour for table name.
+    name: "CarNumber", // Will use table name `Test` as default behavior.
+    tableName: "CarNumber", // Optional: Provide `tableName` property to override the default behavior for table name.
     target: CarNumber,
     columns: {
         id: {
