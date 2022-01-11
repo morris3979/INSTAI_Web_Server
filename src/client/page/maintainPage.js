@@ -7,9 +7,9 @@ const MaintainPage = () => {
   return (
     <Suspense
       fallback={
-        <div style={{ textAlign: 'center', fontSize: 100 }}>
-          <LoadingOutlined />
-        </div>
+        <LoadingOutlined
+          style={{ textAlign: 'center', fontSize: 10 }}
+        />
       }
     >
       <MaintainBoardCard />

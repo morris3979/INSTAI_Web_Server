@@ -7,6 +7,8 @@ import 'antd/dist/antd.css'
 const MainPage = lazy(() => import('./page/mainPage'))
 const MaintainPage = lazy(() => import('./page/maintainPage'))
 const OnlyTest = lazy(() => import('./component/reportPage/onlytest'))
+const InitialPage = lazy(() => import('./page/initialPage'))
+const ErrorPage = lazy(() => import('./page/errorPage'))
 
 const { Content, Sider } = Layout
 const { Item } = Menu
@@ -16,8 +18,8 @@ const App = () => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider breakpoint='xl' collapsedWidth='0'>
         <Menu theme='dark' defaultSelectedKeys={['/']} selectedKeys={[]}>
-          <Item key='/'>
-            <Link to='/'>
+          <Item key='/main'>
+            <Link to='/main'>
               主畫面
             </Link>
           </Item>
@@ -37,13 +39,14 @@ const App = () => {
         <Content>
           <Suspense
             fallback={
-              <div style={{ textAlign: 'center', fontSize: 100 }}>
-                <LoadingOutlined />
-              </div>
+              <LoadingOutlined
+                style={{ textAlign: 'center', fontSize: 10 }}
+              />
             }
           >
             <Routes>
-              <Route path='/' element={<MainPage />} />
+              <Route path='/' element={<InitialPage />} />
+              <Route path='/main' element={<MainPage />} />
               <Route path='/maintain' element={<MaintainPage />} />
               <Route path='/test' element={<OnlyTest />} />
             </Routes>

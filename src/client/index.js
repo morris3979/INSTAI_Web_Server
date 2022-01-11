@@ -12,9 +12,9 @@ const app = (
     <BrowserRouter>
       <Suspense
         fallback={
-          <div style={{ textAlign: 'center', fontSize: 100 }}>
-            <LoadingOutlined />
-          </div>
+          <LoadingOutlined
+            style={{ textAlign: 'center', fontSize: 10 }}
+          />
         }
       >
         <App />
