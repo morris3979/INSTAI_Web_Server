@@ -8,7 +8,6 @@ const MainPage = lazy(() => import('./page/mainPage'))
 const MaintainPage = lazy(() => import('./page/maintainPage'))
 const OnlyTest = lazy(() => import('./component/reportPage/onlytest'))
 const InitialPage = lazy(() => import('./page/initialPage'))
-const ErrorPage = lazy(() => import('./page/errorPage'))
 
 const { Content, Sider } = Layout
 const { Item } = Menu
