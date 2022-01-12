@@ -12,7 +12,7 @@ userRouter.get('/', async(req, res) => {
   }
 });
 
-userRouter.post("/", async (req, res) => {
+userRouter.post("/register", async (req, res) => {
   try{
     const users = await db.insertUser();
     res.status(200).json(users);

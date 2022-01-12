@@ -44,6 +44,20 @@ class User {
     }
 }
 
+Date.prototype.toISOString = function () {
+    let pad =(n)=>(n < 10)?'0' + n:n;
+    let hours_offset = this.getTimezoneOffset() / 60;
+    let offset_date = this.setHours(this.getHours() - hours_offset);
+    let symbol = (hours_offset >= 0) ? "-" : "+";
+    
+    return this.getUTCFullYear() +
+        '-' + pad(this.getUTCMonth() + 1) +
+        '-' + pad(this.getUTCDate()) +
+        'T' + pad(this.getUTCHours()) +
+        ':' + pad(this.getUTCMinutes()) +
+        ':' + pad(this.getUTCSeconds());
+};
+var datetime = new Date().toISOString();
 //CarNumber table
 const CarNumberSchema = new EntitySchema({
     name: "CarNumber", // Will use table name `Test` as default behavior.
@@ -70,6 +84,21 @@ const CarNumberSchema = new EntitySchema({
         plateNumber: {
             type: "varchar",
             default: "AAA-0001",
+        },
+        createAt: {
+            type: "datetime",
+            default: datetime,
+            name: "created_at",
+        },
+        updateAt: {
+            type: "datetime",
+            default: "1970-01-01 08:00:00",
+            name: "update_at",
+        },
+        deleteAt: {
+            type: "datetime",
+            default: "1970-01-01 08:00:00",
+            name: "delete_at",
         },
     },
     relations: {
@@ -113,17 +142,17 @@ const DetailsSchema = new EntitySchema({
         },
         createAt: {
             type: "datetime",
-            default: "2022-01-01 12:00:00",
+            default: datetime,
             name: "created_at",
         },
         updateAt: {
             type: "datetime",
-            default: "2022-01-01 12:00:00",
+            default: "1970-01-01 08:00:00",
             name: "update_at",
         },
         deleteAt: {
             type: "datetime",
-            default: "2022-01-01 12:00:00",
+            default: "1970-01-01 08:00:00",
             name: "delete_at",
         },
     },
@@ -136,7 +165,6 @@ const DetailsSchema = new EntitySchema({
 });
 
 //User table
-var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 const UserSchema = new EntitySchema({
     name: "User", // Will use table name `Test` as default behavior.
     tableName: "User", // Optional: Provide `tableName` property to override the default behavior for table name.
@@ -171,21 +199,20 @@ const UserSchema = new EntitySchema({
             type: "int",
             default: "0",
         },
-    },
-    CreateDateColumn: {
         createAt: {
             type: "datetime",
+            default: datetime,
             name: "created_at",
-            default: "2022-01-01 12:00:00",
-            precision: null,
         },
-    },
-    UpdateDateColumn: {
         updateAt: {
             type: "datetime",
+            default: "1970-01-01 08:00:00",
             name: "update_at",
-            default: "2022-01-01 12:00:00",
-            precision: null,
+        },
+        deleteAt: {
+            type: "datetime",
+            default: "1970-01-01 08:00:00",
+            name: "delete_at",
         },
     },
 });
@@ -194,18 +221,26 @@ const UserSchema = new EntitySchema({
 async function getConnection() {
     return await typeorm.createConnection({
         type: "mysql",
-        host: process.env.HOST,
-        port: process.env.DB_HOST,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: "test",
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
         synchronize: true,
+        migration: true,
         logging: false,
         entities: [
             CarNumberSchema,
             DetailsSchema,
             UserSchema
-        ]
+        ],
+        migrations: [
+           "migration/*.js"
+        ],
+        subscribers: [
+           "subscriber/*.js"
+        ],
+        charset: "utf8mb4_unicode_ci"
     })
 }
 
