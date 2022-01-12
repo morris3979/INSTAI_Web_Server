@@ -14,8 +14,8 @@ npm install -g common-readme
 npm start
 ```
 
-Open browser
+Open browser, enter
 
 ```shell
-- [`CarView`](http://localhost:8080/)
+http://localhost:8080/
 ```
