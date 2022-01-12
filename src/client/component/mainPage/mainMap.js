@@ -27,10 +27,7 @@ location.forEach((item, index, lrr) => {
 
 const markerGroup = location.map((item) => {
   return (
-    <Marker
-      position={item.position}
-      icon={item.icon}
-    />
+    <Marker position={item.position} icon={item.icon} />
   )
 })
 
