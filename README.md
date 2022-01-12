@@ -16,4 +16,6 @@ npm start
 
 Open browser
 
+```shell
 - [`CarView`](http://localhost:8080/)
+```
