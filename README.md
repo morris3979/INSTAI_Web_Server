@@ -1,6 +1,8 @@
-<h4>CarView Project</h4>
+# CarView Project
 
-## Install
+## Using this project
+
+1.Installation
 
 With [npm](https://npmjs.org/) installed, run
 
@@ -8,13 +10,13 @@ With [npm](https://npmjs.org/) installed, run
 npm i
 ```
 
-## Run and Start
+2.Run and Start
 
 ```shell
 npm start
 ```
 
-Open browser, enter
+3.Open browser, enter
 
 ```shell
 http://localhost:8080/
