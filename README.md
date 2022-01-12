@@ -5,7 +5,7 @@
 With [npm](https://npmjs.org/) installed, run
 
 ```shell
-npm install -g common-readme
+npm i
 ```
 
 ## Run and Start
