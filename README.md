@@ -2,9 +2,7 @@
 
 ## Using this project
 
-1.Installation
-
-With [npm](https://npmjs.org/) installed, run
+1.With [npm](https://npmjs.org/) installed, run
 
 ```shell
 npm i
