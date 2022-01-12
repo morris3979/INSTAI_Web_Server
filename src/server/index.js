@@ -1,5 +1,5 @@
 const express = require('express');
-const { createConnection } = require('typeorm');
+require('dotenv').config();
 
 const bodyParser = require('body-parser');
 const compression = require('compression');
@@ -7,9 +7,7 @@ const apiRouter = require('./routes/index');
 
 async function app() {
     const app = express();
-    const port = process.env.PORT || 8080;
-
-    await createConnection(); //typeorm connection
+    const port = process.env.PORT;
 
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
