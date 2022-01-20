@@ -31,7 +31,7 @@ const markerGroup = location.map((item) => {
   )
 })
 
-const MainMap = () => {
+const Map = () => {
   return (
     <MapContainer
       center={[25.0426, 121.537]}
@@ -47,4 +47,4 @@ const MainMap = () => {
   )
 }
 
-export default MainMap
+export default Map

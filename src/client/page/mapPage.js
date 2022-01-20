@@ -1,10 +1,10 @@
 import React, { lazy, Suspense } from 'react'
 import { Row, Col, Spin } from 'antd'
 
-const MainMap = lazy(() => import('../component/mainPage/mainMap'))
-const MainMapLegend = lazy(() => import('../component/mainPage/mainMapLegend'))
+const Map = lazy(() => import('../component/mapPage/map'))
+const MapLegend = lazy(() => import('../component/mapPage/mapLegend'))
 
-const MainPage = () => {
+const MapPage = () => {
   return (
     <Row>
       <Suspense
@@ -15,14 +15,14 @@ const MainPage = () => {
         }
       >
         <Col xs={24} sm={24} xl={8}>
-          <MainMapLegend />
+          <MapLegend />
         </Col>
         <Col xs={24} sm={24} xl={16}>
-          <MainMap />
+          <Map />
         </Col>
       </Suspense>
     </Row>
   )
 }
 
-export default MainPage
+export default MapPage

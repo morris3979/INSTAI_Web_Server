@@ -34,7 +34,7 @@ const iconStyle = (text) => {
   }
 }
 
-const MainMapLegend = () => {
+const MapLegend = () => {
   return (
     <Fragment>
       <Table dataSource={data} pagination={false}>
@@ -48,4 +48,4 @@ const MainMapLegend = () => {
   )
 }
 
-export default MainMapLegend
+export default MapLegend

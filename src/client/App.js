@@ -4,8 +4,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 import 'antd/dist/antd.css'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
-const MainPage = lazy(() => import('./page/mainPage'))
-const MaintainPage = lazy(() => import('./page/maintainPage'))
+const MapPage = lazy(() => import('./page/mapPage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 
 const { Content, Sider } = Layout
@@ -16,14 +15,9 @@ const App = () => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider breakpoint='xl' collapsedWidth='0'>
         <Menu theme='dark' defaultSelectedKeys={['/']} selectedKeys={[]}>
-          <Item key='/main'>
-            <Link to='/main'>
-              主畫面
-            </Link>
-          </Item>
-          <Item key='/maintain'>
-            <Link to='/maintain'>
-              頁面維護
+          <Item key='/map'>
+            <Link to='/map'>
+              地圖資訊
             </Link>
           </Item>
           <Item key='/login'>
@@ -44,8 +38,7 @@ const App = () => {
           >
             <Routes>
               <Route path='/' element={<InitialPage />} />
-              <Route path='/main' element={<MainPage />} />
-              <Route path='/maintain' element={<MaintainPage />} />
+              <Route path='/map' element={<MapPage />} />
               <Route path='/login' element={<LoginPage />} />
             </Routes>
           </Suspense>
