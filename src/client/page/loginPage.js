@@ -5,13 +5,7 @@ const LoginForm = lazy(() => import('../component/loginPage/loginform'))
 
 const LoginPage = () => {
   return (
-    <Suspense
-      fallback={
-        <div style={{ textaligh: 'center', lineheight: '100vh' }}>
-          <Spin size='large' />
-        </div>
-      }
-    >
+    <Suspense fallback={<Spin size='large' />}>
       <LoginForm />
     </Suspense>
   )

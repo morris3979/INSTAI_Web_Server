@@ -13,10 +13,14 @@ const redIcon = L.icon({
   iconSize: [48, 48]
 })
 
-const location = [
+/*const location = [
   { 'position': [25.0427, 121.5357], 'icon': '1' },
-  { 'position': [25.0431, 121.5357], 'icon': '0' }
-]
+  { 'position': [25.0431, 121.5357], 'icon': '1' }
+]*/
+const location = []
+for (let n = 250427; n < 250900; n += 4) {
+  location.push({ 'position': [n / 10000, 121.5357], 'icon': '1' })
+}
 location.forEach((item, index, lrr) => {
   if (item.icon == '1') {
     lrr[index].icon = greenIcon

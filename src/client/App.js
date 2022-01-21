@@ -28,13 +28,7 @@ const App = () => {
       </Sider>
       <Layout>
         <Content>
-          <Suspense
-            fallback={
-              <div style={{ textaligh: 'center', lineheight: '100vh' }}>
-                <Spin size='large' />
-              </div>
-            }
-          >
+          <Suspense fallback={<Spin size='large' />}>
             <Routes>
               <Route path='/' element={<InitialPage />} />
               <Route path='/map' element={<MapPage />} />
