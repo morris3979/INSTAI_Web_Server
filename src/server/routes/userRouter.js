@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const db = require('../entity/db');
+const db = require('../entity/function');
 
 userRouter.get('/', async(req, res) => {
   try{

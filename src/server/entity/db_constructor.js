@@ -1,0 +1,43 @@
+class User {
+    constructor(id, username, password, administrator, pageA, pageB, pageC, createAt, updateAt, deleteAt) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.administrator = administrator;
+        this.pageA = pageA;
+        this.pageB = pageB;
+        this.pageC = pageC;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.deleteAt = deleteAt;
+    }
+}
+
+class CarNumber {
+    constructor(id, boardId, modelName, version, plateNumber, createAt, updateAt, deleteAt) {
+        this.id = id;
+        this.boardId = boardId;
+        this.modelName = modelName;
+        this.version = version;
+        this.plateNumber = plateNumber;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.deleteAt = deleteAt;
+    }
+}
+
+class Details {
+    constructor(id, startingTime, gpsState, speed, stayTime, position, createAt, updateAt, deleteAt) {
+        this.id = id;
+        this.startingTime = startingTime;
+        this.gpsState = gpsState;
+        this.speed = speed;
+        this.stayTime = stayTime;
+        this.position = position;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.deleteAt = deleteAt;
+    }
+}
+
+module.exports = { User, CarNumber, Details }
