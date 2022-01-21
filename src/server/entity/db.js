@@ -30,11 +30,11 @@ class Details {
 }
 
 class User {
-    constructor(id, user, password, proprietary, pageA, pageB, pageC, createAt, updateAt, deleteAt) {
+    constructor(id, username, password, administrator, pageA, pageB, pageC, createAt, updateAt, deleteAt) {
         this.id = id;
-        this.user = user;
+        this.username = username;
         this.password = password;
-        this.proprietary = proprietary;
+        this.administrator = administrator;
         this.pageA = pageA;
         this.pageB = pageB;
         this.pageC = pageC;
@@ -49,7 +49,7 @@ Date.prototype.toISOString = function () {
     let hours_offset = this.getTimezoneOffset() / 60;
     let offset_date = this.setHours(this.getHours() - hours_offset);
     let symbol = (hours_offset >= 0) ? "-" : "+";
-    
+
     return this.getUTCFullYear() +
         '-' + pad(this.getUTCMonth() + 1) +
         '-' + pad(this.getUTCDate()) +
@@ -57,6 +57,7 @@ Date.prototype.toISOString = function () {
         ':' + pad(this.getUTCMinutes()) +
         ':' + pad(this.getUTCSeconds());
 };
+
 var datetime = new Date().toISOString();
 //CarNumber table
 const CarNumberSchema = new EntitySchema({
@@ -175,15 +176,15 @@ const UserSchema = new EntitySchema({
             type: "int",
             generated: true
         },
-        user: {
+        username: {
             type: "varchar",
-            default: "user"
+            default: "admin"
         },
         password: {
             type: "varchar",
-            default: "q123",
+            default: "123",
         },
-        proprietary: {
+        administrator: {
             type: "int",
             default: "1",
         },
@@ -226,7 +227,7 @@ async function getConnection() {
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        synchronize: true,
+        synchronize: false,
         migration: true,
         logging: false,
         entities: [
@@ -310,14 +311,14 @@ async function getUsers() {
     return users;
 }
 
-async function insertUser(id, user, password, proprietary, pageA, pageB, pageC) {
+async function insertUser(id, username, password, administrator, pageA, pageB, pageC) {
     const connection = await getConnection();
     //create
     const users = new User();
     users.id = id;
-    users.user = user;
+    users.username = username;
     users.password = password;
-    users.proprietary = proprietary;
+    users.administrator = administrator;
     users.pageA = pageA;
     users.pageB = pageB;
     users.pageC = pageC;

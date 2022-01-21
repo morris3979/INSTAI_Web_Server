@@ -6,10 +6,6 @@ const outputDirectory = 'dist';
 
 module.exports = {
   entry: ['babel-polyfill', './src/client/index.js'],
-  output: {
-    path: path.join(__dirname, outputDirectory),
-    filename: 'bundle.js'
-  },
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
@@ -29,7 +25,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx', ".css", ".scss"]
+  },
+  output: {
+    path: path.join(__dirname, outputDirectory),
+    filename: 'js/[name].bundle.js'
   },
   devServer: {
     port: 3000,

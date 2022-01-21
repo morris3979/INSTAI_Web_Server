@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 
+const http = require('http');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const apiRouter = require('./routes/index');
@@ -8,6 +9,7 @@ const apiRouter = require('./routes/index');
 async function app() {
     const app = express();
     const port = process.env.PORT;
+    const server = http.createServer(app);
 
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
@@ -20,7 +22,7 @@ async function app() {
         process.exit(1) // To exit with a 'failure' code
     });
 
-    app.listen(port, () => console.log(`Listening on port ${port}!`));
+    server.listen(port, () => console.log(`Listening on port ${port}!`));
 }
 
 app();
