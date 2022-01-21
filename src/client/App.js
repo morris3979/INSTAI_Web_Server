@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import { Layout, Menu, Spin } from 'antd'
 import { Link, Route, Routes } from 'react-router-dom'
-import 'antd/dist/antd.css'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
