@@ -11,7 +11,7 @@ async function getCarNumbers() {
   return carnumbers;
 }
 
-async function insertCarNumber(id, boardId, modelName, version, plateNumber) {
+async function insertCarNumber(id, boardId, modelName, version, plateNumber, createAt) {
   const connection = await getConnection();
   //create
   const carnumber = new CarNumber();
@@ -20,6 +20,7 @@ async function insertCarNumber(id, boardId, modelName, version, plateNumber) {
   carnumber.modelName = modelName;
   carnumber.version = version;
   carnumber.plateNumber = plateNumber;
+  carnumber.createAt = createAt;
   //save
   const carnumberRepo = connection.getRepository(CarNumber);
   const res = await carnumberRepo.save(carnumber);

@@ -1,21 +1,6 @@
 const { User, CarNumber, Details } = require("./db_constructor");
 const EntitySchema = require("typeorm").EntitySchema;
 
-Date.prototype.toISOString = function () {
-    let pad =(n)=>(n < 10)?'0' + n:n;
-    let hours_offset = this.getTimezoneOffset() / 60;
-    let offset_date = this.setHours(this.getHours() - hours_offset);
-    let symbol = (hours_offset >= 0) ? "-" : "+";
-
-    return this.getUTCFullYear() +
-        '-' + pad(this.getUTCMonth() + 1) +
-        '-' + pad(this.getUTCDate()) +
-        'T' + pad(this.getUTCHours()) +
-        ':' + pad(this.getUTCMinutes()) +
-        ':' + pad(this.getUTCSeconds());
-};
-
-var datetime = new Date().toISOString();
 //User table
 const UserSchema = new EntitySchema({
     name: "User", // Will use table name `Test` as default behavior.
@@ -53,7 +38,7 @@ const UserSchema = new EntitySchema({
         },
         createAt: {
             type: "datetime",
-            default: datetime,
+            default: "1970-01-01 08:00:00",
             name: "created_at",
         },
         updateAt: {
@@ -98,7 +83,7 @@ const CarNumberSchema = new EntitySchema({
         },
         createAt: {
             type: "datetime",
-            default: datetime,
+            default: "1970-01-01 08:00:00",
             name: "created_at",
         },
         updateAt: {
@@ -153,7 +138,7 @@ const DetailsSchema = new EntitySchema({
         },
         createAt: {
             type: "datetime",
-            default: datetime,
+            default: "1970-01-01 08:00:00",
             name: "created_at",
         },
         updateAt: {

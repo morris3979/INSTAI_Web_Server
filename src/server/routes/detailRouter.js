@@ -6,7 +6,9 @@ const { Details } = require("../entity/db_constructor");
 async function getDetails() {
   const connection = await getConnection();
   const detailRepo = connection.getRepository(Details);
-  const details = await detailRepo.find();
+  const details = await detailRepo.find({
+    relations: ["CarNumber"],
+  });
   connection.close();
   return details;
 }
