@@ -5,6 +5,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
+const ModelVersionPage = lazy(() => import('./page/modelVersionPage'))
 
 const { Content, Sider } = Layout
 const { Item } = Menu
@@ -17,6 +18,11 @@ const App = () => {
           <Item key='/map'>
             <Link to='/map'>
               地圖資訊
+            </Link>
+          </Item>
+          <Item key='/modelversion'>
+            <Link to='/modelversion'>
+              模型版本
             </Link>
           </Item>
           <Item key='/login'>
@@ -32,6 +38,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<InitialPage />} />
               <Route path='/map' element={<MapPage />} />
+              <Route path='/modelversion' element={<ModelVersionPage />} />
               <Route path='/login' element={<LoginPage />} />
             </Routes>
           </Suspense>
