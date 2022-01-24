@@ -24,7 +24,7 @@ http://localhost:8080/
 ```shell
 URI => http://localhost:8080/api/
 
-GET: 
+GET
 /carnumber
 /detail
 /user
