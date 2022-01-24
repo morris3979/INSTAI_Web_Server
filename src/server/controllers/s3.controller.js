@@ -1,5 +1,4 @@
 const stream = require('stream');
- 
 const s3 = require('../entity/s3_config');
  
 exports.doDownload = (req, res) => {
@@ -10,7 +9,7 @@ exports.doDownload = (req, res) => {
 
 	s3Client.getObject(params)
 		.createReadStream()
-			.on('error', function(err){
-				res.status(500).json({error:"Error -> " + err});
+		.on('error', function(err){
+			res.status(500).json({error:"Error -> " + err});
 		}).pipe(res);
 }
