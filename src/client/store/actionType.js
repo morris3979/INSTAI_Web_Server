@@ -1,4 +1,1 @@
-export const OPEN_MAINTAIN_BOARD_CARD_MODAL = 'open_maintain_board_card_modal'
-export const CLOSE_MAINTAIN_BOARD_CARD_MODAL_OK = 'close_maintain_board_card_modal_ok'
-export const CLOSE_MAINTAIN_BOARD_CARD_MODAL_CANCEL = 'close_maintain_board_card_modal_cancel'
-export const CHANGE_MAINTAIN_BOARD_CARD_MODAL_INPUT_VALUE = 'change_maintain_board_card_modal_input_value'
+export const Init_Model_Version_Table = 'init_model_version_table'

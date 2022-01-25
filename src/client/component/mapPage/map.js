@@ -1,6 +1,6 @@
 import React from 'react'
-import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import L from 'leaflet'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
 const greenIcon = L.icon({
