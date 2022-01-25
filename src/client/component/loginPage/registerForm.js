@@ -15,21 +15,21 @@ const RegisterForm = () => {
       <Form>
         <Item
           label='Username'
-          name='username'
+          name='registerUsername'
           rules={[{ required: true, message: '請輸入帳號' }]}
         >
           <Input />
         </Item>
         <Item
           label='Password'
-          name='password'
+          name='registerPassword'
           rules={[{ required: true, message: '請輸入密碼' }]}
         >
           <Password />
         </Item>
         <Item
           label='Confirm Password'
-          name='confirm password'
+          name='registerConfirmPassword'
           rules={[
             { required: true, message: '請再次輸入密碼' },
             ({ getFieldValue }) => {
@@ -37,10 +37,9 @@ const RegisterForm = () => {
                 validator(_, value) {
                   if (!value || getFieldValue('password') === value) {
                     return Promise.resolve()
+                  } else {
+                    return Promise.reject(Error('與您設置的密碼尚未符合'))
                   }
-                  return Promise.reject(
-                    new Error('與您設置的密碼尚未符合')
-                  )
                 }
               })
             }
@@ -50,7 +49,7 @@ const RegisterForm = () => {
         </Item>
         <Item>
           <Button>
-            確定
+            註冊
           </Button>
         </Item>
       </Form>
