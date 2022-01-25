@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
-import { Table, Image } from 'antd'
+import { Table, Image, Typography } from 'antd'
 
 const { Column } = Table
+const { Text, Link } = Typography
 
 const data = [
   {
@@ -41,9 +42,16 @@ const MapLegend = () => {
         <Column title='圖示' render={iconStyle} />
         <Column title='說明' dataIndex='description' />
       </Table>
-      <div>
-        Icons made by <a href="https://www.flaticon.com/authors/aquariid" title="AquariiD">AquariiD</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-      </div>
+      <Text>
+        Icons made by { }
+        <Link href="https://www.flaticon.com/authors/aquariid" title="AquariiD">
+          AquariiD
+        </Link>
+        { } from { }
+        <Link href="https://www.flaticon.com/" title="Flaticon">
+          www.flaticon.com
+        </Link>
+      </Text>
     </Fragment>
   )
 }

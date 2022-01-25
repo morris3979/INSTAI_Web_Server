@@ -1,13 +1,21 @@
 import React, { lazy, Suspense } from 'react'
-import { Spin } from 'antd'
+import { Spin, Row, Col } from 'antd'
 
-const LoginForm = lazy(() => import('../component/loginPage/loginform'))
+const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
+const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
 
 const LoginPage = () => {
   return (
-    <Suspense fallback={<Spin size='large' />}>
-      <LoginForm />
-    </Suspense>
+    <Row justify='space-around'>
+      <Suspense fallback={<Spin size='large' />}>
+        <Col xs={24} sm={24} xl={10}>
+          <LoginForm />
+        </Col>
+        <Col xs={24} sm={24} xl={10}>
+          <RegisterForm />
+        </Col>
+      </Suspense>
+    </Row>
   )
 }
 

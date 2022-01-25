@@ -5,11 +5,11 @@ const { Item } = Form
 const { Password } = Input
 const { Title } = Typography
 
-const LoginForm = () => {
+const RegisterForm = () => {
   return (
     <Fragment>
       <Title>
-        帳號登入
+        帳號註冊
       </Title>
       <Divider />
       <Form>
@@ -27,9 +27,30 @@ const LoginForm = () => {
         >
           <Password />
         </Item>
+        <Item
+          label='Confirm Password'
+          name='confirm password'
+          rules={[
+            { required: true, message: '請再次輸入密碼' },
+            ({ getFieldValue }) => {
+              return ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(
+                    new Error('與您設置的密碼尚未符合')
+                  )
+                }
+              })
+            }
+          ]}
+        >
+          <Password />
+        </Item>
         <Item>
           <Button>
-            登入
+            確定
           </Button>
         </Item>
       </Form>
@@ -37,4 +58,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegisterForm
