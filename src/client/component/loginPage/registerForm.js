@@ -28,7 +28,7 @@ const RegisterForm = () => {
           <Password />
         </Item>
         <Item
-          label='Confirm Password'
+          label='ConfirmPassword'
           name='registerConfirmPassword'
           rules={[
             { required: true, message: '請再次輸入密碼' },
