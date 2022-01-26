@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Table, message } from 'antd'
 import axios from 'axios'
-import { InitModelVersionTable } from '../../store/actionCreater'
+import {
+  InitModelVersionTable
+} from '../../store/actionCreater'
 
 const { Column } = Table
 
@@ -14,7 +16,7 @@ class ModelVersionTable extends Component {
     try {
       const response = await axios.get('http://localhost:8080/api/carnumber')
       this.props.initModelVersionTable(response.data)
-      message.success(`${JSON.stringify(response.data)}`)
+      message.success('完成')
     } catch (error) {
       message.error(`${error}`)
     }
