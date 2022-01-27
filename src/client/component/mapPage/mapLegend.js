@@ -39,8 +39,8 @@ const MapLegend = () => {
   return (
     <Fragment>
       <Table dataSource={data} pagination={false}>
-        <Column title='圖示' render={iconStyle} />
-        <Column title='說明' dataIndex='description' />
+        <Column title='圖示' render={iconStyle} align='center' />
+        <Column title='說明' dataIndex='description' align='center' />
       </Table>
       <Text>
         Icons made by { }
