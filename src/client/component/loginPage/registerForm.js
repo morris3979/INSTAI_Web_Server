@@ -35,7 +35,7 @@ const RegisterForm = () => {
             ({ getFieldValue }) => {
               return ({
                 validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
+                  if (!value || getFieldValue('registerPassword') === value) {
                     return Promise.resolve()
                   } else {
                     return Promise.reject(Error('與您設置的密碼尚未符合'))

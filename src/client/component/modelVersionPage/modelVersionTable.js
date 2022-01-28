@@ -60,7 +60,7 @@ class ModelVersionTable extends Component {
         pagination={false}
       >
         <Column
-          title='Name'
+          title='版號'
           dataIndex='boardId'
           filterDropdown={this.filter}
           onFilter={this.onFilter}
