@@ -5,6 +5,18 @@ const { Item } = Form
 const { Password } = Input
 const { Title } = Typography
 
+const passwordConfirm = ({ getFieldValue }) => {
+  return ({
+    validator(_, value) {
+      if (!value || getFieldValue('registerPassword') === value) {
+        return Promise.resolve()
+      } else {
+        return Promise.reject(Error('與您設置的密碼尚未符合'))
+      }
+    }
+  })
+}
+
 const RegisterForm = () => {
   return (
     <Fragment>
@@ -32,17 +44,7 @@ const RegisterForm = () => {
           name='registerConfirmPassword'
           rules={[
             { required: true, message: '請再次輸入密碼' },
-            ({ getFieldValue }) => {
-              return ({
-                validator(_, value) {
-                  if (!value || getFieldValue('registerPassword') === value) {
-                    return Promise.resolve()
-                  } else {
-                    return Promise.reject(Error('與您設置的密碼尚未符合'))
-                  }
-                }
-              })
-            }
+            passwordConfirm
           ]}
         >
           <Password />

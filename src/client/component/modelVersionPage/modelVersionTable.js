@@ -64,6 +64,7 @@ class ModelVersionTable extends Component {
           dataIndex='boardId'
           filterDropdown={this.filter}
           onFilter={this.onFilter}
+          align='center'
         />
       </Table>
     )
