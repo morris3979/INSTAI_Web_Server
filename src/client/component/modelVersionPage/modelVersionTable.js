@@ -1,35 +1,73 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Table, Input, Button, Space } from 'antd'
+import { Table } from 'antd'
 import {
-  GetModelVersionTableData,
-  ModelVersionTableInput,
-  ModelVersionTableColumn
+  GetModelVersionTableData
 } from '../../store/actionCreater'
 
 const { Column } = Table
 
 class ModelVersionTable extends Component {
-  filter = (dataIndex) => {
-    return (
-      <div style={{ padding: 4 }}>
-        <Space direction='vertical' align='center'>
-          <Input
-            placeholder={'搜尋資料'}
-            onChange={this.props.modelVersionTableInput}
-          />
-          <Button
-            onClick={this.props.modelVersionTableColumn}
-          >
-            搜尋
-          </Button>
-        </Space>
-      </div>
-    )
+  /*componentDidMount() {
+    this.props.getModelVersionTableData()
   }
+
+  render() {
+    const columns = [
+      {
+        title: '版號',
+        dataIndex: 'boardId',
+        align: 'center',
+        filterDropdown: ({ setSelectedKey, selectedKey, confirm }) => {
+          return (
+            <div style={{ padding: 4 }}>
+              <Space direction='vertical' align='center'>
+                <Input
+                  autoFocus
+                  placeholder={'搜尋資料'}
+                  value={console.log(selectedKey)}
+                  onChange={
+                    (e) => {
+                      setSelectedKey(
+                        e.target.value ? [e.target.value] : []
+                      )
+                    }
+                  }
+                />
+                <Button
+                  onClick={() => { confirm() }}
+                >
+                  搜尋
+                </Button>
+              </Space>
+            </div>
+          )
+        }
+      },
+      {
+        title: '車號',
+        dataIndex: 'plateNumber',
+        align: 'center'
+      }
+    ]
+
+    return (
+      <Table
+        dataSource={this.props.modelVersionTableData}
+        loading={this.props.modelVersionTableStatus}
+        columns={columns}
+      />
+    )
+  }*/
 
   componentDidMount() {
     this.props.getModelVersionTableData()
+  }
+
+  onFilter = (value, record) => {
+    return (
+      record.boardId.indexOf(value) === 0
+    )
   }
 
   render() {
@@ -37,18 +75,19 @@ class ModelVersionTable extends Component {
       <Table
         dataSource={this.props.modelVersionTableData}
         loading={this.props.modelVersionTableStatus}
+        pagination={false}
       >
         <Column
           title='版號'
           dataIndex='boardId'
           align='center'
-          filterDropdown={this.filter('boardID')}
+          filters={this.props.filters}
+          onFilter={this.onFilter}
         />
         <Column
           title='車號'
           dataIndex='plateNumber'
           align='center'
-          filterDropdown={this.filter('plateNumber')}
         />
       </Table>
     )
@@ -60,6 +99,7 @@ const mapStateToProps = (state) => {
   return {
     modelVersionTableData: state.modelVersionTableData,
     modelVersionTableStatus: state.modelVersionTableStatus,
+    filters: state.filters
   }
 }
 
@@ -68,15 +108,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getModelVersionTableData() {
       const action = GetModelVersionTableData()
-      dispatch(action)
-    },
-    modelVersionTableInput(event) {
-      console.log(event)
-      const action = ModelVersionTableInput(event.target.value)
-      dispatch(action)
-    },
-    modelVersionTableColumn(dataIndex) {
-      const action = ModelVersionTableColumn(dataIndex)
       dispatch(action)
     }
   }

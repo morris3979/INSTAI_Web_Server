@@ -2,9 +2,7 @@ import axios from 'axios'
 import { message } from 'antd'
 import {
   Init_Model_Version_Table,
-  Model_Version_Table_Status,
-  Model_Version_Table_Input,
-  Model_Version_Table_Column
+  Model_Version_Table_Status
 } from './actionType'
 
 export const ModelVersionTableStatus = () => {
@@ -14,16 +12,23 @@ export const ModelVersionTableStatus = () => {
 }
 
 export const InitModelVersionTable = (data) => {
+  const filters = []
+  data.forEach((item) => {
+    filters.push({
+      text: `${item.boardId}`,
+      value: `${item.boardId}`
+    })
+  })
   return ({
     type: Init_Model_Version_Table,
-    value: data
+    value: [data, filters]
   })
 }
 
 export const GetModelVersionTableData = () => {
   return (
     async (dispatch) => {
-      const action = ModelVersionTableStatus()
+      const action = ModelVersionTableStatus
       dispatch(action)
       try {
         const response = await axios.get('http://localhost:8080/api/carnumber')
@@ -33,23 +38,9 @@ export const GetModelVersionTableData = () => {
       } catch (error) {
         message.error(`${error}`)
       } finally {
-        const action = ModelVersionTableStatus()
+        const action = ModelVersionTableStatus
         dispatch(action)
       }
     }
   )
-}
-
-export const ModelVersionTableInput = (value) => {
-  return ({
-    type: Model_Version_Table_Input,
-    value: value
-  })
-}
-
-export const ModelVersionTableColumn = (dataIndex) => {
-  return ({
-    type: Model_Version_Table_Column,
-    value: dataIndex
-  })
 }

@@ -19,7 +19,10 @@ const redIcon = L.icon({
 ]*/
 const location = []
 for (let n = 250427; n < 250900; n += 4) {
-  location.push({ 'position': [n / 10000, 121.5357], 'icon': '1' })
+  location.push({
+    'position': [n / 10000, 121.5357],
+    'icon': '1'
+  })
 }
 location.forEach((item, index, lrr) => {
   if (item.icon == '1') {
