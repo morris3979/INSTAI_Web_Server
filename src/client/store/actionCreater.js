@@ -12,23 +12,16 @@ export const ModelVersionTableStatus = () => {
 }
 
 export const InitModelVersionTable = (data) => {
-  const filters = []
-  data.forEach((item) => {
-    filters.push({
-      text: `${item.boardId}`,
-      value: `${item.boardId}`
-    })
-  })
   return ({
     type: Init_Model_Version_Table,
-    value: [data, filters]
+    value: data
   })
 }
 
 export const GetModelVersionTableData = () => {
   return (
     async (dispatch) => {
-      const action = ModelVersionTableStatus
+      const action = ModelVersionTableStatus()
       dispatch(action)
       try {
         const response = await axios.get('http://localhost:8080/api/carnumber')
@@ -38,7 +31,7 @@ export const GetModelVersionTableData = () => {
       } catch (error) {
         message.error(`${error}`)
       } finally {
-        const action = ModelVersionTableStatus
+        const action = ModelVersionTableStatus()
         dispatch(action)
       }
     }

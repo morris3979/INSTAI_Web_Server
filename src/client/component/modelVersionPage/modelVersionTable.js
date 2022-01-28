@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Table } from 'antd'
+import { Table, Input, Button, Space } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 import {
   GetModelVersionTableData
 } from '../../store/actionCreater'
@@ -8,65 +9,46 @@ import {
 const { Column } = Table
 
 class ModelVersionTable extends Component {
-  /*componentDidMount() {
-    this.props.getModelVersionTableData()
-  }
-
-  render() {
-    const columns = [
-      {
-        title: '版號',
-        dataIndex: 'boardId',
-        align: 'center',
-        filterDropdown: ({ setSelectedKey, selectedKey, confirm }) => {
-          return (
-            <div style={{ padding: 4 }}>
-              <Space direction='vertical' align='center'>
-                <Input
-                  autoFocus
-                  placeholder={'搜尋資料'}
-                  value={console.log(selectedKey)}
-                  onChange={
-                    (e) => {
-                      setSelectedKey(
-                        e.target.value ? [e.target.value] : []
-                      )
-                    }
-                  }
-                />
-                <Button
-                  onClick={() => { confirm() }}
-                >
-                  搜尋
-                </Button>
-              </Space>
-            </div>
-          )
-        }
-      },
-      {
-        title: '車號',
-        dataIndex: 'plateNumber',
-        align: 'center'
-      }
-    ]
-
-    return (
-      <Table
-        dataSource={this.props.modelVersionTableData}
-        loading={this.props.modelVersionTableStatus}
-        columns={columns}
-      />
-    )
-  }*/
-
   componentDidMount() {
     this.props.getModelVersionTableData()
   }
 
+  filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
+    const onClick = () => { confirm() }
+
+    const onChange = (event) => {
+      if (event.target.value) {
+        return (
+          setSelectedKeys([event.target.value])
+        )
+      } else {
+        return (
+          setSelectedKeys([])
+        )
+      }
+    }
+
+    return (
+      <Space align='center'>
+        <Input
+          bordered={false}
+          size='large'
+          value={selectedKeys}
+          onChange={onChange}
+        />
+        <Button
+          type='text'
+          size='large'
+          onClick={onClick}
+          icon={<SearchOutlined />}
+        />
+      </Space>
+    )
+  }
+
   onFilter = (value, record) => {
     return (
-      record.boardId.indexOf(value) === 0
+      record.boardId.toLowerCase().includes(value.toLowerCase())
     )
   }
 
@@ -78,16 +60,10 @@ class ModelVersionTable extends Component {
         pagination={false}
       >
         <Column
-          title='版號'
+          title='Name'
           dataIndex='boardId'
-          align='center'
-          filters={this.props.filters}
+          filterDropdown={this.filter}
           onFilter={this.onFilter}
-        />
-        <Column
-          title='車號'
-          dataIndex='plateNumber'
-          align='center'
         />
       </Table>
     )
@@ -98,8 +74,7 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     modelVersionTableData: state.modelVersionTableData,
-    modelVersionTableStatus: state.modelVersionTableStatus,
-    filters: state.filters
+    modelVersionTableStatus: state.modelVersionTableStatus
   }
 }
 

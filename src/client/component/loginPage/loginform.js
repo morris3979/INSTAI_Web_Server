@@ -12,7 +12,7 @@ const LoginForm = () => {
         帳號登入
       </Title>
       <Divider />
-      <Form>
+      <Form size='large'>
         <Item
           label='Username'
           name='loginUsername'

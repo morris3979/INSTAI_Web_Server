@@ -12,7 +12,7 @@ const RegisterForm = () => {
         帳號註冊
       </Title>
       <Divider />
-      <Form>
+      <Form size='large'>
         <Item
           label='Username'
           name='registerUsername'
