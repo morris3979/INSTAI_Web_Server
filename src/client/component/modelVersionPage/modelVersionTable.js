@@ -45,6 +45,7 @@ class ModelVersionTable extends Component {
       <Space align='center'>
         <Input
           bordered={false}
+          placeholder='搜尋資料'
           size='large'
           value={selectedKeys}
           onChange={onChange}
