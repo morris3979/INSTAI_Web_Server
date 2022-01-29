@@ -11,7 +11,7 @@ const passwordConfirm = ({ getFieldValue }) => {
       if (!value || getFieldValue('registerPassword') === value) {
         return Promise.resolve()
       } else {
-        return Promise.reject(Error('與您設置的密碼尚未符合'))
+        return Promise.reject('與您設置的密碼尚未符合')
       }
     }
   })
@@ -40,8 +40,9 @@ const RegisterForm = () => {
           <Password />
         </Item>
         <Item
-          label='ConfirmPassword'
+          label='Confirm Password'
           name='registerConfirmPassword'
+          dependencies={['registerPassword']}
           rules={[
             { required: true, message: '請再次輸入密碼' },
             passwordConfirm
