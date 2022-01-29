@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Table, Input, Button, Space } from 'antd'
+import { Table, Input, Button, Space, Calendar } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import {
   GetModelVersionTableData
@@ -28,6 +28,19 @@ class ModelVersionTable extends Component {
       }
     }
 
+    /*const onSelect = (value) => {
+      console.log(value.format('YYYY-MM-DD'))
+      if (value) {
+        return (
+          setSelectedKeys([value.format('YYYY-MM-DD')])
+        )
+      } else {
+        return (
+          setSelectedKeys([])
+        )
+      }
+    }*/
+
     return (
       <Space align='center'>
         <Input
@@ -43,6 +56,15 @@ class ModelVersionTable extends Component {
           icon={<SearchOutlined />}
         />
       </Space>
+      /*<Fragment>
+        <Calendar fullscreen={false} onSelect={onSelect} />
+        <Button
+          type='text'
+          size='large'
+          onClick={onClick}
+          icon={<SearchOutlined />}
+        />
+      </Fragment>*/
     )
   }
 

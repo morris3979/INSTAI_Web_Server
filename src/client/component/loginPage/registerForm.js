@@ -24,7 +24,7 @@ const RegisterForm = () => {
         帳號註冊
       </Title>
       <Divider />
-      <Form size='large'>
+      <Form size='large' layout='vertical'>
         <Item
           label='Username'
           name='registerUsername'
