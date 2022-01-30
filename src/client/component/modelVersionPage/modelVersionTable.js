@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Table, Input, Button, Space, Calendar } from 'antd'
+import { Table, Input, Button, Space } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import {
   GetModelVersionTableData
@@ -8,71 +8,49 @@ import {
 
 const { Column } = Table
 
+const filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
+  const onClick = () => { confirm() }
+
+  const onChange = (event) => {
+    if (event.target.value) {
+      return (
+        setSelectedKeys([event.target.value])
+      )
+    } else {
+      return (
+        setSelectedKeys([])
+      )
+    }
+  }
+
+  return (
+    <Space align='center'>
+      <Input
+        bordered={false}
+        placeholder='搜尋資料'
+        size='large'
+        value={selectedKeys}
+        onChange={onChange}
+      />
+      <Button
+        type='text'
+        size='large'
+        onClick={onClick}
+        icon={<SearchOutlined />}
+      />
+    </Space>
+  )
+}
+
+const onFilter = (value, record) => {
+  return (
+    record.boardId.toLowerCase().includes(value.toLowerCase())
+  )
+}
+
 class ModelVersionTable extends Component {
   componentDidMount() {
     this.props.getModelVersionTableData()
-  }
-
-  filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
-    const onClick = () => { confirm() }
-
-    const onChange = (event) => {
-      if (event.target.value) {
-        return (
-          setSelectedKeys([event.target.value])
-        )
-      } else {
-        return (
-          setSelectedKeys([])
-        )
-      }
-    }
-
-    /*const onSelect = (value) => {
-      console.log(value.format('YYYY-MM-DD'))
-      if (value) {
-        return (
-          setSelectedKeys([value.format('YYYY-MM-DD')])
-        )
-      } else {
-        return (
-          setSelectedKeys([])
-        )
-      }
-    }*/
-
-    return (
-      <Space align='center'>
-        <Input
-          bordered={false}
-          placeholder='搜尋資料'
-          size='large'
-          value={selectedKeys}
-          onChange={onChange}
-        />
-        <Button
-          type='text'
-          size='large'
-          onClick={onClick}
-          icon={<SearchOutlined />}
-        />
-      </Space>
-      /*<Fragment>
-        <Calendar fullscreen={false} onSelect={onSelect} />
-        <Button
-          type='text'
-          size='large'
-          onClick={onClick}
-          icon={<SearchOutlined />}
-        />
-      </Fragment>*/
-    )
-  }
-
-  onFilter = (value, record) => {
-    return (
-      record.boardId.toLowerCase().includes(value.toLowerCase())
-    )
   }
 
   render() {
@@ -85,8 +63,8 @@ class ModelVersionTable extends Component {
         <Column
           title='版號'
           dataIndex='boardId'
-          filterDropdown={this.filter}
-          onFilter={this.onFilter}
+          filterDropdown={filter}
+          onFilter={onFilter}
           align='center'
         />
       </Table>
