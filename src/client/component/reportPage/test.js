@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { Modal, Button, Image } from 'antd'
 import { connect } from 'react-redux'
+import ReactPlayer from 'react-player/lazy'
 import {
   ShowModal,
   CloseModalOk,
@@ -20,9 +21,19 @@ const Test = (props) => {
       <Button onClick={onClick}>
         Open Modal
       </Button>
-      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        destroyOnClose={true}
+        width={690}
+      >
         <Image
-          src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+          src='http://localhost:8080/api/s3/files/4.jpg'
+        />
+        <ReactPlayer
+          url='http://localhost:8080/api/s3/files/1.mp4'
+          controls={true}
         />
       </Modal>
     </Fragment>

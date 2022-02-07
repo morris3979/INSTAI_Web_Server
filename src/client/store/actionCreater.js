@@ -2,7 +2,8 @@ import axios from 'axios'
 import { message } from 'antd'
 import {
   Init_Model_Version_Table,
-  Model_Version_Table_Status
+  Model_Version_Table_Status,
+  Map_Position
 } from './actionType'
 
 export const ModelVersionTableStatus = () => {
@@ -33,6 +34,30 @@ export const GetModelVersionTableData = () => {
       } finally {
         const action = ModelVersionTableStatus()
         dispatch(action)
+      }
+    }
+  )
+}
+
+export const MapPosition = (data) => {
+  return ({
+    type: Map_Position,
+    value: data
+  })
+}
+
+export const GetMapPositionData = () => {
+  message.config({ maxCount: 1 })
+  return (
+    async (dispatch) => {
+      message.loading('載入中', 0)
+      try {
+        const response = await axios.get('http://localhost:8080/api/detail')
+        const action = MapPosition(response.data)
+        dispatch(action)
+        message.success('完成')
+      } catch (error) {
+        message.error(`${error}`)
       }
     }
   )

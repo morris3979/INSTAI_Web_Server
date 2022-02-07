@@ -63,8 +63,23 @@ class ModelVersionTable extends Component {
         <Column
           title='版號'
           dataIndex='boardId'
-          filterDropdown={filter}
-          onFilter={onFilter}
+          //filterDropdown={filter}
+          //onFilter={onFilter}
+          align='center'
+        />
+        <Column
+          title='車號'
+          dataIndex='plateNumber'
+          align='center'
+        />
+        <Column
+          title='模型'
+          dataIndex='modelName'
+          align='center'
+        />
+        <Column
+          title='版本'
+          dataIndex='version'
           align='center'
         />
       </Table>

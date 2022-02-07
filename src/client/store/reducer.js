@@ -1,11 +1,13 @@
 import {
   Init_Model_Version_Table,
-  Model_Version_Table_Status
+  Model_Version_Table_Status,
+  Map_Position
 } from './actionType'
 
 const defaultState = {
   modelVersionTableData: [],
   modelVersionTableStatus: false,
+  mapPositionData: [],
   isModalVisible: false
 }
 
@@ -18,6 +20,10 @@ const reducer = (state = defaultState, action) => {
     }
     case Model_Version_Table_Status: {
       newState.modelVersionTableStatus = !newState.modelVersionTableStatus
+      return newState
+    }
+    case Map_Position: {
+      newState.mapPositionData = action.value
       return newState
     }
     case 'show_modal': {
