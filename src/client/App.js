@@ -6,6 +6,7 @@ const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const ModelVersionPage = lazy(() => import('./page/modelVersionPage'))
+const Test = lazy(() => import('./component/reportPage/test'))
 
 const { Content, Sider } = Layout
 const { Item } = Menu
@@ -30,6 +31,11 @@ const App = () => {
               帳號登入
             </Link>
           </Item>
+          <Item key='/test'>
+            <Link to='/test'>
+              測試用頁面
+            </Link>
+          </Item>
         </Menu>
       </Sider>
       <Layout>
@@ -40,6 +46,7 @@ const App = () => {
               <Route path='/map' element={<MapPage />} />
               <Route path='/modelversion' element={<ModelVersionPage />} />
               <Route path='/login' element={<LoginPage />} />
+              <Route path='/test' element={<Test />} />
             </Routes>
           </Suspense>
         </Content>

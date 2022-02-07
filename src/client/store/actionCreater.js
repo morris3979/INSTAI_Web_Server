@@ -37,3 +37,21 @@ export const GetModelVersionTableData = () => {
     }
   )
 }
+
+export const ShowModal = () => {
+  return ({
+    type: 'show_modal'
+  })
+}
+
+export const CloseModalOk = () => {
+  return ({
+    type: 'close_modal_ok'
+  })
+}
+
+export const CloseModalCancel = () => {
+  return ({
+    type: 'close_modal_cancel'
+  })
+}

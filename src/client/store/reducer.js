@@ -5,7 +5,8 @@ import {
 
 const defaultState = {
   modelVersionTableData: [],
-  modelVersionTableStatus: false
+  modelVersionTableStatus: false,
+  isModalVisible: false
 }
 
 const reducer = (state = defaultState, action) => {
@@ -17,6 +18,18 @@ const reducer = (state = defaultState, action) => {
     }
     case Model_Version_Table_Status: {
       newState.modelVersionTableStatus = !newState.modelVersionTableStatus
+      return newState
+    }
+    case 'show_modal': {
+      newState.isModalVisible = true
+      return newState
+    }
+    case 'close_modal_ok': {
+      newState.isModalVisible = false
+      return newState
+    }
+    case 'close_modal_cancel': {
+      newState.isModalVisible = false
       return newState
     }
     default: {
