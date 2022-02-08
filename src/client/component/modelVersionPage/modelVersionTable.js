@@ -42,9 +42,15 @@ const filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   )
 }
 
-const onFilter = (value, record) => {
+const boardIdOnFilter = (value, record) => {
   return (
     record.boardId.toLowerCase().includes(value.toLowerCase())
+  )
+}
+
+const plateNumberOnFilter = (value, record) => {
+  return (
+    record.plateNumber.toLowerCase().includes(value.toLowerCase())
   )
 }
 
@@ -63,13 +69,15 @@ class ModelVersionTable extends Component {
         <Column
           title='版號'
           dataIndex='boardId'
-          //filterDropdown={filter}
-          //onFilter={onFilter}
+          filterDropdown={filter}
+          onFilter={boardIdOnFilter}
           align='center'
         />
         <Column
           title='車號'
           dataIndex='plateNumber'
+          filterDropdown={filter}
+          onFilter={plateNumberOnFilter}
           align='center'
         />
         <Column

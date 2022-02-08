@@ -8,6 +8,8 @@ import {
 } from '../../store/actionCreater'
 import 'leaflet/dist/leaflet.css'
 
+message.config({ maxCount: 1 })
+
 const greenIcon = L.icon({
   iconUrl: require('../../icon image/green car.png'),
   iconSize: [48, 48]
@@ -50,10 +52,12 @@ const positionData = (data) => {
 
 class Map extends Component {
   async componentDidMount() {
+    message.loading('載入中', 0)
     try {
       const response = await axios.get('http://localhost:8080/api/detail')
       this.props.mapPosition(response.data)
       positionData(this.props.mapPositionData)
+      message.success('完成')
     } catch (error) {
       message.error(`${error}`)
     }
