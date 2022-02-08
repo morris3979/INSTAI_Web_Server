@@ -46,23 +46,6 @@ export const MapPosition = (data) => {
   })
 }
 
-export const GetMapPositionData = () => {
-  message.config({ maxCount: 1 })
-  return (
-    async (dispatch) => {
-      message.loading('載入中', 0)
-      try {
-        const response = await axios.get('http://localhost:8080/api/detail')
-        const action = MapPosition(response.data)
-        dispatch(action)
-        message.success('完成')
-      } catch (error) {
-        message.error(`${error}`)
-      }
-    }
-  )
-}
-
 export const ShowModal = () => {
   return ({
     type: 'show_modal'

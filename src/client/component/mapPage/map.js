@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import L from 'leaflet'
 import { connect } from 'react-redux'
+import axios from 'axios'
+import { message } from 'antd'
+import L from 'leaflet'
 import {
-  GetMapPositionData
+  MapPosition
 } from '../../store/actionCreater'
 import 'leaflet/dist/leaflet.css'
 
@@ -47,9 +49,14 @@ const positionData = (data) => {
 }
 
 class Map extends Component {
-  componentDidMount() {
-    this.props.getMapPositionData()
-    positionData(this.props.mapPositionData)
+  async componentDidMount() {
+    try {
+      const response = await axios.get('http://localhost:8080/api/detail')
+      this.props.mapPosition(response.data)
+      positionData(this.props.mapPositionData)
+    } catch (error) {
+      message.error(`${error}`)
+    }
   }
 
   render() {
@@ -69,8 +76,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    getMapPositionData() {
-      const action = GetMapPositionData()
+    mapPosition(data) {
+      const action = MapPosition(data)
       dispatch(action)
     }
   }
