@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { message } from 'antd'
 import L from 'leaflet'
-import Locate from 'leaflet.locatecontrol'
+//import 'leaflet.locatecontrol'
 import { MapPosition } from '../../store/actionCreater'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.locatecontrol/dist/L.control.Locate.css'
@@ -43,9 +43,8 @@ const positionData = (data) => {
 
   const map = L.map('map').setView([25.0426, 121.535], 17)
   const OSMUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-  const Location = new Locate()
   L.tileLayer(OSMUrl).addTo(map)
-  Location.addTo(map)
+  //L.control.locate().addTo(map)
   location.map((item) => {
     L.marker(item.position, { icon: item.icon }).addTo(map)
   })
