@@ -1,29 +1,35 @@
 import {
-  Init_Model_Version_Table,
-  Model_Version_Table_Status,
-  Map_Position
+  Table_Status,
+  Model_Version_Table,
+  Map_Position,
+  Status_Table
 } from './actionType'
 
 const defaultState = {
+  tableStatus: false,
   modelVersionTableData: [],
-  modelVersionTableStatus: false,
   mapPositionData: [],
+  reportTableData: [],
   isModalVisible: false
 }
 
 const reducer = (state = defaultState, action) => {
   const newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
-    case Init_Model_Version_Table: {
-      newState.modelVersionTableData = action.value
+    case Table_Status: {
+      newState.tableStatus = !newState.tableStatus
       return newState
     }
-    case Model_Version_Table_Status: {
-      newState.modelVersionTableStatus = !newState.modelVersionTableStatus
+    case Model_Version_Table: {
+      newState.modelVersionTableData = action.value
       return newState
     }
     case Map_Position: {
       newState.mapPositionData = action.value
+      return newState
+    }
+    case Status_Table: {
+      newState.reportTableData = action.value
       return newState
     }
     case 'show_modal': {

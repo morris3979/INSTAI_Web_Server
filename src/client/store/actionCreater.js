@@ -1,38 +1,38 @@
 import axios from 'axios'
 import { message } from 'antd'
 import {
-  Init_Model_Version_Table,
-  Model_Version_Table_Status,
-  Map_Position
+  Model_Version_Table,
+  Table_Status,
+  Map_Position,
+  Status_Table
 } from './actionType'
 
-export const ModelVersionTableStatus = () => {
+export const TableStatus = () => {
   return ({
-    type: Model_Version_Table_Status
+    type: Table_Status
   })
 }
 
-export const InitModelVersionTable = (data) => {
+export const ModelVersionTable = (data) => {
   return ({
-    type: Init_Model_Version_Table,
+    type: Model_Version_Table,
     value: data
   })
 }
-
 export const GetModelVersionTableData = () => {
   return (
     async (dispatch) => {
-      const action = ModelVersionTableStatus()
+      const action = TableStatus()
       dispatch(action)
       try {
         const response = await axios.get('http://localhost:8080/api/carnumber')
-        const action = InitModelVersionTable(response.data)
+        const action = ModelVersionTable(response.data)
         dispatch(action)
         message.success('完成')
       } catch (error) {
         message.error(`${error}`)
       } finally {
-        const action = ModelVersionTableStatus()
+        const action = TableStatus()
         dispatch(action)
       }
     }
@@ -46,18 +46,44 @@ export const MapPosition = (data) => {
   })
 }
 
+export const StatusTable = (data) => {
+  return ({
+    type: Status_Table,
+    value: data
+  })
+}
+export const GetStatusTableData = () => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus()
+      dispatch(action)
+      try {
+        const response = await axios.get('http://localhost:8080/api/details')
+        /*let filterData = response.data.filter((value) => { return (value.CarNumber.modelName[0] == 'A') })
+        console.log(filterData)*/
+        const action = StatusTable(response.data)
+        dispatch(action)
+        message.success('完成')
+      } catch (error) {
+        message.error(`${error}`)
+      } finally {
+        const action = TableStatus()
+        dispatch(action)
+      }
+    }
+  )
+}
+
 export const ShowModal = () => {
   return ({
     type: 'show_modal'
   })
 }
-
 export const CloseModalOk = () => {
   return ({
     type: 'close_modal_ok'
   })
 }
-
 export const CloseModalCancel = () => {
   return ({
     type: 'close_modal_cancel'

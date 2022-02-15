@@ -1,58 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Table, Input, Button, Space } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import { Table } from 'antd'
 import {
   GetModelVersionTableData
 } from '../../store/actionCreater'
 
 const { Column } = Table
-
-const filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
-  const onClick = () => { confirm() }
-
-  const onChange = (event) => {
-    if (event.target.value) {
-      return (
-        setSelectedKeys([event.target.value])
-      )
-    } else {
-      return (
-        setSelectedKeys([])
-      )
-    }
-  }
-
-  return (
-    <Space align='center'>
-      <Input
-        bordered={false}
-        placeholder='搜尋資料'
-        size='large'
-        value={selectedKeys}
-        onChange={onChange}
-      />
-      <Button
-        type='text'
-        size='large'
-        onClick={onClick}
-        icon={<SearchOutlined />}
-      />
-    </Space>
-  )
-}
-
-const boardIdOnFilter = (value, record) => {
-  return (
-    record.boardId.toLowerCase().includes(value.toLowerCase())
-  )
-}
-
-const plateNumberOnFilter = (value, record) => {
-  return (
-    record.plateNumber.toLowerCase().includes(value.toLowerCase())
-  )
-}
 
 class ModelVersionTable extends Component {
   componentDidMount() {
@@ -63,21 +16,17 @@ class ModelVersionTable extends Component {
     return (
       <Table
         dataSource={this.props.modelVersionTableData}
-        loading={this.props.modelVersionTableStatus}
+        loading={this.props.tableStatus}
         pagination={false}
       >
         <Column
           title='版號'
           dataIndex='boardId'
-          filterDropdown={filter}
-          onFilter={boardIdOnFilter}
           align='center'
         />
         <Column
           title='車號'
           dataIndex='plateNumber'
-          filterDropdown={filter}
-          onFilter={plateNumberOnFilter}
           align='center'
         />
         <Column
@@ -99,7 +48,7 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     modelVersionTableData: state.modelVersionTableData,
-    modelVersionTableStatus: state.modelVersionTableStatus
+    tableStatus: state.tableStatus
   }
 }
 
