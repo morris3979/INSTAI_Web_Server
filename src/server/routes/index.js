@@ -8,7 +8,7 @@ const awsS3Router = require("./awsS3Router");
 apiRouter.use("/S3", awsS3Router);
 
 apiRouter.use("/carnumber", carnumberRouter);
-apiRouter.use("/detail", detailRouter);
+apiRouter.use("/details", detailRouter);
 apiRouter.use("/user", userRouter);
 
 module.exports = apiRouter;
