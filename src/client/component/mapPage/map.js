@@ -4,9 +4,11 @@ import axios from 'axios'
 import { message } from 'antd'
 import L from 'leaflet'
 //import 'leaflet.locatecontrol'
+//import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import { MapPosition } from '../../store/actionCreater'
 import 'leaflet/dist/leaflet.css'
-import 'leaflet.locatecontrol/dist/L.control.Locate.css'
+//import 'leaflet.locatecontrol/dist/L.control.Locate.css'
+//import 'leaflet-geosearch/dist/geosearch.css'
 
 message.config({ maxCount: 1 })
 
@@ -18,6 +20,11 @@ const redIcon = L.icon({
   iconUrl: require('../../icon image/red car.png'),
   iconSize: [48, 48]
 })
+
+/*const searchControl = new GeoSearchControl({
+  provider: new OpenStreetMapProvider(),
+  showMarker: false
+})*/
 
 const location = []
 const positionData = (data) => {
@@ -45,6 +52,7 @@ const positionData = (data) => {
   const OSMUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
   L.tileLayer(OSMUrl).addTo(map)
   //L.control.locate().addTo(map)
+  //map.addControl(searchControl)
   location.map((item) => {
     L.marker(item.position, { icon: item.icon }).addTo(map)
   })

@@ -9,7 +9,7 @@ const ModelVersionPage = lazy(() => import('./page/modelVersionPage'))
 const Test = lazy(() => import('./component/reportPage/test'))
 
 const { Content, Sider } = Layout
-const { Item } = Menu
+const { Item, SubMenu } = Menu
 
 const App = () => {
   return (
@@ -21,6 +21,28 @@ const App = () => {
               地圖資訊
             </Link>
           </Item>
+          <SubMenu key='subreport' title='報表查詢'>
+            <Item key='status'>
+              <Link to='/status'>
+                一般狀態
+              </Link>
+            </Item>
+            <Item key='modelA'>
+              <Link to='/modelA'>
+                模型A
+              </Link>
+            </Item>
+            <Item key='modelB'>
+              <Link to='modelB'>
+                模型B
+              </Link>
+            </Item>
+            <Item key='modelC'>
+              <Link to='modelC'>
+                模型C
+              </Link>
+            </Item>
+          </SubMenu>
           <Item key='/modelversion'>
             <Link to='/modelversion'>
               模型版本

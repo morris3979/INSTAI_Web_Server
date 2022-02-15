@@ -29,10 +29,25 @@ const Test = (props) => {
         width={690}
       >
         <Image
-          src='http://localhost:8080/api/s3/files/4.jpg'
+          src='http://localhost:8080/api/s3/files/3.jpg'
+        />
+        <Image
+          src='http://localhost:8080/api/s3/files/dog1.jpeg'
+        />
+        <Image
+          src='http://localhost:8080/api/s3/files/dog2.jpeg'
+        />
+        <Image
+          src='http://localhost:8080/api/s3/files/dog3.jpeg'
+        />
+        <Image
+          src='http://localhost:8080/api/s3/files/dog4.jpeg'
+        />
+        <Image
+          src='http://localhost:8080/api/s3/files/dog5.jpeg'
         />
         <ReactPlayer
-          url='http://localhost:8080/api/s3/files/1.mp4'
+          url='http://localhost:8080/api/s3/files/dvr_0_20211221_085459.mp4'
           controls={true}
         />
       </Modal>
