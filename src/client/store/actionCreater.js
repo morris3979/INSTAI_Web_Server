@@ -28,7 +28,6 @@ export const GetModelVersionTableData = () => {
         const response = await axios.get('http://localhost:8080/api/carnumber')
         const action = ModelVersionTable(response.data)
         dispatch(action)
-        message.success('完成')
       } catch (error) {
         message.error(`${error}`)
       } finally {
@@ -63,7 +62,6 @@ export const GetStatusTableData = () => {
         console.log(filterData)*/
         const action = StatusTable(response.data)
         dispatch(action)
-        message.success('完成')
       } catch (error) {
         message.error(`${error}`)
       } finally {
