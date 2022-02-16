@@ -27,12 +27,12 @@ class CarNumber {
 }
 
 class Details {
-    constructor(id, startingTime, gpsState, speed, stayTime, position, createAt, updateAt, deleteAt) {
+    constructor(id, startingTime, gpsState, speed, event, position, createAt, updateAt, deleteAt) {
         this.id = id;
         this.startingTime = startingTime;
         this.gpsState = gpsState;
         this.speed = speed;
-        this.stayTime = stayTime;
+        this.event = event;
         this.position = position;
         this.createAt = createAt;
         this.updateAt = updateAt;

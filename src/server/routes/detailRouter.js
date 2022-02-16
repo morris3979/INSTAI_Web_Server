@@ -13,7 +13,7 @@ async function getDetails() {
   return details;
 }
 
-async function insertDetail(id, startingTime, gpsState, speed, stayTime, position) {
+async function insertDetail(id, startingTime, gpsState, speed, event, position) {
   const connection = await getConnection();
   //create
   const details = new Details();
@@ -21,7 +21,7 @@ async function insertDetail(id, startingTime, gpsState, speed, stayTime, positio
   details.startingTime = startingTime;
   details.gpsState = gpsState;
   details.speed = speed;
-  details.stayTime = stayTime;
+  details.event = event;
   details.position = position;
   //save
   const detailRepo = connection.getRepository(Details);

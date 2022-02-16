@@ -128,9 +128,9 @@ const DetailsSchema = new EntitySchema({
             type: "int",
             default: "0"
         },
-        stayTime: {
-            type: "int",
-            default: "0"
+        event: {
+            type: "varchar",
+            default: "AAA"
         },
         position: {
             type: "varchar",
