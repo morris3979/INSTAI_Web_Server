@@ -41,6 +41,7 @@ detailsRouter.post("/", async (req, res) => {
     details.speed = speed;
     details.event = event;
     details.position = position;
+    details.createAt = createAt;
     //save
     const detailRepo = connection.getRepository(Details);
     const res = await detailRepo.save(details);
