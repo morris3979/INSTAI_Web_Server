@@ -116,12 +116,12 @@ carnumberRouter.delete("/:id", async (req, res) => {
     //delete
     const carnumberRepo = connection.getRepository(CarNumber);
     //return new list
-    const allCarnumbers = await carnumberRepo.find();
+    const allCarnumbers = await carnumberRepo.delete(id);
     connection.close();
     return allCarnumbers;
   }
   try{
-    const carnumbers = await deleteCarNumber(id);
+    const carnumbers = await deleteCarNumber();
     res.status(204).json(carnumbers);
   } catch (e) {
     console.log(e);
