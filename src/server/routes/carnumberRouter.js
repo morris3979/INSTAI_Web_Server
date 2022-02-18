@@ -5,14 +5,14 @@ const { CarNumber } = require("../entity/db_constructor");
 
 //GET
 carnumberRouter.get('/', async(req, res) => {
+  async function getCarNumbers() {
+    const connection = await getConnection();
+    const carnumberRepo = connection.getRepository(CarNumber);
+    const carnumbers = await carnumberRepo.find();
+    connection.close();
+    return carnumbers;
+  }
   try{
-    async function getCarNumbers() {
-      const connection = await getConnection();
-      const carnumberRepo = connection.getRepository(CarNumber);
-      const carnumbers = await carnumberRepo.find();
-      connection.close();
-      return carnumbers;
-    }
     const carnumbers = await getCarNumbers();
     res.json(carnumbers);
   } catch (e) {
