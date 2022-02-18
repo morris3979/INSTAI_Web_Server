@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Table, Input, Button, Space } from 'antd'
+import { Table, Input, Button, Space, DatePicker } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
-import {
-  GetStatusTableData
-} from '../../store/actionCreater'
+import { GetStatusTableData } from '../../store/actionCreater'
 
 const { Column } = Table
 
-const filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
+const carNumberFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   const onClick = () => { confirm() }
 
   const onChange = (event) => {
@@ -41,10 +39,41 @@ const filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
     </Space>
   )
 }
-
-const onFilter = (value, record) => {
+const carNumberOnFilter = (value, record) => {
   return (
     record.CarNumber.plateNumber.toLowerCase().includes(value.toLowerCase())
+  )
+}
+
+const dateFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
+  const onClick = () => { confirm() }
+
+  const onChange = (value) => {
+    if (value) {
+      return (
+        setSelectedKeys([value.format('YYYY-MM-DD')])
+      )
+    } else {
+      return (
+        setSelectedKeys([])
+      )
+    }
+  }
+
+  return (
+    <Space align='center'>
+      <DatePicker
+        bordered={false} size='large' onChange={onChange}
+      />
+      <Button
+        type='text' size='large' onClick={onClick} icon={<SearchOutlined />}
+      />
+    </Space>
+  )
+}
+const dateOnFilter = (value, record) => {
+  return (
+    record.createAt.toLowerCase().includes(value.toLowerCase())
   )
 }
 
@@ -63,8 +92,15 @@ class StatusTable extends Component {
         <Column
           title='車輛編號'
           dataIndex={['CarNumber', 'plateNumber']}
-          filterDropdown={filter}
-          onFilter={onFilter}
+          filterDropdown={carNumberFilter}
+          onFilter={carNumberOnFilter}
+          align='center'
+        />
+        <Column
+          title='紀錄時間'
+          dataIndex='createAt'
+          filterDropdown={dateFilter}
+          onFilter={dateOnFilter}
           align='center'
         />
         <Column

@@ -19,26 +19,10 @@ class ModelVersionTable extends Component {
         loading={this.props.tableStatus}
         pagination={false}
       >
-        <Column
-          title='版號'
-          dataIndex='boardId'
-          align='center'
-        />
-        <Column
-          title='車號'
-          dataIndex='plateNumber'
-          align='center'
-        />
-        <Column
-          title='模型'
-          dataIndex='modelName'
-          align='center'
-        />
-        <Column
-          title='版本'
-          dataIndex='version'
-          align='center'
-        />
+        <Column title='版號' dataIndex='boardId' align='center' />
+        <Column title='車號' dataIndex='plateNumber' align='center' />
+        <Column title='模型' dataIndex='modelName' align='center' />
+        <Column title='版本' dataIndex='version' align='center' />
       </Table>
     )
   }

@@ -1,20 +1,15 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Modal, Button, Image } from 'antd'
-import { connect } from 'react-redux'
 import ReactPlayer from 'react-player/lazy'
-import {
-  ShowModal,
-  CloseModalOk,
-  CloseModalCancel
-} from '../../store/actionCreater'
 
-const Test = (props) => {
-  const {
-    isModalVisible,
-    onClick,
-    handleOk,
-    handleCancel
-  } = props
+const Test = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const onClick = () => { setIsModalVisible(true) }
+
+  const handleOk = () => { setIsModalVisible(false) }
+
+  const handleCancel = () => { setIsModalVisible(false) }
 
   return (
     <Fragment>
@@ -29,25 +24,24 @@ const Test = (props) => {
         width={690}
       >
         <Image
-          src='http://localhost:8080/api/s3/files/3.jpg'
+          src='http://localhost:8080/api/s3/files/pc1_1_20220217132352_camera1_front_pedestrianflow.jpg'
         />
         <Image
-          src='http://localhost:8080/api/s3/files/dog1.jpeg'
+          src='http://localhost:8080/api/s3/files/pc1_2_20220217132635_camera2_behind_pedestrianflow.jpg'
         />
         <Image
-          src='http://localhost:8080/api/s3/files/dog2.jpeg'
-        />
-        <Image
-          src='http://localhost:8080/api/s3/files/dog3.jpeg'
-        />
-        <Image
-          src='http://localhost:8080/api/s3/files/dog4.jpeg'
-        />
-        <Image
-          src='http://localhost:8080/api/s3/files/dog5.jpeg'
+          src='http://localhost:8080/api/s3/files/pc1_3_20220217132759_camera1_front_pedestrianflow.jpg'
         />
         <ReactPlayer
-          url='http://localhost:8080/api/s3/files/dvr_0_20211221_085459.mp4'
+          url='http://localhost:8080/api/s3/files/pc1_1_20220217132352_camera1_front_pedestrianflow.mp4'
+          controls={true}
+        />
+        <ReactPlayer
+          url='http://localhost:8080/api/s3/files/pc1_2_20220217132635_camera2_behind_pedestrianflow.mp4'
+          controls={true}
+        />
+        <ReactPlayer
+          url='http://localhost:8080/api/s3/files/pc1_3_20220217132759_camera1_front_pedestrianflow.mp4'
           controls={true}
         />
       </Modal>
@@ -55,29 +49,4 @@ const Test = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  //state指的是store裡的數據
-  return {
-    isModalVisible: state.isModalVisible
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  //dispatch指store.dispatch這個方法
-  return {
-    onClick() {
-      const action = ShowModal()
-      dispatch(action)
-    },
-    handleOk() {
-      const action = CloseModalOk()
-      dispatch(action)
-    },
-    handleCancel() {
-      const action = CloseModalCancel()
-      dispatch(action)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Test)
+export default Test

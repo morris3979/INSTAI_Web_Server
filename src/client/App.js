@@ -10,6 +10,7 @@ const StatusPage = lazy(() => import('./page/statusPage'))
 const ModelAPage = lazy(() => import('./page/modelAPage'))
 const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
+const Test = lazy(() => import('./component/reportPage/test'))
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
@@ -56,6 +57,11 @@ const App = () => {
               帳號登入
             </Link>
           </Item>
+          <Item key='/test'>
+            <Link to='/test'>
+              測試用頁面
+            </Link>
+          </Item>
         </Menu>
       </Sider>
       <Layout>
@@ -70,6 +76,7 @@ const App = () => {
               <Route path='/modelA' element={<ModelAPage />} />
               <Route path='/modelB' element={<ModelBPage />} />
               <Route path='/modelC' element={<ModelCPage />} />
+              <Route path='/test' element={<Test />} />
             </Routes>
           </Suspense>
         </Content>

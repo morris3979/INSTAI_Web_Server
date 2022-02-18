@@ -19,11 +19,6 @@ const redIcon = L.icon({
   iconSize: [48, 48]
 })
 
-/*const searchControl = new GeoSearchControl({
-  provider: new OpenStreetMapProvider(),
-  showMarker: false
-})*/
-
 const location = []
 const positionData = (data) => {
   data.map((dataItem) => {
@@ -45,15 +40,24 @@ const positionData = (data) => {
       })
     }
   })
+}
 
+/*const searchControl = new GeoSearchControl({
+  provider: new OpenStreetMapProvider(),
+  showMarker: false
+})*/
+
+const showMap = () => {
   const map = L.map('map').setView([25.0426, 121.535], 17)
   const OSMUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
   L.tileLayer(OSMUrl).addTo(map)
   //L.control.locate().addTo(map)
   //map.addControl(searchControl)
-  location.map((item) => {
-    L.marker(item.position, { icon: item.icon }).addTo(map)
-  })
+  if (location.length > 0) {
+    location.map((item) => {
+      L.marker(item.position, { icon: item.icon }).addTo(map)
+    })
+  }
 }
 
 class Map extends Component {
@@ -64,6 +68,8 @@ class Map extends Component {
       positionData(this.props.mapPositionData)
     } catch (error) {
       message.error(`${error}`)
+    } finally {
+      showMap()
     }
   }
 

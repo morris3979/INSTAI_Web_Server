@@ -1,8 +1,6 @@
 import {
-  Table_Status,
-  Model_Version_Table,
-  Map_Position,
-  Status_Table
+  Table_Status, Model_Version_Table, Map_Position, Status_Table,
+  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File
 } from './actionType'
 
 const defaultState = {
@@ -10,7 +8,10 @@ const defaultState = {
   modelVersionTableData: [],
   mapPositionData: [],
   reportTableData: [],
-  isModalVisible: false
+  modelATableData: [],
+  modelBTableData: [],
+  modelCTableData: [],
+  modalFile: ''
 }
 
 const reducer = (state = defaultState, action) => {
@@ -32,16 +33,20 @@ const reducer = (state = defaultState, action) => {
       newState.reportTableData = action.value
       return newState
     }
-    case 'show_modal': {
-      newState.isModalVisible = true
+    case Model_A_Table: {
+      newState.modelATableData = action.value
       return newState
     }
-    case 'close_modal_ok': {
-      newState.isModalVisible = false
+    case Model_B_Table: {
+      newState.modelBTableData = action.value
       return newState
     }
-    case 'close_modal_cancel': {
-      newState.isModalVisible = false
+    case Model_C_Table: {
+      newState.modelCTableData = action.value
+      return newState
+    }
+    case Modal_File: {
+      newState.modalFile = action.value
       return newState
     }
     default: {
