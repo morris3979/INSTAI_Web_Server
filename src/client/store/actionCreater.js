@@ -2,7 +2,7 @@ import axios from 'axios'
 import { message } from 'antd'
 import {
   Model_Version_Table, Table_Status, Map_Position, Status_Table,
-  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File
+  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal
 } from './actionType'
 
 export const MapPosition = (data) => {
@@ -66,6 +66,13 @@ export const GetStatusTableData = () => {
 export const GetModalFile = (data) => {
   return ({
     type: Modal_File,
+    value: data
+  })
+}
+
+export const SetWhichModal = (data) => {
+  return ({
+    type: Which_Modal,
     value: data
   })
 }

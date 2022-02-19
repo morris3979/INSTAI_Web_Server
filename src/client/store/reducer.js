@@ -1,6 +1,6 @@
 import {
   Table_Status, Model_Version_Table, Map_Position, Status_Table,
-  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File
+  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal
 } from './actionType'
 
 const defaultState = {
@@ -11,7 +11,8 @@ const defaultState = {
   modelATableData: [],
   modelBTableData: [],
   modelCTableData: [],
-  modalFile: ''
+  modalFile: '',
+  whichModal: ''
 }
 
 const reducer = (state = defaultState, action) => {
@@ -47,6 +48,10 @@ const reducer = (state = defaultState, action) => {
     }
     case Modal_File: {
       newState.modalFile = action.value
+      return newState
+    }
+    case Which_Modal: {
+      newState.whichModal = action.value
       return newState
     }
     default: {

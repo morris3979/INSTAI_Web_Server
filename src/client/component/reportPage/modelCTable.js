@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { Table, Input, Button, Space, Modal, Image, DatePicker } from 'antd'
 import { SearchOutlined, FileOutlined } from '@ant-design/icons'
 import {
-  GetModelCTableData,
-  GetModalFile
+  GetModelCTableData, GetModalFile
 } from '../../store/actionCreater'
 
 const { Column } = Table
@@ -25,7 +24,7 @@ const filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   }
 
   return (
-    <Space align='center'>
+    <Space>
       <Input
         bordered={false}
         placeholder='搜尋資料'
@@ -64,7 +63,7 @@ const dateFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   }
 
   return (
-    <Space align='center'>
+    <Space>
       <DatePicker
         bordered={false} size='large' onChange={onChange}
       />
@@ -137,10 +136,6 @@ class ModelCTable extends Component {
         icon={<FileOutlined />}
       />
     )
-  }
-
-  handleOk = () => {
-    this.setState({ isModalVisible: false })
   }
 
   handleCancel = () => {

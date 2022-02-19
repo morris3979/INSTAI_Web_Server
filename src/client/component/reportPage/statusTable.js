@@ -22,7 +22,7 @@ const carNumberFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   }
 
   return (
-    <Space align='center'>
+    <Space>
       <Input
         bordered={false}
         placeholder='搜尋資料'
@@ -61,7 +61,7 @@ const dateFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   }
 
   return (
-    <Space align='center'>
+    <Space>
       <DatePicker
         bordered={false} size='large' onChange={onChange}
       />

@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Table, Input, Button, Space, Modal, Image, DatePicker } from 'antd'
-import { SearchOutlined, FileOutlined } from '@ant-design/icons'
 import {
-  GetModelATableData,
-  GetModalFile
+  SearchOutlined, FileOutlined, DownloadOutlined
+} from '@ant-design/icons'
+import {
+  GetModelATableData, GetModalFile
 } from '../../store/actionCreater'
 
 const { Column } = Table
@@ -25,7 +26,7 @@ const filter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   }
 
   return (
-    <Space align='center'>
+    <Space>
       <Input
         bordered={false}
         placeholder='搜尋資料'
@@ -64,7 +65,7 @@ const dateFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   }
 
   return (
-    <Space align='center'>
+    <Space>
       <DatePicker
         bordered={false} size='large' onChange={onChange}
       />
@@ -130,12 +131,12 @@ class ModelATable extends Component {
         </Table>
         <Modal
           visible={this.state.isModalVisible}
-          onOk={this.handleOk}
           onCancel={this.handleCancel}
+          footer={<Button size='large' icon={<DownloadOutlined />} />}
           destroyOnClose={true}
         >
           <Image
-            src={`http://localhost:8080/api/s3/files/${this.props.modalFile}.jpeg`}
+            src={`http://localhost:8080/api/s3/files/${this.props.modalFile}.jpg`}
           />
         </Modal>
       </Fragment>
@@ -152,10 +153,6 @@ class ModelATable extends Component {
         icon={<FileOutlined />}
       />
     )
-  }
-
-  handleOk = () => {
-    this.setState({ isModalVisible: false })
   }
 
   handleCancel = () => {
