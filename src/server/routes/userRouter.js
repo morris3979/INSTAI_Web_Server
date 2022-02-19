@@ -44,13 +44,10 @@ userRouter.post("/register", async (req, res) => {
     users.createAt = createAt;
     //save
     const userRepo = connection.getRepository(User);
-    console.log("user", User);
-    const res = await userRepo.save(users);
-    console.log("save", res);
-    //return new list
     const allUsers = await userRepo.find();
     await connection.getRepository(CarNumber).save(allUsers);
     connection.close();
+    //return new list
     return allUsers;
   }
   try{

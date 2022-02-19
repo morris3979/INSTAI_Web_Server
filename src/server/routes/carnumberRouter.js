@@ -10,6 +10,7 @@ carnumberRouter.get('/', async(req, res) => {
     const carnumberRepo = connection.getRepository(CarNumber);
     const carnumbers = await carnumberRepo.find();
     connection.close();
+    //return new list
     return carnumbers;
   }
   try{
@@ -39,12 +40,10 @@ carnumberRouter.post("/", async (req, res) => {
     carnumber.createAt = createAt;
     //save
     const carnumberRepo = connection.getRepository(CarNumber);
-    const res = await carnumberRepo.save(carnumber);
-    console.log("save", res);
-    //return new list
     const allCarnumbers = await carnumberRepo.find();
     await connection.getRepository(CarNumber).save(allCarnumbers);
     connection.close();
+    //return new list
     return allCarnumbers;
   }
   try{
@@ -74,7 +73,6 @@ carnumberRouter.patch("/:id", async (req, res) => {
     carnumber.version = version;
     carnumber.plateNumber = plateNumber;
     carnumber.updateAt = updateAt;
-    //return new list
     const updateCarnumbers = await carnumberRepo.findOne(id);
     if (!updateCarnumbers) {
       res.sendStatus(404);
@@ -97,6 +95,7 @@ carnumberRouter.patch("/:id", async (req, res) => {
     }
     await connection.getRepository(CarNumber).save(updateCarnumbers);
     connection.close();
+    //return new list
     return updateCarnumbers;
   }
   try{
@@ -115,9 +114,9 @@ carnumberRouter.delete("/:id", async (req, res) => {
     const connection = await getConnection();
     //delete
     const carnumberRepo = connection.getRepository(CarNumber);
-    //return new list
     const allCarnumbers = await carnumberRepo.delete(id);
     connection.close();
+    //return new list
     return allCarnumbers;
   }
   try{

@@ -12,6 +12,7 @@ detailsRouter.get('/', async(req, res) => {
       relations: ["CarNumber"],
     });
     connection.close();
+    //return new list
     return details;
   }
   try{
@@ -44,12 +45,10 @@ detailsRouter.post("/", async (req, res) => {
     details.createAt = createAt;
     //save
     const detailRepo = connection.getRepository(Details);
-    const res = await detailRepo.save(details);
-    console.log("save", res);
-    //return new list
     const allDetails = await detailRepo.find();
     await connection.getRepository(CarNumber).save(allDetails);
     connection.close();
+    //return new list
     return allDetails;
   }
   try{
