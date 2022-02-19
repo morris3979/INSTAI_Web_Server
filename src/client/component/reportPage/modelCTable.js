@@ -79,6 +79,12 @@ const dateOnFilter = (value, record) => {
   )
 }
 
+const dateChange = (text) => {
+  return (
+    text.createAt.replace('T', ' ').slice(0, -5)
+  )
+}
+
 class ModelCTable extends Component {
   constructor(props) {
     super(props)
@@ -106,7 +112,7 @@ class ModelCTable extends Component {
           />
           <Column
             title='紀錄時間'
-            dataIndex='createAt'
+            render={dateChange}
             filterDropdown={dateFilter}
             onFilter={dateOnFilter}
             align='center'

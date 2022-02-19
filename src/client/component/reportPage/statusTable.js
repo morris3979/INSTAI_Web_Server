@@ -77,6 +77,12 @@ const dateOnFilter = (value, record) => {
   )
 }
 
+const dateChange = (text) => {
+  return (
+    text.createAt.replace('T', ' ').slice(0, -5)
+  )
+}
+
 class StatusTable extends Component {
   componentDidMount() {
     this.props.getStatusTableData()
@@ -98,7 +104,7 @@ class StatusTable extends Component {
         />
         <Column
           title='紀錄時間'
-          dataIndex='createAt'
+          render={dateChange}
           filterDropdown={dateFilter}
           onFilter={dateOnFilter}
           align='center'
