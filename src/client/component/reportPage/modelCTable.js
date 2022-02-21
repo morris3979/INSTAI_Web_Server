@@ -81,7 +81,7 @@ const dateOnFilter = (value, record) => {
 
 const dateChange = (text) => {
   return (
-    text.createAt.replace('T', ' ').slice(0, -5)
+    text.createAt.slice(0, -5).replace('T', ' ')
   )
 }
 
