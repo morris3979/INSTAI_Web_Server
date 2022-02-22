@@ -31,11 +31,14 @@ carnumberRouter.post("/", async (req, res) => {
   const createAt = new Date(new Date().toLocaleDateString());
   async function insertCarNumber(boardId, modelName, version, plateNumber, createAt) {
     const connection = await getConnection();
-    const carnumber = await connection.getRepository(CarNumber).findOne({
+    const findBoardId = await connection.getRepository(CarNumber).findOne({
       boardId: req.body.boardId,
     });
+    const findPlateNumber = await connection.getRepository(CarNumber).findOne({
+      plateNumber: req.body.plateNumber,
+    });
     //create
-    if (!carnumber) {
+    if (!(findBoardId || findPlateNumber)) {
       const carnumbers = new CarNumber();
       carnumbers.boardId = boardId;
       carnumbers.modelName = modelName;
