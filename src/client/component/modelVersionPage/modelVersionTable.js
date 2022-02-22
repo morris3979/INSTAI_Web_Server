@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Popconfirm, Table, Button, Space, Modal, Form, Input } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import {
-  GetModelVersionTableData, SetWhichModal
+  ActModelVersionTableData, SetWhichModal
 } from '../../store/actionCreater'
 
 const { Column } = Table
@@ -16,7 +16,7 @@ class ModelVersionTable extends Component {
   }
 
   componentDidMount() {
-    this.props.getModelVersionTableData()
+    this.props.actModelVersionTableData(0)
   }
 
   render() {
@@ -109,7 +109,7 @@ class ModelVersionTable extends Component {
         />
         <Popconfirm
           title='確定刪除?'
-          onConfirm={() => { console.log('yes') }}
+          onConfirm={() => { this.props.actModelVersionTableData(text.id) }}
         >
           <Button icon={<DeleteOutlined />} />
         </Popconfirm>
@@ -130,8 +130,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    getModelVersionTableData() {
-      const action = GetModelVersionTableData()
+    actModelVersionTableData(id) {
+      const action = ActModelVersionTableData(id)
       dispatch(action)
     },
     setWhichModal(data) {

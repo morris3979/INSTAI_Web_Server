@@ -25,12 +25,16 @@ export const TableData = (data, actionType) => {
   })
 }
 
-export const GetModelVersionTableData = () => {
+export const ActModelVersionTableData = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus()
       dispatch(action)
+      console.log(id)
       try {
+        if (id > 0) {
+          await axios.delete(`http://localhost:8080/api/carnumber/${id}`)
+        }
         const response = await axios.get('http://localhost:8080/api/carnumber')
         const action = TableData(response.data, Model_Version_Table)
         dispatch(action)
