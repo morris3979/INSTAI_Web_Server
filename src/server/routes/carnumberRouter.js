@@ -31,18 +31,26 @@ carnumberRouter.post("/", async (req, res) => {
   const createAt = new Date(new Date().toLocaleDateString());
   async function insertCarNumber(boardId, modelName, version, plateNumber, createAt) {
     const connection = await getConnection();
+    const carnumber = await connection.getRepository(CarNumber).findOne({
+      boardId: req.body.boardId,
+    });
     //create
-    const carnumber = new CarNumber();
-    carnumber.boardId = boardId;
-    carnumber.modelName = modelName;
-    carnumber.version = version;
-    carnumber.plateNumber = plateNumber;
-    carnumber.createAt = createAt;
-    //save
-    await connection.getRepository(CarNumber).save(carnumber);
+    if (!carnumber) {
+      const carnumbers = new CarNumber();
+      carnumbers.boardId = boardId;
+      carnumbers.modelName = modelName;
+      carnumbers.version = version;
+      carnumbers.plateNumber = plateNumber;
+      carnumbers.createAt = createAt;
+      //save
+      await connection.getRepository(CarNumber).save(carnumbers);
+      connection.close();
+      //return new list
+      return carnumbers;
+    }
+    const existed = "existed";
     connection.close();
-    //return new list
-    return carnumber;
+    return existed;
   }
   try{
     const carnumbers = await insertCarNumber(boardId, modelName, version, plateNumber, createAt);
