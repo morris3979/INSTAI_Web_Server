@@ -39,12 +39,10 @@ carnumberRouter.post("/", async (req, res) => {
     carnumber.plateNumber = plateNumber;
     carnumber.createAt = createAt;
     //save
-    const carnumberRepo = connection.getRepository(CarNumber);
-    const allCarnumbers = await carnumberRepo.find();
-    await connection.getRepository(CarNumber).save(allCarnumbers);
+    await connection.getRepository(CarNumber).save(carnumber);
     connection.close();
     //return new list
-    return allCarnumbers;
+    return carnumber;
   }
   try{
     const carnumbers = await insertCarNumber(boardId, modelName, version, plateNumber, createAt);
