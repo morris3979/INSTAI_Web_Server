@@ -1,5 +1,5 @@
 import {
-  Table_Status, Model_Version_Table, Map_Position, Status_Table,
+  Table_Status, Get_Model_Version_Table, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal
 } from './actionType'
 
@@ -22,7 +22,7 @@ const reducer = (state = defaultState, action) => {
       newState.tableStatus = !newState.tableStatus
       return newState
     }
-    case Model_Version_Table: {
+    case Get_Model_Version_Table: {
       newState.modelVersionTableData = action.value
       return newState
     }

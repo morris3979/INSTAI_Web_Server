@@ -62,11 +62,14 @@ const showMap = () => {
 
 class Map extends Component {
   async componentDidMount() {
+    message.loading('載入中...', 0)
     try {
       const response = await axios.get('http://localhost:8080/api/details')
       this.props.mapPosition(response.data)
       positionData(this.props.mapPositionData)
+      message.destroy()
     } catch (error) {
+      message.destroy()
       message.error(`${error}`)
     } finally {
       showMap()

@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { message } from 'antd'
+import { message, Modal } from 'antd'
 import {
-  Model_Version_Table, Table_Status, Map_Position, Status_Table,
+  Get_Model_Version_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal
 } from './actionType'
 
@@ -25,24 +25,42 @@ export const TableData = (data, actionType) => {
   })
 }
 
-export const ActModelVersionTableData = (id) => {
+export const GetModelVersionTableData = () => {
   return (
     async (dispatch) => {
       const action = TableStatus()
       dispatch(action)
-      console.log(id)
       try {
-        if (id > 0) {
-          await axios.delete(`http://localhost:8080/api/carnumber/${id}`)
-        }
         const response = await axios.get('http://localhost:8080/api/carnumber')
-        const action = TableData(response.data, Model_Version_Table)
+        const action = TableData(response.data, Get_Model_Version_Table)
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
       } finally {
         const action = TableStatus()
         dispatch(action)
+      }
+    }
+  )
+}
+
+export const DeleteModelVersionTableData = (id) => {
+  return (
+    async (dispatch) => {
+      message.loading('請稍後...', 0)
+      try {
+        await axios.delete(`http://localhost:8080/api/carnumber/${id}`)
+        message.destroy()
+        Modal.success({
+          title: '刪除成功',
+          onOk: () => {
+            const action = GetModelVersionTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
       }
     }
   )

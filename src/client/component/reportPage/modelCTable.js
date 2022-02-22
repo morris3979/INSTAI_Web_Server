@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player/lazy'
 import { Table, Input, Button, Space, Modal, Image, DatePicker } from 'antd'
-import { SearchOutlined, FileOutlined } from '@ant-design/icons'
+import {
+  SearchOutlined, FileOutlined, DownloadOutlined
+} from '@ant-design/icons'
 import {
   GetModelCTableData, GetModalFile
 } from '../../store/actionCreater'
@@ -119,6 +121,11 @@ class ModelCTable extends Component {
             align='center'
           />
           <Column
+            title='事件'
+            render={this.eventButton}
+            align='center'
+          />
+          <Column
             title='位置'
             dataIndex='position'
             align='center'
@@ -129,6 +136,21 @@ class ModelCTable extends Component {
             align='center'
           />
         </Table>
+        <Modal
+          visible={this.state.isModalVisible}
+          onCancel={this.handleCancel}
+          footer={<Button size='large' icon={<DownloadOutlined />} />}
+          destroyOnClose={true}
+          width={690}
+        >
+          <Image
+            src={`http://localhost:8080/api/s3/files/${this.props.modalFile}.jpg`}
+          />
+          <ReactPlayer
+            url={`http://localhost:8080/api/s3/files/${this.props.modalFile}.mp4`}
+            controls={true}
+          />
+        </Modal>
       </Fragment>
     )
   }
