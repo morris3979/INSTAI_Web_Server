@@ -49,7 +49,7 @@ const App = () => {
           </SubMenu>
           <Item key='/modelversion'>
             <Link to='/modelversion'>
-              模型版本
+              版號與模型配置
             </Link>
           </Item>
           <Item key='/login'>

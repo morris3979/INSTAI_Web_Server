@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
+import ReactPlayer from 'react-player/lazy'
 import { Table, Input, Button, Space, Modal, Image, DatePicker } from 'antd'
 import { SearchOutlined, FileOutlined } from '@ant-design/icons'
 import {

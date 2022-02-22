@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
+import ReactPlayer from 'react-player/lazy'
 import { Table, Input, Button, Space, Modal, Image, DatePicker } from 'antd'
 import {
   SearchOutlined, FileOutlined, DownloadOutlined
@@ -140,9 +141,14 @@ class ModelBTable extends Component {
           onCancel={this.handleCancel}
           footer={<Button size='large' icon={<DownloadOutlined />} />}
           destroyOnClose={true}
+          width={690}
         >
           <Image
             src={`http://localhost:8080/api/s3/files/${this.props.modalFile}.jpg`}
+          />
+          <ReactPlayer
+            url={`http://localhost:8080/api/s3/files/${this.props.modalFile}.mp4`}
+            controls={true}
           />
         </Modal>
       </Fragment>
