@@ -37,7 +37,7 @@ carnumberRouter.post("/", async (req, res) => {
     const findPlateNumber = await connection.getRepository(CarNumber).findOne({
       plateNumber: req.body.plateNumber,
     });
-    //create
+    //Create, if boardId & plateNumber is existed, it will be not created.
     if (!(findBoardId || findPlateNumber)) {
       const carnumbers = new CarNumber();
       carnumbers.boardId = boardId;
@@ -83,6 +83,7 @@ carnumberRouter.patch("/:id", async (req, res) => {
     carnumber.plateNumber = plateNumber;
     carnumber.updateAt = updateAt;
     const updateCarnumbers = await carnumberRepo.findOne(id);
+    //if not find id, it will be sent not found.
     if (!updateCarnumbers) {
       res.sendStatus(404);
       return;
