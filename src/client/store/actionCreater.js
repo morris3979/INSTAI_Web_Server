@@ -47,7 +47,7 @@ export const GetModelVersionTableData = () => {
 export const DeleteModelVersionTableData = (id) => {
   return (
     async (dispatch) => {
-      message.loading('請稍後...', 0)
+      message.loading('刪除中，請稍後...', 0)
       try {
         await axios.delete(`http://localhost:8080/api/carnumber/${id}`)
         message.destroy()

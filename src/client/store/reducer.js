@@ -12,7 +12,7 @@ const defaultState = {
   modelBTableData: [],
   modelCTableData: [],
   modalFile: '',
-  whichModal: ''
+  whichModal: 0
 }
 
 const reducer = (state = defaultState, action) => {

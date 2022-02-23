@@ -22,7 +22,7 @@ class ModelVersionTable extends Component {
   render() {
     return (
       <Fragment>
-        <Button onClick={() => { this.onClick('post', {}) }} size='large'>
+        <Button onClick={() => { this.onClick(0) }} size='large'>
           新增
         </Button>
         <Table
@@ -45,29 +45,29 @@ class ModelVersionTable extends Component {
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
             <Item
               label='版號'
-              name='boardID'
-              rules={[{ required: true, message: '請輸入版號' }]}
+              name='boardId'
+              rules={[this.rule('版號')]}
             >
               <Input />
             </Item>
             <Item
               label='車號'
-              name='carNumber'
-              rules={[{ required: true, message: '請輸入車號' }]}
+              name='plateNumber'
+              rules={[this.rule('車號')]}
             >
               <Input />
             </Item>
             <Item
               label='模型'
-              name='model'
-              rules={[{ required: true, message: '請輸入模型' }]}
+              name='modelName'
+              rules={[this.rule('模型')]}
             >
               <Input />
             </Item>
             <Item
               label='版本'
-              name='vrsion'
-              rules={[{ required: true, message: '請輸入版本' }]}
+              name='version'
+              rules={[this.rule('版本')]}
             >
               <Input />
             </Item>
@@ -85,14 +85,22 @@ class ModelVersionTable extends Component {
     )
   }
 
-  onClick = (action, text) => {
-    console.log(text)
+  onClick = (id) => {
+    console.log(id)
     this.setState({ isModalVisible: true })
-    this.props.setWhichModal(action)
+    this.props.setWhichModal(id)
   }
 
   handleCancel = () => {
     this.setState({ isModalVisible: false })
+  }
+
+  rule = (hint) => {
+    if (this.props.whichModal == 0) {
+      return ({ required: true, message: `請輸入${hint}` })
+    } else {
+      return ({ required: false })
+    }
   }
 
   onFinish = (values) => {
@@ -104,7 +112,7 @@ class ModelVersionTable extends Component {
     return (
       <Space size='large'>
         <Button
-          onClick={() => { this.onClick('patch', text) }}
+          onClick={() => { this.onClick(text.id) }}
           icon={<EditOutlined />}
         />
         <Popconfirm
