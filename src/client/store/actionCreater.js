@@ -66,6 +66,50 @@ export const DeleteModelVersionTableData = (id) => {
   )
 }
 
+export const PatchModelVersionTableData = (id, data) => {
+  return (
+    async (dispatch) => {
+      message.loading('修改中，請稍後...', 0)
+      try {
+        await axios.patch(`http://localhost:8080/api/carnumber/${id}`, data)
+        message.destroy()
+        Modal.success({
+          title: '修改成功',
+          onOk: () => {
+            const action = GetModelVersionTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const PostModelVersionTableData = (data) => {
+  return (
+    async (dispatch) => {
+      message.loading('新增中，請稍後...', 0)
+      try {
+        await axios.post('http://localhost:8080/api/carnumber', data)
+        message.destroy()
+        Modal.success({
+          title: '新增成功',
+          onOk: () => {
+            const action = GetModelVersionTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const GetStatusTableData = () => {
   return (
     async (dispatch) => {
