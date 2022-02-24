@@ -46,39 +46,20 @@ class ModelVersionTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item
-              label='版號'
-              name='boardId'
-              rules={[this.rule('版號')]}
-            >
+            <Item label='版號' name='boardId' rules={[this.rule('版號')]}>
               <Input />
             </Item>
-            <Item
-              label='車號'
-              name='plateNumber'
-              rules={[this.rule('車號')]}
-            >
+            <Item label='車號' name='plateNumber' rules={[this.rule('車號')]}>
               <Input />
             </Item>
-            <Item
-              label='模型'
-              name='modelName'
-              rules={[this.rule('模型')]}
-            >
+            <Item label='模型' name='modelName' rules={[this.rule('模型')]}>
               <Input />
             </Item>
-            <Item
-              label='版本'
-              name='version'
-              rules={[this.rule('版本')]}
-            >
+            <Item label='版本' name='version' rules={[this.rule('版本')]}>
               <Input />
             </Item>
             <Item>
-              <Button
-                htmlType='submit'
-                onClick={this.handleCancel}
-              >
+              <Button htmlType='submit' onClick={this.handleCancel}>
                 確認
               </Button>
             </Item>
@@ -150,8 +131,8 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetModelVersionTableData()
       dispatch(action)
     },
-    setWhichModal(data) {
-      const action = SetWhichModal(data)
+    setWhichModal(id) {
+      const action = SetWhichModal(id)
       dispatch(action)
     },
     deleteModelVersionTableData(id) {
