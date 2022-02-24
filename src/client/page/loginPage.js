@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Spin, Row, Col } from 'antd'
 
-const LoginForm = lazy(() => import('../component/loginPage/login'))
+const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
 const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
 
 const LoginPage = () => {
