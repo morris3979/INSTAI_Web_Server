@@ -3,11 +3,14 @@ import { connect } from 'react-redux'
 import { Popconfirm, Table, Button, Space, Modal, Form, Input } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import {
-  GetModelVersionTableData, SetWhichModal, DeleteModelVersionTableData
+  GetModelVersionTableData, SetWhichModal, DeleteModelVersionTableData,
+  PatchModelVersionTableData, PostModelVersionTableData
 } from '../../store/actionCreater'
 
 const { Column } = Table
 const { Item } = Form
+
+const convertedValues = {}
 
 class ModelVersionTable extends Component {
   constructor(props) {
@@ -86,7 +89,6 @@ class ModelVersionTable extends Component {
   }
 
   onClick = (id) => {
-    console.log(id)
     this.setState({ isModalVisible: true })
     this.props.setWhichModal(id)
   }
@@ -104,8 +106,14 @@ class ModelVersionTable extends Component {
   }
 
   onFinish = (values) => {
-    console.log(this.props.whichModal)
-    console.log(values)
+    Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
+      convertedValues[String(key)] = values[key]
+    })
+    if (this.props.whichModal > 0) {
+      this.props.patchModelVersionTableData(this.props.whichModal, convertedValues)
+    } else {
+      this.props.postModelVersionTableData(convertedValues)
+    }
   }
 
   buttonGroup = (text) => {
@@ -148,6 +156,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteModelVersionTableData(id) {
       const action = DeleteModelVersionTableData(id)
+      dispatch(action)
+    },
+    patchModelVersionTableData(id, data) {
+      const action = PatchModelVersionTableData(id, data)
+      dispatch(action)
+    },
+    postModelVersionTableData(data) {
+      const action = PostModelVersionTableData(data)
       dispatch(action)
     }
   }
