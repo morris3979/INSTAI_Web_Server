@@ -71,7 +71,7 @@ const App = () => {
               <Route path='/' element={<InitialPage />} />
               <Route path='/map' element={<MapPage />} />
               <Route path='/modelversion' element={<ModelVersionPage />} />
-              <Route path='/login' element={<div>test</div>} />
+              <Route path='/login' element={<LoginPage />} />
               <Route path='/status' element={<StatusPage />} />
               <Route path='/modelA' element={<ModelAPage />} />
               <Route path='/modelB' element={<ModelBPage />} />
