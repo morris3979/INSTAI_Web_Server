@@ -31,7 +31,7 @@ export const GetModelVersionTableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('http://localhost:8080/api/carnumber')
+        const response = await axios.get('/api/carnumber')
         const action = TableData(response.data, Get_Model_Version_Table)
         dispatch(action)
       } catch (error) {
@@ -49,7 +49,7 @@ export const DeleteModelVersionTableData = (id) => {
     async (dispatch) => {
       message.loading('刪除中，請稍後...', 0)
       try {
-        await axios.delete(`http://localhost:8080/api/carnumber/${id}`)
+        await axios.delete(`/api/carnumber/${id}`)
         message.destroy()
         Modal.success({
           title: '刪除成功',
@@ -71,7 +71,7 @@ export const PatchModelVersionTableData = (id, data) => {
     async (dispatch) => {
       message.loading('修改中，請稍後...', 0)
       try {
-        await axios.patch(`http://localhost:8080/api/carnumber/${id}`, data)
+        await axios.patch(`/api/carnumber/${id}`, data)
         message.destroy()
         Modal.success({
           title: '修改成功',
@@ -93,7 +93,7 @@ export const PostModelVersionTableData = (data) => {
     async (dispatch) => {
       message.loading('新增中，請稍後...', 0)
       try {
-        await axios.post('http://localhost:8080/api/carnumber', data)
+        await axios.post('/api/carnumber', data)
         message.destroy()
         Modal.success({
           title: '新增成功',
@@ -116,7 +116,7 @@ export const GetStatusTableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('http://localhost:8080/api/details')
+        const response = await axios.get('/api/details')
         const action = TableData(response.data, Status_Table)
         dispatch(action)
       } catch (error) {
@@ -149,7 +149,7 @@ export const GetModelATableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('http://localhost:8080/api/details')
+        const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
           return (value.CarNumber.modelName[0] == 'A')
         })
@@ -171,7 +171,7 @@ export const GetModelBTableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('http://localhost:8080/api/details')
+        const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
           return (value.CarNumber.modelName[0] == 'B')
         })
@@ -193,7 +193,7 @@ export const GetModelCTableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('http://localhost:8080/api/details')
+        const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
           return (value.CarNumber.modelName[0] == 'C')
         })
