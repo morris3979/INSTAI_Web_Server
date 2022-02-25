@@ -68,10 +68,10 @@ class ModelCTable extends Component {
           width={690}
         >
           <Image
-            src={`http://localhost:8080/api/s3/files/${this.props.modalFile}.jpg`}
+            src={`/api/s3/files/${this.props.modalFile}.jpg`}
           />
           <ReactPlayer
-            url={`http://localhost:8080/api/s3/files/${this.props.modalFile}.mp4`}
+            url={`/api/s3/files/${this.props.modalFile}.mp4`}
             controls={true}
           />
         </Modal>
