@@ -9,7 +9,7 @@ const StatusPage = lazy(() => import('./page/statusPage'))
 const ModelAPage = lazy(() => import('./page/modelAPage'))
 const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
-const Resource = lazy(() => import('./page/resource'))
+const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const Test = lazy(() => import('./component/reportPage/test'))
 
