@@ -25,7 +25,7 @@ class ModelVersionTable extends Component {
   render() {
     return (
       <Fragment>
-        <Button onClick={() => { this.onClick(0) }} size='large'>
+        <Button onClick={() => { this.onClick({ id: 0 }) }} size='large'>
           新增
         </Button>
         <Table
@@ -47,16 +47,32 @@ class ModelVersionTable extends Component {
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
             <Item label='版號' name='boardId' rules={[this.rule('版號')]}>
-              <Input />
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.boardId)}`
+                }
+              />
             </Item>
             <Item label='車號' name='plateNumber' rules={[this.rule('車號')]}>
-              <Input />
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.plateNumber)}`
+                }
+              />
             </Item>
             <Item label='模型' name='modelName' rules={[this.rule('模型')]}>
-              <Input />
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.modelName)}`
+                }
+              />
             </Item>
             <Item label='版本' name='version' rules={[this.rule('版本')]}>
-              <Input />
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.version)}`
+                }
+              />
             </Item>
             <Item>
               <Button htmlType='submit' onClick={this.handleCancel}>
@@ -70,9 +86,8 @@ class ModelVersionTable extends Component {
   }
 
   onClick = (text) => {
-    console.log(text)
     this.setState({ isModalVisible: true })
-    this.props.setWhichModal(text.id)
+    this.props.setWhichModal(text)
   }
 
   handleCancel = () => {
@@ -80,10 +95,18 @@ class ModelVersionTable extends Component {
   }
 
   rule = (hint) => {
-    if (this.props.whichModal == 0) {
+    if (this.props.whichModal.id == 0) {
       return ({ required: true, message: `請輸入${hint}` })
     } else {
       return ({ required: false })
+    }
+  }
+
+  defaultValue = (value) => {
+    if (this.props.whichModal.id > 0) {
+      return (value)
+    } else {
+      return ('')
     }
   }
 
@@ -91,8 +114,8 @@ class ModelVersionTable extends Component {
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
       convertedValues[String(key)] = values[key]
     })
-    if (this.props.whichModal > 0) {
-      this.props.patchModelVersionTableData(this.props.whichModal, convertedValues)
+    if (this.props.whichModal.id > 0) {
+      this.props.patchModelVersionTableData(this.props.whichModal.id, convertedValues)
     } else {
       this.props.postModelVersionTableData(convertedValues)
     }
@@ -132,8 +155,8 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetModelVersionTableData()
       dispatch(action)
     },
-    setWhichModal(id) {
-      const action = SetWhichModal(id)
+    setWhichModal(text) {
+      const action = SetWhichModal(text)
       dispatch(action)
     },
     deleteModelVersionTableData(id) {

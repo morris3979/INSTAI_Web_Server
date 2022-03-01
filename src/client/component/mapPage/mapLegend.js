@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react'
-import { Table, Image, Typography } from 'antd'
+import React from 'react'
+import { Table, Image } from 'antd'
 
 const { Column } = Table
-const { Text, Link } = Typography
 
 const data = [
   {
@@ -37,12 +36,10 @@ const iconStyle = (text) => {
 
 const MapLegend = () => {
   return (
-    <Fragment>
-      <Table dataSource={data} pagination={false}>
-        <Column title='圖示' render={iconStyle} align='center' />
-        <Column title='說明' dataIndex='description' align='center' />
-      </Table>
-    </Fragment>
+    <Table dataSource={data} pagination={false}>
+      <Column title='圖示' render={iconStyle} align='center' />
+      <Column title='說明' dataIndex='description' align='center' />
+    </Table>
   )
 }
 
