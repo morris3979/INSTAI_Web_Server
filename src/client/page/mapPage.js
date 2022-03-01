@@ -8,10 +8,10 @@ const MapPage = () => {
   return (
     <Row>
       <Suspense fallback={<Spin size='large' />}>
-        <Col xs={24} sm={24} xl={8}>
+        <Col xs={24} sm={24} md={8}>
           <MapLegend />
         </Col>
-        <Col xs={24} sm={24} xl={16}>
+        <Col xs={24} sm={24} md={16}>
           <Map />
         </Col>
       </Suspense>

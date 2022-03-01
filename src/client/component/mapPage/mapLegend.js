@@ -42,16 +42,6 @@ const MapLegend = () => {
         <Column title='圖示' render={iconStyle} align='center' />
         <Column title='說明' dataIndex='description' align='center' />
       </Table>
-      <Text>
-        Icons made by { }
-        <Link href='https://www.flaticon.com/authors/aquariid' target='_blank'>
-          AquariiD
-        </Link>
-        { } from { }
-        <Link href='https://www.flaticon.com/' target='_blank'>
-          www.flaticon.com
-        </Link>
-      </Text>
     </Fragment>
   )
 }

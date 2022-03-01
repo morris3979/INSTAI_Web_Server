@@ -69,9 +69,10 @@ class ModelVersionTable extends Component {
     )
   }
 
-  onClick = (id) => {
+  onClick = (text) => {
+    console.log(text)
     this.setState({ isModalVisible: true })
-    this.props.setWhichModal(id)
+    this.props.setWhichModal(text.id)
   }
 
   handleCancel = () => {
@@ -101,7 +102,7 @@ class ModelVersionTable extends Component {
     return (
       <Space size='large'>
         <Button
-          onClick={() => { this.onClick(text.id) }}
+          onClick={() => { this.onClick(text) }}
           icon={<EditOutlined />}
         />
         <Popconfirm

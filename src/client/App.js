@@ -4,12 +4,13 @@ import { Layout, Menu, Spin } from 'antd'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
-const LoginPage = lazy(() => import('./page/loginPage'))
 const ModelVersionPage = lazy(() => import('./page/modelVersionPage'))
 const StatusPage = lazy(() => import('./page/statusPage'))
 const ModelAPage = lazy(() => import('./page/modelAPage'))
 const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
+const Resource = lazy(() => import('./page/resource'))
+const LoginPage = lazy(() => import('./page/loginPage'))
 const Test = lazy(() => import('./component/reportPage/test'))
 
 const { Content, Sider } = Layout
@@ -18,7 +19,7 @@ const { Item, SubMenu } = Menu
 const App = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider breakpoint='xl' collapsedWidth='0'>
+      <Sider breakpoint='md' collapsedWidth='0'>
         <Menu theme='dark' defaultSelectedKeys={['/']} selectedKeys={[]}>
           <Item key='/map'>
             <Link to='/map'>
@@ -52,14 +53,9 @@ const App = () => {
               版號與模型配置
             </Link>
           </Item>
-          <Item key='/login'>
-            <Link to='/login'>
-              帳號登入
-            </Link>
-          </Item>
-          <Item key='/test'>
-            <Link to='/test'>
-              測試用頁面
+          <Item key='/resource'>
+            <Link to='/resource'>
+              關於
             </Link>
           </Item>
         </Menu>
@@ -70,13 +66,12 @@ const App = () => {
             <Routes>
               <Route path='/' element={<InitialPage />} />
               <Route path='/map' element={<MapPage />} />
-              <Route path='/modelversion' element={<ModelVersionPage />} />
-              <Route path='/login' element={<LoginPage />} />
               <Route path='/status' element={<StatusPage />} />
               <Route path='/modelA' element={<ModelAPage />} />
               <Route path='/modelB' element={<ModelBPage />} />
               <Route path='/modelC' element={<ModelCPage />} />
-              <Route path='/test' element={<Test />} />
+              <Route path='/modelversion' element={<ModelVersionPage />} />
+              <Route path='/resource' element={<Resource />} />
             </Routes>
           </Suspense>
         </Content>

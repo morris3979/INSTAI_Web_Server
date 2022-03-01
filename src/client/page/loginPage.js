@@ -8,10 +8,10 @@ const LoginPage = () => {
   return (
     <Row justify='space-around'>
       <Suspense fallback={<Spin size='large' />}>
-        <Col xs={24} sm={24} xl={10}>
+        <Col xs={24} sm={24} md={10}>
           <LoginForm />
         </Col>
-        <Col xs={24} sm={24} xl={10}>
+        <Col xs={24} sm={24} md={10}>
           <RegisterForm />
         </Col>
       </Suspense>
