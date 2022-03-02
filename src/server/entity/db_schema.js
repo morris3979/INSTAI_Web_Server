@@ -44,11 +44,13 @@ const UserSchema = new EntitySchema({
         updateAt: {
             nullable: "true",
             type: "datetime",
+            updateDate: true,
             name: "update_at",
         },
         deleteAt: {
             nullable: "true",
             type: "datetime",
+            deleteDate: true,
             name: "delete_at",
         },
     },
@@ -89,11 +91,13 @@ const CarNumberSchema = new EntitySchema({
         updateAt: {
             nullable: "true",
             type: "datetime",
+            updateDate: true,
             name: "update_at",
         },
         deleteAt: {
             nullable: "true",
             type: "datetime",
+            deleteDate: true,
             name: "delete_at",
         },
     },
@@ -144,11 +148,13 @@ const DetailsSchema = new EntitySchema({
         updateAt: {
             nullable: "true",
             type: "datetime",
+            updateDate: true,
             name: "update_at",
         },
         deleteAt: {
             nullable: "true",
             type: "datetime",
+            deleteDate: true,
             name: "delete_at",
         },
     },
