@@ -14,41 +14,41 @@ const UserSchema = new EntitySchema({
         },
         username: {
             type: "varchar",
-            default: "admin"
+            default: "0"
         },
         password: {
             type: "varchar",
-            default: "123",
+            default: "0",
         },
         administrator: {
             type: "int",
-            default: "1",
+            default: "0",
         },
-        pageA: {
+        modelA: {
             type: "int",
             default: "0",
         },
-        pageB: {
+        modelB: {
             type: "int",
             default: "0",
         },
-        pageC: {
+        modelC: {
             type: "int",
             default: "0",
         },
         createAt: {
             type: "datetime",
-            default: "1970-01-01 08:00:00",
+            createDate: true,
             name: "created_at",
         },
         updateAt: {
+            nullable: "true",
             type: "datetime",
-            default: "1970-01-01 08:00:00",
             name: "update_at",
         },
         deleteAt: {
+            nullable: "true",
             type: "datetime",
-            default: "1970-01-01 08:00:00",
             name: "delete_at",
         },
     },
@@ -83,17 +83,17 @@ const CarNumberSchema = new EntitySchema({
         },
         createAt: {
             type: "datetime",
-            default: "1970-01-01 08:00:00",
+            createDate: true,
             name: "created_at",
         },
         updateAt: {
+            nullable: "true",
             type: "datetime",
-            default: "1970-01-01 08:00:00",
             name: "update_at",
         },
         deleteAt: {
+            nullable: "true",
             type: "datetime",
-            default: "1970-01-01 08:00:00",
             name: "delete_at",
         },
     },
@@ -138,17 +138,17 @@ const DetailsSchema = new EntitySchema({
         },
         createAt: {
             type: "datetime",
-            default: "1970-01-01 08:00:00",
+            createDate: true,
             name: "created_at",
         },
         updateAt: {
+            nullable: "true",
             type: "datetime",
-            default: "1970-01-01 08:00:00",
             name: "update_at",
         },
         deleteAt: {
+            nullable: "true",
             type: "datetime",
-            default: "1970-01-01 08:00:00",
             name: "delete_at",
         },
     },

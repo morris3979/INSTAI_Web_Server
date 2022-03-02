@@ -28,8 +28,7 @@ carnumberRouter.post("/", async (req, res) => {
   const modelName = req.body.modelName;
   const version = req.body.version;
   const plateNumber = req.body.plateNumber;
-  const createAt = new Date(new Date().toLocaleDateString());
-  async function insertCarNumber(boardId, modelName, version, plateNumber, createAt) {
+  async function insertCarNumber(boardId, modelName, version, plateNumber) {
     const connection = await getConnection();
     const findBoardId = await connection.getRepository(CarNumber).findOne({
       boardId: req.body.boardId,
@@ -44,7 +43,6 @@ carnumberRouter.post("/", async (req, res) => {
       carnumbers.modelName = modelName;
       carnumbers.version = version;
       carnumbers.plateNumber = plateNumber;
-      carnumbers.createAt = createAt;
       //save
       await connection.getRepository(CarNumber).save(carnumbers);
       connection.close();
@@ -56,7 +54,7 @@ carnumberRouter.post("/", async (req, res) => {
     return existed;
   }
   try{
-    const carnumbers = await insertCarNumber(boardId, modelName, version, plateNumber, createAt);
+    const carnumbers = await insertCarNumber(boardId, modelName, version, plateNumber);
     res.status(200).json(carnumbers);
   } catch (e) {
     console.log(e);

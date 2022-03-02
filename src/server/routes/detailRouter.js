@@ -31,8 +31,7 @@ detailsRouter.post("/", async (req, res) => {
   const speed = req.body.speed;
   const event = req.body.event;
   const position = req.body.position;
-  const createAt = new Date(new Date().toLocaleDateString());
-  async function insertDetail(startingTime, gpsState, speed, event, position, createAt) {
+  async function insertDetail(startingTime, gpsState, speed, event, position) {
     const connection = await getConnection();
     //create
     const details = new Details();
@@ -42,7 +41,6 @@ detailsRouter.post("/", async (req, res) => {
     details.speed = speed;
     details.event = event;
     details.position = position;
-    details.createAt = createAt;
     //save
     const detailRepo = connection.getRepository(Details);
     const allDetails = await detailRepo.find();
@@ -52,7 +50,7 @@ detailsRouter.post("/", async (req, res) => {
     return allDetails;
   }
   try{
-    const details = await insertDetail(startingTime, gpsState, speed, event, position, createAt);
+    const details = await insertDetail(startingTime, gpsState, speed, event, position);
     res.status(200).json(details);
   } catch (e) {
     console.log(e);

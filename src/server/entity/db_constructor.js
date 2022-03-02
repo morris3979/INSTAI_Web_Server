@@ -1,12 +1,12 @@
 class User {
-    constructor(id, username, password, administrator, pageA, pageB, pageC, createAt, updateAt, deleteAt) {
+    constructor(id, username, password, administrator, modelA, modelB, modelC, createAt, updateAt, deleteAt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.administrator = administrator;
-        this.pageA = pageA;
-        this.pageB = pageB;
-        this.pageC = pageC;
+        this.modelA = modelA;
+        this.modelB = modelB;
+        this.modelC = modelC;
         this.createAt = createAt;
         this.updateAt = updateAt;
         this.deleteAt = deleteAt;

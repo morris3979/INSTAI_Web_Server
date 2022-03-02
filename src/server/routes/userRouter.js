@@ -26,12 +26,7 @@ userRouter.get('/', async(req, res) => {
 userRouter.post("/register", async (req, res) => {
   const username = req.body.username;
   const password = bcrypt.hashSync(req.body.password, 10);
-  const administrator = req.body.administrator;
-  const pageA = req.body.pageA;
-  const pageB = req.body.pageB;
-  const pageC = req.body.pageC;
-  const createAt = new Date(new Date().toLocaleDateString());
-  async function insertUser(username, password, administrator, pageA, pageB, pageC, createAt) {
+  async function insertUser(username, password) {
     const connection = await getConnection();
     const findUserName = await connection.getRepository(User).findOne({
       username: req.body.username,
@@ -41,11 +36,6 @@ userRouter.post("/register", async (req, res) => {
       const users = new User();
       users.username = username;
       users.password = password;
-      users.administrator = administrator;
-      users.pageA = pageA;
-      users.pageB = pageB;
-      users.pageC = pageC;
-      users.createAt = createAt;
       //save
       await connection.getRepository(User).save(users);
       connection.close();
@@ -57,7 +47,7 @@ userRouter.post("/register", async (req, res) => {
     return existed;
   }
   try{
-    const users = await insertUser(username, password, administrator, pageA, pageB, pageC, createAt);
+    const users = await insertUser(username, password);
     res.status(200).json(users);
   } catch (e) {
     console.log(e);
