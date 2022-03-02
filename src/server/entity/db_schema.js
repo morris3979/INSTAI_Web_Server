@@ -14,27 +14,27 @@ const UserSchema = new EntitySchema({
         },
         username: {
             type: "varchar",
-            default: "0"
+            default: "null"
         },
         password: {
             type: "varchar",
-            default: "0",
+            default: "null",
         },
         administrator: {
-            type: "int",
-            default: "0",
+            type: "boolean",
+            default: false,
         },
         modelA: {
-            type: "int",
-            default: "0",
+            type: "boolean",
+            default: false,
         },
         modelB: {
-            type: "int",
-            default: "0",
+            type: "boolean",
+            default: false,
         },
         modelC: {
-            type: "int",
-            default: "0",
+            type: "boolean",
+            default: false,
         },
         createAt: {
             type: "datetime",

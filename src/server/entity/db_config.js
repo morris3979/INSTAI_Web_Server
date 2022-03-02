@@ -12,7 +12,7 @@ async function getConnection() {
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
         timezone: "SYSTEM",
-        synchronize: true,
+        synchronize: false,
         migration: true,
         logging: false,
         entities: [

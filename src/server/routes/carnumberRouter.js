@@ -69,8 +69,7 @@ carnumberRouter.patch("/:id", async (req, res) => {
   const modelName = req.body.modelName;
   const version = req.body.version;
   const plateNumber = req.body.plateNumber;
-  const updateAt = new Date(new Date().toLocaleDateString());
-  async function patchCarNumber(boardId, modelName, version, plateNumber, updateAt) {
+  async function patchCarNumber(boardId, modelName, version, plateNumber) {
     const connection = await getConnection();
     //patch
     const carnumberRepo = connection.getRepository(CarNumber);
@@ -79,7 +78,6 @@ carnumberRouter.patch("/:id", async (req, res) => {
     carnumber.modelName = modelName;
     carnumber.version = version;
     carnumber.plateNumber = plateNumber;
-    carnumber.updateAt = updateAt;
     const updateCarnumbers = await carnumberRepo.findOne(id);
     //if not find id, it will be sent not found.
     if (!updateCarnumbers) {
@@ -98,16 +96,13 @@ carnumberRouter.patch("/:id", async (req, res) => {
     if (carnumber.plateNumber) {
       updateCarnumbers.plateNumber = carnumber.plateNumber;
     }
-    if (carnumber.updateAt) {
-      updateCarnumbers.updateAt = carnumber.updateAt;
-    }
     await connection.getRepository(CarNumber).save(updateCarnumbers);
     connection.close();
     //return new list
     return updateCarnumbers;
   }
   try{
-    const carnumbers = await patchCarNumber(boardId, modelName, version, plateNumber, updateAt);
+    const carnumbers = await patchCarNumber(boardId, modelName, version, plateNumber);
     res.status(204).json(carnumbers);
   } catch (e) {
     console.log(e);
@@ -122,7 +117,7 @@ carnumberRouter.delete("/:id", async (req, res) => {
     const connection = await getConnection();
     //delete
     const carnumberRepo = connection.getRepository(CarNumber);
-    const allCarnumbers = await carnumberRepo.delete(id);
+    const allCarnumbers = await carnumberRepo.softDelete(id);
     connection.close();
     //return new list
     return allCarnumbers;
