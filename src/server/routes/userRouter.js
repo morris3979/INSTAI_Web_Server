@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
+const bcrypt = require('bcrypt');
 const { getConnection } = require("../entity/db_config");
 const { User } = require("../entity/db_constructor");
 
@@ -24,7 +25,7 @@ userRouter.get('/', async(req, res) => {
 //POST
 userRouter.post("/register", async (req, res) => {
   const username = req.body.username;
-  const password = req.body.password;
+  const password = bcrypt.hashSync(req.body.password, 10);
   const administrator = req.body.administrator;
   const pageA = req.body.pageA;
   const pageB = req.body.pageB;
@@ -32,23 +33,28 @@ userRouter.post("/register", async (req, res) => {
   const createAt = new Date(new Date().toLocaleDateString());
   async function insertUser(username, password, administrator, pageA, pageB, pageC, createAt) {
     const connection = await getConnection();
+    const findUserName = await connection.getRepository(User).findOne({
+      username: req.body.username,
+    });
     //create
-    const users = new User();
-    users.id = id;
-    users.username = username;
-    users.password = password;
-    users.administrator = administrator;
-    users.pageA = pageA;
-    users.pageB = pageB;
-    users.pageC = pageC;
-    users.createAt = createAt;
-    //save
-    const userRepo = connection.getRepository(User);
-    const allUsers = await userRepo.find();
-    await connection.getRepository(CarNumber).save(allUsers);
+    if (!findUserName) {
+      const users = new User();
+      users.username = username;
+      users.password = password;
+      users.administrator = administrator;
+      users.pageA = pageA;
+      users.pageB = pageB;
+      users.pageC = pageC;
+      users.createAt = createAt;
+      //save
+      await connection.getRepository(User).save(users);
+      connection.close();
+      //return new list
+      return users;
+    }
+    const existed = "Existed";
     connection.close();
-    //return new list
-    return allUsers;
+    return existed;
   }
   try{
     const users = await insertUser(username, password, administrator, pageA, pageB, pageC, createAt);

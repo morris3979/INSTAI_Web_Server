@@ -51,7 +51,7 @@ carnumberRouter.post("/", async (req, res) => {
       //return new list
       return carnumbers;
     }
-    const existed = "existed";
+    const existed = "Existed";
     connection.close();
     return existed;
   }
