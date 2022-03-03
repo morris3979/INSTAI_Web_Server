@@ -41,7 +41,7 @@ carnumberRouter.patch("/:id", async (req, res) => {
   const version = req.body.version;
   const plateNumber = req.body.plateNumber;
   try{
-    const carnumbers = await patchCarNumber(boardId, modelName, version, plateNumber);
+    const carnumbers = await patchCarNumber(id, boardId, modelName, version, plateNumber);
     res.status(204).json(carnumbers);
   } catch (e) {
     console.log(e);

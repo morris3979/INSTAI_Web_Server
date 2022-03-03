@@ -13,10 +13,10 @@ async function getCarNumbers() {
 async function insertCarNumber(boardId, modelName, version, plateNumber) {
     const connection = await getConnection();
     const findBoardId = await connection.getRepository(CarNumber).findOne({
-      boardId: req.body.boardId,
+      boardId: boardId,
     });
     const findPlateNumber = await connection.getRepository(CarNumber).findOne({
-      plateNumber: req.body.plateNumber,
+      plateNumber: plateNumber,
     });
     //Create, if boardId & plateNumber is existed, it will be not created.
     if (!(findBoardId || findPlateNumber)) {
@@ -36,7 +36,7 @@ async function insertCarNumber(boardId, modelName, version, plateNumber) {
     return existed;
 }
 
-async function patchCarNumber(boardId, modelName, version, plateNumber) {
+async function patchCarNumber(id, boardId, modelName, version, plateNumber) {
     const connection = await getConnection();
     //patch
     const carnumberRepo = connection.getRepository(CarNumber);

@@ -12,7 +12,7 @@ async function getUsers() {
 async function insertUser(username, password) {
     const connection = await getConnection();
     const findUserName = await connection.getRepository(User).findOne({
-      username: req.body.username,
+      username: username,
     });
     //create
     if (!findUserName) {
