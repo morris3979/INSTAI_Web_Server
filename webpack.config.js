@@ -3,15 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const outputDirectory = 'dist';
+
 module.exports = {
   entry: ['babel-polyfill', './src/client/index.js'],
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader'
-      }
+      loader: 'babel-loader',
     },
     {
       test: /\.css$/,
@@ -40,6 +39,16 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:8080'
+    }
+  },
+  performance: {
+    hints: "warning",
+    hints: "error",
+    hints: false,
+    maxAssetSize: 200000,
+    maxEntrypointSize: 400000,
+    assetFilter: function(assetFilename) {
+      return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
     }
   },
   plugins: [
