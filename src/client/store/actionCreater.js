@@ -2,8 +2,36 @@ import axios from 'axios'
 import { message, Modal } from 'antd'
 import {
   Get_Model_Version_Table, Table_Status, Map_Position, Status_Table,
-  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal
+  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
+  Login_Flag
 } from './actionType'
+
+export const LoginFlag = () => {
+  return ({
+    type: Login_Flag
+  })
+}
+
+export const RegisterFormData = (data) => {
+  return (
+    async () => {
+      message.loading('註冊中，請稍後...', 0)
+      const convertedData = {}
+      delete data['registerConfirmPassword']
+      Object.keys(data).forEach((key) => {
+        convertedData[String(key).slice(8)] = data[key]
+      })
+      try {
+        await axios.post('/api/user/register', convertedData)
+        message.destroy()
+        message.success('註冊成功')
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
 
 export const MapPosition = (data) => {
   return ({

@@ -15,14 +15,14 @@ const LoginForm = () => {
       <Form size='large' layout='vertical'>
         <Item
           label='Username'
-          name='loginUsername'
+          name='loginusername'
           rules={[{ required: true, message: '請輸入帳號' }]}
         >
           <Input />
         </Item>
         <Item
           label='Password'
-          name='loginPassword'
+          name='loginpassword'
           rules={[{ required: true, message: '請輸入密碼' }]}
         >
           <Password />

@@ -11,7 +11,6 @@ const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
 const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
-const Test = lazy(() => import('./component/reportPage/test'))
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
@@ -20,7 +19,7 @@ const App = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider breakpoint='md' collapsedWidth='0'>
-        <Menu theme='dark' defaultSelectedKeys={['/']} selectedKeys={[]}>
+        <Menu theme='dark' selectedKeys={[]}>
           <Item key='/map'>
             <Link to='/map'>
               地圖資訊
@@ -65,6 +64,7 @@ const App = () => {
           <Suspense fallback={<Spin size='large' />}>
             <Routes>
               <Route path='/' element={<InitialPage />} />
+              <Route path='/login' element={<LoginPage />} />
               <Route path='/map' element={<MapPage />} />
               <Route path='/status' element={<StatusPage />} />
               <Route path='/modelA' element={<ModelAPage />} />
