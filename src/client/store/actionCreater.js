@@ -12,6 +12,25 @@ export const LoginFlag = () => {
   })
 }
 
+export const LoginFormData = (data) => {
+  return (
+    () => {
+      message.loading('登入中，請稍後...', 0)
+      try {
+        const convertedData = {}
+        Object.keys(data).forEach((key) => {
+          convertedData[String(key).slice(5)] = data[key]
+        })
+        console.log(convertedData)
+        message.destroy()
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const RegisterFormData = (data) => {
   return (
     async () => {
