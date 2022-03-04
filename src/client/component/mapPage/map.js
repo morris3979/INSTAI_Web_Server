@@ -3,19 +3,21 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { message } from 'antd'
 import L from 'leaflet'
-import 'leaflet.locatecontrol'
+//import 'leaflet.locatecontrol'
 //import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
 import { MapPosition } from '../../store/actionCreater'
 import 'leaflet/dist/leaflet.css'
-import 'leaflet.locatecontrol/dist/L.control.Locate.css'
+//import 'leaflet.locatecontrol/dist/L.control.Locate.css'
 //import 'leaflet-geosearch/dist/geosearch.css'
+import greenCar from '../../icon image/green car.png'
+import redCar from '../../icon image/red car.png'
 
 const greenIcon = L.icon({
-  iconUrl: require('../../icon image/green car.png'),
+  iconUrl: greenCar,
   iconSize: [48, 48]
 })
 const redIcon = L.icon({
-  iconUrl: require('../../icon image/red car.png'),
+  iconUrl: redCar,
   iconSize: [48, 48]
 })
 
@@ -51,7 +53,7 @@ const showMap = () => {
   const map = L.map('map').setView([25.0426, 121.535], 17)
   const OSMUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
   L.tileLayer(OSMUrl).addTo(map)
-  L.control.locate().addTo(map)
+  //L.control.locate().addTo(map)
   //map.addControl(searchControl)
   if (location.length > 0) {
     location.map((item) => {

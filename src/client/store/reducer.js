@@ -25,7 +25,7 @@ const reducer = (state = defaultState, action) => {
       return newState
     }
     case Login_Flag: {
-      newState.loginFlag = true
+      newState.loginFlag = !newState.loginFlag
       return newState
     }
     case Get_Model_Version_Table: {
@@ -61,7 +61,7 @@ const reducer = (state = defaultState, action) => {
       return newState
     }
     default: {
-      return newState
+      return state
     }
   }
 }

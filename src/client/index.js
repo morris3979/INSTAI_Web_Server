@@ -2,19 +2,22 @@ import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
 import { Spin } from 'antd'
-import store from './store/store'
+import store, { persistor } from './store/store'
 import 'antd/dist/antd.css'
 
 const App = lazy(() => import('./App'))
 
 const app = (
   <Provider store={store}>
-    <HashRouter>
-      <Suspense fallback={<Spin size='large' />}>
-        <App />
-      </Suspense>
-    </HashRouter>
+    <PersistGate persistor={persistor}>
+      <HashRouter>
+        <Suspense fallback={<Spin size='large' />}>
+          <App />
+        </Suspense>
+      </HashRouter>
+    </PersistGate>
   </Provider>
 )
 
