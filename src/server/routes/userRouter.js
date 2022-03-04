@@ -3,16 +3,29 @@ const userRouter = express.Router();
 const bcrypt = require('bcrypt');
 const {
   getUsers,
+  getUserName,
   insertUser,
   patchUser,
   deleteUser
-} = require("../controllers/db.user.controller")
+} = require("../controllers/db.user.controller");
 
 //GET
 userRouter.get('/', async(req, res) => {
   try{
     const users = await getUsers();
     res.json(users);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+//GET
+userRouter.get('/:username', async(req, res) => {
+  const username = String(req.params.username);
+  try{
+    const getUser = await getUserName(username);
+    res.json(getUser);
   } catch (e) {
     console.log(e);
     res.sendStatus(500);

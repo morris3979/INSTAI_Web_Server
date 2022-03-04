@@ -2,11 +2,20 @@ const { getConnection } = require("../entity/db_config");
 const { User } = require("../entity/db_constructor");
 
 async function getUsers() {
-    const connection = await getConnection();
-    const userRepo = connection.getRepository(User);
-    const users = await userRepo.find();
-    connection.close();
-    return users;
+  const connection = await getConnection();
+  const userRepo = connection.getRepository(User);
+  const users = await userRepo.find();
+  connection.close();
+  return users;
+}
+
+async function getUserName(username) {
+  const connection = await getConnection();
+  const users = await connection.getRepository(User).findOne({
+    username: username,
+  });
+  connection.close();
+  return users;
 }
 
 async function insertUser(username, password) {
@@ -88,4 +97,4 @@ async function deleteUser(id) {
     return admin;
 }
 
-module.exports = { getUsers, insertUser, patchUser, deleteUser }
+module.exports = { getUsers, getUserName, insertUser, patchUser, deleteUser }
