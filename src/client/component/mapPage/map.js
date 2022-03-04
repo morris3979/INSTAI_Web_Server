@@ -9,13 +9,15 @@ import { MapPosition } from '../../store/actionCreater'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.locatecontrol/dist/L.control.Locate.css'
 //import 'leaflet-geosearch/dist/geosearch.css'
+import greenCar from '../../icon image/green car.png'
+import redCar from '../../icon image/red car.png'
 
 const greenIcon = L.icon({
-  iconUrl: require('../../icon image/green car.png'),
+  iconUrl: greenCar,
   iconSize: [48, 48]
 })
 const redIcon = L.icon({
-  iconUrl: require('../../icon image/red car.png'),
+  iconUrl: redCar,
   iconSize: [48, 48]
 })
 

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Table, Image } from 'antd'
+import greenCar from '../../icon image/green car.png'
+import redCar from '../../icon image/red car.png'
 
 const { Column } = Table
 
@@ -19,7 +21,7 @@ const iconStyle = (text) => {
     return (
       <Image
         width={32}
-        src={require('../../icon image/green car.png')}
+        src={greenCar}
         preview={false}
       />
     )
@@ -27,7 +29,7 @@ const iconStyle = (text) => {
     return (
       <Image
         width={32}
-        src={require('../../icon image/red car.png')}
+        src={redCar}
         preview={false}
       />
     )
