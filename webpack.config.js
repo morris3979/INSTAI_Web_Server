@@ -5,7 +5,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const outputDirectory = 'dist';
 
 module.exports = {
+  mode: "production",
   entry: ['babel-polyfill', './src/client/index.js'],
+  output: {
+    path: path.join(__dirname, outputDirectory),
+    filename: 'js/[name].bundle.js'
+  },
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
@@ -29,18 +34,6 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx', ".css", ".scss"]
   },
-  output: {
-    path: path.join(__dirname, outputDirectory),
-    filename: 'js/[name].bundle.js'
-  },
-  devServer: {
-    port: 3000,
-    open: true,
-    historyApiFallback: true,
-    proxy: {
-      '/api': 'http://localhost:8080'
-    }
-  },
   performance: {
     hints: "warning",
     hints: "error",
@@ -51,6 +44,7 @@ module.exports = {
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
     }
   },
+  devtool: "inline-source-map",
   plugins: [
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: outputDirectory
