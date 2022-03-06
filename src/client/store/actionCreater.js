@@ -14,14 +14,15 @@ export const LoginFlag = () => {
 
 export const LoginFormData = (data) => {
   return (
-    () => {
+    async (dispatch) => {
       message.loading('登入中，請稍後...', 0)
+      const convertedData = {}
+      Object.keys(data).forEach((key) => {
+        convertedData[String(key).slice(5)] = data[key]
+      })
       try {
-        const convertedData = {}
-        Object.keys(data).forEach((key) => {
-          convertedData[String(key).slice(5)] = data[key]
-        })
-        console.log(convertedData)
+        const response = await axios.get(`/api/user/${convertedData['username']}`)
+        console.log(response.data)
         message.destroy()
       } catch (error) {
         message.destroy()
