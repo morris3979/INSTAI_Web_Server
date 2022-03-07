@@ -1,9 +1,11 @@
-require('dotenv').config();const express = require('express');
+require('dotenv').config();
+const express = require('express');
 const userRouter = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { getConnection } = require("../entity/db_config");
 const { User } = require("../entity/db_constructor");
+const auth = require("../middleware/auth");
 
 //POST register
 userRouter.post("/register", async (req, res) => {
@@ -72,6 +74,10 @@ userRouter.post('/login', async(req, res) => {
     console.log(e);
     res.sendStatus(500);
   }
+});
+
+userRouter.post("/welcome", auth, (req, res) => {
+  res.status(200).send("Welcome 🙌 ");
 });
 
 //PATCH
