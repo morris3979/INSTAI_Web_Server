@@ -1,13 +1,13 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 import { Result } from 'antd'
 import { LikeOutlined } from '@ant-design/icons'
 
 const InitialPage = (props) => {
-  const { loginFlag } = props
+  const { loginInformation } = props
 
-  if (loginFlag == false) {
+  if (Object.keys(loginInformation).length == 0) {
     return (
       <Navigate to='/login' />
     )
@@ -21,7 +21,7 @@ const InitialPage = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    loginFlag: state.loginFlag
+    loginInformation: state.loginInformation
   }
 }
 

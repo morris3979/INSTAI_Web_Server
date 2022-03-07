@@ -3,15 +3,48 @@ import { message, Modal } from 'antd'
 import {
   Get_Model_Version_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Flag
+  Login_Information
 } from './actionType'
 
-export const LoginFlag = () => {
+//共用Function <<<
+export const TableStatus = () => {
   return ({
-    type: Login_Flag
+    type: Table_Status
   })
 }
 
+export const DeliverData = (data, actionType) => {
+  return ({
+    type: actionType,
+    value: data
+  })
+}
+// >>>
+
+//獨立Function <<<
+export const MapPosition = (data) => {
+  return ({
+    type: Map_Position,
+    value: data
+  })
+}
+
+export const GetModalFile = (data) => {
+  return ({
+    type: Modal_File,
+    value: data
+  })
+}
+
+export const SetWhichModal = (data) => {
+  return ({
+    type: Which_Modal,
+    value: data
+  })
+}
+// >>>
+
+//API Function <<<
 export const LoginFormData = (data) => {
   return (
     async (dispatch) => {
@@ -21,7 +54,25 @@ export const LoginFormData = (data) => {
         convertedData[String(key).slice(5)] = data[key]
       })
       try {
-        //const response = await axios.get(`/api/user/${convertedData['username']}`)
+        const response = await axios.post('/api/user/login', convertedData)
+        const action = LoginToken(response.data)
+        dispatch(action)
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const LoginToken = (data) => {
+  return (
+    async (dispatch) => {
+      const headers = { 'x-access-token': data.token }
+      try {
+        await axios.post('/api/user/welcome', 'Welcome 🙌 ', { headers: headers })
+        const action = DeliverData(data, Login_Information)
+        dispatch(action)
         message.destroy()
       } catch (error) {
         message.destroy()
@@ -41,39 +92,15 @@ export const RegisterFormData = (data) => {
         convertedData[String(key).slice(8)] = data[key]
       })
       try {
-        const response = await axios.post('/api/user/register', convertedData)
+        await axios.post('/api/user/register', convertedData)
         message.destroy()
-        if (response.data == 'Existed') {
-          message.warning('帳號已註冊')
-        } else {
-          message.success('註冊成功')
-        }
+        message.success('註冊成功')
       } catch (error) {
         message.destroy()
         message.error(`${error}`)
       }
     }
   )
-}
-
-export const MapPosition = (data) => {
-  return ({
-    type: Map_Position,
-    value: data
-  })
-}
-
-export const TableStatus = () => {
-  return ({
-    type: Table_Status
-  })
-}
-
-export const TableData = (data, actionType) => {
-  return ({
-    type: actionType,
-    value: data
-  })
 }
 
 export const GetModelVersionTableData = () => {
@@ -83,7 +110,7 @@ export const GetModelVersionTableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/carnumber')
-        const action = TableData(response.data, Get_Model_Version_Table)
+        const action = DeliverData(response.data, Get_Model_Version_Table)
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
@@ -144,8 +171,7 @@ export const PostModelVersionTableData = (data) => {
     async (dispatch) => {
       message.loading('新增中，請稍後...', 0)
       try {
-        const response = await axios.post('/api/carnumber', data)
-        console.log(response)
+        await axios.post('/api/carnumber', data)
         message.destroy()
         Modal.success({
           title: '新增成功',
@@ -169,7 +195,7 @@ export const GetStatusTableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/details')
-        const action = TableData(response.data, Status_Table)
+        const action = DeliverData(response.data, Status_Table)
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
@@ -179,20 +205,6 @@ export const GetStatusTableData = () => {
       }
     }
   )
-}
-
-export const GetModalFile = (data) => {
-  return ({
-    type: Modal_File,
-    value: data
-  })
-}
-
-export const SetWhichModal = (data) => {
-  return ({
-    type: Which_Modal,
-    value: data
-  })
 }
 
 export const GetModelATableData = () => {
@@ -205,7 +217,7 @@ export const GetModelATableData = () => {
         const filterData = response.data.filter((value) => {
           return (value.CarNumber.modelName[0] == 'A')
         })
-        const action = TableData(filterData, Model_A_Table)
+        const action = DeliverData(filterData, Model_A_Table)
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
@@ -227,7 +239,7 @@ export const GetModelBTableData = () => {
         const filterData = response.data.filter((value) => {
           return (value.CarNumber.modelName[0] == 'B')
         })
-        const action = TableData(filterData, Model_B_Table)
+        const action = DeliverData(filterData, Model_B_Table)
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
@@ -249,7 +261,7 @@ export const GetModelCTableData = () => {
         const filterData = response.data.filter((value) => {
           return (value.CarNumber.modelName[0] == 'C')
         })
-        const action = TableData(filterData, Model_C_Table)
+        const action = DeliverData(filterData, Model_C_Table)
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
@@ -260,3 +272,4 @@ export const GetModelCTableData = () => {
     }
   )
 }
+// >>>

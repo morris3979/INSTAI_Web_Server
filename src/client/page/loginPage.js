@@ -7,9 +7,9 @@ const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
 const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
 
 const LoginPage = (props) => {
-  const { loginFlag } = props
+  const { loginInformation } = props
 
-  if (loginFlag == false) {
+  if (Object.keys(loginInformation).length == 0) {
     return (
       <Row justify='space-around'>
         <Suspense fallback={<Spin size='large' />}>
@@ -32,7 +32,7 @@ const LoginPage = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    loginFlag: state.loginFlag
+    loginInformation: state.loginInformation
   }
 }
 

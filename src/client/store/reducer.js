@@ -1,11 +1,11 @@
 import {
   Table_Status, Get_Model_Version_Table, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Flag
+  Login_Information
 } from './actionType'
 
 const defaultState = {
-  loginFlag: false,
+  loginInformation: {},
   tableStatus: false,
   modelVersionTableData: [],
   mapPositionData: [],
@@ -24,8 +24,9 @@ const reducer = (state = defaultState, action) => {
       newState.tableStatus = !newState.tableStatus
       return newState
     }
-    case Login_Flag: {
-      newState.loginFlag = !newState.loginFlag
+    case Login_Information: {
+      newState.loginInformation = action.value
+      console.log(newState.loginInformation)
       return newState
     }
     case Get_Model_Version_Table: {

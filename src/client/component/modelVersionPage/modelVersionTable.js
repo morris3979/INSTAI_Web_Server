@@ -151,12 +151,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    getModelVersionTableData() {
-      const action = GetModelVersionTableData()
-      dispatch(action)
-    },
     setWhichModal(text) {
       const action = SetWhichModal(text)
+      dispatch(action)
+    },
+    getModelVersionTableData() {
+      const action = GetModelVersionTableData()
       dispatch(action)
     },
     deleteModelVersionTableData(id) {
