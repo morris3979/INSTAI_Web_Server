@@ -55,7 +55,9 @@ userRouter.post('/login', async(req, res) => {
     const user = await connection.getRepository(User).findOne({
       username: username,
     });
-    if (user && (await bcrypt.compare(password, user.password))) {
+    const comparePwd = await bcrypt.compare(password, user.password);
+    const mode = user.administrator || user.modelA || user.modelB || user.modelC;
+    if (user && comparePwd && (mode == true)) {
       const token = jwt.sign(
         { users_id: user._id, username },
         process.env.TOKEN_KEY,
@@ -78,7 +80,7 @@ userRouter.post('/login', async(req, res) => {
 
 // POST welcome
 userRouter.post("/welcome", auth, (req, res) => {
-  res.status(200).send("Welcome 🙌 ");
+  res.status(200).send("Welcome！ ");
 });
 
 // GET
@@ -87,6 +89,10 @@ userRouter.get("/", async (req, res) => {
     const connection = await getConnection();
     const userRepo = connection.getRepository(User);
     const users = await userRepo.find();
+    const findUser = await users.filter((t) => {
+    const {username, administrator, modelA, modelB, modelC} = t;
+      console.log("1:", )
+    });
     connection.close();
     res.json(users);
     return users;
