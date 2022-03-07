@@ -76,6 +76,7 @@ userRouter.post('/login', async(req, res) => {
   }
 });
 
+// POST welcome
 userRouter.post("/welcome", auth, (req, res) => {
   res.status(200).send("Welcome 🙌 ");
 });
@@ -116,58 +117,25 @@ userRouter.patch("/:username", async (req, res) => {
   }
 })
 
-//DELETE
-// userRouter.delete("/:id", async (req, res) => {
-//   const id = Number(req.params.id);
-//   try{
-//     const users = await deleteUser(id);
-//     res.status(204).json(users);
-//   } catch (e) {
-//     console.log(e);
-//     res.sendStatus(500);
-//   }
-// })
+// DELETE
+userRouter.delete("/:id", async (req, res) => {
+  try{
+    const id = req.params.id;
+    const connection = await getConnection();
+    const userRepo = connection.getRepository(User);
+    const findAdmin = await userRepo.findOne(id);
+    if (findAdmin.administrator == false) {
+      const deletedUser = await userRepo.softDelete(id);
+      connection.close();
+      res.status(204).json(deletedUser);
+      //return new list
+      return deletedUser;
+    }
+    res.status(403).send("Forbidden");
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+})
 
 module.exports = [ userRouter ];
-
-
-// async function patchUser(id, username, password, administrator, modelA, modelB, modelC) {
-//   const connection = await getConnection();
-//   //patch
-//   const userRepo = connection.getRepository(User);
-//   const user = new User();
-//   user.username = username;
-//   user.password = password;
-//   user.administrator = administrator;
-//   user.modelA = modelA;
-//   user.modelB = modelB;
-//   user.modelC = modelC;
-//   const updateUsers = await userRepo.findOne(id);
-//   //if not find id, it will be sent not found.
-//   if (!updateUsers) {
-//     res.sendStatus(404);
-//     return;
-//   }
-//   if (user.username) {
-//     updateUsers.username = user.username;
-//   }
-//   if (user.password) {
-//     updateUsers.password = user.password;
-//   }
-//   if (user.administrator) {
-//     updateUsers.administrator = user.administrator;
-//   }
-//   if (user.modelA) {
-//     updateUsers.modelA = user.modelA;
-//   }
-//   if (user.modelB) {
-//     updateUsers.modelB = user.modelB;
-//   }
-//   if (user.modelC) {
-//     updateUsers.modelC = user.modelC;
-//   }
-//   await connection.getRepository(User).save(updateUsers);
-//   connection.close();
-//   //return new list
-//   return updateUsers;
-// }
