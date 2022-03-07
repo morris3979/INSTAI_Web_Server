@@ -3,9 +3,9 @@ const express = require('express');
 const userRouter = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const auth = require("../middleware/auth");
 const { getConnection } = require("../entity/db_config");
 const { User } = require("../entity/db_constructor");
-const auth = require("../middleware/auth");
 
 //POST register
 userRouter.post("/register", async (req, res) => {
@@ -80,23 +80,41 @@ userRouter.post("/welcome", auth, (req, res) => {
   res.status(200).send("Welcome 🙌 ");
 });
 
-//PATCH
-// userRouter.patch("/:id", async (req, res) => {
-//   const id = Number(req.params.id);
-//   const username = req.body.username;
-//   const password = bcrypt.hashSync(req.body.password, 10);
-//   const administrator = req.body.administrator;
-//   const modelA = req.body.modelA;
-//   const modelB = req.body.modelB;
-//   const modelC = req.body.modelC;
-//   try{
-//     const users = await patchUser(id, username, password, administrator, modelA, modelB, modelC);
-//     res.status(204).json(users);
-//   } catch (e) {
-//     console.log(e);
-//     res.sendStatus(500);
-//   }
-// })
+// PATCH
+userRouter.patch("/:username", async (req, res) => {
+  try{
+    const userName = req.params.username;
+    const { username, password, administrator, modelA, modelB, modelC } = req.body;
+    const connection = await getConnection();
+    const user = await connection.getRepository(User).findOne({
+      username: userName,
+    });
+    if (user) {
+      user.username = username;
+      user.password = bcrypt.hashSync(password, 10);
+      user.administrator = administrator;
+      user.modelA = modelA;
+      user.modelB = modelB;
+      user.modelC = modelC;
+      const token = jwt.sign(
+        { users_id: user._id, username },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
+      user.token = token;
+      await connection.getRepository(User).save(user);
+      connection.close();
+      res.status(204).json(user);
+      return user;
+    }
+    res.status(404).send("Not Found");
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+})
 
 //DELETE
 // userRouter.delete("/:id", async (req, res) => {
@@ -111,3 +129,45 @@ userRouter.post("/welcome", auth, (req, res) => {
 // })
 
 module.exports = [ userRouter ];
+
+
+// async function patchUser(id, username, password, administrator, modelA, modelB, modelC) {
+//   const connection = await getConnection();
+//   //patch
+//   const userRepo = connection.getRepository(User);
+//   const user = new User();
+//   user.username = username;
+//   user.password = password;
+//   user.administrator = administrator;
+//   user.modelA = modelA;
+//   user.modelB = modelB;
+//   user.modelC = modelC;
+//   const updateUsers = await userRepo.findOne(id);
+//   //if not find id, it will be sent not found.
+//   if (!updateUsers) {
+//     res.sendStatus(404);
+//     return;
+//   }
+//   if (user.username) {
+//     updateUsers.username = user.username;
+//   }
+//   if (user.password) {
+//     updateUsers.password = user.password;
+//   }
+//   if (user.administrator) {
+//     updateUsers.administrator = user.administrator;
+//   }
+//   if (user.modelA) {
+//     updateUsers.modelA = user.modelA;
+//   }
+//   if (user.modelB) {
+//     updateUsers.modelB = user.modelB;
+//   }
+//   if (user.modelC) {
+//     updateUsers.modelC = user.modelC;
+//   }
+//   await connection.getRepository(User).save(updateUsers);
+//   connection.close();
+//   //return new list
+//   return updateUsers;
+// }
