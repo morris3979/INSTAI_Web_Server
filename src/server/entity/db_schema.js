@@ -36,6 +36,10 @@ const UserSchema = new EntitySchema({
             type: "boolean",
             default: false,
         },
+        token: {
+            type: "varchar",
+            default: "null",
+        },
         createAt: {
             type: "datetime",
             createDate: true,

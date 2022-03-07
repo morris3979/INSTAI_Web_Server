@@ -1,5 +1,5 @@
 class User {
-    constructor(id, username, password, administrator, modelA, modelB, modelC) {
+    constructor(id, username, password, administrator, modelA, modelB, modelC, token) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -7,6 +7,7 @@ class User {
         this.modelA = modelA;
         this.modelB = modelB;
         this.modelC = modelC;
+        this.token = token;
     }
 }
 

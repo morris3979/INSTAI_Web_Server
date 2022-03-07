@@ -1,5 +1,6 @@
 const { getConnection } = require("../entity/db_config");
 const { User } = require("../entity/db_constructor");
+require('dotenv').config();
 
 async function getUsers() {
   const connection = await getConnection();
@@ -18,23 +19,24 @@ async function getUserName(username) {
   return users;
 }
 
-async function insertUser(username, password) {
+async function insertUser(username, password, token) {
     const connection = await getConnection();
-    const findUserName = await connection.getRepository(User).findOne({
+    const oldUser = await connection.getRepository(User).findOne({
       username: username,
     });
     //create
-    if (!findUserName) {
+    if (!oldUser) {
       const users = new User();
       users.username = username;
       users.password = password;
+      users.token = token;
       //save
       await connection.getRepository(User).save(users);
       connection.close();
       //return new list
       return users;
     }
-    const existed = "Existed";
+    const existed = "User Already Exist. Please Login";
     connection.close();
     return existed;
 }
