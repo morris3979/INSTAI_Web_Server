@@ -24,7 +24,7 @@ userRouter.post("/register", async (req, res) => {
     }
     const users = new User();
     const token = jwt.sign(
-      { users_id: users._id, username },
+      { _id: users.id, username },
       process.env.TOKEN_KEY,
       {
         expiresIn: "2h",
@@ -59,7 +59,7 @@ userRouter.post('/login', async(req, res) => {
     const mode = user.administrator || user.modelA || user.modelB || user.modelC;
     if (user && comparePwd && (mode == true)) {
       const token = jwt.sign(
-        { users_id: user._id, username },
+        { _id: user.id, username },
         process.env.TOKEN_KEY,
         {
           expiresIn: "2h",
