@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { Result } from 'antd'
-import { LikeOutlined } from '@ant-design/icons'
 
 const InitialPage = (props) => {
   const { loginInformation } = props
@@ -13,7 +12,7 @@ const InitialPage = (props) => {
     )
   } else {
     return (
-      <Result icon={<LikeOutlined />} title='歡迎使用' />
+      <Result status='success' title='登入成功，歡迎使用' />
     )
   }
 }
