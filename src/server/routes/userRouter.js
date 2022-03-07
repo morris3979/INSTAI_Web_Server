@@ -81,15 +81,28 @@ userRouter.post("/welcome", auth, (req, res) => {
   res.status(200).send("Welcome 🙌 ");
 });
 
-// PATCH
-userRouter.patch("/:username", async (req, res) => {
+// GET
+userRouter.get("/", async (req, res) => {
   try{
-    const userName = req.params.username;
+    const connection = await getConnection();
+    const userRepo = connection.getRepository(User);
+    const users = await userRepo.find();
+    connection.close();
+    res.json(users);
+    return users;
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+})
+
+// PATCH
+userRouter.patch("/:id", async (req, res) => {
+  try{
+    const id = Number(req.params.id)
     const { username, password, administrator, modelA, modelB, modelC } = req.body;
     const connection = await getConnection();
-    const user = await connection.getRepository(User).findOne({
-      username: userName,
-    });
+    const user = await connection.getRepository(User).findOne(id);
     if (user) {
       user.username = username;
       user.password = bcrypt.hashSync(password, 10);
