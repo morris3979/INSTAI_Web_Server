@@ -21,8 +21,7 @@ export const LoginFormData = (data) => {
         convertedData[String(key).slice(5)] = data[key]
       })
       try {
-        const response = await axios.get(`/api/user/${convertedData['username']}`)
-        console.log(response.data)
+        //const response = await axios.get(`/api/user/${convertedData['username']}`)
         message.destroy()
       } catch (error) {
         message.destroy()
@@ -42,9 +41,13 @@ export const RegisterFormData = (data) => {
         convertedData[String(key).slice(8)] = data[key]
       })
       try {
-        await axios.post('/api/user/register', convertedData)
+        const response = await axios.post('/api/user/register', convertedData)
         message.destroy()
-        message.success('註冊成功')
+        if (response.data == 'Existed') {
+          message.warning('帳號已註冊')
+        } else {
+          message.success('註冊成功')
+        }
       } catch (error) {
         message.destroy()
         message.error(`${error}`)
@@ -141,7 +144,8 @@ export const PostModelVersionTableData = (data) => {
     async (dispatch) => {
       message.loading('新增中，請稍後...', 0)
       try {
-        await axios.post('/api/carnumber', data)
+        const response = await axios.post('/api/carnumber', data)
+        console.log(response)
         message.destroy()
         Modal.success({
           title: '新增成功',
