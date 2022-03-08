@@ -70,7 +70,7 @@ export const LoginToken = (data) => {
     async (dispatch) => {
       const headers = { 'x-access-token': data.token }
       try {
-        await axios.post('/api/user/welcome', 'Welcome 🙌 ', { headers: headers })
+        await axios.post('/api/user/welcome', null, { headers: headers })
         const action = DeliverData(data, Login_Information)
         dispatch(action)
         message.destroy()
