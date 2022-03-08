@@ -89,10 +89,6 @@ userRouter.get("/", async (req, res) => {
     const connection = await getConnection();
     const userRepo = connection.getRepository(User);
     const users = await userRepo.find();
-    const findUser = await users.filter((t) => {
-    const {username, administrator, modelA, modelB, modelC} = t;
-      console.log("1:", )
-    });
     connection.close();
     res.json(users);
     return users;
