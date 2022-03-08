@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const DashboardPlugin = require("webpack-dashboard/plugin");
 
 const outputDirectory = 'dist';
 
@@ -45,6 +47,21 @@ module.exports = {
     }
   },
   devtool: "inline-source-map",
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+        },
+        omlib: {
+          test: /[\\/]libs[\\/]/,
+          name: 'omlib',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   plugins: [
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: outputDirectory
@@ -52,6 +69,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico'
-    })
+    }),
+    new BundleAnalyzerPlugin(),
+    new DashboardPlugin(),
   ]
 };
