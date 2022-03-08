@@ -5,7 +5,7 @@ import {
 } from './actionType'
 
 const defaultState = {
-  loginInformation: {},
+  loginInformation: { administrator: false },
   tableStatus: false,
   modelVersionTableData: [],
   mapPositionData: [],
@@ -26,7 +26,6 @@ const reducer = (state = defaultState, action) => {
     }
     case Login_Information: {
       newState.loginInformation = action.value
-      console.log(newState.loginInformation)
       return newState
     }
     case Get_Model_Version_Table: {

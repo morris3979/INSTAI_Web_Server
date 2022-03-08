@@ -6,7 +6,7 @@ import { Result } from 'antd'
 const InitialPage = (props) => {
   const { loginInformation } = props
 
-  if (Object.keys(loginInformation).length == 0) {
+  if (loginInformation.administrator == false) {
     return (
       <Navigate to='/login' />
     )

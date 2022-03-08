@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from 'react'
+import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu, Spin } from 'antd'
 
@@ -15,17 +16,19 @@ const LoginPage = lazy(() => import('./page/loginPage'))
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
 
-const App = () => {
+const App = (props) => {
+  const { loginInformation } = props
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider breakpoint='md' collapsedWidth='0'>
         <Menu theme='dark' selectedKeys={[]}>
-          <Item key='/map'>
+          <Item key='/map' disabled={!loginInformation.administrator}>
             <Link to='/map'>
               地圖資訊
             </Link>
           </Item>
-          <SubMenu key='subreport' title='報表查詢'>
+          <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.administrator}>
             <Item key='status'>
               <Link to='/status'>
                 一般狀態
@@ -47,12 +50,12 @@ const App = () => {
               </Link>
             </Item>
           </SubMenu>
-          <Item key='/modelversion'>
+          <Item key='/modelversion' disabled={!loginInformation.administrator}>
             <Link to='/modelversion'>
               版號與模型配置
             </Link>
           </Item>
-          <Item key='/resource'>
+          <Item key='/resource' disabled={!loginInformation.administrator}>
             <Link to='/resource'>
               關於
             </Link>
@@ -80,4 +83,11 @@ const App = () => {
   )
 }
 
-export default App
+const mapStateToProps = (state) => {
+  //state指的是store裡的數據
+  return {
+    loginInformation: state.loginInformation
+  }
+}
+
+export default connect(mapStateToProps)(App)

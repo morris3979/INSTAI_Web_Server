@@ -9,7 +9,7 @@ const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
 const LoginPage = (props) => {
   const { loginInformation } = props
 
-  if (Object.keys(loginInformation).length == 0) {
+  if (loginInformation.administrator == false) {
     return (
       <Row justify='space-around'>
         <Suspense fallback={<Spin size='large' />}>
