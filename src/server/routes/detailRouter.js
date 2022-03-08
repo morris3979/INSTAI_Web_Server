@@ -15,13 +15,9 @@ detailsRouter.get('/', async(req, res) => {
 
 //POST
 detailsRouter.post("/", async (req, res) => {
-  const startingTime = req.body.startingTime;
-  const gpsState = req.body.gpsState;
-  const speed = req.body.speed;
-  const event = req.body.event;
-  const position = req.body.position;
+  const { startingTime, gpsState, speed, event, position, CarNumber } = req.body;
   try{
-    const details = await insertDetail(startingTime, gpsState, speed, event, position);
+    const details = await insertDetail(startingTime, gpsState, speed, event, position, CarNumber);
     res.status(200).json(details);
   } catch (e) {
     console.log(e);
