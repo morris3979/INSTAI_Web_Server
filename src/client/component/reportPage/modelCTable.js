@@ -1,13 +1,14 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Modal, Image } from 'antd'
-import { FileOutlined, DownloadOutlined } from '@ant-design/icons'
+import { Table, Button, Modal, Image, Spin } from 'antd'
 import {
   GetModelCTableData, GetModalFile
 } from '../../store/actionCreater'
-import {
+
+const { FileOutlined, DownloadOutlined } = lazy(() => import('@ant-design/icons'))
+const {
   CarNumberFilter, CarNumberOnFilter, DateFilter, DateOnFilter, DateChange
-} from './filter'
+} = lazy(() => import('./filter'))
 
 const { Column } = Table
 
@@ -23,7 +24,7 @@ class ModelCTable extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Suspense fallback={<Spin size='large' />}>
         <Table
           dataSource={this.props.modelCTableData}
           loading={this.props.tableStatus}
@@ -70,19 +71,21 @@ class ModelCTable extends Component {
             src={`/api/s3/files/${this.props.modalFile}.jpg`}
           />
         </Modal>
-      </Fragment>
+      </Suspense>
     )
   }
 
   eventButton = (text) => {
     return (
-      <Button
-        onClick={() => {
-          this.setState({ isModalVisible: true })
-          this.props.getModalFile(text.event)
-        }}
-        icon={<FileOutlined />}
-      />
+      <Suspense fallback={<Spin size='large' />}>
+        <Button
+          onClick={() => {
+            this.setState({ isModalVisible: true })
+            this.props.getModalFile(text.event)
+          }}
+          icon={<FileOutlined />}
+        />
+      </Suspense>
     )
   }
 

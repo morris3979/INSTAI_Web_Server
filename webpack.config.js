@@ -27,8 +27,8 @@ module.exports = {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       loader: 'url-loader',
       options: {
-          limit: 100000,
-          name : 'assets/img/[name].[ext]'
+        limit: 100000,
+        name: 'assets/img/[name].[ext]'
       }
     }
     ]
@@ -42,7 +42,7 @@ module.exports = {
     hints: false,
     maxAssetSize: 200000,
     maxEntrypointSize: 400000,
-    assetFilter: function(assetFilename) {
+    assetFilter: function (assetFilename) {
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
     }
   },
@@ -70,7 +70,7 @@ module.exports = {
       template: './public/index.html',
       favicon: './public/favicon.ico'
     }),
-    new BundleAnalyzerPlugin(),
+    //new BundleAnalyzerPlugin(),
     new DashboardPlugin(),
   ]
 };

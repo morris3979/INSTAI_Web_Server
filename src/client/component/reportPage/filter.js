@@ -1,6 +1,7 @@
-import React from 'react'
-import { Input, Button, Space, DatePicker } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import React, { lazy, Suspense } from 'react'
+import { Input, Button, Space, DatePicker, Spin } from 'antd'
+
+const { SearchOutlined } = lazy(() => import('@ant-design/icons'))
 
 export const CarNumberFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   const onClick = () => { confirm() }
@@ -26,12 +27,14 @@ export const CarNumberFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
         value={selectedKeys}
         onChange={onChange}
       />
-      <Button
-        type='text'
-        size='large'
-        onClick={onClick}
-        icon={<SearchOutlined />}
-      />
+      <Suspense fallback={<Spin size='large' />}>
+        <Button
+          type='text'
+          size='large'
+          onClick={onClick}
+          icon={<SearchOutlined />}
+        />
+      </Suspense>
     </Space>
   )
 }
@@ -61,9 +64,11 @@ export const DateFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
       <DatePicker
         bordered={false} size='large' onChange={onChange}
       />
-      <Button
-        type='text' size='large' onClick={onClick} icon={<SearchOutlined />}
-      />
+      <Suspense fallback={<Spin size='large' />}>
+        <Button
+          type='text' size='large' onClick={onClick} icon={<SearchOutlined />}
+        />
+      </Suspense>
     </Space>
   )
 }

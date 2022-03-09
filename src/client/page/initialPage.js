@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Navigate } from 'react-router-dom'
-import { Result } from 'antd'
+import { Result, Spin } from 'antd'
+
+const { Navigate } = lazy(() => import('react-router-dom'))
 
 const InitialPage = (props) => {
   const { loginInformation } = props
 
   if (loginInformation.administrator == false) {
     return (
-      <Navigate to='/login' />
+      <Suspense fallback={<Spin size='large' />}>
+        <Navigate to='/login' />
+      </Suspense>
     )
   } else {
     return (
