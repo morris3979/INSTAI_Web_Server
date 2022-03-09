@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import ReactPlayer from 'react-player/lazy'
 import { Table, Button, Modal, Image } from 'antd'
 import { FileOutlined, DownloadOutlined } from '@ant-design/icons'
 import {
@@ -69,10 +68,6 @@ class ModelCTable extends Component {
         >
           <Image
             src={`/api/s3/files/${this.props.modalFile}.jpg`}
-          />
-          <ReactPlayer
-            url={`/api/s3/files/${this.props.modalFile}.mp4`}
-            controls={true}
           />
         </Modal>
       </Fragment>
