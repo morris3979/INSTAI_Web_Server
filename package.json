@@ -4,12 +4,12 @@
   "description": "Web application using React, Node.js, Express and Webpack.",
   "main": "src/server/server.js",
   "scripts": {
-    "build": "npx webpack --mode production",
+    "build": "webpack --mode production",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "watch:build": "npx webpack --mode production",
+    "watch:build": "webpack --mode production",
     "watch:server": "node src/server/server.js",
-    "dev": "npm-run-all --parallel watch:* ",
-    "start": "webpack-dashboard -- npm run dev"
+    "dev": "webpack-dashboard -- npm-run-all --parallel watch:* ",
+    "start": "npm run build && node src/server/server.js"
   },
   "author": "EnChi Chang",
   "license": "ISC",
