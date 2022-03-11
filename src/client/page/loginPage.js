@@ -1,8 +1,8 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Navigate } from 'react-router-dom'
 import { Spin, Row, Col } from 'antd'
 
+const { Navigate } = lazy(() => import('react-router-dom'))
 const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
 const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
 
@@ -24,7 +24,10 @@ const LoginPage = (props) => {
     )
   } else {
     return (
-      <Navigate to='/' />
+      <Suspense fallback={<Spin size='large' />}>
+        <Navigate to='/' />
+      </Suspense>
+
     )
   }
 }

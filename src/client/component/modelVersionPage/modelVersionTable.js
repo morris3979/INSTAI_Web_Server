@@ -1,11 +1,14 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Popconfirm, Table, Button, Space, Modal, Form, Input } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import {
+  Popconfirm, Table, Button, Space, Modal, Form, Input, Spin
+} from 'antd'
 import {
   GetModelVersionTableData, SetWhichModal, DeleteModelVersionTableData,
   PatchModelVersionTableData, PostModelVersionTableData
 } from '../../store/actionCreater'
+
+const { EditOutlined, DeleteOutlined } = lazy(() => import('@ant-design/icons'))
 
 const { Column } = Table
 const { Item } = Form
@@ -124,16 +127,18 @@ class ModelVersionTable extends Component {
   buttonGroup = (text) => {
     return (
       <Space size='large'>
-        <Button
-          onClick={() => { this.onClick(text) }}
-          icon={<EditOutlined />}
-        />
-        <Popconfirm
-          title='確定刪除?'
-          onConfirm={() => { this.props.deleteModelVersionTableData(text.id) }}
-        >
-          <Button icon={<DeleteOutlined />} />
-        </Popconfirm>
+        <Suspense fallback={<Spin size='large' />}>
+          <Button
+            onClick={() => { this.onClick(text) }}
+            icon={<EditOutlined />}
+          />
+          <Popconfirm
+            title='確定刪除?'
+            onConfirm={() => { this.props.deleteModelVersionTableData(text.id) }}
+          >
+            <Button icon={<DeleteOutlined />} />
+          </Popconfirm>
+        </Suspense>
       </Space>
     )
   }
