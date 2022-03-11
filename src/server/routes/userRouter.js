@@ -55,7 +55,7 @@ userRouter.post('/login', async(req, res) => {
     const user = await connection.getRepository(User).findOne({
       username: username,
     });
-    const comparePwd = await bcrypt.compare(password, user.password);
+    const comparePwd = await bcrypt.compareSync(password, user.password);
     const mode = user.administrator || user.modelA || user.modelB || user.modelC;
     if (user && comparePwd && (mode == true)) {
       const token = jwt.sign(
@@ -98,34 +98,48 @@ userRouter.get("/", async (req, res) => {
   }
 })
 
-// PATCH
+// PATCH, 其餘選填, 密碼必填!
 userRouter.patch("/:id", async (req, res) => {
   try{
     const id = Number(req.params.id)
     const { username, password, administrator, modelA, modelB, modelC } = req.body;
     const connection = await getConnection();
     const user = await connection.getRepository(User).findOne(id);
-    if (user) {
-      user.username = username;
-      user.password = bcrypt.hashSync(password, 10);
-      user.administrator = administrator;
-      user.modelA = modelA;
-      user.modelB = modelB;
-      user.modelC = modelC;
-      const token = jwt.sign(
-        { users_id: user._id, username },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "2h",
-        }
-      );
-      user.token = token;
-      await connection.getRepository(User).save(user);
-      connection.close();
-      res.status(204).json(user);
-      return user;
+    const encryptedPassword = await bcrypt.hashSync(password, 10);
+    if (!user) {
+      res.status(404).send("Not Found");
+      return;
     }
-    res.status(404).send("Not Found");
+    if (username) {
+      user.username = username;
+    }
+    if (encryptedPassword) {
+      user.password = encryptedPassword;
+    }
+    if (administrator) {
+      user.administrator = administrator;
+    }
+    if (modelA) {
+      user.modelA = modelA;
+    }
+    if (modelB) {
+      user.modelB = modelB;
+    }
+    if (modelC) {
+      user.modelC = modelC;
+    }
+    const token = jwt.sign(
+      { users_id: user._id, username },
+      process.env.TOKEN_KEY,
+      {
+        expiresIn: "2h",
+      }
+    );
+    user.token = token;
+    await connection.getRepository(User).save(user);
+    connection.close();
+    res.status(204).json(user);
+    return user;
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
