@@ -1,8 +1,8 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
+import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu, Spin } from 'antd'
 
-const { Link, Route, Routes } = lazy(() => import('react-router-dom'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
 const ModelVersionPage = lazy(() => import('./page/modelVersionPage'))
@@ -22,55 +22,55 @@ const App = (props) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Suspense fallback={<Spin size='large' />}>
-        <Sider breakpoint='md' collapsedWidth='0'>
-          <Menu theme='dark' selectedKeys={[]}>
-            <Item key='/map' disabled={!loginInformation.administrator}>
-              <Link to='/map'>
-                地圖資訊
+      <Sider breakpoint='md' collapsedWidth='0'>
+        <Menu theme='dark' selectedKeys={[]}>
+          <Item key='/map' disabled={!loginInformation.administrator}>
+            <Link to='/map'>
+              地圖資訊
+            </Link>
+          </Item>
+          <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.administrator}>
+            <Item key='status'>
+              <Link to='/status'>
+                一般狀態
               </Link>
             </Item>
-            <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.administrator}>
-              <Item key='status'>
-                <Link to='/status'>
-                  一般狀態
-                </Link>
-              </Item>
-              <Item key='modelA'>
-                <Link to='/modelA'>
-                  模型A
-                </Link>
-              </Item>
-              <Item key='modelB'>
-                <Link to='modelB'>
-                  模型B
-                </Link>
-              </Item>
-              <Item key='modelC'>
-                <Link to='modelC'>
-                  模型C
-                </Link>
-              </Item>
-            </SubMenu>
-            <Item key='/modelversion' disabled={!loginInformation.administrator}>
-              <Link to='/modelversion'>
-                版號與模型配置
+            <Item key='modelA'>
+              <Link to='/modelA'>
+                模型A
               </Link>
             </Item>
-            <Item key='/resource' disabled={!loginInformation.administrator}>
-              <Link to='/resource'>
-                關於
+            <Item key='modelB'>
+              <Link to='modelB'>
+                模型B
               </Link>
             </Item>
-            <Item key='/test'>
-              <Link to='/test'>
-                測試用
+            <Item key='modelC'>
+              <Link to='modelC'>
+                模型C
               </Link>
             </Item>
-          </Menu>
-        </Sider>
-        <Layout>
-          <Content>
+          </SubMenu>
+          <Item key='/modelversion' disabled={!loginInformation.administrator}>
+            <Link to='/modelversion'>
+              版號與模型配置
+            </Link>
+          </Item>
+          <Item key='/resource' disabled={!loginInformation.administrator}>
+            <Link to='/resource'>
+              關於
+            </Link>
+          </Item>
+          <Item key='/test'>
+            <Link to='/test'>
+              測試用
+            </Link>
+          </Item>
+        </Menu>
+      </Sider>
+      <Layout>
+        <Content>
+          <Suspense fallback={<Spin size='large' />}>
             <Routes>
               <Route path='/' element={<InitialPage />} />
               <Route path='/login' element={<LoginPage />} />
@@ -83,9 +83,9 @@ const App = (props) => {
               <Route path='/resource' element={<Resource />} />
               <Route path='/test' element={<Test />} />
             </Routes>
-          </Content>
-        </Layout>
-      </Suspense>
+          </Suspense>
+        </Content>
+      </Layout>
     </Layout >
   )
 }

@@ -69,10 +69,6 @@ module.exports = {
       template: './public/index.html',
       favicon: './public/favicon.ico'
     }),
-<<<<<<< HEAD
-    //new BundleAnalyzerPlugin(),
-=======
->>>>>>> refs/remotes/origin/main
     new DashboardPlugin(),
   ]
 };

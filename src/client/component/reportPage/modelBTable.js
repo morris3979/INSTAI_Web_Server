@@ -4,8 +4,8 @@ import { Table, Button, Modal, Image, Spin } from 'antd'
 import {
   GetModelBTableData, GetModalFile
 } from '../../store/actionCreater'
+import { FileOutlined, DownloadOutlined } from '@ant-design/icons'
 
-const { FileOutlined, DownloadOutlined } = lazy(() => import('@ant-design/icons'))
 const {
   CarNumberFilter, CarNumberOnFilter, DateFilter, DateOnFilter, DateChange
 } = lazy(() => import('./filter'))
@@ -77,15 +77,13 @@ class ModelBTable extends Component {
 
   eventButton = (text) => {
     return (
-      <Suspense fallback={<Spin size='large' />}>
-        <Button
-          onClick={() => {
-            this.setState({ isModalVisible: true })
-            this.props.getModalFile(text.event)
-          }}
-          icon={<FileOutlined />}
-        />
-      </Suspense>
+      <Button
+        onClick={() => {
+          this.setState({ isModalVisible: true })
+          this.props.getModalFile(text.event)
+        }}
+        icon={<FileOutlined />}
+      />
     )
   }
 

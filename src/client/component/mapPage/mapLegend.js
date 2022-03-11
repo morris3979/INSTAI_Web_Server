@@ -1,8 +1,7 @@
-import React, { lazy, Suspense } from 'react'
-import { Table, Image, Spin } from 'antd'
-
-const greenCar = lazy(() => import('../../icon image/green car.png'))
-const redCar = lazy(() => import('../../icon image/red car.png'))
+import React from 'react'
+import { Table, Image } from 'antd'
+import greenCar from '../../icon image/green car.png'
+import redCar from '../../icon image/red car.png'
 
 const { Column } = Table
 
@@ -20,15 +19,11 @@ const data = [
 const iconStyle = (text) => {
   if (text.status == '1') {
     return (
-      <Suspense fallback={<Spin size='large' />}>
-        <Image width={32} src={greenCar} preview={false} />
-      </Suspense>
+      <Image width={32} src={greenCar} preview={false} />
     )
   } else {
     return (
-      <Suspense fallback={<Spin size='large' />}>
-        <Image width={32} src={redCar} preview={false} />
-      </Suspense>
+      <Image width={32} src={redCar} preview={false} />
     )
   }
 }
