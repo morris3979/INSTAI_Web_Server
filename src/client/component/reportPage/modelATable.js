@@ -1,14 +1,13 @@
-import React, { Component, lazy, Suspense } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Modal, Image, Spin } from 'antd'
+import { Table, Button, Modal, Image } from 'antd'
 import {
   GetModelATableData, GetModalFile
 } from '../../store/actionCreater'
 import { FileOutlined, DownloadOutlined } from '@ant-design/icons'
-
-const {
+import {
   CarNumberFilter, CarNumberOnFilter, DateFilter, DateOnFilter, DateChange
-} = lazy(() => import('./filter'))
+} from './filter'
 
 const { Column } = Table
 
@@ -24,7 +23,7 @@ class ModelATable extends Component {
 
   render() {
     return (
-      <Suspense fallback={<Spin size='large' />}>
+      <Fragment>
         <Table
           dataSource={this.props.modelATableData}
           loading={this.props.tableStatus}
@@ -71,7 +70,7 @@ class ModelATable extends Component {
             src={`/api/s3/files/${this.props.modalFile}.jpg`}
           />
         </Modal>
-      </Suspense>
+      </Fragment>
     )
   }
 
