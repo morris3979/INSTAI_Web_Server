@@ -32,8 +32,8 @@ async function app() {
         process.exit(1) // To exit with a 'failure' code
     });
 
-    httpServer.listen(httpPort, () => console.log(`Express server listening on port ${httpPort}!`));
-    httpsServer.listen(httpsPort, () => console.log(`Https server listening on port ${httpsPort}!`));
+    httpServer.listen(httpPort, () => console.log(`=> local server listening on port ${httpPort}!`));
+    httpsServer.listen(httpsPort, () => console.log(`=> https server listening on port ${httpsPort}!`));
 }
 
 app();
