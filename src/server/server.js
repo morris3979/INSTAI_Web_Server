@@ -1,15 +1,26 @@
 const express = require('express');
 require('dotenv').config();
-
-const http = require('http');
-const bodyParser = require('body-parser');
-const compression = require('compression');
-const apiRouter = require('./routes/index');
+const  path = require('path');
+const fs = require('fs');
 
 async function app() {
     const app = express();
-    const port = process.env.PORT;
-    const server = http.createServer(app);
+    const http = require('http');
+    const https = require('https');
+    const httpPort = process.env.HTTP_PORT;
+    const httpsPort = process.env.HTTPS_PORT;
+    const privateKey = fs.readFileSync(__dirname + '/ssl/privatekey.pem');
+    const certificate = fs.readFileSync(__dirname + '/ssl/certificate.pem');
+    const credentials = {
+        key: privateKey,
+        cert: certificate
+    };
+    const httpServer = http.createServer(app);
+    const httpsServer = https.createServer(credentials, app);
+
+    const bodyParser = require('body-parser');
+    const compression = require('compression');
+    const apiRouter = require('./routes/index');
 
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
@@ -22,7 +33,8 @@ async function app() {
         process.exit(1) // To exit with a 'failure' code
     });
 
-    server.listen(port, () => console.log(`Listening on port ${port}!`));
+    httpServer.listen(httpPort, () => console.log(`Express server listening on port ${httpPort}!`));
+    httpsServer.listen(httpsPort, () => console.log(`Https server listening on port ${httpsPort}!`));
 }
 
 app();
