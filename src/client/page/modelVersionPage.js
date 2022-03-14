@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from 'react'
-import { Spin } from 'antd'
+import Loading from '../loading'
 
 const ModelVersionTable = lazy(() => import('../component/modelVersionPage/modelVersionTable'))
 
 const ModelVersionPage = () => {
   return (
-    <Suspense fallback={<Spin size='large' />}>
+    <Suspense fallback={<Loading />}>
       <ModelVersionTable />
     </Suspense>
   )

@@ -14,7 +14,7 @@
   "author": "EnChi Chang",
   "license": "ISC",
   "dependencies": {
-    "antd": "^4.19.1",
+    "antd": "^4.19.2",
     "aws-sdk": "^2.1092.0",
     "axios": "^0.26.1",
     "babel-polyfill": "^6.26.0",

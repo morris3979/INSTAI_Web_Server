@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistor } from './store/store'
-import { Spin } from 'antd'
+import Loading from './loading'
 import 'antd/dist/antd.css'
 
 const App = lazy(() => import('./App'))
@@ -13,7 +13,7 @@ const app = (
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <HashRouter>
-        <Suspense fallback={<Spin size='large' />}>
+        <Suspense fallback={<Loading />}>
           <App />
         </Suspense>
       </HashRouter>

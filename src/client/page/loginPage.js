@@ -1,7 +1,8 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import { Spin, Row, Col } from 'antd'
+import { Row, Col } from 'antd'
+import Loading from '../loading'
 
 const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
 const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
@@ -12,7 +13,7 @@ const LoginPage = (props) => {
   if (loginInformation.administrator == false) {
     return (
       <Row justify='space-around'>
-        <Suspense fallback={<Spin size='large' />}>
+        <Suspense fallback={<Loading />}>
           <Col xs={24} sm={24} md={10}>
             <LoginForm />
           </Col>

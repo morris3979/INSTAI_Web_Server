@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
-import { Row, Col, Spin } from 'antd'
+import { Row, Col } from 'antd'
+import Loading from '../loading'
 
 const Map = lazy(() => import('../component/mapPage/map'))
 const MapLegend = lazy(() => import('../component/mapPage/mapLegend'))
@@ -7,7 +8,7 @@ const MapLegend = lazy(() => import('../component/mapPage/mapLegend'))
 const MapPage = () => {
   return (
     <Row>
-      <Suspense fallback={<Spin size='large' />}>
+      <Suspense fallback={<Loading />}>
         <Col xs={24} sm={24} md={8}>
           <MapLegend />
         </Col>

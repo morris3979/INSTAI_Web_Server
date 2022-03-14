@@ -1,7 +1,8 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
-import { Layout, Menu, Spin } from 'antd'
+import { Layout, Menu } from 'antd'
+import Loading from './loading'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
@@ -70,7 +71,7 @@ const App = (props) => {
       </Sider>
       <Layout>
         <Content>
-          <Suspense fallback={<Spin size='large' />}>
+          <Suspense fallback={<Loading />}>
             <Routes>
               <Route path='/' element={<InitialPage />} />
               <Route path='/login' element={<LoginPage />} />
