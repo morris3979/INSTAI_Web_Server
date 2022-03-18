@@ -31,7 +31,7 @@ async function insertCarNumber(boardId, modelName, version, plateNumber) {
       //return new list
       return carnumbers;
     }
-    const existed = "Existed";
+    const existed = "Already Exist";
     connection.close();
     return existed;
 }
@@ -48,7 +48,7 @@ async function patchCarNumber(id, boardId, modelName, version, plateNumber) {
     const updateCarnumbers = await carnumberRepo.findOne(id);
     //if not find id, it will be sent not found.
     if (!updateCarnumbers) {
-      res.sendStatus(404);
+      res.status(404).send("Not Found");
       return;
     }
     if (carnumber.boardId) {
