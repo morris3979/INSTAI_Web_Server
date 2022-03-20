@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^4.19.2",
-    "aws-sdk": "^2.1095.0",
+    "aws-sdk": "^2.1096.0",
     "axios": "^0.26.1",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^5.0.1",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@babel/core": "^7.17.5",
+    "@babel/core": "^7.17.8",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
@@ -55,7 +55,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react": "^7.29.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
