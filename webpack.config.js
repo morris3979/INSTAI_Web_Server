@@ -16,6 +16,7 @@ module.exports = {
     rules: [{
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
+      include: path.resolve(__dirname, 'src'),
       loader: 'babel-loader',
     },
     {
@@ -47,18 +48,10 @@ module.exports = {
   },
   devtool: "inline-source-map",
   optimization: {
+    removeAvailableModules: false,
+    removeEmptyChunks: false,
     splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-        },
-        omlib: {
-          test: /[\\/]libs[\\/]/,
-          name: 'omlib',
-          chunks: 'all',
-        },
-      },
+      chunks: 'all', // 全域配置
     },
   },
   plugins: [
