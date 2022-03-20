@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DashboardPlugin = require("webpack-dashboard/plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const outputDirectory = 'dist';
 
@@ -34,7 +35,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', ".css", ".scss"]
+    modules: ['node_modules'],
+    extensions: ['*', '.js', '.jsx', ".css", ".scss", ".json"],
   },
   performance: {
     hints: "warning",
@@ -53,6 +55,11 @@ module.exports = {
     splitChunks: {
       chunks: 'all', // 全域配置
     },
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
+    ],
   },
   plugins: [
     new CleanWebpackPlugin({
