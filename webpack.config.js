@@ -17,7 +17,7 @@ module.exports = {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
       include: path.resolve(__dirname, 'src'),
-      loader: 'babel-loader',
+      use: ['cache-loader', 'thread-loader', 'babel-loader']
     },
     {
       test: /\.css$/,
