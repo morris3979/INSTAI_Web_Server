@@ -50,16 +50,24 @@ module.exports = {
   },
   devtool: "inline-source-map",
   optimization: {
+    moduleIds: "deterministic",
+    runtimeChunk: "single",
     removeAvailableModules: false,
     removeEmptyChunks: false,
     splitChunks: {
-      chunks: 'all', // 全域配置
+      chunks: 'all',
     },
     minimizer: [
       new TerserPlugin({
         parallel: true,
       }),
     ],
+  },
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename],
+    },
   },
   plugins: [
     new CleanWebpackPlugin({
