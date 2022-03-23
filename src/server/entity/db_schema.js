@@ -49,7 +49,6 @@ const UserSchema = new EntitySchema({
             name: "update_at",
         },
         deleteAt: {
-            nullable: "true",
             type: "datetime",
             deleteDate: true,
             name: "delete_at",
@@ -69,6 +68,7 @@ const CarNumberSchema = new EntitySchema({
             generated: true
         },
         boardId: {
+            unique: true,
             type: "varchar",
         },
         modelName: {
@@ -94,7 +94,6 @@ const CarNumberSchema = new EntitySchema({
             name: "update_at",
         },
         deleteAt: {
-            nullable: "true",
             type: "datetime",
             deleteDate: true,
             name: "delete_at",
@@ -150,7 +149,6 @@ const DetailsSchema = new EntitySchema({
             name: "update_at",
         },
         deleteAt: {
-            nullable: "true",
             type: "datetime",
             deleteDate: true,
             name: "delete_at",
