@@ -14,31 +14,29 @@ const UserSchema = new EntitySchema({
         },
         username: {
             type: "varchar",
-            default: "null"
         },
         password: {
             type: "varchar",
-            default: "null",
         },
         administrator: {
+            nullable: "true",
             type: "boolean",
-            default: false,
         },
         modelA: {
+            nullable: "true",
             type: "boolean",
-            default: false,
         },
         modelB: {
+            nullable: "true",
             type: "boolean",
-            default: false,
         },
         modelC: {
+            nullable: "true",
             type: "boolean",
-            default: false,
         },
         token: {
+            nullable: "true",
             type: "varchar",
-            default: "null",
         },
         createAt: {
             type: "datetime",
@@ -46,7 +44,6 @@ const UserSchema = new EntitySchema({
             name: "created_at",
         },
         updateAt: {
-            nullable: "true",
             type: "datetime",
             updateDate: true,
             name: "update_at",
@@ -73,19 +70,18 @@ const CarNumberSchema = new EntitySchema({
         },
         boardId: {
             type: "varchar",
-            default: "0x0001",
         },
         modelName: {
+            nullable: "true",
             type: "varchar",
-            default: "A",
         },
         version: {
+            nullable: "true",
             type: "varchar",
-            default: "0.1",
         },
         plateNumber: {
+            nullable: "true",
             type: "varchar",
-            default: "AAA-0001",
         },
         createAt: {
             type: "datetime",
@@ -93,7 +89,6 @@ const CarNumberSchema = new EntitySchema({
             name: "created_at",
         },
         updateAt: {
-            nullable: "true",
             type: "datetime",
             updateDate: true,
             name: "update_at",
@@ -125,24 +120,24 @@ const DetailsSchema = new EntitySchema({
             generated: true
         },
         startingTime: {
+            nullable: "true",
             type: "timestamp",
-            default: "2022-01-01 12:00:00",
         },
         gpsState: {
+            nullable: "true",
             type: "varchar",
-            default: "GPS"
         },
         speed: {
+            nullable: "true",
             type: "int",
-            default: "0"
         },
         event: {
+            nullable: "true",
             type: "varchar",
-            default: "AAA"
         },
         position: {
+            nullable: "true",
             type: "varchar",
-            default: "25.042884, 121.532950",
         },
         createAt: {
             type: "datetime",
@@ -150,7 +145,6 @@ const DetailsSchema = new EntitySchema({
             name: "created_at",
         },
         updateAt: {
-            nullable: "true",
             type: "datetime",
             updateDate: true,
             name: "update_at",
