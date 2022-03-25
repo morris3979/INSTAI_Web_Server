@@ -14,8 +14,8 @@
   "author": "EnChi Chang",
   "license": "ISC",
   "dependencies": {
-    "antd": "^4.19.2",
-    "aws-sdk": "^2.1096.0",
+    "antd": "^4.19.3",
+    "aws-sdk": "^2.1098.0",
     "axios": "^0.26.1",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^5.0.1",
@@ -36,7 +36,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.0",
+    "typeorm": "^0.3.2",
     "web-vitals": "^2.1.4",
     "webpack-bundle-analyzer": "^4.5.0"
   },
