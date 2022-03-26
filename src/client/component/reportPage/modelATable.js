@@ -66,6 +66,11 @@ class ModelATable extends Component {
           destroyOnClose={true}
           width={690}
         >
+          <video
+            src={`https://d20cmf4o2f77jz.cloudfront.net/${this.props.modalFile}.mp4`}
+            preload='auto'
+            controls={true}
+          />
           <Image
             src={`/api/s3/files/${this.props.modalFile}.jpg`}
           />
