@@ -66,6 +66,7 @@ class ModelCTable extends Component {
           destroyOnClose={true}
           width={690}
         >
+          <th>AWS</th>
           <video
             src={`https://d20cmf4o2f77jz.cloudfront.net/video/${this.props.modalFile}.mp4`}
             preload='auto'
@@ -73,6 +74,15 @@ class ModelCTable extends Component {
           />
           <Image
             src={`https://d20cmf4o2f77jz.cloudfront.net/image/${this.props.modalFile}.jpg`}
+          />
+          <th>Aliyun</th>
+          <video
+            src={`http://carview.oss-accelerate.aliyuncs.com/video/${this.props.modalFile}.mp4`}
+            preload='auto'
+            controls={true}
+          />
+          <Image
+            src={`http://carview.oss-accelerate.aliyuncs.com/image/${this.props.modalFile}.jpg`}
           />
         </Modal>
       </Fragment>
