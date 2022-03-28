@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Table, Button, Modal, Image } from 'antd'
+import ReactPlayer from 'react-player/lazy'
 import {
   GetModelATableData, GetModalFile
 } from '../../store/actionCreater'
@@ -66,9 +67,8 @@ class ModelATable extends Component {
           destroyOnClose={true}
           width={690}
         >
-          <video
-            src={`https://d20cmf4o2f77jz.cloudfront.net/${this.props.modalFile}.mp4`}
-            preload='auto'
+          <ReactPlayer
+            url={`https://d20cmf4o2f77jz.cloudfront.net/${this.props.modalFile}.mp4`}
             controls={true}
           />
           <Image
