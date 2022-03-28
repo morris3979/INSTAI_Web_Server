@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Modal, Image } from 'antd'
+import { Table, Button, Modal, Image, Typography } from 'antd'
 import ReactPlayer from 'react-player/lazy'
 import {
   GetModelCTableData, GetModalFile
@@ -11,6 +11,7 @@ import {
 } from './filter'
 
 const { Column } = Table
+const { Text } = Typography
 
 class ModelCTable extends Component {
   constructor(props) {
@@ -67,8 +68,18 @@ class ModelCTable extends Component {
           destroyOnClose={true}
           width={690}
         >
+          <Text>AWS</Text>
           <ReactPlayer
-            url={`https://d20cmf4o2f77jz.cloudfront.net/${this.props.modalFile}.mp4`}
+            url={`https://d20cmf4o2f77jz.cloudfront.net/video/${this.props.modalFile}.mp4`}
+            controls={true}
+          />
+          <Image
+            src={`https://d20cmf4o2f77jz.cloudfront.net/image/${this.props.modalFile}.jpg`}
+          />
+          <Text>阿里雲</Text>
+          <ReactPlayer
+            url={`http://carview.oss-accelerate.aliyuncs.com/video/${this.props.modalFile}.mp4`}
+            controls={true}
           />
           <Image
             src={`http://carview.oss-accelerate.aliyuncs.com/image/${this.props.modalFile}.jpg`}
