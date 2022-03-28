@@ -67,12 +67,28 @@ class ModelBTable extends Component {
           destroyOnClose={true}
           width={690}
         >
+<<<<<<< HEAD
           <ReactPlayer
             url={`https://d20cmf4o2f77jz.cloudfront.net/${this.props.modalFile}.mp4`}
+=======
+          <th>AWS</th>
+          <video
+            src={`https://d20cmf4o2f77jz.cloudfront.net/video/${this.props.modalFile}.mp4`}
+            preload='auto'
+>>>>>>> e4d6aabacd47979cae67004b652dd32cb0ffb7fc
             controls={true}
           />
           <Image
-            src={`/api/s3/files/${this.props.modalFile}.jpg`}
+            src={`https://d20cmf4o2f77jz.cloudfront.net/image/${this.props.modalFile}.jpg`}
+          />
+          <th>Aliyun</th>
+          <video
+            src={`http://carview.oss-accelerate.aliyuncs.com/video/${this.props.modalFile}.mp4`}
+            preload='auto'
+            controls={true}
+          />
+          <Image
+            src={`http://carview.oss-accelerate.aliyuncs.com/image/${this.props.modalFile}.jpg`}
           />
         </Modal>
       </Fragment>

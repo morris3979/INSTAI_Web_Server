@@ -68,7 +68,7 @@ const CarNumberSchema = new EntitySchema({
             generated: true
         },
         boardId: {
-            unique: true,
+            nullable: "true",
             type: "varchar",
         },
         modelName: {

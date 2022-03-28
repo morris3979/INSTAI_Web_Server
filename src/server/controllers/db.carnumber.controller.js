@@ -15,11 +15,8 @@ async function insertCarNumber(boardId, modelName, version, plateNumber) {
     const findBoardId = await connection.getRepository(CarNumber).findOne({
       boardId: boardId,
     });
-    const findPlateNumber = await connection.getRepository(CarNumber).findOne({
-      plateNumber: plateNumber,
-    });
     //Create, if boardId & plateNumber is existed, it will be not created.
-    if (!(findBoardId || findPlateNumber)) {
+    if (!(findBoardId)) {
       const carnumbers = new CarNumber();
       carnumbers.boardId = boardId;
       carnumbers.modelName = modelName;
