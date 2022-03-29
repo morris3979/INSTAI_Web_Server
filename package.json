@@ -37,7 +37,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.4",
+    "typeorm": "0.2.45",
     "web-vitals": "^2.1.4",
     "webpack-bundle-analyzer": "^4.5.0"
   },

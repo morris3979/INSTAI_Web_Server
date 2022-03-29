@@ -14,11 +14,9 @@ const UserSchema = new EntitySchema({
         },
         username: {
             type: "varchar",
-            default: "admin"
         },
         password: {
             type: "varchar",
-            default: "123456"
         },
         administrator: {
             nullable: "true",
@@ -71,7 +69,6 @@ const CarNumberSchema = new EntitySchema({
         },
         boardId: {
             type: "varchar",
-            default: "0x0001"
         },
         modelName: {
             nullable: "true",
@@ -82,8 +79,8 @@ const CarNumberSchema = new EntitySchema({
             type: "varchar",
         },
         plateNumber: {
+            nullable: "true",
             type: "varchar",
-            default: "AAA-0001"
         },
         createAt: {
             type: "datetime",
