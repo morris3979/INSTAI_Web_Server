@@ -70,7 +70,7 @@ async function deleteCarNumber(id) {
     const connection = await getConnection();
     //delete
     const carnumberRepo = connection.getRepository(CarNumber);
-    const allCarnumbers = await carnumberRepo.delete(id);
+    const allCarnumbers = await carnumberRepo.softDelete(id);
     connection.close();
     //return new list
     return allCarnumbers;
