@@ -1,13 +1,14 @@
-# CarView Project
+# CarView Project from NTUT Lab321 
+## 🇹🇼 Taiwan No.1 🎉🎉🎉
 
-
-## 1.With [npm](https://npmjs.org/) installed, run
+#
+## 1. With [npm](https://npmjs.org/) installed, run
 
 ```shell
 npm install
 ```
-
-## 2.Run and Start
+#
+## 2. Run and Start
 
 ```shell
 npm start
