@@ -1,4 +1,4 @@
-const { getConnection } = require("../entity/db_config");
+const { getConnection } = require("../entity/aws_rds_config");
 const { CarNumber } = require("../entity/db_constructor");
 
 async function getCarNumbers() {

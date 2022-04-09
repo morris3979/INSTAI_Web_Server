@@ -4,7 +4,7 @@ const userRouter = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const auth = require("../middleware/auth");
-const { getConnection } = require("../entity/db_config");
+const { getConnection } = require("../entity/aws_rds_config");
 const { User } = require("../entity/db_constructor");
 
 //POST register

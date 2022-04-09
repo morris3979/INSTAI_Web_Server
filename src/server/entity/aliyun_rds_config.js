@@ -6,11 +6,11 @@ const { UserSchema, CarNumberSchema, DetailsSchema } = require("./db_schema");
 async function getConnection() {
     return await typeorm.createConnection({
         type: "mysql",
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
+        host: process.env.ALIYUN_RDS_HOST,
+        port: process.env.ALIYUN_RDS_PORT,
+        username: process.env.ALIYUN_RDS_USERNAME,
+        password: process.env.ALIYUN_RDS_PASSWORD,
+        database: process.env.RDS_DATABASE,
         timezone: "SYSTEM",
         synchronize: false,
         migration: true,
