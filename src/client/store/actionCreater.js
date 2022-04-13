@@ -215,7 +215,9 @@ export const GetModelATableData = () => {
       try {
         const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
-          return (value.CarNumber.modelName[0] == 'A')
+          if (value.CarNumber.modelName) {
+            return (value.CarNumber.modelName[0] == 'A')
+          }
         })
         const action = DeliverData(filterData, Model_A_Table)
         dispatch(action)
@@ -237,7 +239,9 @@ export const GetModelBTableData = () => {
       try {
         const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
-          return (value.CarNumber.modelName[0] == 'B')
+          if (value.CarNumber.modelName) {
+            return (value.CarNumber.modelName[0] == 'B')
+          }
         })
         const action = DeliverData(filterData, Model_B_Table)
         dispatch(action)
@@ -259,7 +263,9 @@ export const GetModelCTableData = () => {
       try {
         const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
-          return (value.CarNumber.modelName[0] == 'C')
+          if (value.CarNumber.modelName) {
+            return (value.CarNumber.modelName[0] == 'C')
+          }
         })
         const action = DeliverData(filterData, Model_C_Table)
         dispatch(action)

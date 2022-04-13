@@ -24,22 +24,24 @@ const redIcon = L.icon({
 const location = []
 const positionData = (data) => {
   data.map((dataItem) => {
-    const position = dataItem.position.split(',')
-    position.forEach((item) => {
-      position.push(Number(item))
-    })
-    position.splice(0, 2)
+    if (dataItem.position) {
+      const position = dataItem.position.split(',')
+      position.forEach((item) => {
+        position.push(Number(item))
+      })
+      position.splice(0, 2)
 
-    if (dataItem.stayTime < 10) {
-      location.push({
-        'position': position,
-        'icon': greenIcon
-      })
-    } else {
-      location.push({
-        'position': position,
-        'icon': redIcon
-      })
+      if (dataItem.stayTime < 10) {
+        location.push({
+          'position': position,
+          'icon': greenIcon
+        })
+      } else {
+        location.push({
+          'position': position,
+          'icon': redIcon
+        })
+      }
     }
   })
 }
