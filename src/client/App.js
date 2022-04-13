@@ -21,74 +21,79 @@ const { Item, SubMenu } = Menu
 const App = (props) => {
   const { loginInformation } = props
 
-  return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider breakpoint='md' collapsedWidth='0'>
-        <Menu theme='dark' selectedKeys={[]}>
-          <Item key='/map' disabled={!loginInformation.administrator}>
-            <Link to='/map'>
-              地圖資訊
-            </Link>
-          </Item>
-          <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.administrator}>
-            <Item key='status'>
-              <Link to='/status'>
-                一般狀態
+  if (loginInformation.administrator == true) {
+    return (
+      <Layout style={{ minHeight: '100vh' }}>
+        <Sider breakpoint='md' collapsedWidth='0'>
+          <Menu theme='dark' selectedKeys={[]}>
+            <Item key='/map' disabled={!loginInformation.administrator}>
+              <Link to='/map'>
+                地圖資訊
               </Link>
             </Item>
-            <Item key='modelA'>
-              <Link to='/modelA'>
-                模型A
+            <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.administrator}>
+              <Item key='status'>
+                <Link to='/status'>
+                  一般狀態
+                </Link>
+              </Item>
+              <Item key='modelA'>
+                <Link to='/modelA'>
+                  模型A
+                </Link>
+              </Item>
+              <Item key='modelB'>
+                <Link to='modelB'>
+                  模型B
+                </Link>
+              </Item>
+              <Item key='modelC'>
+                <Link to='modelC'>
+                  模型C
+                </Link>
+              </Item>
+            </SubMenu>
+            <Item key='/modelversion' disabled={!loginInformation.administrator}>
+              <Link to='/modelversion'>
+                版號與模型配置
               </Link>
             </Item>
-            <Item key='modelB'>
-              <Link to='modelB'>
-                模型B
+            <Item key='/resource' disabled={!loginInformation.administrator}>
+              <Link to='/resource'>
+                關於
               </Link>
             </Item>
-            <Item key='modelC'>
-              <Link to='modelC'>
-                模型C
+            <Item key='/test'>
+              <Link to='/test'>
+                測試用
               </Link>
             </Item>
-          </SubMenu>
-          <Item key='/modelversion' disabled={!loginInformation.administrator}>
-            <Link to='/modelversion'>
-              版號與模型配置
-            </Link>
-          </Item>
-          <Item key='/resource' disabled={!loginInformation.administrator}>
-            <Link to='/resource'>
-              關於
-            </Link>
-          </Item>
-          <Item key='/test'>
-            <Link to='/test'>
-              測試用
-            </Link>
-          </Item>
-        </Menu>
-      </Sider>
-      <Layout>
-        <Content>
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              <Route path='/' element={<InitialPage />} />
-              <Route path='/login' element={<LoginPage />} />
-              <Route path='/map' element={<MapPage />} />
-              <Route path='/status' element={<StatusPage />} />
-              <Route path='/modelA' element={<ModelAPage />} />
-              <Route path='/modelB' element={<ModelBPage />} />
-              <Route path='/modelC' element={<ModelCPage />} />
-              <Route path='/modelversion' element={<ModelVersionPage />} />
-              <Route path='/resource' element={<Resource />} />
-              <Route path='/test' element={<Test />} />
-            </Routes>
-          </Suspense>
-        </Content>
-      </Layout>
-    </Layout >
-  )
+          </Menu>
+        </Sider>
+        <Layout>
+          <Content>
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path='/' element={<InitialPage />} />
+                <Route path='/map' element={<MapPage />} />
+                <Route path='/status' element={<StatusPage />} />
+                <Route path='/modelA' element={<ModelAPage />} />
+                <Route path='/modelB' element={<ModelBPage />} />
+                <Route path='/modelC' element={<ModelCPage />} />
+                <Route path='/modelversion' element={<ModelVersionPage />} />
+                <Route path='/resource' element={<Resource />} />
+                <Route path='/test' element={<Test />} />
+              </Routes>
+            </Suspense>
+          </Content>
+        </Layout>
+      </Layout >
+    )
+  } else {
+    return (
+      <LoginPage />
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
