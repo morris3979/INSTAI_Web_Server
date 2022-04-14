@@ -37,9 +37,11 @@ export const CarNumberFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
 }
 export const CarNumberOnFilter = (value, record) => {
   if (record.CarNumber) {
-    return (
-      record.CarNumber.plateNumber.toLowerCase().includes(value.toLowerCase())
-    )
+    if (record.CarNumber.plateNumber) {
+      return (
+        record.CarNumber.plateNumber.toLowerCase().includes(value.toLowerCase())
+      )
+    }
   }
 }
 
