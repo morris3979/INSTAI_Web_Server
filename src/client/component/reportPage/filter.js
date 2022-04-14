@@ -36,9 +36,11 @@ export const CarNumberFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   )
 }
 export const CarNumberOnFilter = (value, record) => {
-  return (
-    record.CarNumber.plateNumber.toLowerCase().includes(value.toLowerCase())
-  )
+  if (record.CarNumber) {
+    return (
+      record.CarNumber.plateNumber.toLowerCase().includes(value.toLowerCase())
+    )
+  }
 }
 
 export const DateFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
@@ -68,13 +70,17 @@ export const DateFilter = ({ setSelectedKeys, selectedKeys, confirm }) => {
   )
 }
 export const DateOnFilter = (value, record) => {
-  return (
-    record.createAt.toLowerCase().includes(value.toLowerCase())
-  )
+  if (record.createAt) {
+    return (
+      record.createAt.toLowerCase().includes(value.toLowerCase())
+    )
+  }
 }
 
 export const DateChange = (text) => {
-  return (
-    text.createAt.slice(0, -5).replace('T', ' ')
-  )
+  if (text.createAt) {
+    return (
+      text.createAt.slice(0, -5).replace('T', ' ')
+    )
+  }
 }

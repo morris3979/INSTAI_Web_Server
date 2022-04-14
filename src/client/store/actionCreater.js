@@ -215,7 +215,7 @@ export const GetModelATableData = () => {
       try {
         const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
-          if (value.CarNumber.modelName) {
+          if (value.CarNumber) {
             return (value.CarNumber.modelName[0] == 'A')
           }
         })
@@ -239,7 +239,7 @@ export const GetModelBTableData = () => {
       try {
         const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
-          if (value.CarNumber.modelName) {
+          if (value.CarNumber) {
             return (value.CarNumber.modelName[0] == 'B')
           }
         })
@@ -263,7 +263,7 @@ export const GetModelCTableData = () => {
       try {
         const response = await axios.get('/api/details')
         const filterData = response.data.filter((value) => {
-          if (value.CarNumber.modelName) {
+          if (value.CarNumber) {
             return (value.CarNumber.modelName[0] == 'C')
           }
         })
