@@ -56,7 +56,7 @@ userRouter.post('/login', async(req, res) => {
       username: username,
     });
     const comparePwd = await bcrypt.compareSync(password, user.password);
-    const mode = user.administrator || user.modelA || user.modelB || user.modelC;
+    const mode = user.admin || user.authA || user.authB || user.authC;
     if (user && comparePwd && (mode == true)) {
       const token = jwt.sign(
         { _id: user.id, username },
@@ -80,7 +80,7 @@ userRouter.post('/login', async(req, res) => {
 
 // POST welcome
 userRouter.post("/welcome", auth, (req, res) => {
-  res.status(200).send("Welcome！ ");
+  res.status(200).send("Welcome");
 });
 
 // GET
@@ -102,7 +102,7 @@ userRouter.get("/", async (req, res) => {
 userRouter.patch("/:id", async (req, res) => {
   try{
     const id = Number(req.params.id)
-    const { username, password, administrator, modelA, modelB, modelC } = req.body;
+    const { username, password, admin, authA, authB, authC } = req.body;
     const connection = await getConnection();
     const user = await connection.getRepository(User).findOne(id);
     const encryptedPassword = await bcrypt.hashSync(password, 10);
@@ -116,17 +116,17 @@ userRouter.patch("/:id", async (req, res) => {
     if (encryptedPassword) {
       user.password = encryptedPassword;
     }
-    if (administrator) {
-      user.administrator = administrator;
+    if (admin) {
+      user.admin = admin;
     }
-    if (modelA) {
-      user.modelA = modelA;
+    if (authA) {
+      user.authA = authA;
     }
-    if (modelB) {
-      user.modelB = modelB;
+    if (authB) {
+      user.authB = authB;
     }
-    if (modelC) {
-      user.modelC = modelC;
+    if (authC) {
+      user.authC = authC;
     }
     const token = jwt.sign(
       { users_id: user._id, username },
@@ -153,7 +153,7 @@ userRouter.delete("/:id", async (req, res) => {
     const connection = await getConnection();
     const userRepo = connection.getRepository(User);
     const findAdmin = await userRepo.findOne(id);
-    if (findAdmin.administrator == false) {
+    if (findAdmin.admin == false) {
       const deletedUser = await userRepo.softDelete(id);
       connection.close();
       res.status(204).json(deletedUser);

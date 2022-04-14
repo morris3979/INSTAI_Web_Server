@@ -1,4 +1,4 @@
-const { User, CarNumber, Details } = require("./db_constructor");
+const { User, CarNumber, Event, Details } = require("./db_constructor");
 const EntitySchema = require("typeorm").EntitySchema;
 
 //User table
@@ -18,19 +18,19 @@ const UserSchema = new EntitySchema({
         password: {
             type: "varchar",
         },
-        administrator: {
+        admin: {
             nullable: "true",
             type: "boolean",
         },
-        modelA: {
+        authA: {
             nullable: "true",
             type: "boolean",
         },
-        modelB: {
+        authB: {
             nullable: "true",
             type: "boolean",
         },
-        modelC: {
+        authC: {
             nullable: "true",
             type: "boolean",
         },
@@ -82,6 +82,14 @@ const CarNumberSchema = new EntitySchema({
             nullable: "true",
             type: "varchar",
         },
+        accessKey: {
+            default: "AKIAZW72FNAUQH6DA46E",
+            type: "varchar",
+        },
+        secretKey: {
+            default: "yCdBApwib4xCt77vg7L3MYP/2AnU3qy1HTG9th8e",
+            type: "varchar",
+        },
         createAt: {
             type: "datetime",
             createDate: true,
@@ -99,25 +107,25 @@ const CarNumberSchema = new EntitySchema({
         },
     },
     relations: {
-        Details: {
+        Event: {
             type: "one-to-many",
-            target: "Details",
+            target: "Event",
         },
     },
 });
 
-//Details table
-const DetailsSchema = new EntitySchema({
-    name: "Details", // Will use table name `Test` as default behavior.
-    tableName: "Details", // Optional: Provide `tableName` property to override the default behavior for table name.
-    target: Details,
+//Event table
+const EventSchema = new EntitySchema({
+    name: "Event", // Will use table name `Test` as default behavior.
+    tableName: "Event", // Optional: Provide `tableName` property to override the default behavior for table name.
+    target: Event,
     columns: {
         id: {
             primary: true,
             type: "int",
             generated: true
         },
-        startingTime: {
+        eventTime: {
             nullable: "true",
             type: "timestamp",
         },
@@ -129,9 +137,9 @@ const DetailsSchema = new EntitySchema({
             nullable: "true",
             type: "int",
         },
-        event: {
+        stayTime: {
             nullable: "true",
-            type: "varchar",
+            type: "int",
         },
         position: {
             nullable: "true",
@@ -158,8 +166,50 @@ const DetailsSchema = new EntitySchema({
             type: "many-to-one",
             target: "CarNumber",
         },
+        Details: {
+            type: "one-to-many",
+            target: "Details",
+        },
     },
 });
 
+//Details table
+const DetailsSchema = new EntitySchema({
+    name: "Details", // Will use table name `Test` as default behavior.
+    tableName: "Details", // Optional: Provide `tableName` property to override the default behavior for table name.
+    target: Details,
+    columns: {
+        id: {
+            primary: true,
+            type: "int",
+            generated: true
+        },
+        details: {
+            nullable: "true",
+            type: "varchar",
+        },
+        createAt: {
+            type: "datetime",
+            createDate: true,
+            name: "created_at",
+        },
+        updateAt: {
+            type: "datetime",
+            updateDate: true,
+            name: "update_at",
+        },
+        deleteAt: {
+            type: "datetime",
+            deleteDate: true,
+            name: "delete_at",
+        },
+    },
+    relations: {
+        Event: {
+            type: "many-to-one",
+            target: "Event",
+        },
+    },
+});
 
-module.exports = { UserSchema, CarNumberSchema, DetailsSchema }
+module.exports = { UserSchema, CarNumberSchema, EventSchema, DetailsSchema }

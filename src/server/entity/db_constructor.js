@@ -1,36 +1,46 @@
 class User {
-    constructor(id, username, password, administrator, modelA, modelB, modelC, token) {
+    constructor(id, username, password, admin, authA, authB, authC, token) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.administrator = administrator;
-        this.modelA = modelA;
-        this.modelB = modelB;
-        this.modelC = modelC;
+        this.admin = admin;
+        this.authA = authA;
+        this.authB = authB;
+        this.authC = authC;
         this.token = token;
     }
 }
 
 class CarNumber {
-    constructor(id, boardId, modelName, version, plateNumber) {
+    constructor(id, boardId, modelName, version, plateNumber, accessKey, secretKey) {
         this.id = id;
         this.boardId = boardId;
         this.modelName = modelName;
         this.version = version;
         this.plateNumber = plateNumber;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
     }
 }
 
-class Details {
-    constructor(id, startingTime, gpsState, speed, event, position, CarNumber) {
+class Event {
+    constructor(id, startingTime, gpsState, speed, stayTime, position, CarNumber) {
         this.id = id;
         this.startingTime = startingTime;
         this.gpsState = gpsState;
         this.speed = speed;
-        this.event = event;
+        this.stayTime = stayTime;
         this.position = position;
         this.CarNumber = CarNumber;
     }
 }
 
-module.exports = { User, CarNumber, Details }
+class Details {
+    constructor(id, event, Event) {
+        this.id = id;
+        this.event = event;
+        this.Event = Event;
+    }
+}
+
+module.exports = { User, CarNumber, Event, Details }
