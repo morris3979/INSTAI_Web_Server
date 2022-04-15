@@ -5,7 +5,7 @@ async function getDetails() {
     const connection = await getConnection();
     const detailsRepo = connection.getRepository(Details);
     const details = await detailsRepo.find({
-      relations: ["Event"],
+      relations: ["Event", "Event.CarNumber"],
     });
     connection.close();
     //return new list
