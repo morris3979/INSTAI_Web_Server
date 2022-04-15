@@ -21,17 +21,17 @@ const { Item, SubMenu } = Menu
 const App = (props) => {
   const { loginInformation } = props
 
-  if (loginInformation.administrator == true) {
+  if (loginInformation.admin == true) {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint='md' collapsedWidth='0'>
           <Menu theme='dark' selectedKeys={[]}>
-            <Item key='/map' disabled={!loginInformation.administrator}>
+            <Item key='/map' disabled={!loginInformation.admin}>
               <Link to='/map'>
                 地圖資訊
               </Link>
             </Item>
-            <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.administrator}>
+            <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin}>
               <Item key='status'>
                 <Link to='/status'>
                   一般狀態
@@ -53,12 +53,12 @@ const App = (props) => {
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/modelversion' disabled={!loginInformation.administrator}>
+            <Item key='/modelversion' disabled={!loginInformation.admin}>
               <Link to='/modelversion'>
                 版號與模型配置
               </Link>
             </Item>
-            <Item key='/resource' disabled={!loginInformation.administrator}>
+            <Item key='/resource' disabled={!loginInformation.admin}>
               <Link to='/resource'>
                 關於
               </Link>
