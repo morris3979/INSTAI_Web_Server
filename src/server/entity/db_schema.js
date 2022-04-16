@@ -109,7 +109,9 @@ const CarNumberSchema = new EntitySchema({
     relations: {
         Event: {
             type: "one-to-many",
+            cascade: true,
             target: "Event",
+            inverseSide: 'carnumber'
         },
     },
 });
@@ -165,10 +167,14 @@ const EventSchema = new EntitySchema({
         CarNumber: {
             type: "many-to-one",
             target: "CarNumber",
+            joinColumn: 'carnumber_id',
+            inverseSide: 'event'
         },
         Details: {
             type: "one-to-many",
+            cascade: true,
             target: "Details",
+            inverseSide: 'event'
         },
     },
 });
@@ -208,6 +214,8 @@ const DetailsSchema = new EntitySchema({
         Event: {
             type: "many-to-one",
             target: "Event",
+            joinColumn: 'event_id',
+            inverseSide: 'details'
         },
     },
 });

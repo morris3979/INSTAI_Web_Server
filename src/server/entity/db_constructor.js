@@ -24,7 +24,7 @@ class CarNumber {
 }
 
 class Event {
-    constructor(id, startingTime, gpsState, speed, stayTime, position, CarNumber) {
+    constructor(id, startingTime, gpsState, speed, stayTime, position, CarNumber, Details) {
         this.id = id;
         this.startingTime = startingTime;
         this.gpsState = gpsState;
@@ -32,6 +32,7 @@ class Event {
         this.stayTime = stayTime;
         this.position = position;
         this.CarNumber = CarNumber;
+        this.Details = Details;
     }
 }
 
