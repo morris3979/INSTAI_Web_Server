@@ -1,4 +1,4 @@
-const { User, CarNumber, Event, Details } = require("./db_constructor");
+const { User, CarNumber, Event, Details } = require("./db_model");
 const EntitySchema = require("typeorm").EntitySchema;
 
 //User table
@@ -109,8 +109,8 @@ const CarNumberSchema = new EntitySchema({
     relations: {
         Event: {
             type: "one-to-many",
-            cascade: true,
             target: "Event",
+            cascade: true,
             inverseSide: 'carnumber'
         },
     },
@@ -167,13 +167,16 @@ const EventSchema = new EntitySchema({
         CarNumber: {
             type: "many-to-one",
             target: "CarNumber",
-            joinColumn: 'carnumber_id',
+            joinColumn: true,
+            onDelete: "CASCADE",
             inverseSide: 'event'
         },
         Details: {
             type: "one-to-many",
-            cascade: true,
             target: "Details",
+            cascade: true,
+            joinColumn: true,
+            eager: true,
             inverseSide: 'event'
         },
     },
@@ -214,7 +217,8 @@ const DetailsSchema = new EntitySchema({
         Event: {
             type: "many-to-one",
             target: "Event",
-            joinColumn: 'event_id',
+            joinColumn: true,
+            onDelete: "CASCADE",
             inverseSide: 'details'
         },
     },
