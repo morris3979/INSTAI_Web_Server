@@ -1,11 +1,11 @@
 const express = require('express');
 const carnumberRouter = express.Router();
-const { 
+const {
   getCarNumbers,
   insertCarNumber,
   patchCarNumber,
   deleteCarNumber
-} = require("../controllers/db.carnumber.controller")
+} = require("../rds/controllers/carnumber.controller")
 
 //GET
 carnumberRouter.get('/', async(req, res) => {

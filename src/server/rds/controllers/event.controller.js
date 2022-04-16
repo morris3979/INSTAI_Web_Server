@@ -1,5 +1,5 @@
-const { getConnection } = require("../database/aws_rds_index");
-const { Event } = require("../database/model/event");
+const { getConnection } = require("../aws_index");
+const { Event } = require("../rds/model/event");
 
 async function getEvent() {
     const connection = await getConnection();

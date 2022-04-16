@@ -1,6 +1,6 @@
 const express = require('express');
 const detailsRouter = express.Router();
-const { getDetails } = require("../controllers/db.details.controller");
+const { getDetails } = require("../rds/controllers/details.controller");
 
 //GET
 detailsRouter.get('/', async(req, res) => {

@@ -1,5 +1,5 @@
-const { getConnection } = require("../database/aws_rds_index");
-const { CarNumber } = require("../database/model/carnumber");
+const { getConnection } = require("../aws_index");
+const { CarNumber } = require("../model/carnumber");
 
 async function getCarNumbers() {
     const connection = await getConnection();
