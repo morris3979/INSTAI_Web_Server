@@ -1,5 +1,5 @@
-const { getConnection } = require("../entity/aws_rds_config");
-const { Details } = require("../entity/db_model");
+const { getConnection } = require("../database/aws_rds_index");
+const { Details } = require("../database/model/details");
 
 async function getDetails() {
     const connection = await getConnection();

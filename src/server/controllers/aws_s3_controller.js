@@ -1,5 +1,5 @@
 const stream = require('stream');
-const s3 = require('../entity/aws_s3_config');
+const s3 = require('./aws_s3_config');
 
 exports.doDownload = (req, res) => {
 	const s3Client = s3.s3Client;

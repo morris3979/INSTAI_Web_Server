@@ -1,6 +1,9 @@
 const typeorm = require('typeorm');
 require('dotenv').config();
-const { UserSchema, CarNumberSchema, EventSchema, DetailsSchema } = require("./db_schema");
+const { UserSchema } = require("./entity/user");
+const { CarNumberSchema } = require("./entity/carnumber");
+const { EventSchema } = require("./entity/event");
+const { DetailsSchema } = require("./entity/details");
 
 /** db config !! */
 async function getConnection() {
@@ -12,7 +15,7 @@ async function getConnection() {
         password: process.env.AWS_RDS_PASSWORD,
         database: process.env.RDS_DATABASE,
         timezone: "SYSTEM",
-        synchronize: false,
+        synchronize: true,
         migration: true,
         logging: false,
         entities: [

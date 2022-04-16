@@ -1,6 +1,6 @@
 const express = require('express');
 const awsS3Router = express.Router();
-const awsWorker = require("../controllers/s3.controller");
+const awsWorker = require("../controllers/aws_s3_controller");
 
 awsS3Router.get("/files/:filename", awsWorker.doDownload);
 

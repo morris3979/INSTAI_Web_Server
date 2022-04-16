@@ -1,11 +1,11 @@
-const { getConnection } = require("../entity/aws_rds_config");
-const { Event } = require("../entity/db_model");
+const { getConnection } = require("../database/aws_rds_index");
+const { Event } = require("../database/model/event");
 
 async function getEvent() {
     const connection = await getConnection();
     const eventRepo = connection.getRepository(Event);
     const event = await eventRepo.find({
-      relations: ["CarNumber", "Details.Event"],
+      relations: ["CarNumber"],
     });
     connection.close();
     //return new list
