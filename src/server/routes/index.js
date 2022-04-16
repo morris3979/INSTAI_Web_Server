@@ -5,7 +5,7 @@ const eventRouter = require("./eventRouter");
 const detailsRouter = require("./detailsRouter");
 const userRouter = require("./userRouter");
 
-const awsS3Router = require("./awsS3Router");
+const awsS3Router = require("./aws_s3Router");
 apiRouter.use("/S3", awsS3Router);
 
 apiRouter.use("/carnumber", carnumberRouter);
