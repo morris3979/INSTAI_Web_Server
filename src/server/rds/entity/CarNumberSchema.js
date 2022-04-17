@@ -1,5 +1,5 @@
 const EntitySchema = require("typeorm").EntitySchema;
-const { CarNumber } = require("../model/carnumber");
+const { CarNumber } = require("../model/CarNumber");
 
 //CarNumber table
 const CarNumberSchema = new EntitySchema({
@@ -55,6 +55,7 @@ const CarNumberSchema = new EntitySchema({
         Event: {
             type: "one-to-many",
             target: "Event",
+            joinColumn: { name: "eventId" },
             cascade: true,
             inverseSide: 'carnumber'
         },

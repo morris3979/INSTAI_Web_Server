@@ -1,5 +1,5 @@
 const { getConnection } = require("../aws_index");
-const { Details } = require("../model/details");
+const { Details } = require("../model/Details");
 
 async function getDetails() {
     const connection = await getConnection();

@@ -1,9 +1,9 @@
 const typeorm = require('typeorm');
 require('dotenv').config();
-const { UserSchema } = require("./entity/user");
-const { CarNumberSchema } = require("./entity/carnumber");
-const { EventSchema } = require("./entity/event");
-const { DetailsSchema } = require("./entity/details");
+const { UserSchema } = require("./entity/UserSchema");
+const { CarNumberSchema } = require("./entity/CarNumberSchema");
+const { EventSchema } = require("./entity/EventSchema");
+const { DetailsSchema } = require("./entity/DetailsSchema");
 
 /** db config !! */
 async function getConnection() {

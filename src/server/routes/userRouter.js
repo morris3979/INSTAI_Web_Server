@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const auth = require("../middleware/auth");
 const { getConnection } = require("../rds/aws_index");
-const { User } = require("../rds/model/user");
+const { User } = require("../rds/model/User");
 
 //POST register
 userRouter.post("/register", async (req, res) => {

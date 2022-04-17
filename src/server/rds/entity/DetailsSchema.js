@@ -1,5 +1,5 @@
 const EntitySchema = require("typeorm").EntitySchema;
-const { Details } = require("../model/details");
+const { Details } = require("../model/Details");
 
 //Details table
 const DetailsSchema = new EntitySchema({
@@ -36,7 +36,7 @@ const DetailsSchema = new EntitySchema({
         Event: {
             type: "many-to-one",
             target: "Event",
-            onDelete: "CASCADE",
+            joinColumn: { name: "eventId" },
             inverseSide: 'details'
         },
     },

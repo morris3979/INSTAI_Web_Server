@@ -1,5 +1,5 @@
 const { getConnection } = require("../aws_index");
-const { Event } = require("../model/event");
+const { Event } = require("../model/Event");
 
 async function getEvent() {
     const connection = await getConnection();

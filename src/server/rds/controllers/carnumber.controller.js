@@ -1,5 +1,6 @@
 const { getConnection } = require("../aws_index");
-const { CarNumber } = require("../model/carnumber");
+const { CarNumber } = require("../model/CarNumber");
+const { Event } = require("../model/Event");
 
 async function getCarNumbers() {
     const connection = await getConnection();
@@ -70,10 +71,16 @@ async function deleteCarNumber(id) {
     const connection = await getConnection();
     //delete
     const carnumberRepo = connection.getRepository(CarNumber);
-    const allCarnumbers = await carnumberRepo.softDelete(id);
+    const deleteCarnumber = await carnumberRepo.softDelete(id);
+    const eventRepo = connection.getRepository(Event);
+    const deleteEvent = await eventRepo
+    .createQueryBuilder()
+    .where("Event.carNumberId = :carNumberId", { carNumberId: id })
+    .softDelete()
+    .execute();
     connection.close();
     //return new list
-    return allCarnumbers;
+    return [deleteEvent, deleteCarnumber];
 }
 
 module.exports = { getCarNumbers, insertCarNumber, patchCarNumber, deleteCarNumber }

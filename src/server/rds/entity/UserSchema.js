@@ -1,5 +1,5 @@
 const EntitySchema = require("typeorm").EntitySchema;
-const { User } = require("../model/user");
+const { User } = require("../model/User");
 
 //User table
 const UserSchema = new EntitySchema({
