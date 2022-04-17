@@ -2,7 +2,6 @@ const express = require('express');
 const apiRouter = express.Router();
 const carnumberRouter = require("./carnumberRouter");
 const eventRouter = require("./eventRouter");
-const detailsRouter = require("./detailsRouter");
 const userRouter = require("./userRouter");
 
 const awsS3Router = require("./aws_s3Router");
@@ -10,7 +9,6 @@ apiRouter.use("/S3", awsS3Router);
 
 apiRouter.use("/carnumber", carnumberRouter);
 apiRouter.use("/event", eventRouter);
-apiRouter.use("/details", detailsRouter);
 apiRouter.use("/user", userRouter);
 
 module.exports = apiRouter;

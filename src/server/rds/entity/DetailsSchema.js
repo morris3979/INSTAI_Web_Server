@@ -36,8 +36,8 @@ const DetailsSchema = new EntitySchema({
         Event: {
             type: "many-to-one",
             target: "Event",
-            joinColumn: { name: "eventId" },
-            inverseSide: 'details'
+            joinColumn: true,
+            inverseSide: 'Details'
         },
     },
 });

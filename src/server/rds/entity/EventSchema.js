@@ -52,15 +52,13 @@ const EventSchema = new EntitySchema({
         CarNumber: {
             type: "many-to-one",
             target: "CarNumber",
-            joinColumn: { name: "carNumberId" },
-            inverseSide: 'event'
+            inverseSide: 'Event'
         },
         Details: {
             type: "one-to-many",
             target: "Details",
-            joinColumn: { name: "detailsId" },
             cascade: true,
-            inverseSide: 'event'
+            inverseSide: 'Event'
         },
     },
 });

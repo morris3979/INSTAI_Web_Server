@@ -5,7 +5,7 @@ async function getEvent() {
     const connection = await getConnection();
     const eventRepo = connection.getRepository(Event);
     const event = await eventRepo.find({
-      relations: ["CarNumber"],
+      relations: ["CarNumber", "Details"],
     });
     connection.close();
     //return new list
