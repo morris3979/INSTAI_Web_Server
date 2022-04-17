@@ -26,11 +26,6 @@ const DetailsSchema = new EntitySchema({
             updateDate: true,
             name: "update_at",
         },
-        deleteAt: {
-            type: "datetime",
-            deleteDate: true,
-            name: "delete_at",
-        },
     },
     relations: {
         Event: {
