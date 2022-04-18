@@ -13,7 +13,7 @@ const defaultState = {
   modelATableData: [],
   modelBTableData: [],
   modelCTableData: [],
-  modalFile: '',
+  modalFile: [],
   whichModal: {}
 }
 

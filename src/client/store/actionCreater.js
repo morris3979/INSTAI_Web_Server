@@ -194,7 +194,7 @@ export const GetStatusTableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('/api/details')
+        const response = await axios.get('/api/event')
         const action = DeliverData(response.data, Status_Table)
         dispatch(action)
       } catch (error) {
@@ -213,7 +213,7 @@ export const GetModelATableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('/api/details')
+        const response = await axios.get('/api/event')
         const filterData = response.data.filter((value) => {
           if (value.CarNumber) {
             return (value.CarNumber.modelName[0] == 'A')
@@ -237,7 +237,7 @@ export const GetModelBTableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('/api/details')
+        const response = await axios.get('/api/event')
         const filterData = response.data.filter((value) => {
           if (value.CarNumber) {
             return (value.CarNumber.modelName[0] == 'B')
@@ -261,7 +261,7 @@ export const GetModelCTableData = () => {
       const action = TableStatus()
       dispatch(action)
       try {
-        const response = await axios.get('/api/details')
+        const response = await axios.get('/api/event')
         const filterData = response.data.filter((value) => {
           if (value.CarNumber) {
             return (value.CarNumber.modelName[0] == 'C')

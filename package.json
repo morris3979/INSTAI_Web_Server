@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^4.19.5",
-    "aws-sdk": "^2.1115.0",
+    "aws-sdk": "^2.1116.0",
     "axios": "^0.26.1",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^5.0.1",
@@ -32,7 +32,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-player": "^2.10.0",
-    "react-redux": "^7.2.8",
+    "react-redux": "^8.0.0",
     "react-router-dom": "^6.3.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",

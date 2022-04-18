@@ -8,7 +8,7 @@ import {
 import { FileOutlined, DownloadOutlined } from '@ant-design/icons'
 import {
   CarNumberFilter, CarNumberOnFilter, DateFilter, DateOnFilter, DateChange
-} from './filter'
+} from './tools'
 
 const { Column } = Table
 const { Text } = Typography
@@ -68,22 +68,10 @@ class ModelATable extends Component {
           destroyOnClose={true}
           width={690}
         >
-          <Text>AWS</Text>
-          <ReactPlayer
-            url={`https://d20cmf4o2f77jz.cloudfront.net/video/${this.props.modalFile}.mp4`}
-            controls={true}
-          />
-          <Image
-            src={`https://d20cmf4o2f77jz.cloudfront.net/image/${this.props.modalFile}.jpg`}
-          />
-          <Text>阿里雲</Text>
-          <ReactPlayer
-            url={`http://carview.oss-accelerate.aliyuncs.com/video/${this.props.modalFile}.mp4`}
-            controls={true}
-          />
-          <Image
-            src={`http://carview.oss-accelerate.aliyuncs.com/image/${this.props.modalFile}.jpg`}
-          />
+          <Text>圖片</Text>
+          {this.modalFileImage()}
+          <Text>影片</Text>
+          {this.modalFileVideo()}
         </Modal>
       </Fragment>
     )
@@ -94,7 +82,7 @@ class ModelATable extends Component {
       <Button
         onClick={() => {
           this.setState({ isModalVisible: true })
-          this.props.getModalFile(text.event)
+          this.props.getModalFile(text.Details)
         }}
         icon={<FileOutlined />}
       />
@@ -103,6 +91,35 @@ class ModelATable extends Component {
 
   handleCancel = () => {
     this.setState({ isModalVisible: false })
+  }
+
+  modalFileImage = () => {
+    return (
+      this.props.modalFile.map((value) => {
+        if (value.image) {
+          return (
+            <Image
+              src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`}
+            />
+          )
+        }
+      })
+    )
+  }
+
+  modalFileVideo = () => {
+    return (
+      this.props.modalFile.map((value) => {
+        if (value.video) {
+          return (
+            <ReactPlayer
+              url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`}
+              controls={true}
+            />
+          )
+        }
+      })
+    )
   }
 }
 
