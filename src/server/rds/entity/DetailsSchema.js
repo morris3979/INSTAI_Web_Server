@@ -13,8 +13,19 @@ const DetailsSchema = new EntitySchema({
             generated: true
         },
         details: {
-            nullable: "true",
             type: "varchar",
+        },
+        image: {
+            nullable: "true",
+            type: "boolean",
+        },
+        video: {
+            nullable: "true",
+            type: "boolean",
+        },
+        log: {
+            nullable: "true",
+            type: "boolean",
         },
         createAt: {
             type: "datetime",

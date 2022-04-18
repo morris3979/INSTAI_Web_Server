@@ -24,7 +24,6 @@ const CarNumberSchema = new EntitySchema({
             type: "varchar",
         },
         plateNumber: {
-            nullable: "true",
             type: "varchar",
         },
         accessKey: {
