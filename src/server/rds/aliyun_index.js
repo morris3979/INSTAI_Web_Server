@@ -1,6 +1,9 @@
 const typeorm = require('typeorm');
 require('dotenv').config();
-const { UserSchema, CarNumberSchema, DetailsSchema } = require("./db_schema");
+const { UserSchema } = require("./entity/UserSchema");
+const { CarNumberSchema } = require("./entity/CarNumberSchema");
+const { EventSchema } = require("./entity/EventSchema");
+const { DetailsSchema } = require("./entity/DetailsSchema");
 
 /** db config !! */
 async function getConnection() {
@@ -18,6 +21,7 @@ async function getConnection() {
         entities: [
             UserSchema,
             CarNumberSchema,
+            EventSchema,
             DetailsSchema,
         ],
         migrations: [
