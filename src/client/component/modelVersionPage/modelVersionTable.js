@@ -35,7 +35,7 @@ class ModelVersionTable extends Component {
           loading={this.props.tableStatus}
           pagination={false}
         >
-          <Column title='版號' dataIndex='boardId' align='center' />
+          <Column title='板號' dataIndex='boardId' align='center' />
           <Column title='車號' dataIndex='plateNumber' align='center' />
           <Column title='模型' dataIndex='modelName' align='center' />
           <Column title='版本' dataIndex='version' align='center' />
@@ -48,7 +48,7 @@ class ModelVersionTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='版號' name='boardId' rules={[this.rule('版號')]}>
+            <Item label='板號' name='boardId' rules={[this.rule('板號')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.boardId)}`

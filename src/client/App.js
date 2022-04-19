@@ -55,7 +55,7 @@ const App = (props) => {
             </SubMenu>
             <Item key='/modelversion' disabled={!loginInformation.admin}>
               <Link to='/modelversion'>
-                版號與模型配置
+                板號與模型配置
               </Link>
             </Item>
             <Item key='/resource' disabled={!loginInformation.admin}>

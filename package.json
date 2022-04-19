@@ -24,7 +24,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "leaflet": "^1.7.1",
+    "leaflet": "^1.8.0",
     "leaflet-geosearch": "^3.6.0",
     "leaflet.locatecontrol": "^0.76.0",
     "mysql": "^2.18.1",
