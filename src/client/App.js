@@ -25,7 +25,7 @@ const App = (props) => {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint='md' collapsedWidth='0'>
-          <Menu theme='dark' selectedKeys={[]}>
+          <Menu theme='dark' selectedKeys={[]} mode='inline'>
             <Item key='/map' disabled={!loginInformation.admin}>
               <Link to='/map'>
                 地圖資訊
