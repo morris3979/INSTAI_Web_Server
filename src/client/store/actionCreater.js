@@ -171,15 +171,21 @@ export const PostModelVersionTableData = (data) => {
     async (dispatch) => {
       message.loading('新增中，請稍後...', 0)
       try {
-        await axios.post('/api/carnumber', data)
+        const response = await axios.post('/api/carnumber', data)
         message.destroy()
-        Modal.success({
-          title: '新增成功',
-          onOk: () => {
-            const action = GetModelVersionTableData()
-            dispatch(action)
-          }
-        })
+        if (response.data == 'Already Exist') {
+          Modal.warning({
+            title: '資料已存在'
+          })
+        } else {
+          Modal.success({
+            title: '新增成功',
+            onOk: () => {
+              const action = GetModelVersionTableData()
+              dispatch(action)
+            }
+          })
+        }
       } catch (error) {
         message.destroy()
         message.error(`${error}`)
