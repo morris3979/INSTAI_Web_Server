@@ -7,7 +7,6 @@ import Loading from './loading'
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
 const ModelVersionPage = lazy(() => import('./page/modelVersionPage'))
-const StatusPage = lazy(() => import('./page/statusPage'))
 const ModelAPage = lazy(() => import('./page/modelAPage'))
 const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
@@ -32,11 +31,6 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin}>
-              <Item key='status'>
-                <Link to='/status'>
-                  一般狀態
-                </Link>
-              </Item>
               <Item key='modelA'>
                 <Link to='/modelA'>
                   模型A
@@ -76,7 +70,6 @@ const App = (props) => {
               <Routes>
                 <Route path='/' element={<InitialPage />} />
                 <Route path='/map' element={<MapPage />} />
-                <Route path='/status' element={<StatusPage />} />
                 <Route path='/modelA' element={<ModelAPage />} />
                 <Route path='/modelB' element={<ModelBPage />} />
                 <Route path='/modelC' element={<ModelCPage />} />
