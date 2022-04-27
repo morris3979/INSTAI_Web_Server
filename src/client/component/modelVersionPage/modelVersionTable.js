@@ -34,7 +34,6 @@ class ModelVersionTable extends Component {
         <Table
           dataSource={this.props.modelVersionTableData}
           loading={this.props.tableStatus}
-          pagination={false}
         >
           <Column title='板號' dataIndex='boardId' align='center' />
           <Column title='車號' dataIndex='plateNumber' align='center' />
