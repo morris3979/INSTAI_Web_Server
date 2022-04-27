@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import {
-  Popconfirm, Table, Button, Space, Modal, Form, Input
+  Popconfirm, Table, Button, Space, Modal, Form, Input, Select
 } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import {
@@ -11,6 +11,7 @@ import {
 
 const { Column } = Table
 const { Item } = Form
+const { Option } = Select
 
 const convertedValues = {}
 
@@ -63,18 +64,26 @@ class ModelVersionTable extends Component {
               />
             </Item>
             <Item label='模型' name='modelName' rules={[this.rule('模型')]}>
-              <Input
+              <Select
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.modelName)}`
                 }
-              />
+              >
+                <Option value='A'>A</Option>
+                <Option value='B'>B</Option>
+                <Option value='C'>C</Option>
+              </Select>
             </Item>
             <Item label='版本' name='version' rules={[this.rule('版本')]}>
-              <Input
+              <Select
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.version)}`
                 }
-              />
+              >
+                <Option value='1'>1</Option>
+                <Option value='2'>2</Option>
+                <Option value='3'>3</Option>
+              </Select>
             </Item>
             <Item>
               <Button htmlType='submit' onClick={this.handleCancel}>
