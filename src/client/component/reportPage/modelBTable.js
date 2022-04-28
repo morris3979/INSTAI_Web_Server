@@ -29,7 +29,6 @@ class ModelBTable extends Component {
         <Table
           dataSource={this.props.modelBTableData}
           loading={this.props.tableStatus}
-          pagination={false}
         >
           <Column
             title='車輛編號'

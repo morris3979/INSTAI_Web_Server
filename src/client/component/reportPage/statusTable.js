@@ -18,7 +18,6 @@ class StatusTable extends Component {
       <Table
         dataSource={this.props.reportTableData}
         loading={this.props.tableStatus}
-        pagination={false}
       >
         <Column
           title='車輛編號'
