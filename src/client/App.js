@@ -12,6 +12,7 @@ const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
 const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
+const AccountPage = lazy(() => import('./page/accountPage'))
 const Test = lazy(() => import('./component/reportPage/test'))
 
 const { Content, Sider } = Layout
@@ -52,6 +53,11 @@ const App = (props) => {
                 板號與模型配置
               </Link>
             </Item>
+            <Item key='/account' disabled={!loginInformation.admin}>
+              <Link to='/account'>
+                帳號權限配置
+              </Link>
+            </Item>
             <Item key='/resource' disabled={!loginInformation.admin}>
               <Link to='/resource'>
                 關於
@@ -75,6 +81,7 @@ const App = (props) => {
                 <Route path='/modelC' element={<ModelCPage />} />
                 <Route path='/modelversion' element={<ModelVersionPage />} />
                 <Route path='/resource' element={<Resource />} />
+                <Route path='/account' element={<AccountPage />} />
                 <Route path='/test' element={<Test />} />
               </Routes>
             </Suspense>
