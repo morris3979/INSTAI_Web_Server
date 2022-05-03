@@ -102,20 +102,20 @@ userRouter.get("/", async (req, res) => {
 userRouter.patch("/:id", async (req, res) => {
   try{
     const id = Number(req.params.id)
-    const { username, password, admin, authA, authB, authC } = req.body;
+    const { username, admin, authA, authB, authC } = req.body;
     const connection = await getConnection();
     const user = await connection.getRepository(User).findOne(id);
-    const encryptedPassword = await bcrypt.hashSync(password, 10);
+    // const encryptedPassword = await bcrypt.hashSync(password, 10);
     if (!user) {
       res.status(404).send("Not Found");
       return;
     }
-    if (username) {
-      user.username = username;
-    }
-    if (encryptedPassword) {
-      user.password = encryptedPassword;
-    }
+    // if (username) {
+    //   user.username = username;
+    // }
+    // if (encryptedPassword) {
+    //   user.password = encryptedPassword;
+    // }
     if (admin) {
       user.admin = admin;
     }
