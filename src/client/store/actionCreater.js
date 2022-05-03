@@ -3,7 +3,7 @@ import { message, Modal } from 'antd'
 import {
   Get_Model_Version_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information
+  Login_Information, Account_Information
 } from './actionType'
 
 //共用Function <<<
@@ -95,6 +95,47 @@ export const RegisterFormData = (data) => {
         await axios.post('/api/user/register', convertedData)
         message.destroy()
         message.success('註冊成功')
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const GetAccountTableData = () => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus()
+      dispatch(action)
+      try {
+        const response = await axios.get('/api/user')
+        const action = DeliverData(response.data, Account_Information)
+        dispatch(action)
+      } catch (error) {
+        message.error(`${error}`)
+      } finally {
+        const action = TableStatus()
+        dispatch(action)
+      }
+    }
+  )
+}
+
+export const PatchAccountTableData = (id, data) => {
+  return (
+    async (dispatch) => {
+      message.loading('修改中，請稍後...', 0)
+      try {
+        await axios.patch(`/api/user/${id}`, data)
+        message.destroy()
+        Modal.success({
+          title: '修改成功',
+          onOk: () => {
+            const action = GetAccountTableData()
+            dispatch(action)
+          }
+        })
       } catch (error) {
         message.destroy()
         message.error(`${error}`)

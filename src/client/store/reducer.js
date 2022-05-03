@@ -1,7 +1,7 @@
 import {
   Table_Status, Get_Model_Version_Table, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information
+  Login_Information, Account_Information
 } from './actionType'
 
 const defaultState = {
@@ -14,6 +14,7 @@ const defaultState = {
   modelBTableData: [],
   modelCTableData: [],
   modalFile: [],
+  accountData: [],
   whichModal: {}
 }
 
@@ -26,6 +27,10 @@ const reducer = (state = defaultState, action) => {
     }
     case Login_Information: {
       newState.loginInformation = action.value
+      return newState
+    }
+    case Account_Information: {
+      newState.accountData = action.value
       return newState
     }
     case Get_Model_Version_Table: {
