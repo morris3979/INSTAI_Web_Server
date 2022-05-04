@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^4.20.2",
-    "aws-sdk": "^2.1126.0",
+    "aws-sdk": "^2.1127.0",
     "axios": "^0.27.2",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^5.0.1",

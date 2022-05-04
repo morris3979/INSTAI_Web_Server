@@ -144,6 +144,28 @@ export const PatchAccountTableData = (id, data) => {
   )
 }
 
+export const DeleteAccountTableData = (id) => {
+  return (
+    async (dispatch) => {
+      message.loading('刪除中，請稍後...', 0)
+      try {
+        await axios.delete(`/api/user/${id}`)
+        message.destroy()
+        Modal.success({
+          title: '刪除成功',
+          onOk: () => {
+            const action = GetAccountTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const GetModelVersionTableData = () => {
   return (
     async (dispatch) => {

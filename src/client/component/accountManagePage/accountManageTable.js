@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import {
-  Table, Modal, Switch, Form, Button, Space, Popconfirm, Input
+  Table, Modal, Switch, Form, Button, Space, Popconfirm
 } from 'antd'
 import {
-  GetAccountTableData, SetWhichModal
+  GetAccountTableData, SetWhichModal, PatchAccountTableData,
+  DeleteAccountTableData
 } from '../../store/actionCreater'
 import {
   CheckOutlined, CloseOutlined, EditOutlined, DeleteOutlined
@@ -12,6 +13,8 @@ import {
 
 const { Column, ColumnGroup } = Table
 const { Item } = Form
+
+const convertedValues = {}
 
 const adminStatus = (text) => {
   if (text.admin == true) {
@@ -61,10 +64,6 @@ const modelCStatus = (text) => {
   }
 }
 
-const rule = () => {
-  return ({ required: true, message: '請輸入密碼' })
-}
-
 class AccountManageTable extends Component {
   constructor(props) {
     super(props)
@@ -100,22 +99,22 @@ class AccountManageTable extends Component {
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
             <Item label='admin' name='admin'>
               <Switch
-                defaultChecked={`${this.props.whichModal.admin}`}
+                defaultChecked={this.props.whichModal.admin}
               />
             </Item>
             <Item label='modelA' name='authA'>
               <Switch
-                defaultChecked={`${this.props.whichModal.authA}`}
+                defaultChecked={this.props.whichModal.authA}
               />
             </Item>
             <Item label='modelB' name='authB'>
               <Switch
-                defaultChecked={`${this.props.whichModal.authB}`}
+                defaultChecked={this.props.whichModal.authB}
               />
             </Item>
             <Item label='modelC' name='authC'>
               <Switch
-                defaultChecked={`${this.props.whichModal.authC}`}
+                defaultChecked={this.props.whichModal.authC}
               />
             </Item>
             <Item>
@@ -139,7 +138,10 @@ class AccountManageTable extends Component {
   }
 
   onFinish = (values) => {
-    console.log(values)
+    Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
+      convertedValues[String(key)] = values[key]
+    })
+    this.props.patchAccountTableData(this.props.whichModal.id, convertedValues)
   }
 
   buttonGroup = (text) => {
@@ -151,6 +153,7 @@ class AccountManageTable extends Component {
         />
         <Popconfirm
           title='確定刪除?'
+          onConfirm={() => { this.props.deleteAccountTableData(text.id) }}
         >
           <Button icon={<DeleteOutlined />} />
         </Popconfirm>
@@ -177,6 +180,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     getAccountTableData() {
       const action = GetAccountTableData()
+      dispatch(action)
+    },
+    patchAccountTableData(id, data) {
+      const action = PatchAccountTableData(id, data)
+      dispatch(action)
+    },
+    deleteAccountTableData(id) {
+      const action = DeleteAccountTableData(id)
       dispatch(action)
     }
   }
