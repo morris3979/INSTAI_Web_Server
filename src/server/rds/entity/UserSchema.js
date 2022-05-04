@@ -19,20 +19,20 @@ const UserSchema = new EntitySchema({
             type: "varchar",
         },
         admin: {
-            nullable: "true",
             type: "boolean",
+            default: false,
         },
         authA: {
-            nullable: "true",
             type: "boolean",
+            default: false,
         },
         authB: {
-            nullable: "true",
             type: "boolean",
+            default: false,
         },
         authC: {
-            nullable: "true",
             type: "boolean",
+            default: false,
         },
         token: {
             nullable: "true",
