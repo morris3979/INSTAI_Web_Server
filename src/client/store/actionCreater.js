@@ -59,7 +59,7 @@ export const LoginFormData = (data) => {
         dispatch(action)
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -76,7 +76,7 @@ export const LoginToken = (data) => {
         message.destroy()
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -97,7 +97,7 @@ export const RegisterFormData = (data) => {
         message.success('註冊成功')
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -113,7 +113,7 @@ export const GetAccountTableData = () => {
         const action = DeliverData(response.data, Account_Information)
         dispatch(action)
       } catch (error) {
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -138,7 +138,7 @@ export const PatchAccountTableData = (id, data) => {
         })
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -160,7 +160,7 @@ export const DeleteAccountTableData = (id) => {
         })
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -176,7 +176,7 @@ export const GetModelVersionTableData = () => {
         const action = DeliverData(response.data, Get_Model_Version_Table)
         dispatch(action)
       } catch (error) {
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -201,7 +201,7 @@ export const DeleteModelVersionTableData = (id) => {
         })
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -223,7 +223,7 @@ export const PatchModelVersionTableData = (id, data) => {
         })
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -251,7 +251,7 @@ export const PostModelVersionTableData = (data) => {
         }
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       }
     }
   )
@@ -267,7 +267,7 @@ export const GetStatusTableData = () => {
         const action = DeliverData(response.data, Status_Table)
         dispatch(action)
       } catch (error) {
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -291,7 +291,7 @@ export const GetModelATableData = () => {
         const action = DeliverData(filterData, Model_A_Table)
         dispatch(action)
       } catch (error) {
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -315,7 +315,7 @@ export const GetModelBTableData = () => {
         const action = DeliverData(filterData, Model_B_Table)
         dispatch(action)
       } catch (error) {
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -339,7 +339,7 @@ export const GetModelCTableData = () => {
         const action = DeliverData(filterData, Model_C_Table)
         dispatch(action)
       } catch (error) {
-        message.error(`${error}`)
+        message.error(`${error.response.data}`)
       } finally {
         const action = TableStatus()
         dispatch(action)

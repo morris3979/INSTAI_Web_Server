@@ -18,7 +18,7 @@ const defaultState = {
   whichModal: {}
 }
 
-const reducer = (state = defaultState, action) => {
+const Reducer = (state = defaultState, action) => {
   const newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
     case Table_Status: {
@@ -71,4 +71,4 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
-export default reducer
+export default Reducer

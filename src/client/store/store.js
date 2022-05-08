@@ -1,16 +1,15 @@
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import storageSession from 'redux-persist/lib/storage/session'
-import reducer from './reducer'
+import Reducer from './reducer'
 
 const persistConfig = {
   key: 'root',
   storage: storageSession
 }
 
-const persistedReducer = persistReducer(persistConfig, reducer)
-const store = createStore(persistedReducer, applyMiddleware(thunk))
+const persistedReducer = persistReducer(persistConfig, Reducer)
+const store = configureStore({ reducer: persistedReducer })
 
 export const persistor = persistStore(store)
 export default store

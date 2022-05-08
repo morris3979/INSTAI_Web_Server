@@ -74,7 +74,7 @@ class Map extends Component {
       message.destroy()
     } catch (error) {
       message.destroy()
-      message.error(`${error}`)
+      message.error(`${error.response.data}`)
     } finally {
       showMap()
     }
