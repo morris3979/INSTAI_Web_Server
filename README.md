@@ -1,6 +1,4 @@
 # CarView Project from NTUT Lab321 
-## 🇹🇼 Taiwan No.1 🎉🎉🎉
-
 #
 ## 1. With [npm](https://npmjs.org/) installed, run
 
