@@ -15,7 +15,8 @@ async function getConnection() {
         password: process.env.ALIYUN_RDS_PASSWORD,
         database: process.env.RDS_DATABASE,
         timezone: "SYSTEM",
-        synchronize: false,
+        synchronize: true,
+        keepConnectionAlive: true,
         migration: true,
         logging: false,
         entities: [

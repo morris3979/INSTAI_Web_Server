@@ -16,6 +16,7 @@ async function getConnection() {
         database: process.env.RDS_DATABASE,
         timezone: "SYSTEM",
         synchronize: true,
+        keepConnectionAlive: true,
         migration: true,
         logging: false,
         entities: [
