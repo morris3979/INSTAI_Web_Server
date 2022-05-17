@@ -1,4 +1,4 @@
-const { getConnection } = require("../aws_index");
+const { getConnection } = require("../index");
 const { CarNumber } = require("../model/CarNumber");
 const { Event } = require("../model/Event");
 
@@ -14,20 +14,20 @@ async function getCarNumbers() {
 async function insertCarNumber(boardId, modelName, version, plateNumber) {
     const connection = await getConnection();
     const findBoardId = await connection.getRepository(CarNumber).findOne({
-      boardId: boardId,
+        boardId: boardId,
     });
     //Create, if boardId & plateNumber is existed, it will be not created.
     if (!(findBoardId)) {
-      const carnumbers = new CarNumber();
-      carnumbers.boardId = boardId;
-      carnumbers.modelName = modelName;
-      carnumbers.version = version;
-      carnumbers.plateNumber = plateNumber;
-      //save
-      await connection.getRepository(CarNumber).save(carnumbers);
-      connection.close();
-      //return new list
-      return carnumbers;
+        const carnumbers = new CarNumber();
+        carnumbers.boardId = boardId;
+        carnumbers.modelName = modelName;
+        carnumbers.version = version;
+        carnumbers.plateNumber = plateNumber;
+        //save
+        await connection.getRepository(CarNumber).save(carnumbers);
+        connection.close();
+        //return new list
+        return carnumbers;
     }
     const existed = "Already Exist";
     connection.close();
@@ -46,20 +46,20 @@ async function patchCarNumber(id, boardId, modelName, version, plateNumber) {
     const updateCarnumbers = await carnumberRepo.findOne(id);
     //if not find id, it will be sent not found.
     if (!updateCarnumbers) {
-      res.status(404).send("Not Found");
-      return;
+        res.status(404).send("Not Found");
+        return;
     }
     if (carnumber.boardId) {
-      updateCarnumbers.boardId = carnumber.boardId;
+        updateCarnumbers.boardId = carnumber.boardId;
     }
     if (carnumber.modelName) {
-      updateCarnumbers.modelName = carnumber.modelName;
+        updateCarnumbers.modelName = carnumber.modelName;
     }
     if (carnumber.version) {
-      updateCarnumbers.version = carnumber.version;
+        updateCarnumbers.version = carnumber.version;
     }
     if (carnumber.plateNumber) {
-      updateCarnumbers.plateNumber = carnumber.plateNumber;
+        updateCarnumbers.plateNumber = carnumber.plateNumber;
     }
     await connection.getRepository(CarNumber).save(updateCarnumbers);
     connection.close();
@@ -74,10 +74,10 @@ async function deleteCarNumber(id) {
     const deleteCarnumber = await carnumberRepo.softDelete(id);
     const eventRepo = connection.getRepository(Event);
     const deleteEvent = await eventRepo
-    .createQueryBuilder()
-    .where("Event.carNumberId = :carNumberId", { carNumberId: id })
-    .softDelete()
-    .execute();
+        .createQueryBuilder()
+        .where("Event.carNumberId = :carNumberId", { carNumberId: id })
+        .softDelete()
+        .execute();
     connection.close();
     //return new list
     return [deleteEvent, deleteCarnumber];
