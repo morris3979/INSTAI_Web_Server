@@ -8,6 +8,7 @@ const { DetailsSchema } = require("./entity/DetailsSchema");
 /** db config !! */
 async function getConnection() {
     return await typeorm.createConnection({
+        name: "default",
         type: "mysql",
         host: process.env.ALIYUN_RDS_HOST,
         port: process.env.ALIYUN_RDS_PORT,

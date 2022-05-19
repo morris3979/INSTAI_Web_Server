@@ -8,6 +8,7 @@ const { DetailsSchema } = require("./entity/DetailsSchema");
 /** db config !! */
 async function getConnection() {
     return await typeorm.createConnection({
+        name: "default",
         type: "mysql",
         host: process.env.AWS_RDS_HOST,
         port: process.env.AWS_RDS_PORT,
