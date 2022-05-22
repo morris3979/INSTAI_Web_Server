@@ -10,6 +10,7 @@ eventRouter.get('/', async(req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 });
 
@@ -22,6 +23,7 @@ eventRouter.get('/modelA', async(req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 });
 
@@ -34,6 +36,7 @@ eventRouter.get('/modelB', async(req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 });
 
@@ -46,6 +49,7 @@ eventRouter.get('/modelC', async(req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 });
 

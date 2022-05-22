@@ -15,6 +15,7 @@ carnumberRouter.get('/', async(req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 });
 
@@ -30,6 +31,7 @@ carnumberRouter.post("/", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 })
 
@@ -46,6 +48,7 @@ carnumberRouter.patch("/:id", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 })
 
@@ -58,6 +61,7 @@ carnumberRouter.delete("/:id", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
+    return;
   }
 })
 

@@ -17,9 +17,14 @@ async function getConnection() {
         database: process.env.RDS_DATABASE,
         timezone: "SYSTEM",
         synchronize: true,
+        autoLoadEntities: true,
         keepConnectionAlive: true,
+        autoLoadModels: true,
         migration: true,
         logging: false,
+        extra: {
+            connectionLimit: 5
+        },
         entities: [
             UserSchema,
             CarNumberSchema,

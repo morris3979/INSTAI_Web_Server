@@ -39,6 +39,7 @@ userRouter.post("/register", async(req, res) => {
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
+        return;
     }
 })
 
@@ -71,12 +72,14 @@ userRouter.post('/login', async(req, res) => {
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
+        return;
     }
 });
 
 // POST welcome
 userRouter.post("/welcome", auth, (req, res) => {
     res.status(200).send("Welcome");
+    return;
 });
 
 // GET
@@ -91,6 +94,7 @@ userRouter.get("/", async(req, res) => {
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
+        return;
     }
 })
 
@@ -137,6 +141,7 @@ userRouter.patch("/:id", async(req, res) => {
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
+        return;
     }
 })
 
@@ -158,6 +163,7 @@ userRouter.delete("/:id", async(req, res) => {
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
+        return;
     }
 })
 
