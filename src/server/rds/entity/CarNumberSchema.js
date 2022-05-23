@@ -27,11 +27,11 @@ const CarNumberSchema = new EntitySchema({
             type: "varchar",
         },
         accessKey: {
-            default: "AKIAZW72FNAUQH6DA46E",
+            default: "LTAI5tLndrxToCSEGS2bH9BN",
             type: "varchar",
         },
         secretKey: {
-            default: "yCdBApwib4xCt77vg7L3MYP/2AnU3qy1HTG9th8e",
+            default: "aDj4qQ887vTI0hSkApQR2wStaupT6O",
             type: "varchar",
         },
         createAt: {
