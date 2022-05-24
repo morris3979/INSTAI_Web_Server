@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import {
-  Popconfirm, Table, Button, Space, Modal, Form, Input, Select
+  Popconfirm, Table, Button, Space, Modal, Form, Input, Select, Affix
 } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import {
   GetModelVersionTableData, SetWhichModal, DeleteModelVersionTableData,
   PatchModelVersionTableData, PostModelVersionTableData
@@ -28,9 +28,6 @@ class ModelVersionTable extends Component {
   render() {
     return (
       <Fragment>
-        <Button onClick={() => { this.onClick({ id: 0 }) }} size='large'>
-          新增
-        </Button>
         <Table
           dataSource={this.props.modelVersionTableData}
           loading={this.props.tableStatus}
@@ -91,6 +88,14 @@ class ModelVersionTable extends Component {
             </Item>
           </Form>
         </Modal>
+        <Affix style={{ position: 'fixed', bottom: 10, right: 10 }}>
+          <Button
+            onClick={() => { this.onClick({ id: 0 }) }}
+            icon={<PlusOutlined />}
+            size='large'
+            shape='circle'
+          />
+        </Affix>
       </Fragment>
     )
   }
