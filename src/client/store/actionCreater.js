@@ -114,7 +114,6 @@ export const GetAccountTableData = () => {
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
-        setTimeout(location.reload(), 3000)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -178,7 +177,6 @@ export const GetModelVersionTableData = () => {
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
-        setTimeout(location.reload(), 3000)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -270,7 +268,6 @@ export const GetStatusTableData = () => {
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
-        setTimeout(location.reload(), 3000)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -295,7 +292,6 @@ export const GetModelATableData = () => {
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
-        setTimeout(location.reload(), 3000)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -320,7 +316,6 @@ export const GetModelBTableData = () => {
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
-        setTimeout(location.reload(), 3000)
       } finally {
         const action = TableStatus()
         dispatch(action)
@@ -345,7 +340,6 @@ export const GetModelCTableData = () => {
         dispatch(action)
       } catch (error) {
         message.error(`${error}`)
-        setTimeout(location.reload(), 3000)
       } finally {
         const action = TableStatus()
         dispatch(action)

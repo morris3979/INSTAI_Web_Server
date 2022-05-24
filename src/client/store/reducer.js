@@ -5,7 +5,7 @@ import {
 } from './actionType'
 
 const defaultState = {
-  loginInformation: { admin: true },
+  loginInformation: { admin: false },
   tableStatus: false,
   modelVersionTableData: [],
   mapPositionData: [],
