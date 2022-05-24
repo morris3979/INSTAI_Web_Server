@@ -1,6 +1,5 @@
 const { getConnection } = require("../index");
 const { Event } = require("../model/Event");
-const { CarNumber } = require("../model/CarNumber");
 
 async function getEvent() {
     const connection = await getConnection();
@@ -13,18 +12,4 @@ async function getEvent() {
     return event;
 }
 
-async function getCarNumberModel(modelName) {
-    const connection = await getConnection();
-    const carnumberRepo = connection.getRepository(CarNumber);
-    const carnumber = await carnumberRepo.find({
-        relations: ["Event", "Event.Details"],
-        where: {
-            modelName: modelName,
-        }
-    });
-    connection.close();
-    //return new list
-    return carnumber;
-}
-
-module.exports = { getEvent, getCarNumberModel }
+module.exports = { getEvent }

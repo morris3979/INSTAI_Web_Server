@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const auth = require("../middleware/auth");
 const { getConnection } = require("../rds/index");
 const { User } = require("../rds/model/User");
+const { getConnectionManager } = require("typeorm");
 
 //POST register
 userRouter.post("/register", async(req, res) => {
@@ -38,8 +39,11 @@ userRouter.post("/register", async(req, res) => {
         return users;
     } catch (e) {
         console.log(e);
-        res.sendStatus(500);
-        return;
+        res.send(e);
+        if (e.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = await getConnectionManager().get("default");;
+          return existentConn;
+        }
     }
 })
 
@@ -71,8 +75,11 @@ userRouter.post('/login', async(req, res) => {
         res.status(400).send("Invalid Credentials");
     } catch (e) {
         console.log(e);
-        res.sendStatus(500);
-        return;
+        res.send(e);
+        if (e.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = await getConnectionManager().get("default");;
+          return existentConn;
+        }
     }
 });
 
@@ -93,8 +100,11 @@ userRouter.get("/", async(req, res) => {
         return users;
     } catch (e) {
         console.log(e);
-        res.sendStatus(500);
-        return;
+        res.send(e);
+        if (e.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = await getConnectionManager().get("default");;
+          return existentConn;
+        }
     }
 })
 
@@ -140,8 +150,11 @@ userRouter.patch("/:id", async(req, res) => {
         return user;
     } catch (e) {
         console.log(e);
-        res.sendStatus(500);
-        return;
+        res.send(e);
+        if (e.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = await getConnectionManager().get("default");;
+          return existentConn;
+        }
     }
 })
 
@@ -162,8 +175,11 @@ userRouter.delete("/:id", async(req, res) => {
         res.status(403).send("Forbidden");
     } catch (e) {
         console.log(e);
-        res.sendStatus(500);
-        return;
+        res.send(e);
+        if (e.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = await getConnectionManager().get("default");;
+          return existentConn;
+        }
     }
 })
 
