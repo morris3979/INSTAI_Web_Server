@@ -1,6 +1,7 @@
 const express = require('express');
 const eventRouter = express.Router();
-const { getEvent, getCarNumberModel } = require("../rds/controllers/event.controller");
+const { getEvent } = require("../rds/controllers/event.controller");
+const { getConnectionManager } = require("typeorm");
 
 //GET
 eventRouter.get('/', async(req, res) => {
@@ -9,47 +10,11 @@ eventRouter.get('/', async(req, res) => {
     res.json(event);
   } catch (e) {
     console.log(e);
-    res.sendStatus(500);
-    return;
-  }
-});
-
-//GET
-eventRouter.get('/modelA', async(req, res) => {
-  const modelName = "A";
-  try{
-    const event = await getCarNumberModel(modelName);
-    res.json(event);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-    return;
-  }
-});
-
-//GET
-eventRouter.get('/modelB', async(req, res) => {
-  const modelName = "B";
-  try{
-    const event = await getCarNumberModel(modelName);
-    res.json(event);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-    return;
-  }
-});
-
-//GET
-eventRouter.get('/modelC', async(req, res) => {
-  const modelName = "C";
-  try{
-    const event = await getCarNumberModel(modelName);
-    res.json(event);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-    return;
+    res.send(e);
+    if (e.name === "AlreadyHasActiveConnectionError") {
+      const existentConn = await getConnectionManager().get("default");;
+      return existentConn;
+    }
   }
 });
 
