@@ -38,7 +38,6 @@ userRouter.post("/register", async(req, res) => {
         res.status(201).json(users);
         return users;
     } catch (e) {
-        console.log(e);
         res.send(e);
         if (e.name === "AlreadyHasActiveConnectionError") {
           const existentConn = await getConnectionManager().get("default");;
@@ -74,7 +73,6 @@ userRouter.post('/login', async(req, res) => {
         }
         res.status(400).send("Invalid Credentials");
     } catch (e) {
-        console.log(e);
         res.send(e);
         if (e.name === "AlreadyHasActiveConnectionError") {
           const existentConn = await getConnectionManager().get("default");;
@@ -99,7 +97,6 @@ userRouter.get("/", async(req, res) => {
         res.json(users);
         return users;
     } catch (e) {
-        console.log(e);
         res.send(e);
         if (e.name === "AlreadyHasActiveConnectionError") {
           const existentConn = await getConnectionManager().get("default");;
@@ -149,7 +146,6 @@ userRouter.patch("/:id", async(req, res) => {
         res.status(204).json(user);
         return user;
     } catch (e) {
-        console.log(e);
         res.send(e);
         if (e.name === "AlreadyHasActiveConnectionError") {
           const existentConn = await getConnectionManager().get("default");;
@@ -174,7 +170,6 @@ userRouter.delete("/:id", async(req, res) => {
         }
         res.status(403).send("Forbidden");
     } catch (e) {
-        console.log(e);
         res.send(e);
         if (e.name === "AlreadyHasActiveConnectionError") {
           const existentConn = await getConnectionManager().get("default");;

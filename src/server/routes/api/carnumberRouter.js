@@ -14,7 +14,6 @@ carnumberRouter.get('/', async(req, res) => {
     const carnumbers = await getCarNumbers();
     res.json(carnumbers);
   } catch (e) {
-    console.log(e);
     res.send(e);
     if (e.name === "AlreadyHasActiveConnectionError") {
       const existentConn = await getConnectionManager().get("default");;
@@ -33,7 +32,6 @@ carnumberRouter.post("/", async (req, res) => {
     const carnumbers = await insertCarNumber(boardId, modelName, version, plateNumber);
     res.status(200).json(carnumbers);
   } catch (e) {
-    console.log(e);
     res.send(e);
     if (e.name === "AlreadyHasActiveConnectionError") {
       const existentConn = await getConnectionManager().get("default");;
@@ -53,7 +51,6 @@ carnumberRouter.patch("/:id", async (req, res) => {
     const carnumbers = await patchCarNumber(id, boardId, modelName, version, plateNumber);
     res.status(204).json(carnumbers);
   } catch (e) {
-    console.log(e);
     res.send(e);
     if (e.name === "AlreadyHasActiveConnectionError") {
       const existentConn = await getConnectionManager().get("default");;
@@ -69,7 +66,6 @@ carnumberRouter.delete("/:id", async (req, res) => {
     const carnumbers = await deleteCarNumber(id);
     res.status(204).json(carnumbers);
   } catch (e) {
-    console.log(e);
     res.send(e);
     if (e.name === "AlreadyHasActiveConnectionError") {
       const existentConn = await getConnectionManager().get("default");;

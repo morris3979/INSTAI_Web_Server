@@ -9,7 +9,6 @@ eventRouter.get('/', async(req, res) => {
     const event = await getEvent();
     res.json(event);
   } catch (e) {
-    console.log(e);
     res.send(e);
     if (e.name === "AlreadyHasActiveConnectionError") {
       const existentConn = await getConnectionManager().get("default");;
