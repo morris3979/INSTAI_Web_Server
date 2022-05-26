@@ -74,7 +74,7 @@ const App = (props) => {
                 <Route path='/modelA' element={<ModelAPage />} />
                 <Route path='/modelB' element={<ModelBPage />} />
                 <Route path='/modelC' element={<ModelCPage />} />
-                <Route path='/modelversion' element={<ModelVersionPage />} />
+                <Route path='/modelVersion' element={<ModelVersionPage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
               </Routes>

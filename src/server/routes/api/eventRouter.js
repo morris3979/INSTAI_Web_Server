@@ -1,6 +1,6 @@
 const express = require('express');
 const eventRouter = express.Router();
-const { getEvent } = require("../rds/controllers/event.controller");
+const { getEvent } = require("../../rds/controllers/event.controller");
 const { getConnectionManager } = require("typeorm");
 
 //GET

@@ -5,7 +5,7 @@ const {
   insertCarNumber,
   patchCarNumber,
   deleteCarNumber
-} = require("../rds/controllers/carnumber.controller")
+} = require("../../rds/controllers/carnumber.controller")
 const { getConnectionManager } = require("typeorm");
 
 //GET

@@ -3,9 +3,9 @@ const express = require('express');
 const userRouter = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const auth = require("../middleware/auth");
-const { getConnection } = require("../rds/index");
-const { User } = require("../rds/model/User");
+const auth = require("../../middleware/auth");
+const { getConnection } = require("../../rds/index");
+const { User } = require("../../rds/model/User");
 const { getConnectionManager } = require("typeorm");
 
 //POST register
