@@ -74,7 +74,10 @@ class Map extends Component {
       message.destroy()
     } catch (error) {
       message.destroy()
-      message.error(`${error.response.data}`)
+      Modal.error({
+        title: `${error}`,
+        onOk: () => { location.reload() }
+      })
     } finally {
       showMap()
     }
