@@ -5,13 +5,19 @@ const DashboardPlugin = require("webpack-dashboard/plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const outputDirectory = 'dist';
+// const outputDirectory = 'public/js';
 
 module.exports = {
   mode: "production",
   entry: ['babel-polyfill', './src/client/index.js'],
   output: {
+    // filename: "[name].js",
+    // chunkFilename: "[name].chunk.js",
+    // path: path.resolve(__dirname, outputDirectory),
+    // publicPath: "/js/",
     path: path.join(__dirname, outputDirectory),
-    filename: 'js/[name].bundle.js'
+    filename: 'js/[name].bundle.js',
+    publicPath: "/"
   },
   module: {
     rules: [{
