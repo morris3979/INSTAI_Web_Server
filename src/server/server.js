@@ -27,7 +27,7 @@ async function app() {
     app.use(express.static('dist'));
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(pageRouter); // serve html on frontend route
-    app.use("/api", apiRouter); // mount api router
+    app.use('/api', apiRouter); // mount api router
 
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
