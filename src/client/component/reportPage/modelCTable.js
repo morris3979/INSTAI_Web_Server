@@ -98,7 +98,7 @@ class ModelCTable extends Component {
         if (value.image) {
           return (
             <Image
-              src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`}
+              src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`}
             />
           )
         }
@@ -112,7 +112,7 @@ class ModelCTable extends Component {
         if (value.video) {
           return (
             <ReactPlayer
-              url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`}
+              url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`}
               controls={true}
             />
           )
