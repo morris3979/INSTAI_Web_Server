@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { message } from 'antd'
+import { message, Modal } from 'antd'
 import L from 'leaflet'
 //import 'leaflet.locatecontrol'
 //import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch'
