@@ -3,14 +3,17 @@ import { Row, Col } from 'antd'
 import Loading from '../loading'
 
 const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
-//const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
+const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
 
 const LoginPage = () => {
   return (
-    <Row>
+    <Row justify='space-around'>
       <Suspense fallback={<Loading />}>
-        <Col span={4} offset={10}>
+        <Col xs={24} sm={24} md={10}>
           <LoginForm />
+        </Col>
+        <Col xs={24} sm={24} md={10}>
+          <RegisterForm />
         </Col>
       </Suspense>
     </Row>
