@@ -1,14 +1,15 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import {
-  Table, Modal, Switch, Form, Button, Space, Popconfirm
+  Table, Modal, Switch, Form, Button, Space, Popconfirm, Affix
 } from 'antd'
 import {
   GetAccountTableData, SetWhichModal, PatchAccountTableData,
   DeleteAccountTableData
 } from '../../store/actionCreater'
+import RegisterForm from './registerForm'
 import {
-  CheckOutlined, CloseOutlined, EditOutlined, DeleteOutlined
+  CheckOutlined, CloseOutlined, EditOutlined, DeleteOutlined, PlusOutlined
 } from '@ant-design/icons'
 
 const { Column, ColumnGroup } = Table
@@ -67,7 +68,10 @@ const modelCStatus = (text) => {
 class AccountManageTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { isModalVisible: false }
+    this.state = {
+      isChangeModalVisible: false,
+      isRegisterModalVisible: false
+    }
   }
 
   componentDidMount() {
@@ -91,7 +95,7 @@ class AccountManageTable extends Component {
           </ColumnGroup>
         </Table >
         <Modal
-          visible={this.state.isModalVisible}
+          visible={this.state.isChangeModalVisible}
           onCancel={this.handleCancel}
           footer={null}
           destroyOnClose={true}
@@ -124,17 +128,41 @@ class AccountManageTable extends Component {
             </Item>
           </Form>
         </Modal>
+        <Affix style={{ position: 'fixed', bottom: 10, right: 10 }}>
+          <Button
+            onClick={() => { this.onRegisterClick() }}
+            icon={<PlusOutlined />}
+            disabled={!this.props.loginInformation.admin}
+            size='large'
+            shape='circle'
+          />
+        </Affix>
+        <Modal
+          visible={this.state.isRegisterModalVisible}
+          onCancel={this.handleCancel}
+          footer={null}
+          destroyOnClose={true}
+        >
+          <RegisterForm />
+        </Modal>
       </Fragment>
     )
   }
 
-  onClick = (text) => {
-    this.setState({ isModalVisible: true })
+  onChangeClick = (text) => {
+    this.setState({ isChangeModalVisible: true })
     this.props.setWhichModal(text)
   }
 
+  onRegisterClick = () => {
+    this.setState({ isRegisterModalVisible: true })
+  }
+
   handleCancel = () => {
-    this.setState({ isModalVisible: false })
+    this.setState({
+      isChangeModalVisible: false,
+      isRegisterModalVisible: false
+    })
   }
 
   onFinish = (values) => {
@@ -148,7 +176,7 @@ class AccountManageTable extends Component {
     return (
       <Space size='large'>
         <Button
-          onClick={() => { this.onClick(text) }}
+          onClick={() => { this.onChangeClick(text) }}
           icon={<EditOutlined />}
         />
         <Popconfirm
@@ -167,7 +195,8 @@ const mapStateToProps = (state) => {
   return {
     accountData: state.accountData,
     tableStatus: state.tableStatus,
-    whichModal: state.whichModal
+    whichModal: state.whichModal,
+    loginInformation: state.loginInformation
   }
 }
 

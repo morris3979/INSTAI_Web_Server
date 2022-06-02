@@ -94,7 +94,10 @@ export const RegisterFormData = (data) => {
       try {
         await axios.post('/api/user/register', convertedData)
         message.destroy()
-        message.success('註冊成功')
+        Modal.success({
+          title: '註冊成功',
+          onOk: () => { location.reload() }
+        })
       } catch (error) {
         message.destroy()
         message.error(`${error}`)
