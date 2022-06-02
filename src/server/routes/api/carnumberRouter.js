@@ -6,7 +6,7 @@ const {
   patchCarNumber,
   deleteCarNumber
 } = require("../../rds/controllers/carnumber.controller")
-const { getConnectionManager } = require("typeorm");
+// const { getConnectionManager } = require("typeorm");
 
 //GET
 carnumberRouter.get('/', async(req, res) => {
@@ -15,10 +15,10 @@ carnumberRouter.get('/', async(req, res) => {
     res.json(carnumbers);
   } catch (e) {
     res.send(e);
-    if (e.name === "AlreadyHasActiveConnectionError") {
-      const existentConn = await getConnectionManager().get("default");;
-      return existentConn;
-    }
+    // if (e.name === "AlreadyHasActiveConnectionError") {
+    //   const existentConn = await getConnectionManager().get("default");;
+    //   return existentConn;
+    // }
   }
 });
 
@@ -33,10 +33,10 @@ carnumberRouter.post("/", async (req, res) => {
     res.status(200).json(carnumbers);
   } catch (e) {
     res.send(e);
-    if (e.name === "AlreadyHasActiveConnectionError") {
-      const existentConn = await getConnectionManager().get("default");;
-      return existentConn;
-    }
+    // if (e.name === "AlreadyHasActiveConnectionError") {
+    //   const existentConn = await getConnectionManager().get("default");;
+    //   return existentConn;
+    // }
   }
 })
 
@@ -52,10 +52,10 @@ carnumberRouter.patch("/:id", async (req, res) => {
     res.status(204).json(carnumbers);
   } catch (e) {
     res.send(e);
-    if (e.name === "AlreadyHasActiveConnectionError") {
-      const existentConn = await getConnectionManager().get("default");;
-      return existentConn;
-    }
+    // if (e.name === "AlreadyHasActiveConnectionError") {
+    //   const existentConn = await getConnectionManager().get("default");;
+    //   return existentConn;
+    // }
   }
 })
 
@@ -67,10 +67,10 @@ carnumberRouter.delete("/:id", async (req, res) => {
     res.status(204).json(carnumbers);
   } catch (e) {
     res.send(e);
-    if (e.name === "AlreadyHasActiveConnectionError") {
-      const existentConn = await getConnectionManager().get("default");;
-      return existentConn;
-    }
+    // if (e.name === "AlreadyHasActiveConnectionError") {
+    //   const existentConn = await getConnectionManager().get("default");;
+    //   return existentConn;
+    // }
   }
 })
 

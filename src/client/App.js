@@ -48,8 +48,8 @@ const App = (props) => {
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/modelversion' disabled={!loginInformation.admin}>
-              <Link to='/modelversion'>
+            <Item key='/modelVersion' disabled={!loginInformation.admin}>
+              <Link to='/modelVersion'>
                 板號與模型配置
               </Link>
             </Item>
