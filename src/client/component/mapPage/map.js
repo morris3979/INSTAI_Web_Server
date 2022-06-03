@@ -57,16 +57,16 @@ const showMap = () => {
   L.tileLayer(OSMUrl).addTo(map)
   //L.control.locate().addTo(map)
   //map.addControl(searchControl)
-  if (location.length > 0) {
+  /*if (location.length > 0) {
     location.map((item) => {
       L.marker(item.position, { icon: item.icon }).addTo(map)
     })
-  }
+  }*/
 }
 
 class Map extends Component {
   async componentDidMount() {
-    message.loading('載入中...', 0)
+    //message.loading('載入中...', 0)
     try {
       /*const response = await axios.get('/api/event')
       console.log(response.data)
