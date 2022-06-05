@@ -124,6 +124,7 @@ export const GetAccountTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
+          content: '請按OK按鈕來重新整理獲取資料',
           onOk: () => { location.reload() }
         })
       } finally {
@@ -195,6 +196,7 @@ export const GetModelVersionTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
+          content: '請按OK按鈕來重新整理獲取資料',
           onOk: () => { location.reload() }
         })
       } finally {
@@ -294,6 +296,7 @@ export const GetStatusTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
+          content: '請按OK按鈕來重新整理獲取資料',
           onOk: () => { location.reload() }
         })
       } finally {
@@ -326,6 +329,7 @@ export const GetModelATableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
+          content: '請按OK按鈕來重新整理獲取資料',
           onOk: () => { location.reload() }
         })
       } finally {
@@ -358,6 +362,7 @@ export const GetModelBTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
+          content: '請按OK按鈕來重新整理獲取資料',
           onOk: () => { location.reload() }
         })
       } finally {
@@ -390,6 +395,7 @@ export const GetModelCTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
+          content: '請按OK按鈕來重新整理獲取資料',
           onOk: () => { location.reload() }
         })
       } finally {
