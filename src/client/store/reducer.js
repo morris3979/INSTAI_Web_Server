@@ -22,7 +22,7 @@ const Reducer = (state = defaultState, action) => {
   const newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
     case Table_Status: {
-      newState.tableStatus = !newState.tableStatus
+      newState.tableStatus = action.value
       return newState
     }
     case Login_Information: {

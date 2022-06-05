@@ -7,9 +7,10 @@ import {
 } from './actionType'
 
 //共用Function <<<
-export const TableStatus = () => {
+export const TableStatus = (status) => {
   return ({
-    type: Table_Status
+    type: Table_Status,
+    value: status
   })
 }
 
@@ -109,20 +110,24 @@ export const RegisterFormData = (data) => {
 export const GetAccountTableData = () => {
   return (
     async (dispatch) => {
-      const action = TableStatus()
+      const action = TableStatus(true)
       dispatch(action)
       try {
         const response = await axios.get('/api/user')
         console.log(response.data)
-        const action = DeliverData(response.data, Account_Information)
-        dispatch(action)
+        if (Object.keys(response.data).length > 0) {
+          const action = DeliverData(response.data, Account_Information)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
       } catch (error) {
         Modal.error({
           title: `${error}`,
           onOk: () => { location.reload() }
         })
       } finally {
-        const action = TableStatus()
+        const action = TableStatus(false)
         dispatch(action)
       }
     }
@@ -176,20 +181,24 @@ export const DeleteAccountTableData = (id) => {
 export const GetModelVersionTableData = () => {
   return (
     async (dispatch) => {
-      const action = TableStatus()
+      const action = TableStatus(true)
       dispatch(action)
       try {
         const response = await axios.get('/api/carnumber')
         console.log(response.data)
-        const action = DeliverData(response.data, Get_Model_Version_Table)
-        dispatch(action)
+        if (Object.keys(response.data).length > 0) {
+          const action = DeliverData(response.data, Get_Model_Version_Table)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
       } catch (error) {
         Modal.error({
           title: `${error}`,
           onOk: () => { location.reload() }
         })
       } finally {
-        const action = TableStatus()
+        const action = TableStatus(false)
         dispatch(action)
       }
     }
@@ -271,20 +280,24 @@ export const PostModelVersionTableData = (data) => {
 export const GetStatusTableData = () => {
   return (
     async (dispatch) => {
-      const action = TableStatus()
+      const action = TableStatus(true)
       dispatch(action)
       try {
         const response = await axios.get('/api/event')
         console.log(response.data)
-        const action = DeliverData(response.data, Status_Table)
-        dispatch(action)
+        if (Object.keys(response.data).length > 0) {
+          const action = DeliverData(response.data, Status_Table)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
       } catch (error) {
         Modal.error({
           title: `${error}`,
           onOk: () => { location.reload() }
         })
       } finally {
-        const action = TableStatus()
+        const action = TableStatus(false)
         dispatch(action)
       }
     }
@@ -294,25 +307,29 @@ export const GetStatusTableData = () => {
 export const GetModelATableData = () => {
   return (
     async (dispatch) => {
-      const action = TableStatus()
+      const action = TableStatus(true)
       dispatch(action)
       try {
         const response = await axios.get('/api/event')
-        console.log(response.data)
-        const filterData = response.data.filter((value) => {
-          if (value.CarNumber) {
-            return (value.CarNumber.modelName[0] == 'A')
-          }
-        })
-        const action = DeliverData(filterData, Model_A_Table)
-        dispatch(action)
+        console.log(response)
+        if (Object.keys(response.data).length > 0) {
+          const filterData = response.data.filter((value) => {
+            if (value.CarNumber) {
+              return (value.CarNumber.modelName[0] == 'A')
+            }
+          })
+          const action = DeliverData(filterData, Model_A_Table)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
       } catch (error) {
         Modal.error({
           title: `${error}`,
           onOk: () => { location.reload() }
         })
       } finally {
-        const action = TableStatus()
+        const action = TableStatus(false)
         dispatch(action)
       }
     }
@@ -322,25 +339,29 @@ export const GetModelATableData = () => {
 export const GetModelBTableData = () => {
   return (
     async (dispatch) => {
-      const action = TableStatus()
+      const action = TableStatus(true)
       dispatch(action)
       try {
         const response = await axios.get('/api/event')
-        console.log(response.data)
-        const filterData = response.data.filter((value) => {
-          if (value.CarNumber) {
-            return (value.CarNumber.modelName[0] == 'B')
-          }
-        })
-        const action = DeliverData(filterData, Model_B_Table)
-        dispatch(action)
+        console.log(response)
+        if (Object.keys(response.data).length > 0) {
+          const filterData = response.data.filter((value) => {
+            if (value.CarNumber) {
+              return (value.CarNumber.modelName[0] == 'B')
+            }
+          })
+          const action = DeliverData(filterData, Model_B_Table)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
       } catch (error) {
         Modal.error({
           title: `${error}`,
           onOk: () => { location.reload() }
         })
       } finally {
-        const action = TableStatus()
+        const action = TableStatus(false)
         dispatch(action)
       }
     }
@@ -350,25 +371,29 @@ export const GetModelBTableData = () => {
 export const GetModelCTableData = () => {
   return (
     async (dispatch) => {
-      const action = TableStatus()
+      const action = TableStatus(true)
       dispatch(action)
       try {
         const response = await axios.get('/api/event')
-        console.log(response.data)
-        const filterData = response.data.filter((value) => {
-          if (value.CarNumber) {
-            return (value.CarNumber.modelName[0] == 'C')
-          }
-        })
-        const action = DeliverData(filterData, Model_C_Table)
-        dispatch(action)
+        console.log(response)
+        if (Object.keys(response.data).length > 0) {
+          const filterData = response.data.filter((value) => {
+            if (value.CarNumber) {
+              return (value.CarNumber.modelName[0] == 'C')
+            }
+          })
+          const action = DeliverData(filterData, Model_C_Table)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
       } catch (error) {
         Modal.error({
           title: `${error}`,
           onOk: () => { location.reload() }
         })
       } finally {
-        const action = TableStatus()
+        const action = TableStatus(false)
         dispatch(action)
       }
     }
