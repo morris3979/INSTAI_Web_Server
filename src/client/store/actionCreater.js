@@ -97,7 +97,7 @@ export const RegisterFormData = (data) => {
         message.destroy()
         Modal.success({
           title: '註冊成功',
-          onOk: () => { location.reload() }
+          //onOk: () => { location.reload() }
         })
       } catch (error) {
         message.destroy()
@@ -125,7 +125,7 @@ export const GetAccountTableData = () => {
         Modal.error({
           title: `${error}`,
           content: '請按OK按鈕來重新整理獲取資料',
-          onOk: () => { location.reload() }
+          //onOk: () => { location.reload() }
         })
       } finally {
         const action = TableStatus(false)
@@ -197,7 +197,7 @@ export const GetModelVersionTableData = () => {
         Modal.error({
           title: `${error}`,
           content: '請按OK按鈕來重新整理獲取資料',
-          onOk: () => { location.reload() }
+          //onOk: () => { location.reload() }
         })
       } finally {
         const action = TableStatus(false)
@@ -297,7 +297,7 @@ export const GetStatusTableData = () => {
         Modal.error({
           title: `${error}`,
           content: '請按OK按鈕來重新整理獲取資料',
-          onOk: () => { location.reload() }
+          //onOk: () => { location.reload() }
         })
       } finally {
         const action = TableStatus(false)
@@ -330,7 +330,7 @@ export const GetModelATableData = () => {
         Modal.error({
           title: `${error}`,
           content: '請按OK按鈕來重新整理獲取資料',
-          onOk: () => { location.reload() }
+          //onOk: () => { location.reload() }
         })
       } finally {
         const action = TableStatus(false)
@@ -363,7 +363,7 @@ export const GetModelBTableData = () => {
         Modal.error({
           title: `${error}`,
           content: '請按OK按鈕來重新整理獲取資料',
-          onOk: () => { location.reload() }
+          //onOk: () => { location.reload() }
         })
       } finally {
         const action = TableStatus(false)
@@ -396,7 +396,7 @@ export const GetModelCTableData = () => {
         Modal.error({
           title: `${error}`,
           content: '請按OK按鈕來重新整理獲取資料',
-          onOk: () => { location.reload() }
+          //onOk: () => { location.reload() }
         })
       } finally {
         const action = TableStatus(false)
