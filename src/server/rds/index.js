@@ -16,7 +16,7 @@ async function getConnection() {
         password: process.env.AWS_RDS_PASSWORD,
         database: process.env.RDS_DATABASE,
         timezone: "SYSTEM",
-        synchronize: true,
+        synchronize: false,
         keepConnectionAlive: true,
         logging: false,
         extra: {
