@@ -98,8 +98,11 @@ class ModelATable extends Component {
         if (value.image) {
           return (
             <Image
-              src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`}
+              src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`}
             />
+            // <Image
+            //   src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`}
+            // />
           )
         }
       })
@@ -112,9 +115,13 @@ class ModelATable extends Component {
         if (value.video) {
           return (
             <ReactPlayer
-              url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`}
+              url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`}
               controls={true}
             />
+            // <ReactPlayer
+            //   url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`}
+            //   controls={true}
+            // />
           )
         }
       })
