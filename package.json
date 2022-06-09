@@ -16,7 +16,7 @@
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.2",
         "antd": "^4.21.0",
-        "aws-sdk": "^2.1149.0",
+        "aws-sdk": "^2.1151.0",
         "axios": "^0.27.2",
         "babel-polyfill": "^6.26.0",
         "bcrypt": "^5.0.1",
@@ -26,7 +26,7 @@
         "express": "^4.18.1",
         "jsonwebtoken": "^8.5.1",
         "leaflet": "^1.8.0",
-        "leaflet-geosearch": "^3.6.0",
+        "leaflet-geosearch": "^3.6.1",
         "leaflet.locatecontrol": "^0.76.1",
         "mysql": "^2.18.1",
         "npm": "^8.12.1",

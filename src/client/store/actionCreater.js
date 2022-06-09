@@ -97,7 +97,7 @@ export const RegisterFormData = (data) => {
         message.destroy()
         Modal.success({
           title: '註冊成功',
-          //onOk: () => { location.reload() }
+          onOk: () => { location.reload() }
         })
       } catch (error) {
         message.destroy()
@@ -124,8 +124,7 @@ export const GetAccountTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
-          content: '請按OK按鈕來重新整理獲取資料',
-          //onOk: () => { location.reload() }
+          content: '請重新整理來獲取資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -196,8 +195,7 @@ export const GetModelVersionTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
-          content: '請按OK按鈕來重新整理獲取資料',
-          //onOk: () => { location.reload() }
+          content: '請重新整理來獲取資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -296,8 +294,7 @@ export const GetStatusTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
-          content: '請按OK按鈕來重新整理獲取資料',
-          //onOk: () => { location.reload() }
+          content: '請重新整理來獲取資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -329,8 +326,7 @@ export const GetModelATableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
-          content: '請按OK按鈕來重新整理獲取資料',
-          //onOk: () => { location.reload() }
+          content: '請重新整理來獲取資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -362,8 +358,7 @@ export const GetModelBTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
-          content: '請按OK按鈕來重新整理獲取資料',
-          //onOk: () => { location.reload() }
+          content: '請重新整理來獲取資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -395,8 +390,7 @@ export const GetModelCTableData = () => {
       } catch (error) {
         Modal.error({
           title: `${error}`,
-          content: '請按OK按鈕來重新整理獲取資料',
-          //onOk: () => { location.reload() }
+          content: '請重新整理來獲取資料'
         })
       } finally {
         const action = TableStatus(false)
