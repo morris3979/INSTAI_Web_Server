@@ -97,7 +97,10 @@ export const RegisterFormData = (data) => {
         message.destroy()
         Modal.success({
           title: '註冊成功',
-          onOk: () => { location.reload() }
+          onOk: () => {
+            const action = GetAccountTableData()
+            dispatch(action)
+          }
         })
       } catch (error) {
         message.destroy()
