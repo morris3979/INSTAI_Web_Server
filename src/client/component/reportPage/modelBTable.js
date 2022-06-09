@@ -98,10 +98,10 @@ class ModelBTable extends Component {
         if (value.image) {
           return (
             <Image
-              src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`}
+              src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`} //AWS
             />
             // <Image
-            //   src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`}
+            //   src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`} //Aliyun
             // />
           )
         }
@@ -115,11 +115,11 @@ class ModelBTable extends Component {
         if (value.video) {
           return (
             <ReactPlayer
-              url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`}
+              url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`} //AWS
               controls={true}
             />
             // <ReactPlayer
-            //   url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`}
+            //   url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`} //Aliyun
             //   controls={true}
             // />
           )
