@@ -56,8 +56,12 @@ export const LoginFormData = (data) => {
       })
       try {
         const response = await axios.post('/api/user/login', convertedData)
-        const action = LoginToken(response.data)
-        dispatch(action)
+        if (response.data.code == 'ER_HOST_NOT_PRIVILEGED') {
+          throw '無法登入'
+        } else {
+          const action = LoginToken(response.data)
+          dispatch(action)
+        }
       } catch (error) {
         message.destroy()
         message.error(`${error}`)
