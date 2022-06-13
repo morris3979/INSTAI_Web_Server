@@ -15,10 +15,6 @@ carnumberRouter.get('/', async(req, res) => {
     res.json(carnumbers);
   } catch (e) {
     res.send(e);
-    // if (e.name === "AlreadyHasActiveConnectionError") {
-    //   const existentConn = await getConnectionManager().get("default");;
-    //   return existentConn;
-    // }
   }
 });
 
@@ -33,10 +29,6 @@ carnumberRouter.post("/", async (req, res) => {
     res.status(200).json(carnumbers);
   } catch (e) {
     res.send(e);
-    // if (e.name === "AlreadyHasActiveConnectionError") {
-    //   const existentConn = await getConnectionManager().get("default");;
-    //   return existentConn;
-    // }
   }
 })
 
@@ -52,10 +44,6 @@ carnumberRouter.patch("/:id", async (req, res) => {
     res.status(204).json(carnumbers);
   } catch (e) {
     res.send(e);
-    // if (e.name === "AlreadyHasActiveConnectionError") {
-    //   const existentConn = await getConnectionManager().get("default");;
-    //   return existentConn;
-    // }
   }
 })
 
@@ -67,10 +55,6 @@ carnumberRouter.delete("/:id", async (req, res) => {
     res.status(204).json(carnumbers);
   } catch (e) {
     res.send(e);
-    // if (e.name === "AlreadyHasActiveConnectionError") {
-    //   const existentConn = await getConnectionManager().get("default");;
-    //   return existentConn;
-    // }
   }
 })
 

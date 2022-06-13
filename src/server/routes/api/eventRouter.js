@@ -10,10 +10,6 @@ eventRouter.get('/', async(req, res) => {
     res.json(event);
   } catch (e) {
     res.send(e);
-    // if (e.name === "AlreadyHasActiveConnectionError") {
-    //   const existentConn = await getConnectionManager().get("default");;
-    //   return existentConn;
-    // }
   }
 });
 
