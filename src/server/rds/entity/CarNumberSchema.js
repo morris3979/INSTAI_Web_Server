@@ -1,5 +1,6 @@
 const EntitySchema = require("typeorm").EntitySchema;
 const { CarNumber } = require("../model/CarNumber");
+require('dotenv').config();
 
 //CarNumber table
 const CarNumberSchema = new EntitySchema({
@@ -27,13 +28,13 @@ const CarNumberSchema = new EntitySchema({
             type: "varchar",
         },
         accessKey: {
-            default: "AKIAZW72FNAUQH6DA46E", //AWS
-            // default: "LTAI5tLndrxToCSEGS2bH9BN", //Aliyun
+            default: process.env.AWS_ACCESS_KEY,
+            // default: process.env.ALIYUN_ACCESS_KEY,
             type: "varchar",
         },
         secretKey: {
-            default: "yCdBApwib4xCt77vg7L3MYP/2AnU3qy1HTG9th8e", //AWS
-            // default: "aDj4qQ887vTI0hSkApQR2wStaupT6O", //Aliyun
+            default: process.env.AWS_SECRET_ACCESS_KEY,
+            // default: ALIYUN_SECRET_ACCESS_KEY,
             type: "varchar",
         },
         createAt: {
