@@ -31,6 +31,7 @@ class ModelVersionTable extends Component {
         <Table
           dataSource={this.props.modelVersionTableData}
           loading={this.props.tableStatus}
+          pagination={{ position: ['bottomCenter'] }}
         >
           <Column title='板號' dataIndex='boardId' align='center' />
           <Column title='車號' dataIndex='plateNumber' align='center' />
@@ -82,7 +83,7 @@ class ModelVersionTable extends Component {
               </Select>
             </Item>
             <Item>
-              <Button htmlType='submit' onClick={this.handleCancel}>
+              <Button htmlType='submit'>
                 確認
               </Button>
             </Item>
@@ -126,6 +127,7 @@ class ModelVersionTable extends Component {
   }
 
   onFinish = (values) => {
+    this.handleCancel()
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
       convertedValues[String(key)] = values[key]
     })

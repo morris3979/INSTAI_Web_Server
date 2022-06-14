@@ -29,6 +29,7 @@ class ModelCTable extends Component {
         <Table
           dataSource={this.props.modelCTableData}
           loading={this.props.tableStatus}
+          pagination={{ position: ['bottomCenter'] }}
         >
           <Column
             title='車輛編號'

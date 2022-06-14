@@ -84,6 +84,7 @@ class AccountManageTable extends Component {
         <Table
           dataSource={this.props.accountData}
           loading={this.props.tableStatus}
+          pagination={{ position: ['bottomCenter'] }}
         >
           <Column title='帳號' dataIndex='username' align='center' />
           <ColumnGroup title='權限' align='center'>

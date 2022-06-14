@@ -15,8 +15,8 @@
     "license": "ISC",
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.2",
-        "antd": "^4.21.0",
-        "aws-sdk": "^2.1151.0",
+        "antd": "^4.21.1",
+        "aws-sdk": "^2.1153.0",
         "axios": "^0.27.2",
         "babel-polyfill": "^6.26.0",
         "bcrypt": "^5.0.1",

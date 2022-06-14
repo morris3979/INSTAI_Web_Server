@@ -56,15 +56,19 @@ export const LoginFormData = (data) => {
       })
       try {
         const response = await axios.post('/api/user/login', convertedData)
-        if (response.data.code == 'ER_HOST_NOT_PRIVILEGED') {
-          throw '無法登入'
-        } else {
+        if (response.data.token) {
           const action = LoginToken(response.data)
           dispatch(action)
+        } else {
+          throw '無此帳號'
         }
       } catch (error) {
         message.destroy()
-        message.error(`${error}`)
+        if (error.code == 'ERR_BAD_REQUEST') {
+          message.error('密碼輸入錯誤')
+        } else {
+          message.error(`${error}`)
+        }
       }
     }
   )
@@ -101,10 +105,7 @@ export const RegisterFormData = (data) => {
         message.destroy()
         Modal.success({
           title: '註冊成功',
-          onOk: () => {
-            const action = GetAccountTableData()
-            dispatch(action)
-          }
+          onOk: () => { location.reload() }
         })
       } catch (error) {
         message.destroy()
