@@ -164,20 +164,24 @@ export const PatchAccountTableData = (id, data) => {
   )
 }
 
-export const DeleteAccountTableData = (id) => {
+export const DeleteAccountTableData = (data) => {
   return (
     async (dispatch) => {
-      message.loading('刪除中，請稍後...', 0)
       try {
-        await axios.delete(`/api/user/${id}`)
-        message.destroy()
-        Modal.success({
-          title: '刪除成功',
-          onOk: () => {
-            const action = GetAccountTableData()
-            dispatch(action)
-          }
-        })
+        if (data.admin == false) {
+          message.loading('刪除中，請稍後...', 0)
+          await axios.delete(`/api/user/${data.id}`)
+          message.destroy()
+          Modal.success({
+            title: '刪除成功',
+            onOk: () => {
+              const action = GetAccountTableData()
+              dispatch(action)
+            }
+          })
+        } else {
+          throw '權限管理員帳號無法刪除'
+        }
       } catch (error) {
         message.destroy()
         message.error(`${error}`)

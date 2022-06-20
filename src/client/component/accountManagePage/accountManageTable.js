@@ -168,7 +168,11 @@ class AccountManageTable extends Component {
 
   onFinish = (values) => {
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
-      convertedValues[String(key)] = values[key]
+      if (values[key] == true) {
+        convertedValues[String(key)] = values[key]
+      } else {
+        convertedValues[String(key)] = String(values[key])
+      }
     })
     this.props.patchAccountTableData(this.props.whichModal.id, convertedValues)
   }
@@ -182,7 +186,7 @@ class AccountManageTable extends Component {
         />
         <Popconfirm
           title='確定刪除?'
-          onConfirm={() => { this.props.deleteAccountTableData(text.id) }}
+          onConfirm={() => { this.props.deleteAccountTableData(text) }}
         >
           <Button icon={<DeleteOutlined />} />
         </Popconfirm>
