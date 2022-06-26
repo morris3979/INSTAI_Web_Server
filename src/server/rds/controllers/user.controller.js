@@ -6,15 +6,17 @@ const jwt = require('jsonwebtoken');
 
 async function register (username, password) {
     const connection = await getConnection();
-    const oldUser = await connection.getRepository(User).findOne({
+    const existedUser = await connection.getRepository(User).findOne({
         username: username,
     });
     const encryptedPassword = bcrypt.hashSync(password, 10);
     if (!(username && password)) {
-        res.status(400).send("All input is required");
+        const tryAgain = "All input is required";
+        return tryAgain;
     }
-    if (oldUser) {
-        return res.status(409).send("User Already Exist. Please Login");
+    if (existedUser) {
+        const userExisted = "User Already Exist. Please Login";
+        return userExisted;
     }
     const users = new User();
     const token = jwt.sign({ _id: users.id, username },
