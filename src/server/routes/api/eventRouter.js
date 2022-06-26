@@ -1,7 +1,6 @@
 const express = require('express');
 const eventRouter = express.Router();
 const { getEvent, getCarNumberModel } = require("../../rds/controllers/event.controller");
-// const { getConnectionManager } = require("typeorm");
 
 //GET
 eventRouter.get('/', async(req, res) => {

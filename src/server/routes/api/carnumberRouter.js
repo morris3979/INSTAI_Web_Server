@@ -6,7 +6,6 @@ const {
   patchCarNumber,
   deleteCarNumber
 } = require("../../rds/controllers/carnumber.controller")
-// const { getConnectionManager } = require("typeorm");
 
 //GET
 carnumberRouter.get('/', async(req, res) => {
