@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const userRouter = express.Router();
 const auth = require("../../middleware/auth");
-const { register, login, getUser, patchUser, deleteUser } = require("../../rds/controllers/user.controller")
+const { register, login, getUser, patchUser, deleteUser } = require("../../controllers/user.controller")
 
 //POST register
 userRouter.post("/register", async(req, res) => {

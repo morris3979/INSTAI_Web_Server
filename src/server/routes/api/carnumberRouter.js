@@ -5,7 +5,7 @@ const {
   insertCarNumber,
   patchCarNumber,
   deleteCarNumber
-} = require("../../rds/controllers/carnumber.controller")
+} = require("../../controllers/carnumber.controller")
 
 //GET
 carnumberRouter.get('/', async(req, res) => {
