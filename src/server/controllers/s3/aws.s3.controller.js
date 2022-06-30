@@ -1,15 +1,54 @@
-const stream = require('stream');
-const s3 = require('./aws.s3.config');
+const fs = require('fs');
+require('dotenv').config();
+const aws = require('aws-sdk');
 
-exports.doDownload = (req, res) => {
-	const s3Client = s3.s3Client;
-	const params = s3.downloadParams;
+//configure the aws environment
+aws.config.update({
+    accessKeyId:process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY,
+});
 
-	params.Key = req.params.filename;
+//initialize s3
+const s3 = new aws.S3();
 
-	s3Client.getObject(params)
-		.createReadStream()
-		.on('error', function(err){
-			res.status(500).json({error:"Error -> " + err});
-		}).pipe(res);
+//constant params
+const constantParams = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+	Key: 'image/'
 }
+
+//upload file to s3 bucker
+exports.uploadToS3 = (file,next) =>{
+    const fileStream = fs.createReadStream(file.tempFilePath);
+
+    const params = {
+        ...constantParams,
+        Body:fileStream,
+        Key:file.name
+    };
+    s3.upload(params,(error,data)=>{
+        console.log(error,data);
+        next(error,data);
+    });
+};
+
+//download file from s3 bucket
+exports.getFileFromS3 = key =>{
+    const downloadParams = {
+        Key:key,
+       ...constantParams
+    };
+    return s3.getObject(downloadParams).createReadStream();
+};
+
+//delete file from s3 bucker
+exports.deleteFileFromS3 = (key,next) =>{
+    const deleteParams = {
+        Key:key,
+        ...constantParams
+    };
+    s3.deleteObject(deleteParams,(error,data)=>{
+
+        next(error,data);
+    });
+};

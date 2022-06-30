@@ -1,7 +1,36 @@
 const express = require('express');
 const awsS3Router = express.Router();
-const awsWorker = require("../../controllers/s3/aws.s3.controller");
+const s3 = require("../../controllers/s3/aws.s3.controller");
 
-awsS3Router.get("/files/:filename", awsWorker.doDownload);
+awsS3Router.post("/upload",(req,res)=>{
+    const file = req.files.file;
+    s3.uploadToS3(file,(error,data)=>{
+        console.log("commit")
+        if(error){
+            return res.send({error:"Something went wrong."});
+        }
+        return res.send({message:"File uploaded successfully"});
+    });
+});
+
+awsS3Router.get("/getFile/:files",async (req,res)=>{
+    const getFile = req.params.files;
+    try {
+        let fileToSend = await s3.getFileFromS3(getFile);
+        fileToSend.pipe(res);
+    } catch (error) {
+        res.send({error:"Server Error"});
+    }
+});
+
+awsS3Router.delete("/deleteFile/:files",(req,res)=>{
+    const getFile = req.params.files;
+    s3.deleteFileFromS3(getFile,(error,data)=>{
+        if(error){
+            return res.send({error:"Can not delete file, Please try again later"});
+        }
+        return res.send({message:"File has been deleted successfully"});
+    });
+});
 
 module.exports = [ awsS3Router ];
