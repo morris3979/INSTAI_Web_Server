@@ -1,6 +1,6 @@
 const express = require('express');
 const eventRouter = express.Router();
-const { getEvent, getCarNumberModel } = require("../../rds/controllers/event.controller");
+const { getEvent, getCarNumberModel } = require("../../controllers/event.controller");
 
 //GET
 eventRouter.get('/', async(req, res) => {
