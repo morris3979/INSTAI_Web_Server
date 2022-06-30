@@ -5,27 +5,35 @@ import axios from 'axios'
 
 const { Text } = Typography
 
-const imageurl = 'https://source.unsplash.com/random/500x500'
+const imageurl = '/api/S3/getFile/image/0x0001_3_20220217132759_camera1_front_pedestrianflow.jpg'
 
 const download = async () => {
-  const response = await axios.get(
-    imageurl,
-    { responseType: 'blob' }
-  )
-  const url = window.URL.createObjectURL(new Blob([response.data]))
-  const link = document.createElement('a')
-  link.href = url
-  link.setAttribute('download', 'image.jpg')
-  document.body.appendChild(link)
-  link.click()
+  try {
+    const response = await axios.get(
+      imageurl,
+      { responseType: 'blob' }
+    )
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'image.jpg')
+    document.body.appendChild(link)
+    link.click()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const Test = () => {
   return (
     <Fragment>
-      <Image src='https://d20cmf4o2f77jz.cloudfront.net/image/10_2_20220217132635_camera1_front_pedestrianflow.jpg' />
+      <Image src='/api/S3/getFile/image/0x0001_3_20220217132759_camera1_front_pedestrianflow.jpg' />
       <Image src='https://source.unsplash.com/random/500x500' />
-      <Button onClick={() => { download() }}>
+      <ReactPlayer
+        url='/api/S3/getFile/video/0x0001_2_20220217132635_camera2_behind_pedestrianflow.mp4'
+        controls={true}
+      />
+      <Button onClick={download}>
         下載測試
       </Button>
     </Fragment>

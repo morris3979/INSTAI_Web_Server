@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Modal, Image, Typography } from 'antd'
+import { Table, Button, Modal, Image, Typography, Row, Col } from 'antd'
 import ReactPlayer from 'react-player/lazy'
 import {
   GetModelBTableData, GetModalFile
@@ -64,9 +64,9 @@ class ModelBTable extends Component {
         <Modal
           visible={this.state.isModalVisible}
           onCancel={this.handleCancel}
-          footer={<Button size='large' icon={<DownloadOutlined />} />}
+          footer={null}
           destroyOnClose={true}
-          width={690}
+          width={740}
         >
           <Text>圖片</Text>
           {this.modalFileImage()}
@@ -98,9 +98,16 @@ class ModelBTable extends Component {
       this.props.modalFile.map((value) => {
         if (value.image) {
           return (
-            <Image
-              src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`} //AWS
-            />
+            <Row>
+              <Col span={2}>
+                <Button size='large' icon={<DownloadOutlined />} />
+              </Col>
+              <Col span={22}>
+                <Image
+                  src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`} //AWS
+                />
+              </Col>
+            </Row>
             // <Image
             //   src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`} //Aliyun
             // />
@@ -115,10 +122,17 @@ class ModelBTable extends Component {
       this.props.modalFile.map((value) => {
         if (value.video) {
           return (
-            <ReactPlayer
-              url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`} //AWS
-              controls={true}
-            />
+            <Row>
+              <Col span={2}>
+                <Button size='large' icon={<DownloadOutlined />} />
+              </Col>
+              <Col span={22}>
+                <ReactPlayer
+                  url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`} //AWS
+                  controls={true}
+                />
+              </Col>
+            </Row>
             // <ReactPlayer
             //   url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`} //Aliyun
             //   controls={true}
