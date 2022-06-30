@@ -1,5 +1,5 @@
-const { getConnection } = require("../index");
-const { User } = require("../model/User");
+const { getConnection } = require("../rds/index");
+const { User } = require("../rds/model/User");
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');

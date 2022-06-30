@@ -1,6 +1,6 @@
-const { getConnection } = require("../index");
-const { CarNumber } = require("../model/CarNumber");
-const { Event } = require("../model/Event");
+const { getConnection } = require("../rds/index");
+const { CarNumber } = require("../rds/model/CarNumber");
+const { Event } = require("../rds/model/Event");
 
 async function getCarNumbers() {
     const connection = await getConnection();
