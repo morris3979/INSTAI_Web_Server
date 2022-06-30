@@ -18,6 +18,7 @@ awsS3Router.get("/getFile/:folder/:files", async (req, res)=>{
     const getFile = req.params.files;
     try {
         let fileToSend = await s3.getFileFromS3(getFolder, getFile);
+        //pipe the file to res
         fileToSend.pipe(res);
     } catch (error) {
         res.send({error:"Server Error"});
