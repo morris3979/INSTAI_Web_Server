@@ -25,7 +25,7 @@ exports.uploadToS3 = (file, next) =>{
         Body: fileStream,
         Key: file.name
     };
-    s3.upload(params,(error, data)=>{
+    s3.upload(params, (error, data)=>{
         console.log(error, data);
         next(error, data);
     });
@@ -41,12 +41,12 @@ exports.getFileFromS3 = (folder, key) =>{
 };
 
 //delete file from s3 bucker
-exports.deleteFileFromS3 = (key, next) =>{
+exports.deleteFileFromS3 = (folder, key, next) =>{
     const deleteParams = {
-        Key: key,
+        Key: folder + '/' + key,
         ...constantParams
     };
-    s3.deleteObject(deleteParams,(error, data)=>{
+    s3.deleteObject(deleteParams, (error, data)=>{
 
         next(error, data);
     });
