@@ -131,6 +131,7 @@ class ModelATable extends Component {
                 <Button
                   size='large'
                   icon={<DownloadOutlined />}
+                  onClick={() => { this.props.downloadVideo(value.details) }}
                 />
               </Col>
               <Col span={22}>

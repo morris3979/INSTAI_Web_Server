@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Table, Button, Modal, Image, Typography, Row, Col } from 'antd'
 import ReactPlayer from 'react-player/lazy'
 import {
-  GetModelCTableData, GetModalFile
+  GetModelCTableData, GetModalFile, DownloadImage, DownloadVideo
 } from '../../store/actionCreater'
 import { FileOutlined, DownloadOutlined } from '@ant-design/icons'
 import {
@@ -100,7 +100,11 @@ class ModelCTable extends Component {
           return (
             <Row>
               <Col span={2}>
-                <Button size='large' icon={<DownloadOutlined />} />
+                <Button
+                  size='large'
+                  icon={<DownloadOutlined />}
+                  onClick={() => { this.props.downloadImage(value.details) }}
+                />
               </Col>
               <Col span={22}>
                 <Image
@@ -124,7 +128,11 @@ class ModelCTable extends Component {
           return (
             <Row>
               <Col span={2}>
-                <Button size='large' icon={<DownloadOutlined />} />
+                <Button
+                  size='large'
+                  icon={<DownloadOutlined />}
+                  onClick={() => { this.props.downloadVideo(value.details) }}
+                />
               </Col>
               <Col span={22}>
                 <ReactPlayer
@@ -163,7 +171,15 @@ const mapDispatchToProps = (dispatch) => {
     getModalFile(text) {
       const action = GetModalFile(text)
       dispatch(action)
-    }
+    },
+    downloadImage(imageName) {
+      const action = DownloadImage(imageName)
+      dispatch(action)
+    },
+    downloadVideo(videoName) {
+      const action = DownloadVideo(videoName)
+      dispatch(action)
+    },
   }
 }
 
