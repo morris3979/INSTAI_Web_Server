@@ -1,6 +1,6 @@
 const express = require('express');
 const awsS3Router = express.Router();
-const s3 = require("../../controllers/s3/aws.s3.controller");
+const s3 = require("../../controllers/storage service/aws.s3.controller");
 
 awsS3Router.post("/upload", (req, res) => {
     const file = req.files.file;
