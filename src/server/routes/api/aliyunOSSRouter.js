@@ -6,11 +6,11 @@ const OSS = require('ali-oss');
 
 //initialize oss
 const oss = new OSS({
-    // region: 'oss-cn-shenzhen',
+    region: 'oss-cn-shenzhen',
     accessKeyId: process.env.ALIYUN_ACCESS_KEY_ID,
     accessKeySecret: process.env.ALIYUN_SECRET_ACCESS_KEY,
     bucket: process.env.ALIYUN_BUCKET_NAME,
-    endpoint: 'oss-accelerate.aliyuncs.com',
+    // endpoint: 'oss-accelerate.aliyuncs.com', //accelerate
 });
 
 aliyunOSSRouter.get("/getFile/:folder/:files", async(req, res) => {
