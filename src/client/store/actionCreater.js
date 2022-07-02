@@ -411,4 +411,46 @@ export const GetModelCTableData = () => {
     }
   )
 }
+
+export const DownloadImage = (imageName) => {
+  return (
+    async () => {
+      try {
+        const response = await axios.get(
+          `/api/S3/getFile/image/${imageName}.jpg`,
+          { responseType: 'blob' }
+        )
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${imageName}.jpg`)
+        document.body.appendChild(link)
+        link.click()
+      } catch (error) {
+        message.error(error)
+      }
+    }
+  )
+}
+
+export const DownloadVideo = (videoName) => {
+  return (
+    async () => {
+      try {
+        const response = await axios.get(
+          `/api/S3/getFile/video/${videoName}.mp4`,
+          { responseType: 'blob' }
+        )
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${videoName}.mp4`)
+        document.body.appendChild(link)
+        link.click()
+      } catch (error) {
+        message.error(error)
+      }
+    }
+  )
+}
 // >>>
