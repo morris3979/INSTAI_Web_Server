@@ -417,7 +417,8 @@ export const DownloadImage = (imageName) => {
     async () => {
       try {
         const response = await axios.get(
-          `/api/S3/getFile/image/${imageName}.jpg`,
+          `/api/s3/getFile/image/${imageName}.jpg`, //AWS
+          // `/api/oss/getFile/image/${imageName}.jpg`, //Aliyun
           { responseType: 'blob' }
         )
         const url = window.URL.createObjectURL(new Blob([response.data]))
@@ -438,7 +439,8 @@ export const DownloadVideo = (videoName) => {
     async () => {
       try {
         const response = await axios.get(
-          `/api/S3/getFile/video/${videoName}.mp4`,
+          `/api/s3/getFile/video/${videoName}.mp4`, //AWS
+          // `/api/oss/getFile/video/${videoName}.mp4`, //Aliyun
           { responseType: 'blob' }
         )
         const url = window.URL.createObjectURL(new Blob([response.data]))

@@ -28,13 +28,13 @@ const CarNumberSchema = new EntitySchema({
             type: "varchar",
         },
         accessKey: {
-            default: process.env.AWS_ACCESS_KEY,
-            // default: process.env.ALIYUN_ACCESS_KEY,
+            default: process.env.AWS_ACCESS_KEY, //AWS
+            // default: process.env.ALIYUN_ACCESS_KEY, //Aliyun
             type: "varchar",
         },
         secretKey: {
-            default: process.env.AWS_SECRET_ACCESS_KEY,
-            // default: ALIYUN_SECRET_ACCESS_KEY,
+            default: process.env.AWS_SECRET_ACCESS_KEY, //AWS
+            // default: ALIYUN_SECRET_ACCESS_KEY, //Aliyun
             type: "varchar",
         },
         createAt: {

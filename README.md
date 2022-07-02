@@ -1,4 +1,4 @@
-# CarView Project from NTUT Lab321 
+# CarView Project from NTUT Lab321
 #
 ## 1. With [npm](https://npmjs.org/) installed, run
 
@@ -14,5 +14,41 @@ npm start
 
 
 ```shell
-https://localhost:8080/
+http://localhost:8080/
+```
+
+#
+## 3. AWS <--> Aliyun
+
+```shell
+client
+│
+└───component
+│   │
+│   └───reportPage
+│       │   modelA.js
+│       │   modelB.js
+│       │   modelC.js
+│
+└───store
+│   │   actionCreater.js
+│
+server
+│
+└───controllers
+│   │
+│   └───storage service
+│       │   aws.s3.controller.js
+│
+└───rds
+│   │
+│   └───entity
+│       │   CarNumberSchema.js
+│
+└───routes
+│   │
+│   └───api
+│       │   aliyunOSSRouter.js
+│       │   awsS3Router.js
+│   ...
 ```
