@@ -15,9 +15,9 @@ awsS3Router.post("/upload", (req, res) => {
 
 awsS3Router.get("/getFile/:folder/:files", async(req, res) => {
     const getFolder = req.params.folder;
-    const getFile = req.params.files;
+    const getFiles = req.params.files;
     try {
-        let fileToSend = await s3.getFileFromS3(getFolder, getFile);
+        let fileToSend = await s3.getFileFromS3(getFolder, getFiles);
         //pipe the file to res
         fileToSend.pipe(res);
     } catch (error) {
