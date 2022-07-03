@@ -13,7 +13,7 @@ const ModelCPage = lazy(() => import('./page/modelCPage'))
 const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const AccountPage = lazy(() => import('./page/accountPage'))
-const Test = lazy(() => import('./component/reportPage/test'))
+// const Test = lazy(() => import('./component/reportPage/test'))
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
@@ -63,11 +63,11 @@ const App = (props) => {
                 關於
               </Link>
             </Item>
-            <Item key='/test' disabled={!loginInformation.admin}>
+            {/* <Item key='/test' disabled={!loginInformation.admin}>
               <Link to='/test'>
                 測試
               </Link>
-            </Item>
+            </Item> */}
           </Menu>
         </Sider>
         <Layout>
@@ -82,7 +82,7 @@ const App = (props) => {
                 <Route path='/modelVersion' element={<ModelVersionPage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
-                <Route path='/test' element={<Test />} />
+                {/* <Route path='/test' element={<Test />} /> */}
               </Routes>
             </Suspense>
           </Content>
