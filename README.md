@@ -38,6 +38,7 @@ server
 └───controllers
 │   │
 │   └───storage service
+│       │   aliyun.oss.controller.js
 │       │   aws.s3.controller.js
 │
 └───rds
