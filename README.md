@@ -44,12 +44,9 @@ server
 └───rds
 │   │
 │   └───entity
-│       │   CarNumberSchema.js
-│
-└───routes
+│   │   │   CarNumberSchema.js
 │   │
-│   └───api
-│       │   aliyunOSSRouter.js
-│       │   awsS3Router.js
+│   └───index.js
+│
 │   ...
 ```

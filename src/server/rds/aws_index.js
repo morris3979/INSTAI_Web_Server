@@ -10,10 +10,10 @@ async function getConnection() {
     return await typeorm.createConnection({
         name: "default",
         type: "mysql",
-        host: process.env.ALIYUN_RDS_HOST,
+        host: process.env.AWS_RDS_HOST,
         port: process.env.RDS_PORT,
-        username: process.env.ALIYUN_RDS_USERNAME,
-        password: process.env.ALIYUN_RDS_PASSWORD,
+        username: process.env.AWS_RDS_USERNAME,
+        password: process.env.AWS_RDS_PASSWORD,
         database: process.env.RDS_DATABASE,
         timezone: "SYSTEM",
         synchronize: false,
