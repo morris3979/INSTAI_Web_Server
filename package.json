@@ -16,8 +16,8 @@
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.3",
         "ali-oss": "^6.17.1",
-        "antd": "^4.21.4",
-        "aws-sdk": "^2.1167.0",
+        "antd": "^4.21.5",
+        "aws-sdk": "^2.1169.0",
         "axios": "^0.27.2",
         "babel-polyfill": "^6.26.0",
         "bcrypt": "^5.0.1",

@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const { Text } = Typography
 
-const imageurl = '/api/S3/getFile/image/0x0001_3_20220217132759_camera1_front_pedestrianflow.jpg'
+const imageurl = '/api/oss/getFile/image/00000000674a3751_1_20220613235600_camera1_front_body.jpg'
 
 const download = async () => {
   try {
@@ -28,7 +28,7 @@ const Test = () => {
   return (
     <Fragment>
       <Image src='/api/S3/getFile/image/0x0001_3_20220217132759_camera1_front_pedestrianflow.jpg' />
-      <Image src='https://source.unsplash.com/random/500x500' />
+      <Image src='/api/oss/getFile/image/00000000674a3751_1_20220613235600_camera1_front_body.jpg' />
       <ReactPlayer
         url='/api/S3/getFile/video/0x0001_2_20220217132635_camera2_behind_pedestrianflow.mp4'
         controls={true}

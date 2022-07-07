@@ -98,6 +98,7 @@ class ModelCTable extends Component {
       this.props.modalFile.map((value) => {
         if (value.image) {
           return (
+            /*
             <Row>
               <Col span={2}>
                 <Button
@@ -112,9 +113,21 @@ class ModelCTable extends Component {
                 />
               </Col>
             </Row>
-            // <Image
-            //   src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`} //Aliyun
-            // />
+            */
+            <Row>
+              <Col span={2}>
+                <Button
+                  size='large'
+                  icon={<DownloadOutlined />}
+                  onClick={() => { this.props.downloadImage(value.details) }}
+                />
+              </Col>
+              <Col span={22}>
+                <Image
+                  src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`} //Aliyun
+                />
+              </Col>
+            </Row>
           )
         }
       })
@@ -126,6 +139,7 @@ class ModelCTable extends Component {
       this.props.modalFile.map((value) => {
         if (value.video) {
           return (
+            /*
             <Row>
               <Col span={2}>
                 <Button
@@ -141,10 +155,22 @@ class ModelCTable extends Component {
                 />
               </Col>
             </Row>
-            // <ReactPlayer
-            //   url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`} //Aliyun
-            //   controls={true}
-            // />
+            */
+            <Row>
+              <Col span={2}>
+                <Button
+                  size='large'
+                  icon={<DownloadOutlined />}
+                  onClick={() => { this.props.downloadVideo(value.details) }}
+                />
+              </Col>
+              <Col span={22}>
+                <ReactPlayer
+                  url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`} //Aliyun
+                  controls={true}
+                />
+              </Col>
+            </Row>
           )
         }
       })
