@@ -98,7 +98,6 @@ class ModelBTable extends Component {
       this.props.modalFile.map((value) => {
         if (value.image) {
           return (
-            /*
             <Row>
               <Col span={2}>
                 <Button
@@ -110,21 +109,7 @@ class ModelBTable extends Component {
               <Col span={22}>
                 <Image
                   src={`https://d20cmf4o2f77jz.cloudfront.net/image/${value.details}.jpg`} //AWS
-                />
-              </Col>
-            </Row>
-            */
-            <Row>
-              <Col span={2}>
-                <Button
-                  size='large'
-                  icon={<DownloadOutlined />}
-                  onClick={() => { this.props.downloadImage(value.details) }}
-                />
-              </Col>
-              <Col span={22}>
-                <Image
-                  src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`} //Aliyun
+                  // src={`https://carview.oss-accelerate.aliyuncs.com/image/${value.details}.jpg`} //Aliyun
                 />
               </Col>
             </Row>
@@ -139,7 +124,6 @@ class ModelBTable extends Component {
       this.props.modalFile.map((value) => {
         if (value.video) {
           return (
-            /*
             <Row>
               <Col span={2}>
                 <Button
@@ -151,22 +135,7 @@ class ModelBTable extends Component {
               <Col span={22}>
                 <ReactPlayer
                   url={`https://d20cmf4o2f77jz.cloudfront.net/video/${value.details}.mp4`} //AWS
-                  controls={true}
-                />
-              </Col>
-            </Row>
-            */
-            <Row>
-              <Col span={2}>
-                <Button
-                  size='large'
-                  icon={<DownloadOutlined />}
-                  onClick={() => { this.props.downloadVideo(value.details) }}
-                />
-              </Col>
-              <Col span={22}>
-                <ReactPlayer
-                  url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`} //Aliyun
+                  // url={`https://carview.oss-accelerate.aliyuncs.com/video/${value.details}.mp4`} //Aliyun
                   controls={true}
                 />
               </Col>
