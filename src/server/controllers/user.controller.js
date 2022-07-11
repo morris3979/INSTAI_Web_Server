@@ -62,7 +62,9 @@ async function login (username, password) {
 async function getUser () {
     const connection = await getConnection();
     const userRepo = connection.getRepository(User);
-    const users = await userRepo.find();
+    const users = await userRepo.find({
+        order: { createAt: "DESC" },
+    });
     connection.close();
     return users;
 }

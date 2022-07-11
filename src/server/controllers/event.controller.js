@@ -6,6 +6,7 @@ async function getEvent() {
     const connection = await getConnection();
     const eventRepo = connection.getRepository(Event);
     const event = await eventRepo.find({
+        order: { createAt: "DESC" },
         relations: ["CarNumber", "Details"],
     });
     connection.close();

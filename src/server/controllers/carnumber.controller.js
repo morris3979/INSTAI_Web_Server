@@ -5,7 +5,9 @@ const { Event } = require("../rds/model/Event");
 async function getCarNumbers() {
     const connection = await getConnection();
     const carnumberRepo = connection.getRepository(CarNumber);
-    const carnumbers = await carnumberRepo.find();
+    const carnumbers = await carnumberRepo.find({
+        order: { createAt: "DESC" },
+    });
     connection.close();
     //return new list
     return carnumbers;
