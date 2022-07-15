@@ -29,6 +29,9 @@ async function app() {
     app.use(pageRouter); // serve html on frontend route
     app.use('/api', apiRouter); // mount api router
 
+    const awsIotMqtt = require('./middleware/awsIOT');
+    awsIotMqtt();
+
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
         process.exit(1) // To exit with a 'failure' code
