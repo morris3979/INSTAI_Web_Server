@@ -1,7 +1,7 @@
 const express = require('express');
 const awsRouter = express.Router();
 const s3 = require("../../controllers/cloud service/aws.s3.controller");
-const IotController = require('../../controllers/cloud service/aws.iot.controller');
+// const IotController = require('../../controllers/cloud service/aws.iot.controller');
 
 awsRouter.post("s3/upload", (req, res) => {
     const file = req.files.file;
@@ -37,10 +37,35 @@ awsRouter.delete("s3/deleteFile/:folder/:files", (req, res) => {
     });
 });
 
-const {
-    IotController: { publish },
-} = IotController;
+// const {
+//     IotController: { publish },
+// } = IotController;
 
-awsRouter.patch("iot/updateMsg", publish);
+
+const AWS = require('aws-sdk');
+const iotData = new AWS.IotData({ endpoint: "a1pxy4ej19lukk-ats.iot.us-east-1.amazonaws.com" });
+
+awsRouter.post("iot/updateMsg", async(req, res) => {
+    const topicHouse1 = "send_topic";
+    const params = {
+        topic: topicHouse1,
+        payload: Data,
+        qos: 1
+    };
+    iotData.publish(params, function(err, data){
+        if(err){
+            console.log("Error occurred : ",err, err.stack);
+        }
+        else{
+            console.log("Success ...", data);
+        }
+    });
+    //  IotController.publish((error, data) => {
+    //     if (error) {
+    //         return res.send({error:"Can not delete file, Please try again later"});
+    //     }
+    //     return res.send({message:"File has been deleted successfully"});
+    //  });
+});
 
 module.exports = [ awsRouter ];
