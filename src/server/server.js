@@ -22,6 +22,7 @@ async function app() {
     const pageRouter = require('./routes/pageRoutes'); // page route
     const apiRouter = require('./routes/api/index'); // db route
 
+
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
     app.use(express.static('dist')); // serve frontend file
