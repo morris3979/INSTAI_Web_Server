@@ -1,8 +1,9 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
+import { LogoutData } from './store/actionCreater'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
@@ -19,7 +20,10 @@ const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
 
 const App = (props) => {
-  const { loginInformation } = props
+  const {
+    loginInformation,
+    onClick
+  } = props
 
   if (loginInformation.admin == true) {
     return (
@@ -63,6 +67,11 @@ const App = (props) => {
                 關於
               </Link>
             </Item>
+            <Item key='/logout' disabled={!loginInformation.admin} onClick={onClick}>
+              <Link to='/logout'>
+                登出
+              </Link>
+            </Item>
             {/* <Item key='/test' disabled={!loginInformation.admin}>
               <Link to='/test'>
                 測試
@@ -82,6 +91,7 @@ const App = (props) => {
                 <Route path='/modelVersion' element={<ModelVersionPage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
+                <Route path='/logout' element={<Navigate to='/' />} />
                 {/* <Route path='/test' element={<Test />} /> */}
               </Routes>
             </Suspense>
@@ -103,4 +113,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = (dispatch) => {
+  //dispatch指store.dispatch這個方法
+  return {
+    onClick() {
+      const action = LogoutData()
+      dispatch(action)
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

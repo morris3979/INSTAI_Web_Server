@@ -3,7 +3,7 @@ import { message, Modal } from 'antd'
 import {
   Get_Model_Version_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information, Account_Information
+  Login_Information, Account_Information, Logout_Information
 } from './actionType'
 
 //共用Function <<<
@@ -59,16 +59,10 @@ export const LoginFormData = (data) => {
         if (response.data.token) {
           const action = LoginToken(response.data)
           dispatch(action)
-        } else {
-          throw '無此帳號'
         }
       } catch (error) {
         message.destroy()
-        if (error.code == 'ERR_BAD_REQUEST') {
-          message.error('密碼輸入錯誤')
-        } else {
-          message.error(`${error}`)
-        }
+        message.error('登入失敗')
       }
     }
   )
@@ -89,6 +83,13 @@ export const LoginToken = (data) => {
       }
     }
   )
+}
+
+export const LogoutData = () => {
+  return ({
+    type: Logout_Information,
+    value: { admin: false }
+  })
 }
 
 export const RegisterFormData = (data) => {

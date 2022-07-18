@@ -3,9 +3,9 @@ import { Spin } from 'antd'
 
 const Loading = () => {
   return (
-    <div align='center'>
+    <center>
       <Spin size='large' />
-    </div>
+    </center>
   )
 }
 
