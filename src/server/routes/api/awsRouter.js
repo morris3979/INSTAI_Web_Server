@@ -54,7 +54,7 @@ awsRouter.post("/iot/publish", async(req, res) => {
         boardId: topic,
         device: "RaspberryPi",
         type: "OTADevice",
-        payload: {...updateContent},
+        status: {...updateContent},
         dateTime
     }
     try {
