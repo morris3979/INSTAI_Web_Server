@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Link, Navigate, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
 import { LogoutData } from './store/actionCreater'
@@ -91,7 +91,6 @@ const App = (props) => {
                 <Route path='/modelVersion' element={<ModelVersionPage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
-                <Route path='/logout' element={<Navigate to='/' />} />
                 {/* <Route path='/test' element={<Test />} /> */}
               </Routes>
             </Suspense>
