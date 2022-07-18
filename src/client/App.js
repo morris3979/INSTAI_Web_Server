@@ -68,7 +68,7 @@ const App = (props) => {
               </Link>
             </Item>
             <Item key='/logout' disabled={!loginInformation.admin} onClick={onClick}>
-              <Link to='/logout'>
+              <Link to='/'>
                 登出
               </Link>
             </Item>
