@@ -40,9 +40,25 @@ awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
 
 awsRouter.post("/iot/publish", async(req, res) => {
     const topic = req.query.topic;
-    const message = req.body.message;
+    const { model, version, updateState} = req.body;
+    const today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    const dateTime = date + ' ' + time;
+    const updateContent = {
+        model: model,
+        version: version,
+        updateState: updateState
+    }
+    const IoTDevice = {
+        boardId: topic,
+        device: "RaspberryPi",
+        type: "OTADevice",
+        payload: {...updateContent},
+        dateTime
+    }
     try {
-        const response = await IotController.publish(topic, message);
+        const response = await IotController.publish(topic, IoTDevice);
         response.pipe(res);
     } catch (callback) {
         res.send(callback);
