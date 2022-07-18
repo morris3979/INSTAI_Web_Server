@@ -22,15 +22,13 @@ async function app() {
     const pageRouter = require('./routes/pageRoutes'); // page route
     const apiRouter = require('./routes/api/index'); // db route
 
+
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
     app.use(express.static('dist')); // serve frontend file
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(pageRouter); // serve html on frontend route
     app.use('/api', apiRouter); // mount api router
-
-    const awsIotMqtt = require('./middleware/awsIOT');
-    awsIotMqtt();
 
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);

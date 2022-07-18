@@ -1,8 +1,9 @@
 const express = require('express');
-const awsS3Router = express.Router();
-const s3 = require("../../controllers/storage service/aws.s3.controller");
+const awsRouter = express.Router();
+const s3 = require("../../controllers/cloud service/aws.s3.controller");
+const IotController = require('../../controllers/cloud service/aws.iot.controller');
 
-awsS3Router.post("/upload", (req, res) => {
+awsRouter.post("/s3/upload", (req, res) => {
     const file = req.files.file;
     s3.uploadToS3(file, (error, data) => {
         console.log("commit")
@@ -13,7 +14,7 @@ awsS3Router.post("/upload", (req, res) => {
     });
 });
 
-awsS3Router.get("/getFile/:folder/:files", async(req, res) => {
+awsRouter.get("/s3/getFile/:folder/:files", async(req, res) => {
     const getFolder = req.params.folder;
     const getFiles = req.params.files;
     try {
@@ -25,7 +26,7 @@ awsS3Router.get("/getFile/:folder/:files", async(req, res) => {
     }
 });
 
-awsS3Router.delete("/deleteFile/:folder/:files", (req, res) => {
+awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
     const getFolder = req.params.folder;
     const getFile = req.params.files;
     s3.deleteFileFromS3(getFolder, getFile, (error, data) => {
@@ -36,4 +37,14 @@ awsS3Router.delete("/deleteFile/:folder/:files", (req, res) => {
     });
 });
 
-module.exports = [ awsS3Router ];
+
+awsRouter.post("/iot/updateMsg", async(req, res) => {
+    try {
+        const response = await IotController.publish();
+        response.pipe(res);
+    } catch (callback) {
+        res.send(callback);
+    }
+});
+
+module.exports = [ awsRouter ];

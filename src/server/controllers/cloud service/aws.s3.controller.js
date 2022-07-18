@@ -46,6 +46,7 @@ exports.deleteFileFromS3 = (folder, key, next) => {
         ...constantParams
     };
     s3.deleteObject(deleteParams, (error, data) => {
+        console.log(error, data);
         next(error, data);
     });
 };

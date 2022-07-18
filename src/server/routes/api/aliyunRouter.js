@@ -1,8 +1,8 @@
 const express = require('express');
-const aliyunOSSRouter = express.Router();
-const { getFileFromOSS } = require("../../controllers/storage service/aliyun.oss.controller");
+const aliyunRouter = express.Router();
+const { getFileFromOSS } = require("../../controllers/cloud service/aliyun.oss.controller");
 
-aliyunOSSRouter.get("/getFile/:folder/:files", async(req, res) => {
+aliyunRouter.get("/oss/getFile/:folder/:files", async(req, res) => {
     const getFolder = req.params.folder;
     const getFiles = req.params.files;
     try {
@@ -13,4 +13,4 @@ aliyunOSSRouter.get("/getFile/:folder/:files", async(req, res) => {
     }
 });
 
-module.exports = [ aliyunOSSRouter ];
+module.exports = [ aliyunRouter ];
