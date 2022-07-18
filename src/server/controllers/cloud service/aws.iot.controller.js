@@ -7,14 +7,12 @@ const iotData = new AWS.IotData({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-const topicHouse1 = "send_topic";
-const params = {
-    topic: topicHouse1,
-    payload: JSON.stringify("Data"),
-    qos: 1
-};
-
-exports.publish = () => {
+exports.publish = (topic, message) => {
+    const params = {
+        topic: topic,
+        payload: JSON.stringify({message}),
+        qos: 1
+    };
     iotData.publish(params, function(err, data){
         if(err){
             // console.log("Error occurred : ", err, err.stack);

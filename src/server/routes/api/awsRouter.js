@@ -38,9 +38,11 @@ awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
 });
 
 
-awsRouter.post("/iot/updateMsg", async(req, res) => {
+awsRouter.post("/iot/publish", async(req, res) => {
+    const topic = req.query.topic;
+    const message = req.body.message;
     try {
-        const response = await IotController.publish();
+        const response = await IotController.publish(topic, message);
         response.pipe(res);
     } catch (callback) {
         res.send(callback);
