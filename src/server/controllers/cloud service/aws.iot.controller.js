@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 require('dotenv').config();
 
 const iotData = new AWS.IotData({
-    endpoint: "a1pxy4ej19lukk-ats.iot.us-east-1.amazonaws.com",
+    endpoint: process.env.AWS_IOT_ENDPOINT,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
