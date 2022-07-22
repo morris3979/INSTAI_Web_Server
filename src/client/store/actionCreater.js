@@ -290,6 +290,29 @@ export const PostModelVersionTableData = (data) => {
   )
 }
 
+export const PostMQTTTest = (data) => {
+  const sendData = {
+    'modal': String(data.modelName),
+    'version:': String(data.version),
+    'updateState': 1
+  }
+  return (
+    async () => {
+      try {
+        await axios.post('/api/aws/iot/publish', sendData, { params: { topic: data.boardId } })
+        Modal.success(
+          {
+            title: `測試封包已傳送至板號: ${data.boardId}`,
+            content: `傳送內容: ${JSON.stringify(sendData, null, 2)}`
+          }
+        )
+      } catch (error) {
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const GetStatusTableData = () => {
   return (
     async (dispatch) => {

@@ -3,10 +3,15 @@ import { connect } from 'react-redux'
 import {
   Popconfirm, Table, Button, Space, Modal, Form, Input, Select, Affix
 } from 'antd'
-import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  DeploymentUnitOutlined
+} from '@ant-design/icons'
 import {
   GetModelVersionTableData, SetWhichModal, DeleteModelVersionTableData,
-  PatchModelVersionTableData, PostModelVersionTableData
+  PatchModelVersionTableData, PostModelVersionTableData, PostMQTTTest
 } from '../../store/actionCreater'
 
 const { Column } = Table
@@ -142,6 +147,10 @@ class ModelVersionTable extends Component {
     return (
       <Space size='large'>
         <Button
+          onClick={() => { this.props.postMQTTTest(text) }}
+          icon={<DeploymentUnitOutlined />}
+        />
+        <Button
           onClick={() => { this.onClick(text) }}
           icon={<EditOutlined />}
         />
@@ -186,6 +195,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     postModelVersionTableData(data) {
       const action = PostModelVersionTableData(data)
+      dispatch(action)
+    },
+    postMQTTTest(data) {
+      const action = PostMQTTTest(data)
       dispatch(action)
     }
   }
