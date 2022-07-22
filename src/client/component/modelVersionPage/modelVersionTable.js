@@ -82,9 +82,9 @@ class ModelVersionTable extends Component {
                   `${this.defaultValue(this.props.whichModal.version)}`
                 }
               >
-                <Option value='1'>1</Option>
-                <Option value='2'>2</Option>
-                <Option value='3'>3</Option>
+                <Option value='1.0'>1.0</Option>
+                <Option value='2.0'>2.0</Option>
+                <Option value='3.0'>3.0</Option>
               </Select>
             </Item>
             <Item>

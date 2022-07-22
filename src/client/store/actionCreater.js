@@ -292,8 +292,8 @@ export const PostModelVersionTableData = (data) => {
 
 export const PostMQTTTest = (data) => {
   const sendData = {
-    'modal': String(data.modelName),
-    'version:': String(data.version),
+    'model': data.modelName,
+    'version': data.version,
     'updateState': 1
   }
   return (
