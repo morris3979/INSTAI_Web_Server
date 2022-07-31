@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DashboardPlugin = require("webpack-dashboard/plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 
 const outputDirectory = 'dist';
 
@@ -79,5 +80,8 @@ module.exports = {
       favicon: './public/favicon.ico'
     }),
     new DashboardPlugin(),
+    new SimpleProgressWebpackPlugin({
+      format: 'compact',
+    }),
   ]
 };
