@@ -19,9 +19,19 @@ async function app() {
 
     const bodyParser = require('body-parser');
     const compression = require('compression');
-    const pageRouter = require('./routes/pageRoutes'); // page route
-    const apiRouter = require('./routes/api/index'); // db route
+    const apiRouter = require('./routes/index'); //db route
+    const pageRouter = require('./routes/api/page.routes'); //page route
 
+    const db = require('./database');
+
+    db.sequelize.authenticate().then(() => {
+        // console.log("Connected to the database!");
+    })
+    .catch(err => {
+        console.log("Cannot connect to the database!", err);
+        process.exit();
+    });
+    db.sequelize.sync({ alter: true });
 
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
@@ -32,7 +42,7 @@ async function app() {
 
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
-        process.exit(1) // To exit with a 'failure' code
+        process.exit(1) //To exit with a 'failure' code
     });
 
     httpServer.listen(httpPort, () => console.log(`=> local server listening on port ${httpPort}!`));

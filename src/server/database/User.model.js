@@ -1,0 +1,55 @@
+module.exports = (sequelize, Sequelize) => {
+const User = sequelize.define('User', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    username: {
+        type: Sequelize.STRING,
+    },
+    password: {
+        type: Sequelize.STRING,
+    },
+    admin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+    authA: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+    authB: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+    authC: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+    token: {
+        type: Sequelize.STRING,
+    },
+    createdAt: {
+        field: 'created_at',
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
+    },
+    updatedAt: {
+        field: 'updated_at',
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
+    },
+    deletedAt: {
+        field: 'deleted_at',
+        type: Sequelize.DATE,
+    },
+}, {
+    timestamps: true,
+    paranoid: true
+});
+    return User;
+};

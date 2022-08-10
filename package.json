@@ -29,7 +29,9 @@
         "leaflet": "^1.8.0",
         "leaflet-geosearch": "^3.6.1",
         "leaflet.locatecontrol": "^0.76.1",
+        "mariadb": "^3.0.1",
         "mysql": "^2.18.1",
+        "mysql2": "^2.3.3",
         "npm": "^8.15.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -38,6 +40,7 @@
         "react-router-dom": "^6.3.0",
         "redux-persist": "^6.0.0",
         "reflect-metadata": "^0.1.13",
+        "sequelize": "^6.21.3",
         "typeorm": "0.2.45",
         "web-vitals": "^2.1.4",
         "webpack-bundle-analyzer": "^4.5.0"
