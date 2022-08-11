@@ -1,72 +1,27 @@
 const express = require('express');
 const userRouter = express.Router();
 const auth = require("../../middleware/auth");
-// const { register, login, getUser, patchUser, deleteUser } = require("../../controllers/user.controller");
-
 const User = require('../../controllers/user.controller');
 
-// Create a new Project
-userRouter.post("/register", User.create);
+// Register a new User
+userRouter.post("/register", User.register);
 
-// register
-// userRouter.post("/register", async(req, res) => {
-//     const { username, password } = req.body;
-//     try {
-//         const userRegister = await register(username, password);
-//         res.status(201).json(userRegister);
-//     } catch (e) {
-//         res.send(e);
-//     }
-// })
+// Login
+userRouter.post("/login", User.login);
 
-// login
-// userRouter.post('/login', async(req, res) => {
-//     const { username, password } = req.body;
-//     try {
-//         const userLogin = await login(username, password);
-//         res.status(200).json(userLogin);
-//     } catch (e) {
-//         res.send(e);
-//     }
-// });
-
-// welcome
+// Welcome
 userRouter.post("/welcome", auth, (req, res) => {
     res.status(200).send("Welcome");
     return;
 });
 
-// GET
-// userRouter.get("/", async(req, res) => {
-//     try {
-//         const users = await getUser();
-//         res.status(200).json(users);
-//     } catch (e) {
-//         res.send(e);
-//     }
-// })
+// Retrieve all User
+userRouter.get("/", User.findAll);
 
-// PATCH, 其餘選填, 密碼必填!
-// userRouter.patch("/:id", async(req, res) => {
-//     try {
-//         const id = Number(req.params.id)
-//         const { username, admin, authA, authB, authC } = req.body;
-//         const users = await patchUser(id, username, admin, authA, authB, authC);
-//         res.status(204).json(users);
-//     } catch (e) {
-//         res.send(e);
-//     }
-// })
+// Update a User with id
+userRouter.patch("/:id", User.update)
 
-// DELETE
-// userRouter.delete("/:id", async(req, res) => {
-//     try {
-//         const id = req.params.id;
-//         const users = await deleteUser(id);
-//         res.status(204).json(users);
-//     } catch (e) {
-//         res.send(e);
-//     }
-// })
+// Delete a User with id
+userRouter.delete("/:id", User.delete)
 
 module.exports = [userRouter];

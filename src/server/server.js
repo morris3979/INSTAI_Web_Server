@@ -19,8 +19,8 @@ async function app() {
 
     const bodyParser = require('body-parser');
     const compression = require('compression');
-    const apiRouter = require('./routes/index'); //db route
-    const pageRouter = require('./routes/api/page.routes'); //page route
+    const apiRouter = require('./routes/index'); //db routes
+    const pageRouter = require('./routes/api/page.routes'); //page routes
 
     const db = require('./database');
 

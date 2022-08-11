@@ -9,10 +9,10 @@ projectRouter.post("/", Project.create);
 // Retrieve all Project
 projectRouter.get('/', Project.findAll);
 
-// Update a Tutorial with id
+// Update a Project with id
 projectRouter.patch("/:id", Project.update);
 
-// Delete a Tutorial with id
+// Delete a Project with id
 projectRouter.delete("/:id", Project.delete);
 
 module.exports = [ projectRouter ];

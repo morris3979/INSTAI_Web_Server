@@ -3,16 +3,16 @@ const groupRouter = express.Router();
 const Group = require('../../controllers/group.controller');
 
 
-// Create a new Project
+// Create a new Group
 groupRouter.post("/", Group.create);
 
-// Retrieve all Project
+// Retrieve all Group
 groupRouter.get('/', Group.findAll);
 
-// Update a Tutorial with id
+// Update a Group with id
 // groupRouter.patch("/:id", Group.update);
 
-// Delete a Tutorial with id
+// Delete a Group with id
 // groupRouter.delete("/:id", Group.delete);
 
 module.exports = [ groupRouter ];
