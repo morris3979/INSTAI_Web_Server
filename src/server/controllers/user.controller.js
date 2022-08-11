@@ -83,6 +83,12 @@ exports.login = async(req, res) => {
     );
 
     res.status(200).send({
+      username: user.username,
+      password: user.password,
+      admin: user.admin,
+      authA: user.authA,
+      authB: user.authB,
+      authC: user.authC,
       token: token
     });
   })
