@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-
 const pageRouter = express.Router();
 
 pageRouter.get("/map", async (req, res) => {
