@@ -24,9 +24,9 @@ const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Project = require("./Project.model")(sequelize, Sequelize);
-db.Group = require("./Group.model")(sequelize, Sequelize);
-db.User = require("./User.model")(sequelize, Sequelize);
+db.Project = require("./model/Project.model")(sequelize, Sequelize);
+db.Group = require("./model/Group.model")(sequelize, Sequelize);
+db.User = require("./model/User.model")(sequelize, Sequelize);
 
 db.Project.hasMany(db.Group, {as: "Project", foreignKey: 'ProjectId'});
 db.Group.belongsTo(db.Project, {foreignKey: 'ProjectId'});
