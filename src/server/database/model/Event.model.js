@@ -26,7 +26,6 @@ module.exports = (sequelize, Sequelize) => {
       },
     }, {
       timestamps: true,
-      paranoid: true
     });
     return Event;
   };
