@@ -82,9 +82,13 @@ exports.login = async(req, res) => {
         }
     );
 
+    User.update({
+      token: token
+    }, {
+      where: { username: username }
+    })
+
     res.status(200).send({
-      username: user.username,
-      password: user.password,
       admin: user.admin,
       authA: user.authA,
       authB: user.authB,
