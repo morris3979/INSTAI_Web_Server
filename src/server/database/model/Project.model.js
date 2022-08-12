@@ -8,11 +8,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     project: {
       type: Sequelize.STRING,
-      // defaultValue: 'projectA'
     },
     displayName: {
       type: Sequelize.STRING,
-      // defaultValue: '工廠Ａ'
     },
     createdAt: {
         field: 'created_at',
