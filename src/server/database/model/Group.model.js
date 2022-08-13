@@ -29,5 +29,8 @@ module.exports = (sequelize, Sequelize) => {
       timestamps: true,
       paranoid: true
     });
+    Group.associate = function (models) {
+      Group.hasMany(models.Device, {foreignKey: 'GroupId'});
+    };
     return Group;
   };

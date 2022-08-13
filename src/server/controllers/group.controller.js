@@ -35,7 +35,10 @@ exports.findAll = (req, res) => {
     Group.findAll({
         include: [{
             model: db.Project,
-            as: 'Project'
+            attributes:['id', 'project', 'displayName']
+        }, {
+            model: db.Device,
+            attributes:['id', 'boardId', 'deviceName']
         }]
     })
     .then(data => {

@@ -10,9 +10,9 @@ modelRouter.post("/", Model.create);
 modelRouter.get('/', Model.findAll);
 
 // Update a Model with id
-// groupRouter.patch("/:id", Model.update);
+// modelRouter.patch("/:id", Model.update);
 
 // Delete a Model with id
-// groupRouter.delete("/:id", Model.delete);
+// modelRouter.delete("/:id", Model.delete);
 
 module.exports = [ modelRouter ];

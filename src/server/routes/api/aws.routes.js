@@ -1,17 +1,21 @@
 const express = require('express');
 const awsRouter = express.Router();
+const async = require('async');
 const s3 = require("../../controllers/cloud service/aws.s3.controller");
 const IotController = require('../../controllers/cloud service/aws.iot.controller');
 
-awsRouter.post("/s3/upload", (req, res) => {
-    const file = req.files.file;
-    s3.uploadToS3(file, (error, data) => {
-        console.log("commit")
-        if (error) {
-            return res.send({error:"Something went wrong."});
-        }
-        return res.send({message:"File uploaded successfully"});
-    });
+awsRouter.post("/s3/upload/:modelName/:modelVersion", (req, res) => {
+    const {modelName, modelVersion} = req.params;
+    async.parallel([
+        function(callback) {
+          s3.uploadToS3(modelName, modelVersion, req, res, 'file', callback);
+        }], function(err, result){
+        if (err) {
+          return res.status(422).send(err);
+        } else {
+          res.status(200).send(result[0]);
+        }}
+    )
 });
 
 awsRouter.get("/s3/getFile/:folder/:files", async(req, res) => {
@@ -37,7 +41,7 @@ awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
     });
 });
 
-
+// AWS IOT MQTT publish message
 awsRouter.post("/iot/publish", async(req, res) => {
     const topic = req.query.topic;
     const { model, version, updateState} = req.body;

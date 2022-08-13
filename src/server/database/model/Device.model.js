@@ -57,5 +57,8 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
-        return Device;
+    Device.associate = function (models) {
+        Device.belongsTo(models.Group);
+    };
+    return Device;
     };
