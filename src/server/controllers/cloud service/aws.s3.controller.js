@@ -18,20 +18,6 @@ const constantParams = {
     Bucket: process.env.AWS_BUCKET_NAME,
 }
 
-//upload file to s3 bucket
-// exports.uploadToS3 = multer({
-//     storage: multerS3({
-//         s3: s3,
-//         // acl: 'public-read',
-//         bucket: process.env.AWS_BUCKET_NAME,
-//         metadata: (req, file, cb) => {
-//             cb(null, {fieldName: file.fieldname})
-//         },
-//         key: (req, file, cb) => {
-//             cb(null, req)
-//         }
-//     })
-// });
 exports.uploadToS3 = async(modelName, modelVersion, req, res, key, callback) => {
     const upload = multer({
         storage: multerS3({

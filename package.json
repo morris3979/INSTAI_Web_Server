@@ -44,7 +44,6 @@
         "redux-persist": "^6.0.0",
         "reflect-metadata": "^0.1.13",
         "sequelize": "^6.21.3",
-        "typeorm": "0.2.45",
         "web-vitals": "^2.1.4",
         "webpack-bundle-analyzer": "^4.5.0"
     },
