@@ -10,6 +10,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         boardId: {
             type: Sequelize.STRING,
+            allowNull: false,
         },
         deviceName: {
             type: Sequelize.STRING,

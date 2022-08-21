@@ -8,28 +8,31 @@ const User = sequelize.define('User', {
     },
     username: {
         type: Sequelize.STRING,
+        allowNull: false,
     },
     password: {
         type: Sequelize.STRING,
+        allowNull: false,
     },
     admin: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
     },
     authA: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
     },
     authB: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
     },
     authC: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
     },
     token: {
         type: Sequelize.STRING,
+        allowNull: false,
     },
     createdAt: {
         field: 'created_at',

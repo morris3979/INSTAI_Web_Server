@@ -8,6 +8,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       groupName: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
           field: 'created_at',

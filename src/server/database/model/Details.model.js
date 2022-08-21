@@ -8,12 +8,15 @@ module.exports = (sequelize, Sequelize) => {
         },
         details: {
             type: Sequelize.STRING,
+            allowNull: false,
         },
         image: {
             type: Sequelize.BOOLEAN,
+            defaultValue: false,
         },
         video: {
             type: Sequelize.BOOLEAN,
+            defaultValue: false,
         },
         createdAt: {
             field: 'created_at',

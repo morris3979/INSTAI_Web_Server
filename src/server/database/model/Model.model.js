@@ -8,9 +8,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       modelName: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       modelVersion: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       task: {
         type: Sequelize.STRING,

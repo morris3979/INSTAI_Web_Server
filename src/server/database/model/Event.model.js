@@ -8,9 +8,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       eventTime: {
         type: "TIMESTAMP",
+        allowNull: false,
       },
       trigger: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
       },
       createdAt: {
           field: 'created_at',

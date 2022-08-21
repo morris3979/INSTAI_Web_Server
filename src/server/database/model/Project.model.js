@@ -8,6 +8,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     project: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     displayName: {
       type: Sequelize.STRING,
