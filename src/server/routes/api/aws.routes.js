@@ -4,20 +4,22 @@ const async = require('async');
 const s3 = require("../../controllers/cloud service/aws.s3.controller");
 const IotController = require('../../controllers/cloud service/aws.iot.controller');
 
+// upload model file
 awsRouter.post("/s3/upload/:modelName/:modelVersion", (req, res) => {
     const {modelName, modelVersion} = req.params;
     async.parallel([
         function(callback) {
-          s3.uploadToS3(modelName, modelVersion, req, res, 'file', callback);
+            s3.uploadToS3(modelName, modelVersion, req, res, 'file', callback);
         }], function(err, result){
         if (err) {
-          return res.status(422).send(err);
+            return res.status(422).send(err);
         } else {
-          res.status(200).send(result[0]);
+            res.status(200).send(result[0]);
         }}
     )
 });
 
+// get file from bucket folder
 awsRouter.get("/s3/getFile/:folder/:files", async(req, res) => {
     const getFolder = req.params.folder;
     const getFiles = req.params.files;

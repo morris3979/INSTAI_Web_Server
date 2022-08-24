@@ -25,10 +25,10 @@ exports.uploadToS3 = async(modelName, modelVersion, req, res, key, callback) => 
             // acl: 'public-read',
             bucket: process.env.AWS_BUCKET_NAME,
             metadata: (req, file, cb) => {
-                cb(null, {fieldName: file.fieldname})
+                cb(null, {fieldName: file.fieldname});
             },
             key: (req, file, cb) => {
-                cb(null, 'model' + '/' + `${modelName}_${modelVersion}.bin`)
+                cb(null, 'model' + '/' + `${modelName}_${modelVersion}.bin`); // file.originalname
             }
         })
     });
