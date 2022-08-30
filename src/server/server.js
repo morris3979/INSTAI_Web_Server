@@ -4,11 +4,12 @@ const fs = require('fs');
 
 async function app() {
     const app = express();
-    const { SocketConnection } = require('socket.io');
+    // const socket = require('socket.io');
+    // const io = socket(tcpServer, {cors: true});
     const net = require('net');
     const http = require('http');
     const https = require('https');
-    const tcpIpPort = process.env.TCPIP_PORT;
+    const tcpPort = process.env.TCP_PORT;
     const httpPort = process.env.HTTP_PORT;
     const httpsPort = process.env.HTTPS_PORT;
     const privateKey = fs.readFileSync(__dirname + '/ssl/privatekey.pem');
@@ -17,7 +18,15 @@ async function app() {
         key: privateKey,
         cert: certificate
     };
-    const tcpIpServer = net.createServer(app);
+    const tcpServer = net.createServer(function (socket) {
+        // data event： 到收到資料傳輸時觸發事件 ， argument 為對象傳輸的物件
+        socket.on('data', function (data) {
+            // write event: 傳輸資料的事件
+            socket.write('hi', function () {
+                console.log('server: 收到 client 端傳輸資料為 ' + data + ' 回應 hi')
+            })
+        })
+    });
     const httpServer = http.createServer(app);
     const httpsServer = https.createServer(credentials, app);
 
@@ -30,12 +39,11 @@ async function app() {
 
     db.sequelize.authenticate().then(() => {
         console.log("Connected to the database!");
-    })
-    .catch(err => {
+    }).catch(err => {
         console.log("Cannot connect to the database!", err);
-        process.exit();
+        process.exit(1);
     });
-    db.sequelize.sync({ alter: true });
+    db.sequelize.sync({alter: true});
 
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
@@ -48,8 +56,11 @@ async function app() {
         console.error('unhandledRejection', error);
         process.exit(1) //To exit with a 'failure' code
     });
+    tcpServer.on('connection', function () {
+        console.log('server端: 收到 client 端連線請求，並通知 client 端可以開始傳送資料')
+    })
 
-    tcpIpServer.listen(tcpIpPort, () => console.log(`=> tcpip server listening on port ${tcpIpPort}!`));
+    tcpServer.listen(tcpPort, () => console.log(`=> tcp server listening on port ${tcpPort}!`));
     httpServer.listen(httpPort, () => console.log(`=> http server listening on port ${httpPort}!`));
     httpsServer.listen(httpsPort, () => console.log(`=> https server listening on port ${httpsPort}!`));
 }
