@@ -4,8 +4,11 @@ const fs = require('fs');
 
 async function app() {
     const app = express();
+    const { SocketConnection } = require('socket.io');
+    const net = require('net');
     const http = require('http');
     const https = require('https');
+    const tcpIpPort = process.env.TCPIP_PORT;
     const httpPort = process.env.HTTP_PORT;
     const httpsPort = process.env.HTTPS_PORT;
     const privateKey = fs.readFileSync(__dirname + '/ssl/privatekey.pem');
@@ -14,6 +17,7 @@ async function app() {
         key: privateKey,
         cert: certificate
     };
+    const tcpIpServer = net.createServer(app);
     const httpServer = http.createServer(app);
     const httpsServer = https.createServer(credentials, app);
 
@@ -25,7 +29,7 @@ async function app() {
     const db = require('./database');
 
     db.sequelize.authenticate().then(() => {
-        // console.log("Connected to the database!");
+        console.log("Connected to the database!");
     })
     .catch(err => {
         console.log("Cannot connect to the database!", err);
@@ -45,7 +49,8 @@ async function app() {
         process.exit(1) //To exit with a 'failure' code
     });
 
-    httpServer.listen(httpPort, () => console.log(`=> local server listening on port ${httpPort}!`));
+    tcpIpServer.listen(tcpIpPort, () => console.log(`=> tcpip server listening on port ${tcpIpPort}!`));
+    httpServer.listen(httpPort, () => console.log(`=> http server listening on port ${httpPort}!`));
     httpsServer.listen(httpsPort, () => console.log(`=> https server listening on port ${httpsPort}!`));
 }
 
