@@ -4,8 +4,6 @@ const fs = require('fs');
 
 async function app() {
     const app = express();
-    // const socket = require('socket.io');
-    // const io = socket(tcpServer, {cors: true});
     const net = require('net');
     const http = require('http');
     const https = require('https');
@@ -18,17 +16,24 @@ async function app() {
         key: privateKey,
         cert: certificate
     };
-    const tcpServer = net.createServer(function (socket) {
-        // data event： 到收到資料傳輸時觸發事件 ， argument 為對象傳輸的物件
-        socket.on('data', function (data) {
-            // write event: 傳輸資料的事件
-            socket.write('hi', function () {
-                console.log('server: 收到 client 端傳輸資料為 ' + data + ' 回應 hi')
-            })
-        })
-    });
+    // const tcpServer = net.createServer(function (socket) {
+    //     // data event： 到收到資料傳輸時觸發事件 ， argument 為對象傳輸的物件
+    //     socket.on('data', function (data) {
+    //         // write event: 傳輸資料的事件
+    //         socket.write('hi', function () {
+    //             console.log('server: 收到 client 端傳輸資料為 ' + data + ' 回應 hi')
+    //         })
+    //     })
+    // });
+    const tcpServer = net.createServer();
     const httpServer = http.createServer(app);
     const httpsServer = https.createServer(credentials, app);
+
+    // const { Server } = require('socket.io');
+    // const io = new Server(tcpServer, {cors: true});
+    // io.on("connection", (socket) => {
+    //     console.log(socket.id);
+    // });
 
     const bodyParser = require('body-parser');
     const compression = require('compression');
@@ -52,12 +57,27 @@ async function app() {
     app.use(pageRouter); // serve html on frontend route
     app.use('/api', apiRouter); // mount api router
 
-    process.on('unhandledRejection', error => {
+    process.on('unhandledRejection', error => { 
         console.error('unhandledRejection', error);
         process.exit(1) //To exit with a 'failure' code
     });
-    tcpServer.on('connection', function () {
-        console.log('server端: 收到 client 端連線請求，並通知 client 端可以開始傳送資料')
+
+    tcpServer.on('connection', function (socket) {
+        const remoteAddress = socket.remoteAddress + ':' + socket.remotePort;
+        console.log('server: new client connection is made %s', remoteAddress);
+
+        socket.on("data", function (d) {
+            console.log('Data from %s: %s', remoteAddress, d);
+            socket.write("Hello "+ d);
+        });
+
+        socket.once("close", function () {
+            console.log("Connection from %s closed", remoteAddress);
+        })
+
+        socket.on("error", function (err) {
+            console.log('Connection %s error: %s', remoteAddress, err.message);
+        });
     })
 
     tcpServer.listen(tcpPort, () => console.log(`=> tcp server listening on port ${tcpPort}!`));
