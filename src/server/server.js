@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const fs = require('fs');
+const readlineSync = require('readline-sync');
 
 async function app() {
     const app = express();
@@ -16,24 +17,9 @@ async function app() {
         key: privateKey,
         cert: certificate
     };
-    // const tcpServer = net.createServer(function (socket) {
-    //     // data event： 到收到資料傳輸時觸發事件 ， argument 為對象傳輸的物件
-    //     socket.on('data', function (data) {
-    //         // write event: 傳輸資料的事件
-    //         socket.write('hi', function () {
-    //             console.log('server: 收到 client 端傳輸資料為 ' + data + ' 回應 hi')
-    //         })
-    //     })
-    // });
     const tcpServer = net.createServer();
     const httpServer = http.createServer(app);
     const httpsServer = https.createServer(credentials, app);
-
-    // const { Server } = require('socket.io');
-    // const io = new Server(tcpServer, {cors: true});
-    // io.on("connection", (socket) => {
-    //     console.log(socket.id);
-    // });
 
     const bodyParser = require('body-parser');
     const compression = require('compression');
@@ -57,7 +43,7 @@ async function app() {
     app.use(pageRouter); // serve html on frontend route
     app.use('/api', apiRouter); // mount api router
 
-    process.on('unhandledRejection', error => { 
+    process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
         process.exit(1) //To exit with a 'failure' code
     });
@@ -65,6 +51,15 @@ async function app() {
     tcpServer.on('connection', function (socket) {
         const remoteAddress = socket.remoteAddress + ':' + socket.remotePort;
         console.log('server: new client connection is made %s', remoteAddress);
+        tcpServer.getConnections(function (err, count) {
+            console.log("The number of currently connection is: " + count);
+        });
+
+        var clients = [];
+        clients.push(socket);
+        // console.log("clients: ", clients);
+        // const data = readlineSync.question("Enter data to send: ");
+        // clients[0].write(data);
 
         socket.on("data", function (d) {
             console.log('Data from %s: %s', remoteAddress, d);
@@ -73,6 +68,9 @@ async function app() {
 
         socket.once("close", function () {
             console.log("Connection from %s closed", remoteAddress);
+            tcpServer.getConnections(function (err, count) {
+                console.log("The number of currently connection is: " + count);
+            });
         })
 
         socket.on("error", function (err) {
