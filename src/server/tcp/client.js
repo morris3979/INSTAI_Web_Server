@@ -1,8 +1,8 @@
 const readlineSync = require('readline-sync');
 const net = require('net');
 
-const Host = '127.0.0.1';
-const Port = 8124;
+const Host = '127.0.0.1'; // set tcp/ip
+const Port = 8124; // set server port
 
 var client = null;
 
@@ -101,6 +101,8 @@ function menu() {
     }
 }
 
-setTimeout(function () {
-    menu();
-}, 0);
+exports.tcpClient = () => {
+    setTimeout(function () {
+        menu();
+    }, 0);
+}

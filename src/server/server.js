@@ -1,13 +1,13 @@
 const express = require('express');
 require('dotenv').config();
 const fs = require('fs');
-const readlineSync = require('readline-sync');
+// const readlineSync = require('readline-sync');
 
 async function app() {
     const app = express();
-    const net = require('net');
-    const http = require('http');
-    const https = require('https');
+    const net = require('net'); // nodejs tcp
+    const http = require('http'); // nodejs http
+    const https = require('https'); // nodejs https
     const tcpPort = process.env.TCP_PORT;
     const httpPort = process.env.HTTP_PORT;
     const httpsPort = process.env.HTTPS_PORT;
@@ -29,7 +29,7 @@ async function app() {
     const db = require('./database');
 
     db.sequelize.authenticate().then(() => {
-        console.log("Connected to the database!");
+        console.log("=> Connected to the database!");
     }).catch(err => {
         console.log("Cannot connect to the database!", err);
         process.exit(1);
@@ -55,8 +55,8 @@ async function app() {
             console.log("The number of currently connection is: " + count);
         });
 
-        var clients = [];
-        clients.push(socket);
+        // var clients = [];
+        // clients.push(socket);
         // console.log("clients: ", clients);
         // const data = readlineSync.question("Enter data to send: ");
         // clients[0].write(data);
