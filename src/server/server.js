@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const fs = require('fs');
 // const readlineSync = require('readline-sync');
+// const tcp = require('./tcp/client');
 
 async function app() {
     const app = express();
@@ -17,6 +18,7 @@ async function app() {
         key: privateKey,
         cert: certificate
     };
+    // const tcpClient = await tcp.client(); // tcp client test
     const tcpServer = net.createServer();
     const httpServer = http.createServer(app);
     const httpsServer = https.createServer(credentials, app);
@@ -28,12 +30,14 @@ async function app() {
 
     const db = require('./database');
 
+    // check connection is OK
     db.sequelize.authenticate().then(() => {
         console.log("=> Connected to the database!");
     }).catch(err => {
         console.log("Cannot connect to the database!", err);
         process.exit(1);
     });
+    // performs the necessary changes in the table to make it match the model
     db.sequelize.sync({alter: true});
 
     app.use(bodyParser.json()) // for parsing application/json
@@ -45,9 +49,10 @@ async function app() {
 
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
-        process.exit(1) //To exit with a 'failure' code
+        process.exit(1) // To exit with a 'failure' code
     });
 
+    // tcp server connection
     tcpServer.on('connection', function (socket) {
         const remoteAddress = socket.remoteAddress + ':' + socket.remotePort;
         console.log('server: new client connection is made %s', remoteAddress);
@@ -55,15 +60,9 @@ async function app() {
             console.log("The number of currently connection is: " + count);
         });
 
-        // var clients = [];
-        // clients.push(socket);
-        // console.log("clients: ", clients);
-        // const data = readlineSync.question("Enter data to send: ");
-        // clients[0].write(data);
-
         socket.on("data", function (d) {
             console.log('Data from %s: %s', remoteAddress, d);
-            socket.write("Hello "+ d);
+            // socket.write("Hello "+ d);
         });
 
         socket.once("close", function () {
