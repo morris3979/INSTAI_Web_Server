@@ -33,5 +33,5 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         timestamps: true,
     });
-        return Details;
-    };
+    return Details;
+};

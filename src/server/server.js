@@ -1,8 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const fs = require('fs');
-// const readlineSync = require('readline-sync');
-// const tcp = require('./tcp/client');
+const readlineSync = require('readline-sync');
 
 async function app() {
     const app = express();
@@ -18,21 +17,20 @@ async function app() {
         key: privateKey,
         cert: certificate
     };
-    // const tcpClient = await tcp.client(); // tcp client test
     const tcpServer = net.createServer();
     const httpServer = http.createServer(app);
     const httpsServer = https.createServer(credentials, app);
 
     const bodyParser = require('body-parser');
     const compression = require('compression');
-    const apiRouter = require('./routes/index'); //db routes
-    const pageRouter = require('./routes/api/page.routes'); //page routes
+    const apiRouter = require('./routes/index'); // db routes
+    const pageRouter = require('./routes/api/page.routes'); // page routes
 
     const db = require('./database');
 
     // check connection is OK
     db.sequelize.authenticate().then(() => {
-        console.log("=> Connected to the database!");
+        console.log("=> Database connection has been successfully!");
     }).catch(err => {
         console.log("Cannot connect to the database!", err);
         process.exit(1);
@@ -62,8 +60,9 @@ async function app() {
 
         socket.on("data", function (d) {
             console.log('Data from %s: %s', remoteAddress, d);
-            // socket.write("Hello "+ d);
         });
+
+        socket.write(readlineSync.question("Enter data to send: "));
 
         socket.once("close", function () {
             console.log("Connection from %s closed", remoteAddress);

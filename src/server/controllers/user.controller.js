@@ -101,7 +101,6 @@ exports.login = async(req, res) => {
   });
 }
 
-
 // Retrieve all User from the database.
 exports.findAll = (req, res) => {
   User.findAll({

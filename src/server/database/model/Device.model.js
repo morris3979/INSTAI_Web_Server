@@ -62,4 +62,4 @@ module.exports = (sequelize, Sequelize) => {
         Device.belongsTo(models.Group);
     };
     return Device;
-    };
+};
