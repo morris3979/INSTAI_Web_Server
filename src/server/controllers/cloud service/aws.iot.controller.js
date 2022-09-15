@@ -15,7 +15,7 @@ exports.publish = (topic, message) => {
     };
     iotData.publish(params, function(err, data){
         if(err){
-            // console.log("Error occurred : ", err, err.stack);
+            console.log("Error occurred : ", err, err.stack);
             return err;
         } else {
             // console.log("Data: ", data);

@@ -81,10 +81,9 @@ async function app() {
             if (!err) {
                 device
                     .on('message', function (topic, payload) {
-                        console.log(`Message incoming ${topic}:`, payload.toString());
+                        console.log(`Message incoming topic(${topic}):`, payload.toString());
                     });
             }
-            console.log(err)
         })
     });
 
