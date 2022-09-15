@@ -28,7 +28,7 @@ awsRouter.get("/s3/getFile/:folder/:files", async(req, res) => {
         //pipe the file to res
         fileToSend.pipe(res);
     } catch (error) {
-        res.send({error:"Server Error"});
+        res.send({error: "Server Error", error});
     }
 });
 
@@ -46,26 +46,24 @@ awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
 // AWS IOT MQTT publish message
 awsRouter.post("/iot/publish", async(req, res) => {
     const topic = req.query.topic;
-    const { model, version, updateState} = req.body;
+    const { msg } = req.body;
     const today = new Date();
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     const dateTime = date + ' ' + time;
-    const updateContent = {
-        model: model,
-        version: version,
-        updateState: updateState
+    const sendContent = {
+        trans_dir: 'send',
+        msg: msg
     }
     const IoTDevice = {
-        boardId: topic,
+        serialNumber: topic,
         device: "RaspberryPi",
         type: "OTADevice",
-        status: {...updateContent},
+        payload: {...sendContent},
         dateTime
     }
     try {
-        const response = await IotController.publish(topic, IoTDevice);
-        response.pipe(res);
+        return IotController.publish(topic, IoTDevice).pipe();
     } catch (callback) {
         res.send(callback);
     }

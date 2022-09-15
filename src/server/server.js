@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();
 const fs = require('fs');
 const readlineSync = require('readline-sync');
@@ -17,6 +18,14 @@ async function app() {
         key: privateKey,
         cert: certificate
     };
+    const corsOptions = {
+        origin: [
+          'http://www.example.com',
+          'http://localhost:8080',
+        ],
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+        allowedHeaders: ['Content-Type', 'Authorization'],
+    };
     const tcpServer = net.createServer();
     const httpServer = http.createServer(app);
     const httpsServer = https.createServer(credentials, app);
@@ -30,7 +39,7 @@ async function app() {
 
     // check connection is OK
     db.sequelize.authenticate().then(() => {
-        console.log("=> Database connection has been successfully!");
+        console.log("=> Database connected successfully!");
     }).catch(err => {
         console.log("Cannot connect to the database!", err);
         process.exit(1);
@@ -38,6 +47,7 @@ async function app() {
     // performs the necessary changes in the table to make it match the model
     db.sequelize.sync({alter: true});
 
+    app.use(cors(corsOptions));
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
     app.use(express.static('dist')); // serve frontend file

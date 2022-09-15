@@ -18,7 +18,7 @@ exports.publish = (topic, message) => {
             // console.log("Error occurred : ", err, err.stack);
             return err;
         } else {
-            // console.log("Connect to AWS IOT Success ...", data);
+            // console.log("Data: ", data);
             return data;
         }
     });
