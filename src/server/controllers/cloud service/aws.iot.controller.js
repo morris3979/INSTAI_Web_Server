@@ -23,3 +23,32 @@ exports.publish = (topic, message) => {
         }
     });
 };
+
+exports.receive = () => {
+    // aws iot mqtt subscribe
+    const awsIot = require('aws-iot-device-sdk');
+    const path = require('path');
+    const mqttBroker = 'a1pxy4ej19lukk-ats.iot.us-east-1.amazonaws.com';
+    const topic = '0x0001'
+
+    const device = awsIot.device({
+        host: mqttBroker,
+        clientId: 'lab321_carview',
+        keyPath: path.resolve(__dirname, '../../certs/private.pem.key'),
+        certPath: path.resolve(__dirname, '../../certs/certificate.pem.crt'),
+        caPath: path.resolve(__dirname, '../../certs/AmazonRootCA1.pem'),
+    });
+
+    device
+    .on('connect', function () {
+        console.log('=> Connecting to AWS IoT Core!');
+        device.subscribe(topic, function (err) {
+            if (!err) {
+                device
+                    .on('message', function (topic, payload) {
+                        console.log(`Message incoming topic(${topic}):`, payload.toString());
+                    });
+            }
+        })
+    });
+}
