@@ -57,9 +57,12 @@ exports.receive = () => {
                     const findSerialNumber = await Host.findOne({
                         where: { serialNumber: serialNumber },
                     });
+                    const findDeviceId = await Device.findOne({
+                        where: { deviceId: deviceId },
+                    });
 
                     // update host (RasPi) response
-                    if ((!deviceId) && (findSerialNumber)) {
+                    if (findSerialNumber && serialNumber && (!deviceId)) {
                         Host.update({
                             response: response
                         }, {
@@ -69,15 +72,15 @@ exports.receive = () => {
                         console.log('response: ', response);
                     }
 
-                    //  update device (PAG) message
-                    if (deviceId && findSerialNumber) {
+                    // update device (PAG) message
+                    if (findSerialNumber && serialNumber && findDeviceId && deviceId) {
                         Device.update({
                             message: deviceMessage
                         }, {
                             where: { deviceId: deviceId }
                         });
-                        console.log('serialNumber: ', serialNumber);
-                        console.log('response: ', response);
+                        console.log('deviceId: ', deviceId);
+                        console.log('message: ', deviceMessage);
                     }
 
                     console.log(`Message incoming topic(${topic}):`, messageJson);
