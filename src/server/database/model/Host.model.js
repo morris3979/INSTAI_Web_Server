@@ -1,14 +1,28 @@
 module.exports = (sequelize, Sequelize) => {
-    const Group = sequelize.define('Group', {
+    const Host = sequelize.define('Host', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true
         },
-        groupName: {
+        serialNumber: {
           type: Sequelize.STRING,
           allowNull: false,
+        },
+        response: {
+          type: Sequelize.JSON,
+          allowNull: true,
+        },
+        accessKey: {
+            type: Sequelize.STRING,
+            defaultValue: process.env.AWS_ACCESS_KEY_ID,
+            // defaultValue: process.env.ALIYUN_ACCESS_KEY_ID,
+        },
+        secretKey: {
+            type: Sequelize.STRING,
+            defaultValue: process.env.AWS_SECRET_ACCESS_KEY,
+            // defaultValue: process.env.ALIYUN_SECRET_ACCESS_KEY,
         },
         createdAt: {
             field: 'created_at',
@@ -30,8 +44,9 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
-    Group.associate = function (models) {
-        Group.hasMany(models.Device, {foreignKey: 'GroupId'});
+    Host.associate = function (models) {
+        Host.belongsTo(models.Project);
+        Host.hasMany(models.Device, {foreignKey: 'HostId'});
     };
-    return Group;
+    return Host;
 };

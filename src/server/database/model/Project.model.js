@@ -33,5 +33,8 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
+    Project.associate = function (models) {
+        Project.hasMany(models.Host, {foreignKey: 'ProjectId'});
+    };
     return Project;
 };

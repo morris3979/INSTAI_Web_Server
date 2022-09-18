@@ -10,6 +10,22 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
+        rawData: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        cleaned: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        labeled: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        trained: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
         image: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
@@ -33,5 +49,8 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         timestamps: true,
     });
+    Details.associate = function (models) {
+        Details.belongsTo(models.Event);
+    };
     return Details;
 };

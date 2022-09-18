@@ -1,5 +1,8 @@
 const AWS = require('aws-sdk');
 require('dotenv').config();
+const db = require('../../database');
+const Host = db.Host;
+const Device = db.Device;
 
 const iotData = new AWS.IotData({
     endpoint: process.env.AWS_IOT_ENDPOINT,
@@ -7,15 +10,17 @@ const iotData = new AWS.IotData({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
+// aws iot mqtt publish
 exports.publish = (topic, message) => {
     const params = {
         topic: topic,
         payload: JSON.stringify({message}),
         qos: 1
     };
+
     iotData.publish(params, function(err, data){
         if(err){
-            console.log("Error occurred : ", err, err.stack);
+            console.log("Error occurred: ", err, err.stack);
             return err;
         } else {
             // console.log("Data: ", data);
@@ -24,15 +29,13 @@ exports.publish = (topic, message) => {
     });
 };
 
+// aws iot mqtt subscribe
 exports.receive = () => {
-    // aws iot mqtt subscribe
     const awsIot = require('aws-iot-device-sdk');
     const path = require('path');
-    const mqttBroker = 'a1pxy4ej19lukk-ats.iot.us-east-1.amazonaws.com';
-    const topic = '0x0001'
-
+    const topic = 'lobby';
     const device = awsIot.device({
-        host: mqttBroker,
+        host: process.env.AWS_IOT_ENDPOINT,
         clientId: 'lab321_carview',
         keyPath: path.resolve(__dirname, '../../certs/private.pem.key'),
         certPath: path.resolve(__dirname, '../../certs/certificate.pem.crt'),
@@ -45,9 +48,40 @@ exports.receive = () => {
         device.subscribe(topic, function (err) {
             if (!err) {
                 device
-                    .on('message', function (topic, payload) {
-                        console.log(`Message incoming topic(${topic}):`, payload.toString());
+                .on('message', async function (topic, message) {
+                    const messageJson = JSON.parse(message.toString()).message;
+                    const serialNumber = messageJson.serialNumber;
+                    const response = messageJson.response;
+                    const deviceId = response.deviceId;
+                    const deviceMessage = response.message;
+                    const findSerialNumber = await Host.findOne({
+                        where: { serialNumber: serialNumber },
                     });
+
+                    // update host (RasPi) response
+                    if ((!deviceId) && (findSerialNumber)) {
+                        Host.update({
+                            response: response
+                        }, {
+                            where: { serialNumber: serialNumber }
+                        });
+                        console.log('serialNumber: ', serialNumber);
+                        console.log('response: ', response);
+                    }
+
+                    //  update device (PAG) message
+                    if (deviceId && findSerialNumber) {
+                        Device.update({
+                            message: deviceMessage
+                        }, {
+                            where: { deviceId: deviceId }
+                        });
+                        console.log('serialNumber: ', serialNumber);
+                        console.log('response: ', response);
+                    }
+
+                    console.log(`Message incoming topic(${topic}):`, messageJson);
+                });
             }
         })
     });

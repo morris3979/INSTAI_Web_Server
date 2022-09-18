@@ -29,5 +29,9 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         timestamps: true,
     });
+    Event.associate = function (models) {
+        Event.belongsTo(models.Device);
+        Event.hasMany(models.Details, {foreignKey: 'EventId'});
+    };
     return Event;
 };

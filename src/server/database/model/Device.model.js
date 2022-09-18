@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        boardId: {
+        deviceId: {
             type: Sequelize.STRING,
             allowNull: false,
         },
@@ -21,22 +21,13 @@ module.exports = (sequelize, Sequelize) => {
         mentorship: {
             type: Sequelize.BOOLEAN,
         },
-        accessKey: {
-            type: Sequelize.STRING,
-            defaultValue: process.env.AWS_ACCESS_KEY_ID,
-            // defaultValue: process.env.ALIYUN_ACCESS_KEY_ID,
-        },
-        secretKey: {
-            type: Sequelize.STRING,
-            defaultValue: process.env.AWS_SECRET_ACCESS_KEY,
-            // defaultValue: process.env.ALIYUN_SECRET_ACCESS_KEY,
-        },
         updateState: {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         },
         message: {
-            type: Sequelize.STRING,
+            type: Sequelize.JSON,
+            allowNull: true,
         },
         createdAt: {
             field: 'created_at',
@@ -59,7 +50,8 @@ module.exports = (sequelize, Sequelize) => {
         paranoid: true
     });
     Device.associate = function (models) {
-        Device.belongsTo(models.Group);
+        Device.belongsTo(models.Host);
+        Device.hasMany(models.Event, {foreignKey: 'DeviceId'});
     };
     return Device;
 };

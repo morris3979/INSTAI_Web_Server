@@ -3,19 +3,19 @@ const Device = db.Device;
 
 // Create and Save a new Device
 exports.create = (req, res) => {
-    const {boardId, deviceName, description} = req.body;
+    const {deviceId, deviceName, description} = req.body;
 
     // Validate request
-    if (!(boardId && deviceName)) {
+    if (!(deviceId && deviceName)) {
         res.status(400).send({
-            message: "boardId and deviceName can not be empty!"
+            message: "deviceId and deviceName can not be empty!"
         });
         return;
     }
 
     // Create a Device
     const device = {
-        boardId: boardId,
+        deviceId: deviceId,
         deviceName: deviceName,
         description: description
     };
@@ -40,7 +40,7 @@ exports.findAll = (req, res) => {
             model: db.Model,
         }],
         attributes: {
-            exclude: ['accessKey', 'secretKey', 'createdAt', 'updatedAt', 'deletedAt']
+            exclude: ['createdAt', 'updatedAt', 'deletedAt']
         }
     })
     .then(data => {
