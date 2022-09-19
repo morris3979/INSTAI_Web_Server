@@ -14,12 +14,15 @@ module.exports = (sequelize, Sequelize) => {
         },
         deviceName: {
             type: Sequelize.STRING,
+            allowNull: true,
         },
         description: {
             type: Sequelize.STRING,
+            defaultValue: 'Data collection'
         },
         mentorship: {
             type: Sequelize.BOOLEAN,
+            defaultValue: false
         },
         updateState: {
             type: Sequelize.BOOLEAN,

@@ -1,13 +1,23 @@
-const AWS = require('aws-sdk');
 require('dotenv').config();
+const path = require('path');
 const db = require('../../database');
 const Host = db.Host;
 const Device = db.Device;
 
+const AWS = require('aws-sdk');
 const iotData = new AWS.IotData({
     endpoint: process.env.AWS_IOT_ENDPOINT,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
+const awsIot = require('aws-iot-device-sdk');
+const device = awsIot.device({
+    host: process.env.AWS_IOT_ENDPOINT,
+    clientId: 'lab321_carview',
+    keyPath: path.resolve(__dirname, '../../certs/private.pem.key'),
+    certPath: path.resolve(__dirname, '../../certs/certificate.pem.crt'),
+    caPath: path.resolve(__dirname, '../../certs/AmazonRootCA1.pem'),
 });
 
 // aws iot mqtt publish
@@ -31,16 +41,7 @@ exports.publish = (topic, message) => {
 
 // aws iot mqtt subscribe
 exports.receive = () => {
-    const awsIot = require('aws-iot-device-sdk');
-    const path = require('path');
     const topic = 'lobby';
-    const device = awsIot.device({
-        host: process.env.AWS_IOT_ENDPOINT,
-        clientId: 'lab321_carview',
-        keyPath: path.resolve(__dirname, '../../certs/private.pem.key'),
-        certPath: path.resolve(__dirname, '../../certs/certificate.pem.crt'),
-        caPath: path.resolve(__dirname, '../../certs/AmazonRootCA1.pem'),
-    });
 
     device
     .on('connect', function () {
@@ -57,35 +58,35 @@ exports.receive = () => {
                     const findSerialNumber = await Host.findOne({
                         where: { serialNumber: serialNumber },
                     });
-                    const findDeviceId = await Device.findOne({
-                        where: { deviceId: deviceId },
-                    });
 
-                    // update host (RasPi) response
-                    if (findSerialNumber && serialNumber && (!deviceId)) {
+                    console.log(`Message incoming topic(${topic}):`, messageJson);
+
+                    // update host (RaspberryPi) response
+                    if ((!deviceId) && findSerialNumber && serialNumber) {
                         Host.update({
                             response: response
                         }, {
                             where: { serialNumber: serialNumber }
                         });
-                        console.log('serialNumber: ', serialNumber);
-                        console.log('response: ', response);
+                        console.log('host updated!');
+                        // console.log('serialNumber: ', serialNumber);
+                        // console.log('response: ', response);
                     }
 
-                    // update device (PAG) message
-                    if (findSerialNumber && serialNumber && findDeviceId && deviceId) {
+                    // update device (PAG7681) message
+                    if (deviceId && findSerialNumber && serialNumber) {
                         Device.update({
                             message: deviceMessage
                         }, {
                             where: { deviceId: deviceId }
                         });
-                        console.log('deviceId: ', deviceId);
-                        console.log('message: ', deviceMessage);
+                        console.log('device updated!');
+                        // console.log('deviceId: ', deviceId);
+                        // console.log('message: ', deviceMessage);
                     }
-
-                    console.log(`Message incoming topic(${topic}):`, messageJson);
                 });
             }
+            console.log('   ...err: ', err.message);
         })
     });
 }
