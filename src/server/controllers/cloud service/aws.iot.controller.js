@@ -86,7 +86,7 @@ exports.receive = () => {
                     }
                 });
             }
-            console.log('   ...err: ', err.message);
+            console.log('   ...err: ', err);
         })
     });
 }
