@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
             defaultValue: false
         },
         message: {
-            type: Sequelize.JSON,
+            type: Sequelize.STRING,
             allowNull: true,
         },
         createdAt: {
