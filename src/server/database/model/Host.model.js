@@ -10,6 +10,14 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        device: {
+          type: Sequelize.STRING,
+          defaultValue: 'Raspberry Pi',
+        },
+        type: {
+          type: Sequelize.STRING,
+          defaultValue: 'OTADevice',
+        },
         response: {
           type: Sequelize.JSON,
           allowNull: true,

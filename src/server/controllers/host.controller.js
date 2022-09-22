@@ -55,7 +55,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-
 // Update a Host by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
@@ -81,7 +80,6 @@ exports.update = (req, res) => {
       });
 };
 
-
 // Delete a Host with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
@@ -105,4 +103,4 @@ exports.delete = (req, res) => {
           message: "Could not delete Host with id=" + id
         });
       });
-  };
+};

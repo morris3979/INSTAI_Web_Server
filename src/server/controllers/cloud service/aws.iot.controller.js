@@ -69,8 +69,6 @@ exports.receive = () => {
                             where: { serialNumber: serialNumber }
                         });
                         console.log('-- host updated! --');
-                        // console.log('serialNumber: ', serialNumber);
-                        // console.log('response: ', response);
                     }
 
                     // update device (PAG7681) message
@@ -82,8 +80,6 @@ exports.receive = () => {
                             where: { deviceId: deviceId }
                         });
                         console.log('-- device updated! --');
-                        // console.log('deviceId: ', deviceId);
-                        // console.log('message: ', deviceMessage);
                     }
                 });
             }

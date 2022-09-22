@@ -10,9 +10,9 @@ hostRouter.post("/", Host.create);
 hostRouter.get('/', Host.findAll);
 
 // Update a Host with id
-// hostRouter.patch("/:id", Host.update);
+hostRouter.patch("/:id", Host.update);
 
 // Delete a Host with id
-// hostRouter.delete("/:id", Host.delete);
+hostRouter.delete("/:id", Host.delete);
 
 module.exports = [ hostRouter ];

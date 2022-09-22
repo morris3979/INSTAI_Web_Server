@@ -89,6 +89,7 @@ exports.login = async(req, res) => {
     })
 
     res.status(200).send({
+      username: username,
       admin: user.admin,
       authA: user.authA,
       authB: user.authB,
@@ -108,7 +109,7 @@ exports.findAll = (req, res) => {
           ['createdAt', 'DESC'],
       ],
       attributes: {
-          exclude: ['password', 'token']
+          exclude: ['password', 'token', 'createdAt', 'updatedAt', 'deletedAt']
       }
     })
     .then(data => {

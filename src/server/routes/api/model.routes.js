@@ -13,6 +13,6 @@ modelRouter.get('/', Model.findAll);
 // modelRouter.patch("/:id", Model.update);
 
 // Delete a Model with id
-// modelRouter.delete("/:id", Model.delete);
+modelRouter.delete("/:id", Model.delete);
 
 module.exports = [ modelRouter ];

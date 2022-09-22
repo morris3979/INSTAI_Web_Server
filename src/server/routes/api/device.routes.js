@@ -13,6 +13,6 @@ deviceRouter.get('/', Device.findAll);
 deviceRouter.patch("/:id", Device.update);
 
 // Delete a Device with id
-// deviceRouter.delete("/:id", Device.delete);
+deviceRouter.delete("/:id", Device.delete);
 
 module.exports = [ deviceRouter ];
