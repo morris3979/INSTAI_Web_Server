@@ -38,10 +38,11 @@ class ModelVersionTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
-          <Column title='板號' dataIndex='boardId' align='center' />
-          <Column title='車號' dataIndex='plateNumber' align='center' />
-          <Column title='模型' dataIndex='modelName' align='center' />
-          <Column title='版本' dataIndex='version' align='center' />
+          <Column title='設備號' dataIndex='deviceId' align='center' />
+          <Column title='設備名' dataIndex='deviceName' align='center' />
+          <Column title='描述' dataIndex='description' align='center' />
+          <Column title='指令' dataIndex='command' align='center' />
+          <Column title='訊息' dataIndex='message' align='center' />
           <Column title='操作' render={this.buttonGroup} align='center' />
         </Table>
         <Modal
@@ -51,21 +52,35 @@ class ModelVersionTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='板號' name='boardId' rules={[this.rule('板號')]}>
+            <Item label='設備號' name='deviceId' rules={[this.rule('設備號')]}>
               <Input
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.boardId)}`
+                  `${this.defaultValue(this.props.whichModal.deviceId)}`
                 }
               />
             </Item>
-            <Item label='車號' name='plateNumber' rules={[this.rule('車號')]}>
+            <Item label='設備名' name='deviceName' rules={[this.rule('設備名')]}>
               <Input
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.plateNumber)}`
+                  `${this.defaultValue(this.props.whichModal.deviceName)}`
                 }
               />
             </Item>
-            <Item label='模型' name='modelName' rules={[this.rule('模型')]}>
+            <Item label='描述' name='description' rules={[this.rule('描述')]}>
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.description)}`
+                }
+              />
+            </Item>
+            <Item label='指令' name='command' rules={[this.rule('指令')]}>
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.command)}`
+                }
+              />
+            </Item>
+            <Item label='選擇更新模型' name='modelName' rules={[this.rule('模型')]}>
               <Select
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.modelName)}`
@@ -76,10 +91,10 @@ class ModelVersionTable extends Component {
                 <Option value='C'>C</Option>
               </Select>
             </Item>
-            <Item label='版本' name='version' rules={[this.rule('版本')]}>
+            <Item label='選擇更新版本' name='modelVersion' rules={[this.rule('版本')]}>
               <Select
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.version)}`
+                  `${this.defaultValue(this.props.whichModal.modelVersion)}`
                 }
               >
                 <Option value='1.0'>1.0</Option>

@@ -197,7 +197,7 @@ export const GetModelVersionTableData = () => {
       const action = TableStatus(true)
       dispatch(action)
       try {
-        const response = await axios.get('/api/carnumber')
+        const response = await axios.get('/api/device')
         console.log(response.data)
         if (Object.keys(response.data).length > 0) {
           const action = DeliverData(response.data, Get_Model_Version_Table)
@@ -223,7 +223,7 @@ export const DeleteModelVersionTableData = (id) => {
     async (dispatch) => {
       message.loading('刪除中，請稍後...', 0)
       try {
-        await axios.delete(`/api/carnumber/${id}`)
+        await axios.delete(`/api/device/${id}`)
         message.destroy()
         Modal.success({
           title: '刪除成功',
@@ -245,7 +245,7 @@ export const PatchModelVersionTableData = (id, data) => {
     async (dispatch) => {
       message.loading('修改中，請稍後...', 0)
       try {
-        await axios.patch(`/api/carnumber/${id}`, data)
+        await axios.patch(`/api/device/${id}`, data)
         message.destroy()
         Modal.success({
           title: '修改成功',
@@ -267,7 +267,7 @@ export const PostModelVersionTableData = (data) => {
     async (dispatch) => {
       message.loading('新增中，請稍後...', 0)
       try {
-        const response = await axios.post('/api/carnumber', data)
+        const response = await axios.post('/api/device', data)
         message.destroy()
         if (response.data == 'Already Exist') {
           Modal.warning({
@@ -292,18 +292,27 @@ export const PostModelVersionTableData = (data) => {
 
 export const PostMQTTTest = (data) => {
   const sendData = {
-    'model': data.modelName,
-    'version': data.version,
-    'updateState': 1
+    'deviceId': data.deviceId,
+    'command': data.command
   }
   return (
-    async () => {
+    async (dispatch) => {
       try {
-        await axios.post('/api/aws/iot/publish', sendData, { params: { topic: data.boardId } })
+        await axios.post('/api/aws/iot/publish', sendData, {
+          params: {
+            topic: '0000000039aed1d2',
+            device: 'RaspberryPi',
+            type: 'OTADevice'
+          }
+        })
         Modal.success(
           {
-            title: `測試封包已傳送至板號: ${data.boardId}`,
-            content: `傳送內容: ${JSON.stringify(sendData, null, 2)}`
+            title: `封包已傳送至板號: ${data.deviceId}`,
+            content: `傳送內容: ${data.command}`,
+            onOk: () => {
+              const action = GetModelVersionTableData()
+              dispatch(action)
+            }
           }
         )
       } catch (error) {
