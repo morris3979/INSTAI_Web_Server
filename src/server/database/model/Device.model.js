@@ -24,9 +24,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false
         },
-        updateState: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false
+        command: {
+            type: Sequelize.STRING,
+            allowNull: true,
         },
         message: {
             type: Sequelize.STRING,
