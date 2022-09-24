@@ -10,39 +10,38 @@ import {
   DeploymentUnitOutlined
 } from '@ant-design/icons'
 import {
-  GetDeviceTableData, SetWhichModal, DeleteDeviceTableData,
-  PatchDeviceTableData, PostDeviceTableData, PostDeviceMQTT
+    GetHostTableData, SetWhichModal, DeleteHostTableData,
+    PatchHostTableData, PostHostTableData, PostHostMQTT
 } from '../../store/actionCreater'
 
 const { Column } = Table
 const { Item } = Form
-const { Option } = Select
 
 const convertedValues = {}
 
-class DeviceTable extends Component {
+class HostTable extends Component {
   constructor(props) {
     super(props)
     this.state = { isModalVisible: false }
   }
 
   componentDidMount() {
-    this.props.getDeviceTableData()
+    this.props.getHostTableData()
   }
 
   render() {
     return (
       <Fragment>
         <Table
-          dataSource={this.props.deviceTableData}
+          dataSource={this.props.hostTableData}
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
-          <Column title='設備代號' dataIndex='deviceId' align='center' />
-          <Column title='設備名稱' dataIndex='deviceName' align='center' />
-          <Column title='設備描述' dataIndex='description' align='center' />
+          <Column title='主機代號' dataIndex='serialNumber' align='center' />
+          <Column title='主機設備' dataIndex='device' align='center' />
+          <Column title='主機類型' dataIndex='type' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
-          <Column title='訊息' dataIndex='message' align='center' />
+          <Column title='訊息' dataIndex='response' align='center' />
           <Column title='操作' render={this.buttonGroup} align='center' />
         </Table>
         <Modal
@@ -52,24 +51,24 @@ class DeviceTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='請輸入設備代號' name='deviceId' rules={[this.rule('設備代號')]}>
+            <Item label='請輸入主機代號' name='serialNumber' rules={[this.rule('主機代號')]}>
               <Input
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.deviceId)}`
+                  `${this.defaultValue(this.props.whichModal.serialNumber)}`
                 }
               />
             </Item>
-            <Item label='請輸入設備名稱' name='deviceName' rules={[this.rule('設備名稱')]}>
+            <Item label='請輸入主機設備' name='device' rules={[this.rule('主機設備')]}>
               <Input
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.deviceName)}`
+                  `${this.defaultValue(this.props.whichModal.device)}`
                 }
               />
             </Item>
-            <Item label='請輸入設備描述' name='description' rules={[this.rule('設備描述')]}>
+            <Item label='請輸入主機類型' name='type' rules={[this.rule('主機類型')]}>
               <Input
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.description)}`
+                  `${this.defaultValue(this.props.whichModal.type)}`
                 }
               />
             </Item>
@@ -79,28 +78,6 @@ class DeviceTable extends Component {
                   `${this.defaultValue(this.props.whichModal.command)}`
                 }
               />
-            </Item>
-            <Item label='請選擇更新模型' name='modelName' rules={[this.rule('模型')]}>
-              <Select
-                defaultValue={
-                  `${this.defaultValue(this.props.whichModal.modelName)}`
-                }
-              >
-                <Option value='A'>A</Option>
-                <Option value='B'>B</Option>
-                <Option value='C'>C</Option>
-              </Select>
-            </Item>
-            <Item label='請選擇更新版本' name='modelVersion' rules={[this.rule('版本')]}>
-              <Select
-                defaultValue={
-                  `${this.defaultValue(this.props.whichModal.modelVersion)}`
-                }
-              >
-                <Option value='1.0.0'>1.0.0</Option>
-                <Option value='2.0.0'>2.0.0</Option>
-                <Option value='3.0.0'>3.0.0</Option>
-              </Select>
             </Item>
             <Item>
               <Button htmlType='submit'>
@@ -152,9 +129,9 @@ class DeviceTable extends Component {
       convertedValues[String(key)] = values[key]
     })
     if (this.props.whichModal.id > 0) {
-      this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
+      this.props.patchHostTableData(this.props.whichModal.id, convertedValues)
     } else {
-      this.props.postDeviceTableData(convertedValues)
+      this.props.postHostTableData(convertedValues)
     }
   }
 
@@ -162,7 +139,7 @@ class DeviceTable extends Component {
     return (
       <Space size='large'>
         <Button
-          onClick={() => { this.props.PostDeviceMQTT(text) }}
+          onClick={() => { this.props.PostHostMQTT(text) }}
           icon={<DeploymentUnitOutlined />}
         />
         <Button
@@ -171,7 +148,7 @@ class DeviceTable extends Component {
         />
         <Popconfirm
           title='確定刪除?'
-          onConfirm={() => { this.props.deleteDeviceTableData(text.id) }}
+          onConfirm={() => { this.props.deleteHostTableData(text.id) }}
         >
           <Button icon={<DeleteOutlined />} />
         </Popconfirm>
@@ -183,7 +160,7 @@ class DeviceTable extends Component {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    deviceTableData: state.deviceTableData,
+    hostTableData: state.hostTableData,
     tableStatus: state.tableStatus,
     whichModal: state.whichModal
   }
@@ -196,27 +173,27 @@ const mapDispatchToProps = (dispatch) => {
       const action = SetWhichModal(text)
       dispatch(action)
     },
-    getDeviceTableData() {
-      const action = GetDeviceTableData()
+    getHostTableData() {
+      const action = GetHostTableData()
       dispatch(action)
     },
-    deleteDeviceTableData(id) {
-      const action = DeleteDeviceTableData(id)
+    deleteHostTableData(id) {
+      const action = DeleteHostTableData(id)
       dispatch(action)
     },
-    patchDeviceTableData(id, data) {
-      const action = PatchDeviceTableData(id, data)
+    patchHostTableData(id, data) {
+      const action = PatchHostTableData(id, data)
       dispatch(action)
     },
-    postDeviceTableData(data) {
-      const action = PostDeviceTableData(data)
+    postHostTableData(data) {
+      const action = PostHostTableData(data)
       dispatch(action)
     },
-    PostDeviceMQTT(data) {
-      const action = PostDeviceMQTT(data)
+    PostHostMQTT(data) {
+      const action = PostHostMQTT(data)
       dispatch(action)
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeviceTable)
+export default connect(mapStateToProps, mapDispatchToProps)(HostTable)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { message, Modal } from 'antd'
 import {
-  Get_Device_Table, Get_Project_Table, Table_Status, Map_Position, Status_Table,
+  Get_Device_Table, Get_Host_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
   Login_Information, Account_Information, Logout_Information
 } from './actionType'
@@ -191,6 +191,136 @@ export const DeleteAccountTableData = (data) => {
   )
 }
 
+export const GetHostTableData = () => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get('/api/host')
+        console.log(response.data)
+        if (Object.keys(response.data).length > 0) {
+          const action = DeliverData(response.data, Get_Host_Table)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
+      } catch (error) {
+        Modal.error({
+          title: `${error}`,
+          content: '請重新整理來獲取資料'
+        })
+      } finally {
+        const action = TableStatus(false)
+        dispatch(action)
+      }
+    }
+  )
+}
+
+export const DeleteHostTableData = (id) => {
+  return (
+    async (dispatch) => {
+      message.loading('刪除中，請稍後...', 0)
+      try {
+        await axios.delete(`/api/host/${id}`)
+        message.destroy()
+        Modal.success({
+          title: '刪除成功',
+          onOk: () => {
+            const action = GetHostTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const PatchHostTableData = (id, data) => {
+  return (
+    async (dispatch) => {
+      message.loading('修改中，請稍後...', 0)
+      try {
+        await axios.patch(`/api/host/${id}`, data)
+        message.destroy()
+        Modal.success({
+          title: '修改成功',
+          onOk: () => {
+            const action = GetHostTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const PostHostTableData = (data) => {
+  return (
+    async (dispatch) => {
+      message.loading('新增中，請稍後...', 0)
+      try {
+        const response = await axios.post('/api/host', data)
+        message.destroy()
+        if (response.data == 'Already Exist') {
+          Modal.warning({
+            title: '資料已存在'
+          })
+        } else {
+          Modal.success({
+            title: '新增成功',
+            onOk: () => {
+              const action = GetDeviceTableData()
+              dispatch(action)
+            }
+          })
+        }
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const PostHostMQTT = (data) => {
+  const sendData = {
+    'command': data.command
+  }
+  return (
+    async (dispatch) => {
+      try {
+        await axios.post('/api/aws/iot/publish', sendData, {
+          params: {
+            topic: data.serialNumber,
+            device: data.device,
+            type:  data.type
+          }
+        })
+        Modal.success(
+          {
+            title: `封包已傳送至主機: ${data.serialNumber}`,
+            content: `傳送內容: ${data.command}`,
+            onOk: () => {
+              const action = GetDeviceTableData()
+              dispatch(action)
+            }
+          }
+        )
+      } catch (error) {
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const GetDeviceTableData = () => {
   return (
     async (dispatch) => {
@@ -290,7 +420,7 @@ export const PostDeviceTableData = (data) => {
   )
 }
 
-export const PostMQTTTest = (data) => {
+export const PostDeviceMQTT = (data) => {
   const sendData = {
     'deviceId': data.deviceId,
     'command': data.command

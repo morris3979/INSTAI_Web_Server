@@ -18,6 +18,10 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
           defaultValue: 'OTADevice',
         },
+        command: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
         response: {
           type: Sequelize.JSON,
           allowNull: true,

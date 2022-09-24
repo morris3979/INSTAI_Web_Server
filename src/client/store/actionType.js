@@ -1,4 +1,5 @@
 export const Table_Status = 'table_status'
+export const Get_Host_Table = 'get_host_table'
 export const Get_Device_Table = 'get_device_table'
 export const Map_Position = 'map_position'
 export const Status_Table = 'status_table'

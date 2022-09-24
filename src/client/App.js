@@ -7,6 +7,7 @@ import { LogoutData } from './store/actionCreater'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
+const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
 const ModelAPage = lazy(() => import('./page/modelAPage'))
 const ModelBPage = lazy(() => import('./page/modelBPage'))
@@ -53,6 +54,11 @@ const App = (props) => {
               </Item>
             </SubMenu>
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin}>
+              <Item key='/host' disabled={!loginInformation.admin}>
+                <Link to='/host'>
+                  主機配置
+                </Link>
+              </Item>
               <Item key='/device' disabled={!loginInformation.admin}>
                 <Link to='/device'>
                   設備配置
@@ -90,6 +96,7 @@ const App = (props) => {
                 <Route path='/modelA' element={<ModelAPage />} />
                 <Route path='/modelB' element={<ModelBPage />} />
                 <Route path='/modelC' element={<ModelCPage />} />
+                <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
