@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Form, Input, Button, Divider, Typography } from 'antd'
+import { Form, Input, Button, Divider, Typography, Col } from 'antd'
 import { LoginFormData } from '../../store/actionCreater'
 
 import {LoginOutlined} from '@ant-design/icons'
@@ -34,9 +34,9 @@ const LoginForm = (props) => {
           <Password />
         </Item>
         <Item>
-          <Button htmlType='submit'>
-            登入
-          </Button>
+            <Button htmlType='submit'>
+              確認
+            </Button>
         </Item>
       </Form>
     </Fragment>

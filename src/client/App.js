@@ -18,6 +18,7 @@ const MapPage = lazy(() => import('./page/mapPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
+const modelPage = lazy(() => import('./page/modelPage'))
 const ModelAPage = lazy(() => import('./page/modelAPage'))
 const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
@@ -68,7 +69,7 @@ const App = (props) => {
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
               <Item key='/project' disabled={!loginInformation.admin}>
                 <Link to='/project'>
-                  專案配置
+                  專案管理
                 </Link>
               </Item>
               <Item key='/host' disabled={!loginInformation.admin}>
@@ -79,6 +80,11 @@ const App = (props) => {
               <Item key='/device' disabled={!loginInformation.admin}>
                 <Link to='/device'>
                   設備配置
+                </Link>
+              </Item>
+              <Item key='/model' disabled={!loginInformation.admin}>
+                <Link to='/model'>
+                  模型管理
                 </Link>
               </Item>
               <Item key='/account' disabled={!loginInformation.admin}>
@@ -117,6 +123,7 @@ const App = (props) => {
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />
+                <Route path='/model' element={<modelPage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
                 <Route path='/test' element={<Test />} />
