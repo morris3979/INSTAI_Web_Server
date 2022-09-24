@@ -1,5 +1,5 @@
 import {
-  Table_Status, Get_Model_Version_Table, Map_Position, Status_Table,
+  Table_Status, Get_Project_Table, Get_Device_Table, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
   Login_Information, Account_Information, Logout_Information
 } from './actionType'
@@ -37,7 +37,11 @@ const Reducer = (state = defaultState, action) => {
       newState.accountData = action.value
       return newState
     }
-    case Get_Model_Version_Table: {
+    case Get_Project_Table: {
+      newState.projectTableData = action.value
+      return newState
+    }
+    case Get_Device_Table: {
       newState.deviceTableData = action.value
       return newState
     }

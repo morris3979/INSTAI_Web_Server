@@ -18,6 +18,14 @@ pageRouter.get("/modelC", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
+pageRouter.get("/project", async (req, res) => {
+    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+});
+
+pageRouter.get("/host", async (req, res) => {
+    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+});
+
 pageRouter.get("/device", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
@@ -28,6 +36,12 @@ pageRouter.get("/resource", async (req, res) => {
 
 pageRouter.get("/account", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+});
+
+pageRouter.get("/event/:displayName",
+async (req, res) => {
+    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+    return;
 });
 
 module.exports = pageRouter;

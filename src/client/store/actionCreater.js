@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { message, Modal } from 'antd'
 import {
-  Get_Model_Version_Table, Table_Status, Map_Position, Status_Table,
+  Get_Device_Table, Get_Project_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
   Login_Information, Account_Information, Logout_Information
 } from './actionType'
@@ -200,7 +200,7 @@ export const GetDeviceTableData = () => {
         const response = await axios.get('/api/device')
         console.log(response.data)
         if (Object.keys(response.data).length > 0) {
-          const action = DeliverData(response.data, Get_Model_Version_Table)
+          const action = DeliverData(response.data, Get_Device_Table)
           dispatch(action)
         } else {
           throw '資料獲取失敗'
