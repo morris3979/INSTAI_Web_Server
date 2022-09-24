@@ -15,8 +15,7 @@ const LoginForm = (props) => {
   return (
     <Fragment>
       <Title>
-        <LoginOutlined />
-        帳號登入
+        <LoginOutlined /> 登入
       </Title>
       <Divider />
       <Form size='large' layout='vertical' onFinish={onFinish}>
