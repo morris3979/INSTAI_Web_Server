@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { message, Modal } from 'antd'
 import {
-  Get_Device_Table, Get_Host_Table, Table_Status, Map_Position, Status_Table,
+  Get_Project_Table, Get_Host_Table, Get_Device_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
   Login_Information, Account_Information, Logout_Information
 } from './actionType'
@@ -182,6 +182,105 @@ export const DeleteAccountTableData = (data) => {
           })
         } else {
           throw '權限管理員帳號無法刪除'
+        }
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const GetProjectTableData = () => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get('/api/project')
+        console.log(response.data)
+        if (Object.keys(response.data).length > 0) {
+          const action = DeliverData(response.data, Get_Project_Table)
+          dispatch(action)
+        } else {
+          throw '資料獲取失敗'
+        }
+      } catch (error) {
+        Modal.error({
+          title: `${error}`,
+          content: '請重新整理來獲取資料'
+        })
+      } finally {
+        const action = TableStatus(false)
+        dispatch(action)
+      }
+    }
+  )
+}
+
+export const DeleteProjectTableData = (id) => {
+  return (
+    async (dispatch) => {
+      message.loading('刪除中，請稍後...', 0)
+      try {
+        await axios.delete(`/api/project/${id}`)
+        message.destroy()
+        Modal.success({
+          title: '刪除成功',
+          onOk: () => {
+            const action = GetProjectTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const PatchProjectTableData = (id, data) => {
+  return (
+    async (dispatch) => {
+      message.loading('修改中，請稍後...', 0)
+      try {
+        await axios.patch(`/api/project/${id}`, data)
+        message.destroy()
+        Modal.success({
+          title: '修改成功',
+          onOk: () => {
+            const action = GetProjectTableData()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
+export const PostProjectTableData = (data) => {
+  return (
+    async (dispatch) => {
+      message.loading('新增中，請稍後...', 0)
+      try {
+        const response = await axios.post('/api/project', data)
+        message.destroy()
+        if (response.data == 'Already Exist') {
+          Modal.warning({
+            title: '資料已存在'
+          })
+        } else {
+          Modal.success({
+            title: '新增成功',
+            onOk: () => {
+              const action = GetProjectTableData()
+              dispatch(action)
+            }
+          })
         }
       } catch (error) {
         message.destroy()
