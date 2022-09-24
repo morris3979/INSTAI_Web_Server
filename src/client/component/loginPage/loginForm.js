@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Form, Input, Button, Divider, Typography } from 'antd'
 import { LoginFormData } from '../../store/actionCreater'
 
+import {LoginOutlined} from '@ant-design/icons'
+
 const { Item } = Form
 const { Password } = Input
 const { Title } = Typography
@@ -13,6 +15,7 @@ const LoginForm = (props) => {
   return (
     <Fragment>
       <Title>
+        <LoginOutlined />
         帳號登入
       </Title>
       <Divider />

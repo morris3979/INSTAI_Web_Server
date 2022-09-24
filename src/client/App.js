@@ -4,6 +4,14 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
 import { LogoutData } from './store/actionCreater'
+import {
+  AppstoreOutlined,
+  EnvironmentOutlined,
+  SettingOutlined,
+  LinkOutlined,
+  LogoutOutlined,
+  ToolOutlined
+} from '@ant-design/icons'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
@@ -32,12 +40,12 @@ const App = (props) => {
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint='md' collapsedWidth='0'>
           <Menu theme='dark' selectedKeys={[]} mode='inline'>
-            <Item key='/map' disabled={!loginInformation.admin}>
+            <Item key='/map' disabled={!loginInformation.admin} icon={<EnvironmentOutlined />}>
               <Link to='/map'>
                 地圖資訊
               </Link>
             </Item>
-            <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin}>
+            <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
               <Item key={props}>
                 <Link to='/event/:project'></Link>
               </Item>
@@ -57,7 +65,7 @@ const App = (props) => {
                 </Link>
               </Item> */}
             </SubMenu>
-            <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin}>
+            <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
               <Item key='/project' disabled={!loginInformation.admin}>
                 <Link to='/project'>
                   專案配置
@@ -79,17 +87,17 @@ const App = (props) => {
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/resource' disabled={!loginInformation.admin}>
+            <Item key='/resource' disabled={!loginInformation.admin} icon={<LinkOutlined />}>
               <Link to='/resource'>
                 關於
               </Link>
             </Item>
-            <Item key='/logout' disabled={!loginInformation.admin} onClick={onClick}>
+            <Item key='/logout' disabled={!loginInformation.admin} onClick={onClick} icon={<LogoutOutlined />}>
               <Link to='/'>
                 登出
               </Link>
             </Item>
-            <Item key='/test' disabled={!loginInformation.admin}>
+            <Item key='/test' disabled={!loginInformation.admin} icon={<ToolOutlined />}>
               <Link to='/test'>
                 測試
               </Link>
