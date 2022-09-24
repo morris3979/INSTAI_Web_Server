@@ -38,7 +38,7 @@ class HostTable extends Component {
           pagination={{ position: ['bottomCenter'] }}
         >
           <Column title='主機代號' dataIndex='serialNumber' align='center' />
-          <Column title='主機設備' dataIndex='device' align='center' />
+          <Column title='主機裝置' dataIndex='device' align='center' />
           <Column title='主機類型' dataIndex='type' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='response' align='center' />
@@ -58,7 +58,7 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請輸入主機設備' name='device' rules={[this.rule('主機設備')]}>
+            <Item label='請輸入主機裝置' name='device' rules={[this.rule('主機裝置')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.device)}`

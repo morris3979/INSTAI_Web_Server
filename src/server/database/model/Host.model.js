@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
         },
         response: {
-          type: Sequelize.JSON,
+          type: Sequelize.STRING,
           allowNull: true,
         },
         accessKey: {

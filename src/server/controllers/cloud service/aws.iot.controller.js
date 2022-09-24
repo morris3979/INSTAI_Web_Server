@@ -58,13 +58,12 @@ exports.receive = () => {
                     const findSerialNumber = await Host.findOne({
                         where: { serialNumber: serialNumber },
                     });
-
-                    console.log(`Message incoming topic(${topic}):`, messageJson);
+                    // console.log(`Message incoming topic(${topic}):`, messageJson);
 
                     // update host (RaspberryPi) response
                     if ((!deviceId) && findSerialNumber && serialNumber) {
                         Host.update({
-                            response: response
+                            response: deviceMessage
                         }, {
                             where: { serialNumber: serialNumber }
                         });
