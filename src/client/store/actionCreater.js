@@ -191,7 +191,7 @@ export const DeleteAccountTableData = (data) => {
   )
 }
 
-export const GetModelVersionTableData = () => {
+export const GetDeviceTableData = () => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -218,7 +218,7 @@ export const GetModelVersionTableData = () => {
   )
 }
 
-export const DeleteModelVersionTableData = (id) => {
+export const DeleteDeviceTableData = (id) => {
   return (
     async (dispatch) => {
       message.loading('刪除中，請稍後...', 0)
@@ -228,7 +228,7 @@ export const DeleteModelVersionTableData = (id) => {
         Modal.success({
           title: '刪除成功',
           onOk: () => {
-            const action = GetModelVersionTableData()
+            const action = GetDeviceTableData()
             dispatch(action)
           }
         })
@@ -240,7 +240,7 @@ export const DeleteModelVersionTableData = (id) => {
   )
 }
 
-export const PatchModelVersionTableData = (id, data) => {
+export const PatchDeviceTableData = (id, data) => {
   return (
     async (dispatch) => {
       message.loading('修改中，請稍後...', 0)
@@ -250,7 +250,7 @@ export const PatchModelVersionTableData = (id, data) => {
         Modal.success({
           title: '修改成功',
           onOk: () => {
-            const action = GetModelVersionTableData()
+            const action = GetDeviceTableData()
             dispatch(action)
           }
         })
@@ -262,7 +262,7 @@ export const PatchModelVersionTableData = (id, data) => {
   )
 }
 
-export const PostModelVersionTableData = (data) => {
+export const PostDeviceTableData = (data) => {
   return (
     async (dispatch) => {
       message.loading('新增中，請稍後...', 0)
@@ -277,7 +277,7 @@ export const PostModelVersionTableData = (data) => {
           Modal.success({
             title: '新增成功',
             onOk: () => {
-              const action = GetModelVersionTableData()
+              const action = GetDeviceTableData()
               dispatch(action)
             }
           })
@@ -300,9 +300,9 @@ export const PostMQTTTest = (data) => {
       try {
         await axios.post('/api/aws/iot/publish', sendData, {
           params: {
-            topic: '0000000039aed1d2',
-            device: 'RaspberryPi',
-            type: 'OTADevice'
+            topic: data.Host.serialNumber,
+            device: data.Host.device,
+            type:  data.Host.type
           }
         })
         Modal.success(
@@ -310,7 +310,7 @@ export const PostMQTTTest = (data) => {
             title: `封包已傳送至板號: ${data.deviceId}`,
             content: `傳送內容: ${data.command}`,
             onOk: () => {
-              const action = GetModelVersionTableData()
+              const action = GetDeviceTableData()
               dispatch(action)
             }
           }

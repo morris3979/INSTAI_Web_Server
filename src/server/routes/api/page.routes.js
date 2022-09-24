@@ -18,7 +18,7 @@ pageRouter.get("/modelC", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/modelVersion", async (req, res) => {
+pageRouter.get("/device", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 

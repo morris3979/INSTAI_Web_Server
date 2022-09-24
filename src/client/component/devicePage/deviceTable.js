@@ -10,8 +10,8 @@ import {
   DeploymentUnitOutlined
 } from '@ant-design/icons'
 import {
-  GetModelVersionTableData, SetWhichModal, DeleteModelVersionTableData,
-  PatchModelVersionTableData, PostModelVersionTableData, PostMQTTTest
+  GetDeviceTableData, SetWhichModal, DeleteDeviceTableData,
+  PatchDeviceTableData, PostDeviceTableData, PostMQTTTest
 } from '../../store/actionCreater'
 
 const { Column } = Table
@@ -20,21 +20,21 @@ const { Option } = Select
 
 const convertedValues = {}
 
-class ModelVersionTable extends Component {
+class DeviceTable extends Component {
   constructor(props) {
     super(props)
     this.state = { isModalVisible: false }
   }
 
   componentDidMount() {
-    this.props.getModelVersionTableData()
+    this.props.getDeviceTableData()
   }
 
   render() {
     return (
       <Fragment>
         <Table
-          dataSource={this.props.modelVersionTableData}
+          dataSource={this.props.deviceTableData}
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
@@ -152,9 +152,9 @@ class ModelVersionTable extends Component {
       convertedValues[String(key)] = values[key]
     })
     if (this.props.whichModal.id > 0) {
-      this.props.patchModelVersionTableData(this.props.whichModal.id, convertedValues)
+      this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
     } else {
-      this.props.postModelVersionTableData(convertedValues)
+      this.props.postDeviceTableData(convertedValues)
     }
   }
 
@@ -171,7 +171,7 @@ class ModelVersionTable extends Component {
         />
         <Popconfirm
           title='確定刪除?'
-          onConfirm={() => { this.props.deleteModelVersionTableData(text.id) }}
+          onConfirm={() => { this.props.deleteDeviceTableData(text.id) }}
         >
           <Button icon={<DeleteOutlined />} />
         </Popconfirm>
@@ -183,7 +183,7 @@ class ModelVersionTable extends Component {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    modelVersionTableData: state.modelVersionTableData,
+    deviceTableData: state.deviceTableData,
     tableStatus: state.tableStatus,
     whichModal: state.whichModal
   }
@@ -196,20 +196,20 @@ const mapDispatchToProps = (dispatch) => {
       const action = SetWhichModal(text)
       dispatch(action)
     },
-    getModelVersionTableData() {
-      const action = GetModelVersionTableData()
+    getDeviceTableData() {
+      const action = GetDeviceTableData()
       dispatch(action)
     },
-    deleteModelVersionTableData(id) {
-      const action = DeleteModelVersionTableData(id)
+    deleteDeviceTableData(id) {
+      const action = DeleteDeviceTableData(id)
       dispatch(action)
     },
-    patchModelVersionTableData(id, data) {
-      const action = PatchModelVersionTableData(id, data)
+    patchDeviceTableData(id, data) {
+      const action = PatchDeviceTableData(id, data)
       dispatch(action)
     },
-    postModelVersionTableData(data) {
-      const action = PostModelVersionTableData(data)
+    postDeviceTableData(data) {
+      const action = PostDeviceTableData(data)
       dispatch(action)
     },
     postMQTTTest(data) {
@@ -219,4 +219,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModelVersionTable)
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceTable)

@@ -7,7 +7,7 @@ import {
 const defaultState = {
   loginInformation: { admin: false },
   tableStatus: false,
-  modelVersionTableData: [],
+  deviceTableData: [],
   mapPositionData: [],
   reportTableData: [],
   modelATableData: [],
@@ -38,7 +38,7 @@ const Reducer = (state = defaultState, action) => {
       return newState
     }
     case Get_Model_Version_Table: {
-      newState.modelVersionTableData = action.value
+      newState.deviceTableData = action.value
       return newState
     }
     case Map_Position: {

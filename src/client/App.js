@@ -7,7 +7,7 @@ import { LogoutData } from './store/actionCreater'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
-const ModelVersionPage = lazy(() => import('./page/modelVersionPage'))
+const DevicePage = lazy(() => import('./page/devicePage'))
 const ModelAPage = lazy(() => import('./page/modelAPage'))
 const ModelBPage = lazy(() => import('./page/modelBPage'))
 const ModelCPage = lazy(() => import('./page/modelCPage'))
@@ -52,16 +52,18 @@ const App = (props) => {
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/modelVersion' disabled={!loginInformation.admin}>
-              <Link to='/modelVersion'>
-                板號與模型配置
-              </Link>
-            </Item>
-            <Item key='/account' disabled={!loginInformation.admin}>
-              <Link to='/account'>
-                帳號權限配置
-              </Link>
-            </Item>
+            <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin}>
+              <Item key='/device' disabled={!loginInformation.admin}>
+                <Link to='/device'>
+                  設備配置
+                </Link>
+              </Item>
+              <Item key='/account' disabled={!loginInformation.admin}>
+                <Link to='/account'>
+                  帳號權限配置
+                </Link>
+              </Item>
+            </SubMenu>
             <Item key='/resource' disabled={!loginInformation.admin}>
               <Link to='/resource'>
                 關於
@@ -88,7 +90,7 @@ const App = (props) => {
                 <Route path='/modelA' element={<ModelAPage />} />
                 <Route path='/modelB' element={<ModelBPage />} />
                 <Route path='/modelC' element={<ModelCPage />} />
-                <Route path='/modelVersion' element={<ModelVersionPage />} />
+                <Route path='/device' element={<DevicePage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
                 <Route path='/test' element={<Test />} />

@@ -37,7 +37,11 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Device.findAll({
         include: [{
+          model: db.Host,
+          attributes:['id', 'serialNumber', 'device', 'type']
+        }, {
             model: db.Model,
+            attributes:['id', 'modelName', 'modelVersion', 'task']
         }],
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt']
