@@ -38,7 +38,10 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin}>
-              <Item key='modelA'>
+              <Item key={props}>
+                <Link to='/event/:project'></Link>
+              </Item>
+              {/* <Item key='modelA'>
                 <Link to='/modelA'>
                   模型A
                 </Link>
@@ -52,7 +55,7 @@ const App = (props) => {
                 <Link to='modelC'>
                   模型C
                 </Link>
-              </Item>
+              </Item> */}
             </SubMenu>
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin}>
               <Item key='/project' disabled={!loginInformation.admin}>
@@ -102,6 +105,7 @@ const App = (props) => {
                 <Route path='/modelA' element={<ModelAPage />} />
                 <Route path='/modelB' element={<ModelBPage />} />
                 <Route path='/modelC' element={<ModelCPage />} />
+                <Route path='/event/:project' element='' />
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />

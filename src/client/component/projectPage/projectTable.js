@@ -1,16 +1,19 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import {
-  Popconfirm, Table, Button, Space, Modal, Form, Input, Select, Affix
+    Popconfirm, Table, Button, Space, Modal, Form, Input, Select, Affix
 } from 'antd'
 import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined
+    EditOutlined,
+    DeleteOutlined,
+    PlusOutlined
 } from '@ant-design/icons'
 import {
-    GetProjectTableData, SetWhichModal, DeleteProjectTableData,
-    PatchProjectTableData, PostProjectTableData
+    SetWhichModal,
+    GetProjectTableData,
+    DeleteProjectTableData,
+    PatchProjectTableData,
+    PostProjectTableData
 } from '../../store/actionCreater'
 
 const { Column } = Table
