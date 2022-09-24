@@ -37,10 +37,6 @@ const Reducer = (state = defaultState, action) => {
       newState.accountData = action.value
       return newState
     }
-    case Get_Project_Table: {
-      newState.projectTableData = action.value
-      return newState
-    }
     case Get_Device_Table: {
       newState.deviceTableData = action.value
       return newState
