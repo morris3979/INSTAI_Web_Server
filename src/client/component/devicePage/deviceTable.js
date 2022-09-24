@@ -38,9 +38,9 @@ class DeviceTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
-          <Column title='設備號' dataIndex='deviceId' align='center' />
-          <Column title='設備名' dataIndex='deviceName' align='center' />
-          <Column title='描述' dataIndex='description' align='center' />
+          <Column title='設備代號' dataIndex='deviceId' align='center' />
+          <Column title='設備名稱' dataIndex='deviceName' align='center' />
+          <Column title='設備描述' dataIndex='description' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='message' align='center' />
           <Column title='操作' render={this.buttonGroup} align='center' />
@@ -52,35 +52,35 @@ class DeviceTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='設備號' name='deviceId' rules={[this.rule('設備號')]}>
+            <Item label='請輸入設備代號' name='deviceId' rules={[this.rule('設備代號')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.deviceId)}`
                 }
               />
             </Item>
-            <Item label='設備名' name='deviceName' rules={[this.rule('設備名')]}>
+            <Item label='請輸入設備名稱' name='deviceName' rules={[this.rule('設備名稱')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.deviceName)}`
                 }
               />
             </Item>
-            <Item label='描述' name='description' rules={[this.rule('描述')]}>
+            <Item label='請輸入設備描述' name='description' rules={[this.rule('設備描述')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.description)}`
                 }
               />
             </Item>
-            <Item label='指令' name='command' rules={[this.rule('指令')]}>
+            <Item label='請輸入指令' name='command' rules={[this.rule('指令')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.command)}`
                 }
               />
             </Item>
-            <Item label='選擇更新模型' name='modelName' rules={[this.rule('模型')]}>
+            <Item label='請選擇更新模型' name='modelName' rules={[this.rule('模型')]}>
               <Select
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.modelName)}`
@@ -91,15 +91,15 @@ class DeviceTable extends Component {
                 <Option value='C'>C</Option>
               </Select>
             </Item>
-            <Item label='選擇更新版本' name='modelVersion' rules={[this.rule('版本')]}>
+            <Item label='請選擇更新版本' name='modelVersion' rules={[this.rule('版本')]}>
               <Select
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.modelVersion)}`
                 }
               >
-                <Option value='1.0'>1.0</Option>
-                <Option value='2.0'>2.0</Option>
-                <Option value='3.0'>3.0</Option>
+                <Option value='1.0.0'>1.0.0</Option>
+                <Option value='2.0.0'>2.0.0</Option>
+                <Option value='3.0.0'>3.0.0</Option>
               </Select>
             </Item>
             <Item>
