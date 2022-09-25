@@ -93,6 +93,11 @@ const App = (props) => {
                 </Link>
               </Item>
             </SubMenu>
+            <Item key='/test' disabled={!loginInformation.admin} icon={<ToolOutlined />}>
+              <Link to='/test'>
+                測試
+              </Link>
+            </Item>
             <Item key='/resource' disabled={!loginInformation.admin} icon={<LinkOutlined />}>
               <Link to='/resource'>
                 關於
@@ -101,11 +106,6 @@ const App = (props) => {
             <Item key='/logout' disabled={!loginInformation.admin} onClick={onClick} icon={<LogoutOutlined />}>
               <Link to='/'>
                 登出
-              </Link>
-            </Item>
-            <Item key='/test' disabled={!loginInformation.admin} icon={<ToolOutlined />}>
-              <Link to='/test'>
-                測試
               </Link>
             </Item>
           </Menu>
