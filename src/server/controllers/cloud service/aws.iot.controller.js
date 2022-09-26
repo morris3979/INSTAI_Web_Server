@@ -54,7 +54,7 @@ exports.receive = () => {
                     const serialNumber = messageJson.serialNumber;
                     const response = messageJson.response;
                     const deviceId = response.deviceId;
-                    const deviceMessage = response.message;
+                    const resMessage = response.message;
                     const findSerialNumber = await Host.findOne({
                         where: { serialNumber: serialNumber },
                     });
@@ -63,22 +63,21 @@ exports.receive = () => {
                     // update host (RaspberryPi) response
                     if ((!deviceId) && findSerialNumber && serialNumber) {
                         Host.update({
-                            response: deviceMessage
+                            response: resMessage
                         }, {
                             where: { serialNumber: serialNumber }
                         });
-                        console.log('-- host updated! --');
+                        console.log(`host(${serialNumber}): `, resMessage);
                     }
 
                     // update device (PAG7681) message
                     if (deviceId && findSerialNumber && serialNumber) {
-                        console.log('deviceMessage: ', deviceMessage);
                         Device.update({
-                            message: deviceMessage
+                            message: resMessage
                         }, {
                             where: { deviceId: deviceId }
                         });
-                        console.log('-- device updated! --');
+                        console.log(`device(${deviceId}): `, resMessage);
                     }
                 });
             }
