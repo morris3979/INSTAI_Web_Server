@@ -40,8 +40,8 @@ exports.findAll = (req, res) => {
           model: db.Host,
           attributes:['id', 'serialNumber', 'device', 'type']
         }, {
-            model: db.Model,
-            attributes:['id', 'modelName', 'modelVersion', 'task']
+            model: db.HwUpdateLog,
+            attributes:['id', 'modelName']
         }],
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt']
