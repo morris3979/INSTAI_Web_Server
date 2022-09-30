@@ -26,7 +26,6 @@ db.Sequelize = Sequelize;
 
 db.Project = require("./model/Project.model")(sequelize, Sequelize);
 db.Host = require("./model/Host.model")(sequelize, Sequelize);
-db.Model = require("./model/Model.model")(sequelize, Sequelize);
 db.HwUpdateLog = require("./model/HwUpdateLog.model")(sequelize, Sequelize);
 db.Device = require("./model/Device.model")(sequelize, Sequelize);
 db.Event = require("./model/Event.model")(sequelize, Sequelize);
@@ -35,17 +34,17 @@ db.User = require("./model/User.model")(sequelize, Sequelize);
 
 db.Project.hasMany(db.Host, {foreignKey: 'ProjectId'});
 db.Host.hasMany(db.Device, {foreignKey: 'HostId'});
-db.Model.hasMany(db.Device, {foreignKey: 'ModelId'});
 db.Device.hasMany(db.Event, {foreignKey: 'DeviceId'});
+db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
 db.Event.hasMany(db.Details, {foreignKey: 'EventId'});
 
 db.Host.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Device.belongsTo(db.Host, {foreignKey: 'HostId'});
-db.Device.belongsTo(db.Model, {foreignKey: 'ModelId'});
 db.Event.belongsTo(db.Device, {foreignKey: 'DeviceId'});
+db.HwUpdateLog.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 db.Details.belongsTo(db.Event, {foreignKey: 'EventId'});
 
-db.Device.belongsToMany(db.Model, { through: db.HwUpdateLog });
-db.Model.belongsToMany(db.Device, { through: db.HwUpdateLog });
+// db.Device.belongsToMany(db.Model, { through: db.HwUpdateLog });
+// db.Model.belongsToMany(db.Device, { through: db.HwUpdateLog });
 
 module.exports = db;
