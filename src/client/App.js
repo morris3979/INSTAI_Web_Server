@@ -47,24 +47,11 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
-              <Item key={props}>
-                <Link to='/event/:project'></Link>
-              </Item>
-              {/* <Item key='modelA'>
+              <Item key='modelA'>
                 <Link to='/modelA'>
                   模型A
                 </Link>
               </Item>
-              <Item key='modelB'>
-                <Link to='modelB'>
-                  模型B
-                </Link>
-              </Item>
-              <Item key='modelC'>
-                <Link to='modelC'>
-                  模型C
-                </Link>
-              </Item> */}
             </SubMenu>
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
               <Item key='/project' disabled={!loginInformation.admin}>

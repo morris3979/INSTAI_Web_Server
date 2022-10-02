@@ -43,6 +43,9 @@ exports.findAll = (req, res) => {
             model: db.HwUpdateLog,
             attributes:['id', 'modelName']
         }],
+        order: [
+          ['id', 'DESC'],
+        ],
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt']
         }

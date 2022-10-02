@@ -40,6 +40,9 @@ exports.findAll = (req, res) => {
             model: db.Device,
             attributes:['id', 'deviceId', 'deviceName']
         }],
+        order: [
+          ['id', 'DESC'],
+        ],
         attributes: {
             exclude: ['accessKey', 'secretKey', 'createdAt', 'updatedAt', 'deletedAt']
         }
