@@ -50,7 +50,7 @@ class DeviceTable extends Component {
           <Column title='訊息' dataIndex='message' align='center' />
           <Column title='操作' render={this.buttonGroup} align='center' />
           <Column title='模型更新紀錄' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
-            render={(HwUpdateLogs) => HwUpdateLogs.map(c => '\n'+c.modelName).join()} />
+            render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.id+': '+c.modelName+'\n').join('')} />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
