@@ -44,12 +44,14 @@ class DeviceTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
+          <Column title='操作' render={this.buttonGroup} align='center' />
           <Column title='設備代號' dataIndex='deviceId' align='center' />
           <Column title='設備名稱' dataIndex='deviceName' align='center' />
           <Column title='設備描述' dataIndex='description' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='message' align='center' />
-          <Column title='操作' render={this.buttonGroup} align='center' />
+          <Column title='模型更新紀錄 (模型, 更新時間)' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
+            render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+', '+c.createdAt.slice(0, -5).replace('T', ' ')+'\n').join('')} />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
