@@ -41,7 +41,7 @@ exports.findAll = (req, res) => {
           attributes:['id', 'serialNumber', 'device', 'type']
         }, {
             model: db.HwUpdateLog,
-            attributes:['id', 'modelName']
+            attributes:['id', 'modelName', 'createdAt']
         }],
         order: [
           ['id', 'DESC'],

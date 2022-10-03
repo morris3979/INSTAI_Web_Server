@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         modelName: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
         },
         createdAt: {
             field: 'created_at',

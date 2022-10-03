@@ -43,14 +43,14 @@ class DeviceTable extends Component {
           pagination={{ position: ['bottomCenter'] }}
           style={{ whiteSpace: 'pre'}}
         >
+          <Column title='操作' render={this.buttonGroup} align='center' />
           <Column title='設備代號' dataIndex='deviceId' align='center' />
           <Column title='設備名稱' dataIndex='deviceName' align='center' />
           <Column title='設備描述' dataIndex='description' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='message' align='center' />
-          <Column title='操作' render={this.buttonGroup} align='center' />
-          <Column title='模型更新紀錄' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
-            render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.id+': '+c.modelName+'\n').join('')} />
+          <Column title='模型更新紀錄 (模型, 更新時間)' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
+            render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+', '+c.createdAt.slice(0, -5).replace('T', ' ')+'\n').join('')} />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
@@ -93,20 +93,7 @@ class DeviceTable extends Component {
                   `${this.defaultValue(this.props.whichModal.modelName)}`
                 }
               >
-                <Option value='A'>A</Option>
-                <Option value='B'>B</Option>
-                <Option value='C'>C</Option>
-              </Select>
-            </Item>
-            <Item label='請選擇更新版本' name='modelVersion' rules={[this.rule('版本')]}>
-              <Select
-                defaultValue={
-                  `${this.defaultValue(this.props.whichModal.modelVersion)}`
-                }
-              >
-                <Option value='1.0.0'>1.0.0</Option>
-                <Option value='2.0.0'>2.0.0</Option>
-                <Option value='3.0.0'>3.0.0</Option>
+                <Option value='A' />
               </Select>
             </Item>
             <Item>
@@ -169,10 +156,6 @@ class DeviceTable extends Component {
     return (
       <Space size='large'>
         <Button
-          onClick={() => { this.props.PostDeviceMQTT(text) }}
-          icon={<DeploymentUnitOutlined />}
-        />
-        <Button
           onClick={() => { this.onClick(text) }}
           icon={<EditOutlined />}
         />
@@ -182,6 +165,10 @@ class DeviceTable extends Component {
         >
           <Button icon={<DeleteOutlined />} />
         </Popconfirm>
+        <Button
+          onClick={() => { this.props.PostDeviceMQTT(text) }}
+          icon={<DeploymentUnitOutlined />}
+        />
       </Space>
     )
   }
