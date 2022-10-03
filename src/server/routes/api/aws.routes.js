@@ -32,6 +32,22 @@ awsRouter.get("/s3/getFile/:folder/:files", async(req, res) => {
     }
 });
 
+// list object from bucket folder
+awsRouter.get("/s3/listObject", async(req, res) => {
+    try {
+        let fileToSend = await s3.listObject();
+        //pipe the file to res
+        const modelList = [];
+        fileToSend.Contents.forEach(item => {
+            // console.log(item.Key);
+            modelList.push(item.Key);
+        });
+        res.send(modelList);
+    } catch (error) {
+        res.send({error: "Server Error", error});
+    }
+});
+
 awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
     const getFolder = req.params.folder;
     const getFile = req.params.files;

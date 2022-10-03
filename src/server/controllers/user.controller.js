@@ -105,8 +105,8 @@ exports.login = async(req, res) => {
 // Retrieve all User from the database.
 exports.findAll = (req, res) => {
   User.findAll({
-        order: [
-          ['createdAt', 'DESC'],
+      order: [
+          ['id', 'DESC'],
       ],
       attributes: {
           exclude: ['password', 'token', 'createdAt', 'updatedAt', 'deletedAt']

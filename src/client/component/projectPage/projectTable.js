@@ -39,9 +39,9 @@ class ProjectTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
+          <Column title='操作' render={this.buttonGroup} align='center' />
           <Column title='專案代號' dataIndex='project' align='center' />
           <Column title='專案名稱' dataIndex='displayName' align='center' />
-          <Column title='操作' render={this.buttonGroup} align='center' />
         </Table>
         <Modal
           visible={this.state.isModalVisible}

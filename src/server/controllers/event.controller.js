@@ -12,6 +12,9 @@ exports.findAll = (req, res) => {
             model: db.Details,
             attributes:['id', 'details', 'image', 'video']
         }],
+        order: [
+          ['id', 'DESC'],
+        ],
         attributes: {
             exclude: ['createdAt', 'updatedAt']
         }

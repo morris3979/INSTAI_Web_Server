@@ -51,6 +51,14 @@ exports.getFileFromS3 = (folder, key) => {
     return s3.getObject(downloadParams).createReadStream();
 };
 
+exports.listObject = () => {
+    const params = {
+        Bucket: 'lab321-model',
+        Prefix: '', // model/
+    }
+    return s3.listObjects(params).promise();
+}
+
 //delete file from s3 bucket
 exports.deleteFileFromS3 = (folder, key, next) => {
     const deleteParams = {

@@ -32,7 +32,11 @@ exports.create = (req, res) => {
 
 // Retrieve all Project from the database.
 exports.findAll = (req, res) => {
-    Project.findAll()
+    Project.findAll({
+      order: [
+        ['id', 'DESC'],
+      ],
+    })
       .then(data => {
         res.send(data);
       })

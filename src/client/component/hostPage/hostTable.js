@@ -41,12 +41,12 @@ class HostTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
+          <Column title='操作' render={this.buttonGroup} align='center' />
           <Column title='主機代號' dataIndex='serialNumber' align='center' />
           <Column title='主機裝置' dataIndex='device' align='center' />
           <Column title='主機類型' dataIndex='type' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='response' align='center' />
-          <Column title='操作' render={this.buttonGroup} align='center' />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
