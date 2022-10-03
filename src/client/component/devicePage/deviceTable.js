@@ -43,6 +43,7 @@ class DeviceTable extends Component {
           dataSource={this.props.deviceTableData}
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
+          style={{ whiteSpace: 'pre'}}
         >
           <Column title='操作' render={this.buttonGroup} align='center' />
           <Column title='設備代號' dataIndex='deviceId' align='center' />
