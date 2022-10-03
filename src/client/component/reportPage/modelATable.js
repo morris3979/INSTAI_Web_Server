@@ -33,17 +33,19 @@ class ModelATable extends Component {
         >
           <Column
             title='車輛編號'
-            dataIndex={['CarNumber', 'plateNumber']}
-            filterDropdown={CarNumberFilter}
-            onFilter={CarNumberOnFilter}
+            //dataIndex={['CarNumber', 'plateNumber']}
+            //filterDropdown={CarNumberFilter}
+            //onFilter={CarNumberOnFilter}
             align='center'
+            dataIndex='id'
           />
           <Column
             title='紀錄時間'
-            render={DateChange}
-            filterDropdown={DateFilter}
-            onFilter={DateOnFilter}
+            //render={DateChange}
+            //filterDropdown={DateFilter}
+            //onFilter={DateOnFilter}
             align='center'
+            dataIndex='eventTime'
           />
           <Column
             title='事件'
@@ -52,12 +54,12 @@ class ModelATable extends Component {
           />
           <Column
             title='位置'
-            dataIndex='position'
+            //dataIndex='position'
             align='center'
           />
           <Column
             title='模型'
-            dataIndex={['CarNumber', 'modelName']}
+            //dataIndex={['CarNumber', 'modelName']}
             align='center'
           />
         </Table>

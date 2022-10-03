@@ -50,7 +50,7 @@ const App = (props) => {
               <Item key={props}>
                 <Link to='/event/:project'></Link>
               </Item>
-              {/* <Item key='modelA'>
+              <Item key='modelA'>
                 <Link to='/modelA'>
                   模型A
                 </Link>
@@ -64,7 +64,7 @@ const App = (props) => {
                 <Link to='modelC'>
                   模型C
                 </Link>
-              </Item> */}
+              </Item>
             </SubMenu>
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
               <Item key='/project' disabled={!loginInformation.admin}>

@@ -585,14 +585,15 @@ export const GetModelATableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/event')
-        console.log(response)
+        console.log('A: ', response)
         if (Object.keys(response.data).length > 0) {
           const filterData = response.data.filter((value) => {
             if (value.CarNumber) {
               return (value.CarNumber.modelName[0] == 'A')
             }
           })
-          const action = DeliverData(filterData, Model_A_Table)
+          console.log('res: ', filterData)
+          const action = DeliverData(response.data, Model_A_Table)
           dispatch(action)
         } else {
           throw '資料獲取失敗'
@@ -617,7 +618,7 @@ export const GetModelBTableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/event')
-        console.log(response)
+        console.log('B: ', response)
         if (Object.keys(response.data).length > 0) {
           const filterData = response.data.filter((value) => {
             if (value.CarNumber) {
