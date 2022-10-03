@@ -38,9 +38,9 @@ awsRouter.get("/s3/listObject", async(req, res) => {
         let fileToSend = await s3.listObject();
         //pipe the file to res
         const modelList = [];
-        fileToSend.Contents.forEach(item => {
+        fileToSend.Contents.forEach((item, index) => {
             // console.log(item.Key);
-            modelList.push(item.Key);
+            modelList.push({id: index, modelName: item.Key});
         });
         res.send(modelList);
     } catch (error) {
