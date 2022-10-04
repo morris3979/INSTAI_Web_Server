@@ -47,22 +47,19 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
-              <Item key={props}>
-                <Link to='/event/:project'></Link>
-              </Item>
               <Item key='modelA'>
                 <Link to='/modelA'>
-                  模型A
+                  專案A
                 </Link>
               </Item>
               <Item key='modelB'>
                 <Link to='modelB'>
-                  模型B
+                  專案B
                 </Link>
               </Item>
               <Item key='modelC'>
                 <Link to='modelC'>
-                  模型C
+                  專案C
                 </Link>
               </Item>
             </SubMenu>
@@ -116,10 +113,9 @@ const App = (props) => {
               <Routes>
                 <Route path='/' element={<InitialPage />} />
                 <Route path='/map' element={<MapPage />} />
-                <Route path='/modelA' element={<ModelAPage />} />
-                <Route path='/modelB' element={<ModelBPage />} />
-                <Route path='/modelC' element={<ModelCPage />} />
-                <Route path='/event/:project' element='' />
+                <Route path='/modelA' element={[]} />
+                <Route path='/modelB' element={[]} />
+                <Route path='/modelC' element={[]} />
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />

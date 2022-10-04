@@ -29,3 +29,34 @@ exports.findAll = (req, res) => {
         });
     });
 };
+
+// Retrieve Event by Device from the database.
+exports.findByDevice = (req, res) => {
+    const id = req.params.id;
+
+    Event.findAll({
+        where: { deviceId: id },
+        include: [{
+            model: db.Device,
+            attributes:['id', 'deviceId']
+        }, {
+            model: db.Details,
+            attributes:['id', 'details', 'image', 'video']
+        }],
+        order: [
+          ['id', 'DESC'],
+        ],
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    })
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving groups."
+        });
+    });
+};

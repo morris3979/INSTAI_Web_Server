@@ -3,7 +3,7 @@ import { Table, Button, Typography, Collapse } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 
-const { Column } = Table
+const { Column, Row } = Table
 const { Text } = Typography
 const { Panel } = Collapse
 
@@ -14,46 +14,127 @@ const data = [
   }
 ]
 
-const video = (text) => {
-  return (
-    <ReactPlayer
-      url={`${text.videoURL}`}
-      controls={true}
-    />
-  )
-}
+// const video = (text) => {
+//   return (
+//     <ReactPlayer
+//       url={`${text.videoURL}`}
+//       controls={true}
+//     />
+//   )
+// }
 
 const description = (text) => {
   return (
+    <Fragment align='center'>
+      <ReactPlayer
+        url={`${text.videoURL}`}
+        controls={true}
+      />
+      <Text>{text.description}</Text>
+    </Fragment>
+  )
+}
+
+const download = () => {
+  return (
     <Fragment>
       <Button icon={<DownloadOutlined />} />
-      <Text>{text.description}</Text>
     </Fragment>
   )
 }
 
 const Test = () => {
   return (
-    <Collapse>
-      <Panel header='test'>
-        <Table
-          dataSource={data}
-          pagination={{ position: ['bottomCenter'] }}
-        >
-          <Column
-            title='影片'
-            render={video}
-            ellipsis={true}
-            align='center'
-          />
-          <Column
-            title='敘述'
-            render={description}
-            align='center'
-          />
-        </Table>
-      </Panel>
-    </Collapse>
+    <Fragment>
+      <Collapse>
+        <Panel header='0000000039aed1d2'>
+          <Collapse>
+            <Panel header='0x7680'>
+              <Table
+                dataSource={data}
+                pagination={{ position: ['bottomCenter'] }}
+              >
+                <Column
+                  title='採集資料'
+                  render={description}
+                  ellipsis={true}
+                  align='center'
+                />
+                <Column
+                  title='操作'
+                  render={download}
+                  align='center'
+                />
+              </Table>
+            </Panel>
+          </Collapse>
+          <Collapse>
+            <Panel header='0x7699'>
+              <Table
+                dataSource={data}
+                pagination={{ position: ['bottomCenter'] }}
+              >
+                <Column
+                  title='採集資料'
+                  render={description}
+                  ellipsis={true}
+                  align='center'
+                />
+                <Column
+                  title='操作'
+                  render={download}
+                  align='center'
+                />
+              </Table>
+            </Panel>
+          </Collapse>
+        </Panel>
+      </Collapse>
+      <Collapse>
+        <Panel header='0000000012aed3d4'>
+          <Collapse>
+            <Panel header='0x7612'>
+              <Table
+                dataSource={data}
+                pagination={{ position: ['bottomCenter'] }}
+              >
+                <Column
+                  title='採集資料'
+                  render={description}
+                  ellipsis={true}
+                  align='center'
+                />
+                <Column
+                  title='操作'
+                  render={download}
+                  align='center'
+                />
+              </Table>
+            </Panel>
+          </Collapse>
+          <Collapse>
+            <Panel header='0x7634'>
+              <Table
+                dataSource={data}
+                pagination={{ position: ['bottomCenter'] }}
+              >
+                <Column
+                  title='採集資料'
+                  render={description}
+                  ellipsis={true}
+                  align='center'
+                />
+                <Column
+                  title='操作'
+                  render={download}
+                  align='center'
+                />
+              </Table>
+            </Panel>
+          </Collapse>
+        </Panel>
+      </Collapse>
+    </Fragment>
   )
 }
 
