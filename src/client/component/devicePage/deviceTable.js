@@ -242,25 +242,25 @@ class DeviceTable extends Component {
     console.log('values: ', values)
     if (this.props.whichModal.id > 0) {
       //this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
-      if(values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN'){
+      console.log('convertedValues: ', convertedValues)
+      if (values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN') {
         var command = `${mapValues.modelSelect}`
       }
-      else if(values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC'){
-        if(this.state.rec_fps){
-          if(values.modelSelect === 'S_MOTION_CNN_JPEG'){
+      else if (values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC') {
+        if (this.state.rec_fps) {
+          if (values.modelSelect === 'S_MOTION_CNN_JPEG') {
             var command = `rec_after_event;${values.REC_switch}
             \\\\rec_fps;${this.state.rec_fps}
             \\\\rec_after_event_cycle;${this.state.rec_after_event_cycle}
             \\\\rec_after_event_duration;${this.state.rec_after_event_duration}
             \\\\upload_to_server;${values.UPLOAD_DATA}`
           }
-          else if(values.modelSelect === 'JPEG_REC'){
+          else if (values.modelSelect === 'JPEG_REC') {
             var command = `rec_fps;${this.state.rec_fps}
             \\\\upload_to_server;${values.UPLOAD_DATA}
             \\\\rec;${values.REC_Time}`
           }
-        }
-        else{
+        } else {
           Modal.error({
             title: '此FPS無效, 請重新輸入!',
             onOk: () => {
@@ -268,7 +268,7 @@ class DeviceTable extends Component {
             }
           })
         }
-     }else{
+     } else {
       console.log('else: ', values)
      }
      Modal.success({
@@ -291,14 +291,13 @@ class DeviceTable extends Component {
   }
 
   handleSwitch = (value) => {
-    if(value === true){
+    if (value === true) {
       this.setState({ REC: true })
       this.setState({ detailVisible: false })
       this.setState({ uploadServer: false })
       this.setState({ RECtime: false })
       this.setState({ RECfps: false })
-    }
-    else{
+    } else {
       this.setState({ REC: false })
       this.setState({ detailVisible: true })
       this.setState({ uploadServer: true })
@@ -308,33 +307,31 @@ class DeviceTable extends Component {
   }
 
   handleSwitch2 = (value) => {
-    if(value === true){
+    if (value === true) {
       this.setState({ isSelectVisible: false })
-    }
-    else{
+    } else {
       this.setState({ isSelectVisible: true })
     }
   }
+
   handleChange = (value) => {
     console.log(value)
-    if(value === 'S_MOTION_CNN_JPEG'){
+    if (value === 'S_MOTION_CNN_JPEG') {
       this.setState({ RECtime: false })
       this.setState({ recVisible: false })
       this.setState({ Settings: true })
-      if(this.state.REC === true){
+      if (this.state.REC === true) {
         this.setState({ detailVisible: false })
         this.setState({ RECfps: false })
         this.setState({ modelSelect: false })
         this.setState({ uploadServer: false })
-      }
-      else{
+      } else {
         this.setState({ detailVisible: true })
         this.setState({ RECfps: true })
         this.setState({ modelSelect: false })
         this.setState({ uploadServer: true })
       }
-    }
-    else if(value === 'JPEG_REC'){
+    } else if (value === 'JPEG_REC') {
       this.setState({ uploadServer: false })
       this.setState({ Settings: true })
       this.setState({ detailVisible2: true })
@@ -343,8 +340,7 @@ class DeviceTable extends Component {
       this.setState({ recVisible: true })
       this.setState({ modelSelect: false })
       this.setState({ RECtime: true })
-    }
-    else if(value === 'UPDATE_MODEL'){
+    } else if (value === 'UPDATE_MODEL') {
       this.setState({ uploadServer: false })
       this.setState({ Settings: true })
       this.setState({ modelSelect: true })
@@ -353,8 +349,7 @@ class DeviceTable extends Component {
       this.setState({ detailVisible2: false })
       this.setState({ RECtime: false })
       this.setState({ RECfps: true })
-    }
-    else if(value === 'JPEG_CNN'){
+    } else if (value === 'JPEG_CNN') {
       this.setState({ recVisible: true })
       this.setState({ detailVisible: true })
       this.setState({ detailVisible2: false })
@@ -363,8 +358,7 @@ class DeviceTable extends Component {
       this.setState({ Settings: true })
       this.setState({ RECtime: false })
       this.setState({ RECfps: true })
-    }
-    else{
+    } else {
       this.setState({ recVisible: true })
       this.setState({ detailVisible: true })
       this.setState({ detailVisible2: false })
