@@ -32,7 +32,8 @@ class DeviceTable extends Component {
       isModalVisible: false, isSelectVisible: true,
       detailVisible: true, detailVisible2: false,
       recVisible: true, REC: false, RECtime: false, RECfps: true,
-      modelSelect: false, uploadServer: true, Settings: false, inputValue: 15
+      modelSelect: false, uploadServer: true, Settings: false,
+      rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
     }
   }
 
@@ -124,31 +125,57 @@ class DeviceTable extends Component {
                 <Col span={12}>
                   <Slider
                     disabled={this.state.RECfps} hidden={this.state.RECfps}
-                    min={1}
-                    max={15}
-                    onChange={this.onChange}
-                    value={typeof this.state.inputValue === 'number' ? this.state.inputValue : 15}
+                    min={1} max={15} onChange={this.rec_fps_onChange}
+                    value={typeof this.state.rec_fps === 'number' ? this.state.rec_fps : 15}
                   />
                 </Col>
                 <Col span={4}>
                   <InputNumber
                     disabled={this.state.RECfps} hidden={this.state.RECfps}
-                    min={1}
-                    max={15}
-                    style={{
-                      margin: '0 12px',
-                    }}
-                    value={this.state.inputValue}
-                    onChange={this.onChange}
+                    min={1} max={15} style={{ margin: '0 12px', }}
+                    value={this.state.rec_fps}
+                    onChange={this.rec_fps_onChange}
                   />
                 </Col>
               </Row>
             </Item>
             <Item label='CNN 事件觸發後錄影循環次數' name='REC_after_event_cycle' hidden={this.state.detailVisible}>
-              <Input disabled={this.state.detailVisible} hidden={this.state.detailVisible} defaultValue={1}></Input>
+              <Row>
+                <Col span={12}>
+                  <Slider
+                    disabled={this.state.detailVisible} hidden={this.state.detailVisible}
+                    min={1} max={15} onChange={this.rec_after_event_cycle_onChange}
+                    value={typeof this.state.rec_after_event_cycle === 'number' ? this.state.rec_after_event_cycle : 1}
+                  />
+                </Col>
+                <Col span={4}>
+                  <InputNumber
+                    disabled={this.state.detailVisible} hidden={this.state.detailVisible}
+                    min={1} max={15} style={{ margin: '0 12px', }}
+                    value={this.state.rec_after_event_cycle}
+                    onChange={this.rec_after_event_cycle_onChange}
+                  />
+                </Col>
+              </Row>
             </Item>
             <Item label='CNN 事件觸發後每次循環時間長度' name='Cycle_Duration' hidden={this.state.detailVisible}>
-              <Input disabled={this.state.detailVisible} hidden={this.state.detailVisible} defaultValue={5}></Input>
+              <Row>
+                <Col span={12}>
+                  <Slider
+                    disabled={this.state.detailVisible} hidden={this.state.detailVisible}
+                    min={1} max={60} onChange={this.rec_after_event_duration_onChange}
+                    value={typeof this.state.rec_after_event_duration === 'number' ? this.state.rec_after_event_duration : 5}
+                  />
+                </Col>
+                <Col span={4}>
+                  <InputNumber
+                    disabled={this.state.detailVisible} hidden={this.state.detailVisible}
+                    min={1} max={5} style={{ margin: '0 12px', }}
+                    value={this.state.rec_after_event_duration}
+                    onChange={this.rec_after_event_duration_onChange}
+                  />
+                </Col>
+              </Row>
             </Item>
             <Item label='是否將錄製影片上傳至雲端' name='UPLOAD_DATA' hidden={this.state.uploadServer}>
               <Switch defaultChecked={true} hidden={this.state.uploadServer}></Switch>
@@ -212,18 +239,25 @@ class DeviceTable extends Component {
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
       convertedValues[String(key)] = values[key]
     })
+    console.log('values: ', values)
     if (this.props.whichModal.id > 0) {
       //this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
       if(values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN'){
         var command = `${mapValues.modelSelect}`
       }
       else if(values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC'){
-        if(values.REC_FPS < 16 && values.REC_FPS > 0){
+        if(this.state.rec_fps){
           if(values.modelSelect === 'S_MOTION_CNN_JPEG'){
-            var command = `rec_after_event;${values.REC_switch}\\\\rec_fps;${values.REC_FPS}\\\\rec_after_event_cycle;${values.REC_after_event_cycle}\\\\rec_after_event_duration;${values.Cycle_Duration}\\\\upload_to_server;${values.UPLOAD_DATA}`
+            var command = `rec_after_event;${values.REC_switch}
+            \\\\rec_fps;${this.state.rec_fps}
+            \\\\rec_after_event_cycle;${this.state.rec_after_event_cycle}
+            \\\\rec_after_event_duration;${this.state.rec_after_event_duration}
+            \\\\upload_to_server;${values.UPLOAD_DATA}`
           }
           else if(values.modelSelect === 'JPEG_REC'){
-            var command = `rec_fps;${values.REC_FPS}\\\\upload_to_server;${values.UPLOAD_DATA}\\\\rec;${values.REC_Time}`
+            var command = `rec_fps;${this.state.rec_fps}
+            \\\\upload_to_server;${values.UPLOAD_DATA}
+            \\\\rec;${values.REC_Time}`
           }
         }
         else{
@@ -235,7 +269,7 @@ class DeviceTable extends Component {
           })
         }
      }else{
-      console.log(values)
+      console.log('else: ', values)
      }
      Modal.success({
       title:'指令傳送成功!',
@@ -245,9 +279,17 @@ class DeviceTable extends Component {
       //this.props.postDeviceTableData(convertedValues)
     }
   }
-  onChange = (newValue) => {
-    this.setState({ inputValue: newValue })
+
+  rec_fps_onChange = (newValue) => {
+    this.setState({ rec_fps: newValue })
   }
+  rec_after_event_cycle_onChange = (newValue) => {
+    this.setState({ rec_after_event_cycle: newValue })
+  }
+  rec_after_event_duration_onChange = (newValue) => {
+    this.setState({ rec_after_event_duration: newValue })
+  }
+
   handleSwitch = (value) => {
     if(value === true){
       this.setState({ REC: true })
@@ -264,6 +306,7 @@ class DeviceTable extends Component {
       this.setState({ RECfps: true })
     }
   }
+
   handleSwitch2 = (value) => {
     if(value === true){
       this.setState({ isSelectVisible: false })
