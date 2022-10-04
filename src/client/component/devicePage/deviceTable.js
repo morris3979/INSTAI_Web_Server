@@ -28,8 +28,12 @@ const convertedValues = {}
 class DeviceTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { isModalVisible: false, isSelectVisible: true, detailVisible: true, recVisible: true, REC: false, detailVisible2: false,
-                   modelSelect: false, uploadServer: true, Settings: false, RECtime: false, RECfps: true, inputValue: 15 }
+    this.state = {
+      isModalVisible: false, isSelectVisible: true,
+      detailVisible: true, detailVisible2: false,
+      recVisible: true, REC: false, RECtime: false, RECfps: true,
+      modelSelect: false, uploadServer: true, Settings: false, inputValue: 15
+    }
   }
 
   componentDidMount() {
@@ -214,7 +218,7 @@ class DeviceTable extends Component {
         var command = `${mapValues.modelSelect}`
       }
       else if(values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC'){
-        if(values.REC_FPS<16 && values.REC_FPS>0){
+        if(values.REC_FPS < 16 && values.REC_FPS > 0){
           if(values.modelSelect === 'S_MOTION_CNN_JPEG'){
             var command = `rec_after_event;${values.REC_switch}\\\\rec_fps;${values.REC_FPS}\\\\rec_after_event_cycle;${values.REC_after_event_cycle}\\\\rec_after_event_duration;${values.Cycle_Duration}\\\\upload_to_server;${values.UPLOAD_DATA}`
           }
