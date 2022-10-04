@@ -143,7 +143,7 @@ class DeviceTable extends Component {
             <Item label='CNN 事件觸發後錄影循環次數' name='REC_after_event_cycle' hidden={this.state.detailVisible}>
               <Input disabled={this.state.detailVisible} hidden={this.state.detailVisible} defaultValue={1}></Input>
             </Item>
-            <Item label='CNN 事件觸發後每次循環時間長度 ' name='Cycle_Duration' hidden={this.state.detailVisible}>
+            <Item label='CNN 事件觸發後每次循環時間長度' name='Cycle_Duration' hidden={this.state.detailVisible}>
               <Input disabled={this.state.detailVisible} hidden={this.state.detailVisible} defaultValue={5}></Input>
             </Item>
             <Item label='是否將錄製影片上傳至雲端' name='UPLOAD_DATA' hidden={this.state.uploadServer}>
@@ -176,15 +176,15 @@ class DeviceTable extends Component {
   handleCancel = () => {
     this.setState({ isModalVisible: false })
     this.setState({ isSelectVisible: true })
-    this.setState({ recVisible:true})
-    this.setState({ detailVisible :true})
-    this.setState({ detailVisible2:false})
-    this.setState({ modelSelect:false})
-    this.setState({ uploadServer:true})
-    this.setState({ Settings:false})
-    this.setState({ RECtime:false})
-    this.setState({ RECfps:true})
-    this.setState({ REC:false})
+    this.setState({ recVisible: true })
+    this.setState({ detailVisible: true })
+    this.setState({ detailVisible2: false })
+    this.setState({ modelSelect: false })
+    this.setState({ uploadServer: true })
+    this.setState({ Settings: false })
+    this.setState({ RECtime: false })
+    this.setState({ RECfps: true })
+    this.setState({ REC: false })
   }
 
   rule = (hint) => {
@@ -210,21 +210,21 @@ class DeviceTable extends Component {
     })
     if (this.props.whichModal.id > 0) {
       //this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
-      if(values.modelSelect==='CNN'||values.modelSelect==='S_MOTION_CNN'){
-        var command = `"${mapValues.modelSelect}"`
+      if(values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN'){
+        var command = `${mapValues.modelSelect}`
       }
-      else if(values.modelSelect==='S_MOTION_CNN_JPEG'||values.modelSelect==='JPEG_REC'){
-        if(values.REC_FPS<16&&values.REC_FPS>0){
-          if(values.modelSelect==='S_MOTION_CNN_JPEG'){
-            var command = `"rec_after_event;${values.REC_switch}\\\\rec_fps;${values.REC_FPS}\\\\rec_after_event_cycle;${values.REC_after_event_cycle}\\\\rec_after_event_duration;${values.Cycle_Duration}\\\\upload_to_server;${values.UPLOAD_DATA}"`
+      else if(values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC'){
+        if(values.REC_FPS<16 && values.REC_FPS>0){
+          if(values.modelSelect === 'S_MOTION_CNN_JPEG'){
+            var command = `rec_after_event;${values.REC_switch}\\\\rec_fps;${values.REC_FPS}\\\\rec_after_event_cycle;${values.REC_after_event_cycle}\\\\rec_after_event_duration;${values.Cycle_Duration}\\\\upload_to_server;${values.UPLOAD_DATA}`
           }
-          else if(values.modelSelect==='JPEG_REC'){
-            var command = `"rec_fps;${values.REC_FPS}\\\\upload_to_server;${values.UPLOAD_DATA}\\\\rec;${values.REC_Time}"`
+          else if(values.modelSelect === 'JPEG_REC'){
+            var command = `rec_fps;${values.REC_FPS}\\\\upload_to_server;${values.UPLOAD_DATA}\\\\rec;${values.REC_Time}`
           }
         }
         else{
           Modal.error({
-            title: '此FPS無效，請重新輸入!',
+            title: '此FPS無效, 請重新輸入!',
             onOk: () => {
               message.destroy()
             }
@@ -234,7 +234,7 @@ class DeviceTable extends Component {
       console.log(values)
      }
      Modal.success({
-      title:'指令傳送成功 ! ',
+      title:'指令傳送成功!',
       content:`${command}`
     })
     } else {
@@ -246,86 +246,86 @@ class DeviceTable extends Component {
   }
   handleSwitch = (value) => {
     if(value === true){
-      this.setState({ REC:true })
-      this.setState({ detailVisible:false })
-      this.setState({ uploadServer:false })
-      this.setState({ RECtime:false })
-      this.setState({ RECfps:false })
+      this.setState({ REC: true })
+      this.setState({ detailVisible: false })
+      this.setState({ uploadServer: false })
+      this.setState({ RECtime: false })
+      this.setState({ RECfps: false })
     }
     else{
-      this.setState({ REC:false })
-      this.setState({ detailVisible:true })
-      this.setState({ uploadServer:true })
-      this.setState({ RECtime:false })
-      this.setState({ RECfps:true })
+      this.setState({ REC: false })
+      this.setState({ detailVisible: true })
+      this.setState({ uploadServer: true })
+      this.setState({ RECtime: false })
+      this.setState({ RECfps: true })
     }
   }
   handleSwitch2 = (value) => {
     if(value === true){
-      this.setState({isSelectVisible:false})
+      this.setState({ isSelectVisible: false })
     }
     else{
-      this.setState({isSelectVisible:true})
+      this.setState({ isSelectVisible: true })
     }
   }
   handleChange = (value) => {
     console.log(value)
     if(value === 'S_MOTION_CNN_JPEG'){
-      this.setState({RECtime:false})
-      this.setState({ recVisible:false})
-      this.setState({ Settings:true})
+      this.setState({ RECtime: false })
+      this.setState({ recVisible: false })
+      this.setState({ Settings: true })
       if(this.state.REC === true){
-        this.setState({ detailVisible:false})
-        this.setState({ RECfps:false})
-        this.setState({ modelSelect:false})
-        this.setState({ uploadServer:false})
+        this.setState({ detailVisible: false })
+        this.setState({ RECfps: false })
+        this.setState({ modelSelect: false })
+        this.setState({ uploadServer: false })
       }
       else{
-        this.setState({ detailVisible:true})
-        this.setState({ RECfps:true})
-        this.setState({ modelSelect:false})
-        this.setState({ uploadServer:true})
+        this.setState({ detailVisible: true })
+        this.setState({ RECfps: true })
+        this.setState({ modelSelect: false })
+        this.setState({ uploadServer: true })
       }
     }
     else if(value === 'JPEG_REC'){
-      this.setState({ uploadServer:false})
-      this.setState({ Settings:true})
-      this.setState({ detailVisible2:true})
-      this.setState({ detailVisible:true})
-      this.setState({ RECfps:false})
-      this.setState({ recVisible:true})
-      this.setState({ modelSelect:false})
-      this.setState({ RECtime:true})
+      this.setState({ uploadServer: false })
+      this.setState({ Settings: true })
+      this.setState({ detailVisible2: true })
+      this.setState({ detailVisible: true })
+      this.setState({ RECfps: false })
+      this.setState({ recVisible: true })
+      this.setState({ modelSelect: false })
+      this.setState({ RECtime: true })
     }
     else if(value === 'UPDATE_MODEL'){
-      this.setState({ uploadServer:false})
-      this.setState({ Settings:true})
-      this.setState({ modelSelect:true})
-      this.setState({ recVisible:true})
-      this.setState({ detailVisible :true})
-      this.setState({ detailVisible2:false})
-      this.setState({ RECtime:false})
-      this.setState({ RECfps:true})
+      this.setState({ uploadServer: false })
+      this.setState({ Settings: true })
+      this.setState({ modelSelect: true })
+      this.setState({ recVisible: true })
+      this.setState({ detailVisible: true })
+      this.setState({ detailVisible2: false })
+      this.setState({ RECtime: false })
+      this.setState({ RECfps: true })
     }
     else if(value === 'JPEG_CNN'){
-      this.setState({ recVisible:true})
-      this.setState({ detailVisible :true})
-      this.setState({ detailVisible2:false})
-      this.setState({ modelSelect:false})
-      this.setState({ uploadServer:true})
-      this.setState({ Settings:true})
-      this.setState({ RECtime:false})
-      this.setState({ RECfps:true})
+      this.setState({ recVisible: true })
+      this.setState({ detailVisible: true })
+      this.setState({ detailVisible2: false })
+      this.setState({ modelSelect: false })
+      this.setState({ uploadServer: true })
+      this.setState({ Settings: true })
+      this.setState({ RECtime: false })
+      this.setState({ RECfps: true })
     }
     else{
-      this.setState({ recVisible:true})
-      this.setState({ detailVisible :true})
-      this.setState({ detailVisible2:false})
-      this.setState({ modelSelect:false})
-      this.setState({ uploadServer:true})
-      this.setState({ Settings:false})
-      this.setState({ RECtime:false})
-      this.setState({ RECfps:true})
+      this.setState({ recVisible: true })
+      this.setState({ detailVisible: true })
+      this.setState({ detailVisible2: false })
+      this.setState({ modelSelect: false })
+      this.setState({ uploadServer: true })
+      this.setState({ Settings: false })
+      this.setState({ RECtime: false })
+      this.setState({ RECfps: true })
     }
   }
 
