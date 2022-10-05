@@ -68,52 +68,12 @@ const Test = () => {
               </Table>
             </Panel>
           </Collapse>
-          <Collapse>
-            <Panel header='0x7699'>
-              <Table
-                dataSource={data}
-                pagination={{ position: ['bottomCenter'] }}
-              >
-                <Column
-                  title='採集資料'
-                  render={description}
-                  ellipsis={true}
-                  align='center'
-                />
-                <Column
-                  title='操作'
-                  render={download}
-                  align='center'
-                />
-              </Table>
-            </Panel>
-          </Collapse>
         </Panel>
       </Collapse>
       <Collapse>
         <Panel header='0000000012aed3d4'>
           <Collapse>
-            <Panel header='0x7612'>
-              <Table
-                dataSource={data}
-                pagination={{ position: ['bottomCenter'] }}
-              >
-                <Column
-                  title='採集資料'
-                  render={description}
-                  ellipsis={true}
-                  align='center'
-                />
-                <Column
-                  title='操作'
-                  render={download}
-                  align='center'
-                />
-              </Table>
-            </Panel>
-          </Collapse>
-          <Collapse>
-            <Panel header='0x7634'>
+            <Panel header='0x7680'>
               <Table
                 dataSource={data}
                 pagination={{ position: ['bottomCenter'] }}
