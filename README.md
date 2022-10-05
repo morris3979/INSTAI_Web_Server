@@ -9,7 +9,7 @@ npm install
 ## 2. Run and Start
 
 ```shell
-npm start
+npm start test
 ```
 
 
