@@ -3,7 +3,7 @@ import { Table, Button, Typography, Collapse } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 
-const { Column, Row } = Table
+const { Column } = Table
 const { Text } = Typography
 const { Panel } = Collapse
 
