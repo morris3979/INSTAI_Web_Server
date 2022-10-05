@@ -87,6 +87,13 @@ class HostTable extends Component {
                 }
               />
             </Item>
+            <Item label='請選擇專案' name='ProjectId' rules={[this.rule('專案')]}>
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.ProjectId)}`
+                }
+              />
+            </Item>
             <Item>
               <Button htmlType='submit'>
                 確認

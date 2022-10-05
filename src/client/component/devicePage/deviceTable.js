@@ -91,6 +91,13 @@ class DeviceTable extends Component {
                 }
               />
             </Item>
+            <Item label='請選擇主機' name='HostId' rules={[this.rule('主機')]}>
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.HostId)}`
+                }
+              />
+            </Item>
             <Item label='切換運作模式' name='Change_Model'>
               <Switch onChange={this.handleSwitch2}></Switch>
             </Item>
