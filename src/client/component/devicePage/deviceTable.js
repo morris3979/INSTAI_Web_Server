@@ -50,7 +50,7 @@ class DeviceTable extends Component {
           pagination={{ position: ['bottomCenter'] }}
           style={{ whiteSpace: 'pre'}}
         >
-          <Column title='操作' render={this.buttonGroup} align='center' />
+          <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
           <Column title='設備代號' dataIndex='deviceId' align='center' />
           <Column title='設備名稱' dataIndex='deviceName' align='center' />
           <Column title='設備描述' dataIndex='description' align='center' />
@@ -58,6 +58,7 @@ class DeviceTable extends Component {
           <Column title='訊息' dataIndex='message' align='center' />
           <Column title='模型更新紀錄 (模型, 更新時間)' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
             render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+', '+c.createdAt.slice(0, -5).replace('T', ' ')+'\n').join('')} />
+          <Column title='所屬主機' dataIndex={['Host', 'device']} align='center' />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
