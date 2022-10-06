@@ -22,25 +22,41 @@ const data = [
     key: 3,
     videoURL: 'https://d20cmf4o2f77jz.cloudfront.net/video/00000000674a3751_1_20220808202505_camera1_front_body.mp4',
     description: '00000000674a3751_1_20220808202505_camera1_front_body'
+  },
+  {
+    key: 4,
+    videoURL: 'https://d20cmf4o2f77jz.cloudfront.net/video/00000000674a3751_1_20220728192323_camera1_front_body.mp4',
+    description: '00000000674a3751_1_20220728192323_camera1_front_body'
+  },
+  {
+    key: 5,
+    videoURL: 'https://d20cmf4o2f77jz.cloudfront.net/video/00000000674a3751_1_20220728192058_camera1_front_body.mp4',
+    description: '00000000674a3751_1_20220728192058_camera1_front_body'
+  },
+  {
+    key: 6,
+    videoURL: 'https://d20cmf4o2f77jz.cloudfront.net/video/00000000674a3751_1_20220808202505_camera1_front_body.mp4',
+    description: '00000000674a3751_1_20220808202505_camera1_front_body'
   }
 ]
 
-// const video = (text) => {
-//   return (
-//     <ReactPlayer
-//       url={`${text.videoURL}`}
-//       controls={true}
-//     />
-//   )
-// }
-
-const description = (text) => {
+const video = (text) => {
   return (
     <Fragment align='center'>
       <ReactPlayer
         url={`${text.videoURL}`}
         controls={true}
+        position='relative'
+        width='100%'
+        height='100%'
       />
+    </Fragment>
+  )
+}
+
+const description = (text) => {
+  return (
+    <Fragment align='center'>
       <Text>{text.description}</Text>
     </Fragment>
   )
@@ -104,10 +120,17 @@ const Test = () => {
               <Table
                 dataSource={data}
                 rowSelection={rowSelection}
-                pagination={{ position: ['bottomCenter'] }}
+                pagination={{ position: ['bottomCenter'], pageSize: 2 }}
               >
                 <Column
                   title='採集資料'
+                  render={video}
+                  ellipsis={true}
+                  width='30%'
+                  align='center'
+                />
+                <Column
+                  title='資料名稱'
                   render={description}
                   ellipsis={true}
                   align='center'
@@ -115,6 +138,7 @@ const Test = () => {
                 <Column
                   title='操作'
                   render={download}
+                  width='15%'
                   align='center'
                 />
               </Table>
@@ -145,10 +169,17 @@ const Test = () => {
               <Table
                 dataSource={data}
                 rowSelection={rowSelection}
-                pagination={{ position: ['bottomCenter'] }}
+                pagination={{ position: ['bottomCenter'], pageSize: 2 }}
               >
                 <Column
                   title='採集資料'
+                  render={video}
+                  ellipsis={true}
+                  width='30%'
+                  align='center'
+                />
+                <Column
+                  title='資料名稱'
                   render={description}
                   ellipsis={true}
                   align='center'
@@ -156,6 +187,7 @@ const Test = () => {
                 <Column
                   title='操作'
                   render={download}
+                  width='15%'
                   align='center'
                 />
               </Table>
