@@ -34,6 +34,7 @@ class DeviceTable extends Component {
       recVisible: true, REC: false, RECtime: false, RECfps: true,
       modelSelect: false, uploadServer: true, Settings: false,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
+      rec_time:5,uptoserver:true
     }
   }
 
@@ -111,15 +112,31 @@ class DeviceTable extends Component {
                 <Option value='CNNFit_20210223_PDFD_BW.bin'>CNNFit_20210223_PDFD_BW.bin</Option>
               </Select>
             </Item>
-            <Item label='切換運作模式' name='REC_switch' hidden={this.state.recVisible}>
+            <Item label='相關參數配置' name='REC_switch' hidden={this.state.recVisible}>
               <Switch disabled={this.state.recVisible} defaultChecked={false} onChange={this.handleSwitch} hidden={this.state.recVisible}></Switch>
             </Item>
             <Item label='CNN 事件觸發後是否開始錄影' name='Rec after Event' hidden={this.state.detailVisible}>
               <Switch disabled={this.state.detailVisible} hidden={this.state.detailVisible}></Switch>
             </Item>
             <Item label='錄影時間(秒)' name='REC_Time' hidden={!this.state.RECtime}>
-              <Input disabled={!this.state.RECtime} hidden={!this.state.RECtime}></Input>
-            </Item>
+            <Row>
+                <Col span={12}>
+                  <Slider
+                    disabled={!this.state.RECtime} hidden={!this.state.RECtime}
+                    min={1} max={15} onChange={this.rec_time_onChange}
+                    value={typeof this.state.rec_time === 'number' ? this.state.rec_time : 15}
+                  />
+                </Col>
+                <Col span={4}>
+                  <InputNumber
+                    disabled={!this.state.RECtime} hidden={!this.state.RECtime}
+                    min={1} max={15} style={{ margin: '0 12px', }}
+                    value={this.state.rec_time}
+                    onChange={this.rec_time_onChange}
+                  />
+                </Col>
+              </Row>            
+              </Item>
             <Item label='錄影時每秒幀數 FPS' name='REC_FPS' hidden={this.state.RECfps}>
               <Row>
                 <Col span={12}>
@@ -178,8 +195,11 @@ class DeviceTable extends Component {
               </Row>
             </Item>
             <Item label='是否將錄製影片上傳至雲端' name='UPLOAD_DATA' hidden={this.state.uploadServer}>
-              <Switch defaultChecked={true} hidden={this.state.uploadServer}></Switch>
-            </Item>
+            <Switch 
+              defaultChecked={true} 
+              hidden={this.state.uploadServer} 
+              value={this.state.uptoserver === 'boolean' ? this.state.uptoserver : true}
+              onChange={this.uptoserverChange}></Switch>            </Item>
             <Item>
               <Button htmlType='submit'>
                 確認
@@ -249,16 +269,16 @@ class DeviceTable extends Component {
       else if (values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC') {
         if (this.state.rec_fps) {
           if (values.modelSelect === 'S_MOTION_CNN_JPEG') {
-            var command = `rec_after_event;${values.REC_switch}
+            var command = `rec_after_event;${this.changevalue(values.REC_switch)}
             \\\\rec_fps;${this.state.rec_fps}
             \\\\rec_after_event_cycle;${this.state.rec_after_event_cycle}
             \\\\rec_after_event_duration;${this.state.rec_after_event_duration}
-            \\\\upload_to_server;${values.UPLOAD_DATA}`
+            \\\\upload_to_server;${this.changevalue(this.state.uptoserver)}`
           }
           else if (values.modelSelect === 'JPEG_REC') {
             var command = `rec_fps;${this.state.rec_fps}
-            \\\\upload_to_server;${values.UPLOAD_DATA}
-            \\\\rec;${values.REC_Time}`
+            \\\\upload_to_server;${this.changevalue(this.state.uptoserver)}
+            \\\\rec;${this.state.rec_time}`
           }
         } else {
           Modal.error({
@@ -288,6 +308,12 @@ class DeviceTable extends Component {
   }
   rec_after_event_duration_onChange = (newValue) => {
     this.setState({ rec_after_event_duration: newValue })
+  }
+  rec_time_onChange = (newValue) => {
+    this.setState({ rec_time: newValue})
+  }
+  uptoserverChange  = (newValue) => {
+    this.setState({ uptoserver :newValue})
   }
 
   handleSwitch = (value) => {
@@ -367,6 +393,14 @@ class DeviceTable extends Component {
       this.setState({ Settings: false })
       this.setState({ RECtime: false })
       this.setState({ RECfps: true })
+    }
+  }
+  changevalue = (value) => {
+    if(value === true){
+      return 'ON'
+    }
+    else if(value === false){
+      return 'OFF'
     }
   }
 
