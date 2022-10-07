@@ -34,7 +34,7 @@ class DeviceTable extends Component {
       recVisible: true, REC: false, RECtime: false, RECfps: true,
       modelSelect: false, uploadServer: true, Settings: false,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
-      rec_time:5,uptoserver:true,
+      rec_time:5, upload2Server: true,
     }
   }
 
@@ -147,7 +147,7 @@ class DeviceTable extends Component {
                     onChange={this.rec_time_onChange}
                   />
                 </Col>
-              </Row>            
+              </Row>
               </Item>
             <Item label='錄影時每秒幀數 FPS' name='REC_FPS' hidden={this.state.RECfps}>
               <Row>
@@ -208,10 +208,10 @@ class DeviceTable extends Component {
             </Item>
             <Item label='是否將錄製影片上傳至雲端' name='UPLOAD_DATA' hidden={this.state.uploadServer}>
             <Switch 
-              defaultChecked={true} 
-              hidden={this.state.uploadServer} 
-              value={this.state.uptoserver === 'boolean' ? this.state.uptoserver : true}
-              onChange={this.uptoserverChange}></Switch>            </Item>
+              defaultChecked={true}
+              hidden={this.state.uploadServer}
+              value={this.state.upload2Server === 'boolean' ? this.state.upload2Server : true}
+              onChange={this.upload2ServerChange}></Switch>            </Item>
             <Item>
               <Button htmlType='submit'>
                 確認
@@ -281,16 +281,16 @@ class DeviceTable extends Component {
       else if (values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC') {
         if (this.state.rec_fps) {
           if (values.modelSelect === 'S_MOTION_CNN_JPEG') {
-            var command = `rec_after_event;${this.changevalue(values.REC_switch)}
-            \\\\rec_fps;${this.state.rec_fps}
-            \\\\rec_after_event_cycle;${this.state.rec_after_event_cycle}
-            \\\\rec_after_event_duration;${this.state.rec_after_event_duration}
-            \\\\upload_to_server;${this.changevalue(this.state.uptoserver)}`
+            var command = `rec_after_event: ${this.changeValue(values.REC_switch)}
+            , rec_fps: ${this.state.rec_fps}
+            , rec_after_event_cycle: ${this.state.rec_after_event_cycle}
+            , rec_after_event_duration: ${this.state.rec_after_event_duration}
+            , upload_to_server: ${this.changeValue(this.state.upload2Server)}`
           }
           else if (values.modelSelect === 'JPEG_REC') {
-            var command = `rec_fps;${this.state.rec_fps}
-            \\\\upload_to_server;${this.changevalue(this.state.uptoserver)}
-            \\\\rec;${this.state.rec_time}`
+            var command = `rec_fps: ${this.state.rec_fps}
+            , upload_to_server: ${this.changeValue(this.state.upload2Server)}
+            , rec: ${this.state.rec_time}`
           }
         } else {
           Modal.error({
@@ -324,8 +324,8 @@ class DeviceTable extends Component {
   rec_time_onChange = (newValue) => {
     this.setState({ rec_time: newValue})
   }
-  uptoserverChange  = (newValue) => {
-    this.setState({ uptoserver :newValue})
+  upload2ServerChange  = (newValue) => {
+    this.setState({ upload2Server :newValue})
   }
 
   handleSwitch = (value) => {
@@ -407,7 +407,7 @@ class DeviceTable extends Component {
       this.setState({ RECfps: true })
     }
   }
-  changevalue = (value) => {
+  changeValue = (value) => {
     if(value === true){
       return 'ON'
     }
