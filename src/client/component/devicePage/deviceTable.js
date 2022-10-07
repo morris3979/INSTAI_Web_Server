@@ -34,7 +34,7 @@ class DeviceTable extends Component {
       recVisible: true, REC: false, RECtime: false, RECfps: true,
       modelSelect: false, uploadServer: true, Settings: false,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
-      rec_time:5,uptoserver:true
+      rec_time:5,uptoserver:true,
     }
   }
 
