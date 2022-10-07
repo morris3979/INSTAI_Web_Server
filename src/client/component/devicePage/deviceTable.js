@@ -19,7 +19,7 @@ import {
 } from '../../store/actionCreater'
 import { mapValues } from 'async'
 
-const { Column } = Table
+const { Column, ColumnGroup } = Table
 const { Item } = Form
 const { Option } = Select
 
@@ -51,14 +51,19 @@ class DeviceTable extends Component {
           pagination={{ position: ['bottomCenter'] }}
           style={{ whiteSpace: 'pre'}}
         >
-          <Column title='操作' render={this.buttonGroup} align='center' />
+          <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
           <Column title='設備代號' dataIndex='deviceId' align='center' />
           <Column title='設備名稱' dataIndex='deviceName' align='center' />
           <Column title='設備描述' dataIndex='description' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='message' align='center' />
-          <Column title='模型更新紀錄 (模型, 更新時間)' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
-            render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+', '+c.createdAt.slice(0, -5).replace('T', ' ')+'\n').join('')} />
+          <ColumnGroup title="模型更新紀錄">
+            <Column title='模型' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width='15%'
+              render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+'\n').join('')} />
+            <Column title='更新時間' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width='10%'
+              render={(HwUpdateLogs) => HwUpdateLogs.map(c => '('+c.createdAt.slice(0, -5).replace('T', ' ')+')'+'\n').join('')} />
+          </ColumnGroup>
+          <Column title='所屬主機' dataIndex={['Host', 'device']} align='center' />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
@@ -88,6 +93,13 @@ class DeviceTable extends Component {
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.description)}`
+                }
+              />
+            </Item>
+            <Item label='請選擇主機' name='HostId' rules={[this.rule('主機')]}>
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.HostId)}`
                 }
               />
             </Item>

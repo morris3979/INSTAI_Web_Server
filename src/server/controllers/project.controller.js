@@ -33,6 +33,10 @@ exports.create = (req, res) => {
 // Retrieve all Project from the database.
 exports.findAll = (req, res) => {
     Project.findAll({
+      include: [{
+          model: db.Host,
+          attributes:['id', 'serialNumber', 'device']
+      }],
       order: [
         ['id', 'DESC'],
       ],

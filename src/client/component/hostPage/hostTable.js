@@ -40,13 +40,17 @@ class HostTable extends Component {
           dataSource={this.props.hostTableData}
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
+          style={{ whiteSpace: 'pre'}}
         >
-          <Column title='操作' render={this.buttonGroup} align='center' />
+          <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
           <Column title='主機代號' dataIndex='serialNumber' align='center' />
-          <Column title='主機裝置' dataIndex='device' align='center' />
+          <Column title='主機名稱' dataIndex='device' align='center' />
           <Column title='主機類型' dataIndex='type' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='response' align='center' />
+          <Column title='所屬專案' dataIndex={['Project', 'displayName']} align='center' />
+          <Column title='已配置的設備' dataIndex='Devices' key="Devices" align='center'
+            render={(Devices) => Devices.map(c => c.deviceId+' ('+c.deviceName+')'+'\n').join('')} />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
@@ -80,6 +84,13 @@ class HostTable extends Component {
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.command)}`
+                }
+              />
+            </Item>
+            <Item label='請選擇專案' name='ProjectId' rules={[this.rule('專案')]}>
+              <Input
+                defaultValue={
+                  `${this.defaultValue(this.props.whichModal.ProjectId)}`
                 }
               />
             </Item>
