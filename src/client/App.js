@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
-import { LogoutData } from './store/actionCreater'
+import { LogoutData , GetProjectList} from './store/actionCreater'
 import {
   AppstoreOutlined,
   EnvironmentOutlined,
@@ -29,11 +29,10 @@ const Test = lazy(() => import('./component/test'))
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
-
 const App = (props) => {
   const {
     loginInformation,
-    onClick
+    onClick,getProjectList
   } = props
 
   if (loginInformation.admin == true) {
@@ -47,21 +46,7 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
-              <Item key='modelA'>
-                <Link to='/modelA'>
-                  專案A
-                </Link>
-              </Item>
-              <Item key='modelB'>
-                <Link to='modelB'>
-                  專案B
-                </Link>
-              </Item>
-              <Item key='modelC'>
-                <Link to='modelC'>
-                  專案C
-                </Link>
-              </Item>
+              {getProjectList()}
             </SubMenu>
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
               <Item key='/project' disabled={!loginInformation.admin}>
@@ -95,11 +80,11 @@ const App = (props) => {
                 測試
               </Link>
             </Item>
-            <Item key='/resource' disabled={!loginInformation.admin} icon={<LinkOutlined />}>
-              <Link to='/resource'>
-                關於
-              </Link>
-            </Item>
+              <Item key='/resource' disabled={!loginInformation.admin} icon={<LinkOutlined />}>
+                <Link to='/resource'>
+                  關於
+                </Link>
+              </Item>
             <Item key='/logout' disabled={!loginInformation.admin} onClick={onClick} icon={<LogoutOutlined />}>
               <Link to='/'>
                 登出
@@ -148,6 +133,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onClick() {
       const action = LogoutData()
+      dispatch(action)
+    },
+    getProjectList() {
+      const action = GetProjectList()
       dispatch(action)
     }
   }

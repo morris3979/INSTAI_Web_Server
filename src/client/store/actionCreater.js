@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { message, Modal } from 'antd'
+import { message, Modal, Menu} from 'antd'
 import {
   Get_Project_Table, Get_Host_Table, Get_Device_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information, Account_Information, Logout_Information
+  Login_Information, Account_Information, Logout_Information,Get_ProjectData
 } from './actionType'
 
 //共用Function <<<
@@ -91,6 +91,7 @@ export const LogoutData = () => {
     value: { admin: false }
   })
 }
+
 
 export const RegisterFormData = (data) => {
   return (
@@ -186,6 +187,25 @@ export const DeleteAccountTableData = (data) => {
       } catch (error) {
         message.destroy()
         message.error(`${error}`)
+      }
+    }
+  )
+}
+export const GetProjectList = () => {
+  return (
+    async () => {
+      try {
+        const response = await axios.get('/api/project')
+        const transfer_data=[...new Set(response.data.map(x => x.displayName))]
+        console.log(transfer_data)
+        transfer_data.map(index => {
+            return <Menu.Item key={index}>{index}</Menu.Item>
+       })
+      } catch (error) {
+        Modal.error({
+          title: `${error}`,
+          content: '請重新整理來獲取資料'
+        })
       }
     }
   )
