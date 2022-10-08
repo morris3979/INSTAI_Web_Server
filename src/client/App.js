@@ -41,7 +41,7 @@ const App = (props) => {
     getProjectList()
 
     /* 上面是 componentDidMount和componentDidUpdate */
-  }, [props.projectList /* dependencies參數 */]); /* 加入監控的props */
+  }, [/* dependencies參數 */]); /* 加入監控的props */
 
   if (loginInformation.admin == true) {
     return (
@@ -55,7 +55,7 @@ const App = (props) => {
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
               {projectList.map((c) => {
-                console.log(c)
+                // console.log(c)
                 return <Item key={c.project}>{c.displayName}</Item>
               })}
             </SubMenu>
