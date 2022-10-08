@@ -46,4 +46,11 @@ pageRouter.get("/test", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
+pageRouter.get("/report/:project",
+    async (req, res) => {
+        res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+      return;
+    }
+  );
+
 module.exports = pageRouter;

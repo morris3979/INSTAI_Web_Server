@@ -56,7 +56,13 @@ const App = (props) => {
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
               {projectList.map((c) => {
                 // console.log(c)
-                return <Item key={c.project}>{c.displayName}</Item>
+                return (
+                  <Item key={c.project}>
+                    <Link to={`/report/${c.project}`}>
+                      {c.displayName}
+                    </Link>
+                  </Item>
+                )
               })}
             </SubMenu>
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
@@ -109,9 +115,7 @@ const App = (props) => {
               <Routes>
                 <Route path='/' element={<InitialPage />} />
                 <Route path='/map' element={<MapPage />} />
-                <Route path='/modelA' element={[]} />
-                <Route path='/modelB' element={[]} />
-                <Route path='/modelC' element={[]} />
+                <Route path='/report/:project' element={(props) => {}} />
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />
