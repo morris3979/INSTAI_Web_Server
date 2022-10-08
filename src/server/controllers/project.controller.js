@@ -38,7 +38,7 @@ exports.findAll = (req, res) => {
           attributes:['id', 'serialNumber', 'device']
       }],
       order: [
-        ['id', 'DESC'],
+        ['id', 'ASC'],
       ],
     })
       .then(data => {
