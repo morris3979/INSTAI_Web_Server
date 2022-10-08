@@ -1,9 +1,9 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
-import { LogoutData , GetProjectList} from './store/actionCreater'
+import { LogoutData , GetProjectList } from './store/actionCreater'
 import {
   AppstoreOutlined,
   EnvironmentOutlined,
@@ -19,9 +19,6 @@ const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
 const modelPage = lazy(() => import('./page/modelPage'))
-const ModelAPage = lazy(() => import('./page/modelAPage'))
-const ModelBPage = lazy(() => import('./page/modelBPage'))
-const ModelCPage = lazy(() => import('./page/modelCPage'))
 const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const AccountPage = lazy(() => import('./page/accountPage'))
@@ -29,11 +26,22 @@ const Test = lazy(() => import('./component/test'))
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
+
 const App = (props) => {
   const {
     loginInformation,
-    onClick,getProjectList
+    onClick,
+    getProjectList,
+    projectList
   } = props
+
+  useEffect(() => {
+    /* 下面是 componentDidMount和componentDidUpdate */
+
+    getProjectList()
+
+    /* 上面是 componentDidMount和componentDidUpdate */
+  }, [props.projectList /* dependencies參數 */]); /* 加入監控的props */
 
   if (loginInformation.admin == true) {
     return (
@@ -46,7 +54,10 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
-              {getProjectList()}
+              {projectList.map((c) => {
+                console.log(c)
+                return <Item key={c.project}>{c.displayName}</Item>
+              })}
             </SubMenu>
             <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
               <Item key='/project' disabled={!loginInformation.admin}>
@@ -124,7 +135,8 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    loginInformation: state.loginInformation
+    loginInformation: state.loginInformation,
+    projectList: state.projectList
   }
 }
 

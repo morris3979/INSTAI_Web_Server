@@ -3,7 +3,7 @@ import { message, Modal, Menu} from 'antd'
 import {
   Get_Project_Table, Get_Host_Table, Get_Device_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information, Account_Information, Logout_Information,Get_ProjectData
+  Login_Information, Account_Information, Logout_Information, Get_Project_Data
 } from './actionType'
 
 //共用Function <<<
@@ -91,7 +91,6 @@ export const LogoutData = () => {
     value: { admin: false }
   })
 }
-
 
 export const RegisterFormData = (data) => {
   return (
@@ -191,21 +190,19 @@ export const DeleteAccountTableData = (data) => {
     }
   )
 }
+
 export const GetProjectList = () => {
   return (
-    async () => {
+    async (dispatch) => {
       try {
         const response = await axios.get('/api/project')
-        const transfer_data=[...new Set(response.data.map(x => x.displayName))]
-        console.log(transfer_data)
-        transfer_data.map(index => {
-            return <Menu.Item key={index}>{index}</Menu.Item>
-       })
+        console.log(response.data)
+        const action = DeliverData(response.data, Get_Project_Data)
+        dispatch(action)
+        message.destroy()
       } catch (error) {
-        Modal.error({
-          title: `${error}`,
-          content: '請重新整理來獲取資料'
-        })
+        message.destroy()
+        message.error(`${error}`)
       }
     }
   )
