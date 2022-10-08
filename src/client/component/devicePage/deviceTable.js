@@ -310,7 +310,7 @@ class DeviceTable extends Component {
      } else {
       console.log('else: ', values)
      }
-    convertedValues.command=command
+    convertedValues.command = command
     this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
     } else {
       //this.props.postDeviceTableData(convertedValues)
@@ -326,10 +326,10 @@ class DeviceTable extends Component {
     this.setState({ rec_after_event_duration: newValue })
   }
   rec_time_onChange = (newValue) => {
-    this.setState({ rec_time: newValue})
+    this.setState({ rec_time: newValue })
   }
   upload2ServerChange  = (newValue) => {
-    this.setState({ upload2Server :newValue})
+    this.setState({ upload2Server: newValue })
   }
 
   handleSwitch = (value) => {
