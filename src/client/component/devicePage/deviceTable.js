@@ -303,10 +303,8 @@ class DeviceTable extends Component {
      } else {
       console.log('else: ', values)
      }
-     Modal.success({
-      title:'指令傳送成功!',
-      content:`${command}`
-    })
+    convertedValues.command=command
+    this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
     } else {
       //this.props.postDeviceTableData(convertedValues)
     }
