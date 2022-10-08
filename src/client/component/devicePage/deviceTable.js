@@ -34,7 +34,7 @@ class DeviceTable extends Component {
       recVisible: true, REC: false, RECtime: false, RECfps: true,
       modelSelect: false, uploadServer: true, Settings: false,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
-      rec_time:5, upload2Server: true,
+      rec_time:5, upload2Server: true,rec_settings:false,
     }
   }
 
@@ -125,7 +125,12 @@ class DeviceTable extends Component {
               </Select>
             </Item>
             <Item label='相關參數配置' name='REC_switch' hidden={this.state.recVisible}>
-              <Switch disabled={this.state.recVisible} defaultChecked={false} onChange={this.handleSwitch} hidden={this.state.recVisible}></Switch>
+              <Switch 
+              disabled={this.state.recVisible} 
+              defaultChecked={false} 
+              onChange={this.handleSwitch} 
+              hidden={this.state.recVisible}
+              value={this.state.rec_settings === 'boolean' ? this.state.rec_settings : false}></Switch>
             </Item>
             <Item label='CNN 事件觸發後是否開始錄影' name='Rec after Event' hidden={this.state.detailVisible}>
               <Switch disabled={this.state.detailVisible} hidden={this.state.detailVisible}></Switch>
@@ -281,7 +286,7 @@ class DeviceTable extends Component {
       else if (values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC') {
         if (this.state.rec_fps) {
           if (values.modelSelect === 'S_MOTION_CNN_JPEG') {
-            var command = `rec_after_event: ${this.changeValue(values.REC_switch)}
+            var command = `rec_after_event: ${this.changeValue(this.state.rec_settings)}
             , rec_fps: ${this.state.rec_fps}
             , rec_after_event_cycle: ${this.state.rec_after_event_cycle}
             , rec_after_event_duration: ${this.state.rec_after_event_duration}
@@ -309,7 +314,6 @@ class DeviceTable extends Component {
       //this.props.postDeviceTableData(convertedValues)
     }
   }
-
   rec_fps_onChange = (newValue) => {
     this.setState({ rec_fps: newValue })
   }
@@ -333,12 +337,14 @@ class DeviceTable extends Component {
       this.setState({ uploadServer: false })
       this.setState({ RECtime: false })
       this.setState({ RECfps: false })
+      this.setState({ rec_settings: true})
     } else {
       this.setState({ REC: false })
       this.setState({ detailVisible: true })
       this.setState({ uploadServer: true })
       this.setState({ RECtime: false })
       this.setState({ RECfps: true })
+      this.setState({ rec_settings: false})
     }
   }
 
