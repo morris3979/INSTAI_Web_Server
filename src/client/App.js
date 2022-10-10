@@ -39,7 +39,7 @@ const App = (props) => {
     whichProject,
   } = props;
 
-  const whichproject = (a) => {
+  const which_project = (a) => {
     whichProject(a.key)
   }
 
@@ -66,7 +66,7 @@ const App = (props) => {
               {projectList.map((c) => {
                 // console.log(c)
                 return (
-                  <Item key={c.project} onClick={whichproject}>
+                  <Item key={c.project} onClick={which_project}>
                     <Link to={`/report/${c.project}`}>
                       {c.displayName}
                     </Link>
@@ -125,12 +125,9 @@ const App = (props) => {
                 <Route path='/' element={<InitialPage />} />
                 <Route path='/map' element={<MapPage />} />
                 {projectList.map((c) => {
-                //console.log(c.project)
-                return (
-                    <Route path={`/report/${c.project}`} element={<ReportPage/>}>
-                    </Route>
-                )
-              })}
+                  //console.log(c.project)
+                  return (<Route path={`/report/${c.project}`} element={<ReportPage/>} />)
+                })}
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />
@@ -170,11 +167,11 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetProjectList()
       dispatch(action)
     },
-    getHostList(){
+    getHostList() {
       const action = GetHostList()
       dispatch(action)
     },
-    whichProject(text){
+    whichProject(text) {
       const action = WhichProject(text)
       dispatch(action)
     }

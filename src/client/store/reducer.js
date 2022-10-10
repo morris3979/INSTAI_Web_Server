@@ -20,9 +20,9 @@ const defaultState = {
   accountData: [],
   whichModal: {},
   projectList:[],
-  whichprojectname:[],
-  hosttList:[],
-  whichhostname:[],
+  whichProjectName:[],
+  hostList:[],
+  whichHostName:[],
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -57,7 +57,7 @@ const Reducer = (state = defaultState, action) => {
       return newState
     }
     case Get_Host_Data:{
-      newState.hostList=action.value
+      newState.hostList = action.value
       return newState
     }
     case Get_Device_Table: {
@@ -93,11 +93,11 @@ const Reducer = (state = defaultState, action) => {
       return newState
     }
     case Which_Project:{
-      newState.whichprojectname = action.value
+      newState.whichProjectName = action.value
       return newState
     }
     case Which_Host:{
-      newState.whichhostname = action.value
+      newState.whichHostName = action.value
       return newState
     }
     default: {

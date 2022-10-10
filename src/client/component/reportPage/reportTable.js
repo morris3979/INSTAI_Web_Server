@@ -77,7 +77,7 @@ const download = () => {
 
 const reportTable = (props) => {
   const {
-    whichprojectname,
+    whichProjectName,
     getProjectList,
     getHostList,
     projectList,
@@ -86,6 +86,13 @@ const reportTable = (props) => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+
+    getHostList()
+    getProjectList()
+
+  }, [/* dependencies參數 */]);
 
   const start = () => {
     setLoading(true); // ajax request after empty completing
@@ -106,17 +113,17 @@ const reportTable = (props) => {
     onChange: onSelectChange,
   };
 
-
   const projectFilter = (data) => {
     const EachProjectData = data.filter((c) => {
-      return c.project === whichprojectname
+      return c.project === whichProjectName
     });
     const ProjectData = EachProjectData.map((d) => {
       return d.Hosts
     })
     const JSONData =  JSON.parse(JSON.stringify(ProjectData))
     return JSONData[0]
-  } 
+  }
+
   const HostFilter = (data,serialNumber) => {
     const EachHostData = data.filter((c) => {
       return c.serialNumber === serialNumber
@@ -126,18 +133,10 @@ const reportTable = (props) => {
     })
     const JSONData =  JSON.parse(JSON.stringify(HostData))
     return JSONData[0]
-  } 
-
-
-  useEffect(() => {
-    
-    getHostList()
-    getProjectList()
-    
-  }, [/* dependencies參數 */]); 
-
+  }
 
   const hasSelected = selectedRowKeys.length > 0;
+
   return (
     <Fragment>
       {projectFilter(projectList).map((f) => {
@@ -203,11 +202,12 @@ const reportTable = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
-      whichprojectname: state.whichprojectname,
-      projectList: state.projectList,      
+      whichProjectName: state.whichProjectName,
+      projectList: state.projectList,
       hostList: state.hostList
     }
-  }
+}
+
 const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
     return {
@@ -220,6 +220,6 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(action)
       },
     }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(reportTable)
