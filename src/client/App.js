@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
-import { LogoutData , GetProjectList } from './store/actionCreater'
+import { LogoutData , GetProjectList , GetHostList , WhichProject } from './store/actionCreater'
 import {
   AppstoreOutlined,
   EnvironmentOutlined,
@@ -23,6 +23,8 @@ const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const AccountPage = lazy(() => import('./page/accountPage'))
 const Test = lazy(() => import('./component/test'))
+const ReportPage = lazy(() => import('./component/reportPage/reportTable'))
+
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
@@ -32,13 +34,20 @@ const App = (props) => {
     loginInformation,
     onClick,
     getProjectList,
-    projectList
-  } = props
+    getHostList,
+    projectList,
+    whichProject,
+  } = props;
+
+  const whichproject = (a) => {
+    whichProject(a.key)
+  }
 
   useEffect(() => {
     /* 下面是 componentDidMount和componentDidUpdate */
 
     getProjectList()
+    getHostList()
 
     /* 上面是 componentDidMount和componentDidUpdate */
   }, [/* dependencies參數 */]); /* 加入監控的props */
@@ -57,7 +66,7 @@ const App = (props) => {
               {projectList.map((c) => {
                 // console.log(c)
                 return (
-                  <Item key={c.project}>
+                  <Item key={c.project} onClick={whichproject}>
                     <Link to={`/report/${c.project}`}>
                       {c.displayName}
                     </Link>
@@ -115,7 +124,13 @@ const App = (props) => {
               <Routes>
                 <Route path='/' element={<InitialPage />} />
                 <Route path='/map' element={<MapPage />} />
-                <Route path='/report/:project' element={(props) => {}} />
+                {projectList.map((c) => {
+                //console.log(c.project)
+                return (
+                    <Route path={`/report/${c.project}`} element={<ReportPage/>}>
+                    </Route>
+                )
+              })}
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />
@@ -140,7 +155,7 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     loginInformation: state.loginInformation,
-    projectList: state.projectList
+    projectList: state.projectList,
   }
 }
 
@@ -153,6 +168,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     getProjectList() {
       const action = GetProjectList()
+      dispatch(action)
+    },
+    getHostList(){
+      const action = GetHostList()
+      dispatch(action)
+    },
+    whichProject(text){
+      const action = WhichProject(text)
       dispatch(action)
     }
   }

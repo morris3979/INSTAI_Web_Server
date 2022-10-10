@@ -1,7 +1,8 @@
 import {
   Table_Status, Get_Project_Table, Get_Host_Table, Get_Device_Table, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information, Account_Information, Logout_Information, Get_Project_Data
+  Login_Information, Account_Information, Logout_Information, Get_Project_Data, Which_Project,
+   Get_Host_Data, Which_Host
 } from './actionType'
 
 const defaultState = {
@@ -18,7 +19,10 @@ const defaultState = {
   modalFile: [],
   accountData: [],
   whichModal: {},
-  projectList:[]
+  projectList:[],
+  whichprojectname:[],
+  hosttList:[],
+  whichhostname:[],
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -52,6 +56,10 @@ const Reducer = (state = defaultState, action) => {
       newState.hostTableData = action.value
       return newState
     }
+    case Get_Host_Data:{
+      newState.hostList=action.value
+      return newState
+    }
     case Get_Device_Table: {
       newState.deviceTableData = action.value
       return newState
@@ -82,6 +90,14 @@ const Reducer = (state = defaultState, action) => {
     }
     case Which_Modal: {
       newState.whichModal = action.value
+      return newState
+    }
+    case Which_Project:{
+      newState.whichprojectname = action.value
+      return newState
+    }
+    case Which_Host:{
+      newState.whichhostname = action.value
       return newState
     }
     default: {

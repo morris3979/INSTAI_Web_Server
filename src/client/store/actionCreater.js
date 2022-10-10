@@ -3,7 +3,8 @@ import { message, Modal, Menu} from 'antd'
 import {
   Get_Project_Table, Get_Host_Table, Get_Device_Table, Table_Status, Map_Position, Status_Table,
   Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information, Account_Information, Logout_Information, Get_Project_Data
+  Login_Information, Account_Information, Logout_Information, Get_Project_Data, Which_Project,
+  Which_Host,Get_Host_Data,
 } from './actionType'
 
 //共用Function <<<
@@ -41,6 +42,18 @@ export const SetWhichModal = (data) => {
   return ({
     type: Which_Modal,
     value: data
+  })
+}
+export const WhichProject = (text) => {
+  return({
+    type: Which_Project,
+    value: text
+  })
+}
+export const WhichHost = (text) => {
+  return({
+    type: Which_Host,
+    value: text
   })
 }
 // >>>
@@ -196,7 +209,7 @@ export const GetProjectList = () => {
     async (dispatch) => {
       try {
         const response = await axios.get('/api/project')
-        console.log(response.data)
+        //console.log(response.data)
         const action = DeliverData(response.data, Get_Project_Data)
         dispatch(action)
         message.destroy()
@@ -207,7 +220,22 @@ export const GetProjectList = () => {
     }
   )
 }
-
+export const GetHostList = () => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.get('/api/Host')
+        //console.log(response.data)
+        const action = DeliverData(response.data, Get_Host_Data)
+        dispatch(action)
+        message.destroy()
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
 export const GetProjectTableData = () => {
   return (
     async (dispatch) => {
