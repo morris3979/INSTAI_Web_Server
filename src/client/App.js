@@ -39,7 +39,7 @@ const App = (props) => {
     whichProject,
   } = props;
 
-  const which_project = (a) => {
+  const onClickProject = (a) => {
     whichProject(a.key)
   }
 
@@ -66,7 +66,7 @@ const App = (props) => {
               {projectList.map((c) => {
                 // console.log(c)
                 return (
-                  <Item key={c.project} onClick={which_project}>
+                  <Item key={c.project} onClick={onClickProject}>
                     <Link to={`/report/${c.project}`}>
                       {c.displayName}
                     </Link>
