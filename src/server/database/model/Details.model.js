@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         rawData: {
             type: Sequelize.BOOLEAN,
-            defaultValue: false,
+            defaultValue: true,
         },
         cleaned: {
             type: Sequelize.BOOLEAN,

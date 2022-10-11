@@ -35,7 +35,7 @@ exports.findAll = (req, res) => {
     Project.findAll({
       include: [{
           model: db.Host,
-          attributes:['id', 'serialNumber', 'device']
+          attributes:['id', 'serialNumber', 'hostName']
       }],
       order: [
         ['id', 'ASC'],

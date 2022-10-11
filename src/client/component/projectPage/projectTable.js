@@ -44,7 +44,7 @@ class ProjectTable extends Component {
           <Column title='專案代號' dataIndex='project' align='center' />
           <Column title='專案名稱' dataIndex='displayName' align='center' />
           <Column title='已配置的主機' dataIndex='Hosts' key="Hosts" align='center'
-            render={(Hosts) => Hosts.map(c => c.serialNumber+' ('+c.device+')'+'\n').join('')} />
+            render={(Hosts) => Hosts.map(c => c.serialNumber+' ('+c.hostName+')'+'\n').join('')} />
         </Table>
         <Modal
           visible={this.state.isModalVisible}

@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         deviceName: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
         },
         description: {
             type: Sequelize.STRING,

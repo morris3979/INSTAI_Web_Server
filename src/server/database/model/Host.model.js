@@ -10,9 +10,9 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        device: {
+        hostName: {
           type: Sequelize.STRING,
-          defaultValue: 'Raspberry Pi',
+          allowNull: false,
         },
         type: {
           type: Sequelize.STRING,

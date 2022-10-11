@@ -142,7 +142,7 @@ const reportTable = (props) => {
       {projectFilter(projectList).map((f) => {
         return(
           <Collapse>
-          <Panel header={f.serialNumber+' '+'('+f.device+')'}>
+          <Panel header={f.serialNumber+' '+'('+f.hostName+')'}>
             {HostFilter(hostList,f.serialNumber).map((g) => {
               return(
                 <Collapse>

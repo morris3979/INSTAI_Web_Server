@@ -44,7 +44,7 @@ class HostTable extends Component {
         >
           <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
           <Column title='主機代號' dataIndex='serialNumber' align='center' />
-          <Column title='主機名稱' dataIndex='device' align='center' />
+          <Column title='主機名稱' dataIndex='hostName' align='center' />
           <Column title='主機類型' dataIndex='type' align='center' />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='response' align='center' />
@@ -66,10 +66,10 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請輸入主機裝置' name='device' rules={[this.rule('主機裝置')]}>
+            <Item label='請輸入主機裝置' name='hostName' rules={[this.rule('主機裝置')]}>
               <Input
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.device)}`
+                  `${this.defaultValue(this.props.whichModal.hostName)}`
                 }
               />
             </Item>
