@@ -6,7 +6,7 @@ import ReactPlayer from 'react-player/lazy'
 import {
     GetProjectList,
     GetHostList
-} from '../../store/actionCreater'
+} from '../store/actionCreater'
 
 const { Column } = Table
 const { Text } = Typography
@@ -75,7 +75,7 @@ const download = () => {
   )
 }
 
-const reportTable = (props) => {
+const reportPage = (props) => {
   const {
     whichProjectName,
     getProjectList,
@@ -222,4 +222,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(reportTable)
+export default connect(mapStateToProps, mapDispatchToProps)(reportPage)

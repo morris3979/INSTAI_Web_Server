@@ -38,7 +38,7 @@ exports.findAll = (req, res) => {
     Device.findAll({
         include: [{
           model: db.Host,
-          attributes:['id', 'serialNumber', 'device', 'type']
+          attributes:['id', 'serialNumber', 'hostName', 'type']
         }, {
             model: db.HwUpdateLog,
             attributes:['id', 'modelName', 'createdAt']

@@ -23,8 +23,7 @@ const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const AccountPage = lazy(() => import('./page/accountPage'))
 const Test = lazy(() => import('./component/test'))
-const ReportPage = lazy(() => import('./component/reportPage/reportTable'))
-
+const ReportPage = lazy(() => import('./page/reportPage'))
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
@@ -126,7 +125,7 @@ const App = (props) => {
                 <Route path='/map' element={<MapPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)
-                  return (<Route path={`/report/${c.project}`} element={<ReportPage/>} />)
+                  return (<Route path={`/report/${c.project}`} element={<ReportPage />} />)
                 })}
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
