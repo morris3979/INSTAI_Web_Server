@@ -44,10 +44,8 @@ const App = (props) => {
 
   useEffect(() => {
     /* 下面是 componentDidMount和componentDidUpdate */
-
     getProjectList()
     getHostList()
-
     /* 上面是 componentDidMount和componentDidUpdate */
   }, [/* dependencies參數 */]); /* 加入監控的props */
 
