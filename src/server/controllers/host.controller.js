@@ -11,9 +11,17 @@ exports.create = (req, res) => {
         return;
     }
 
+    if (!req.body.hostName) {
+        res.status(400).send({
+            message: "hostName can not be empty!"
+        });
+        return;
+    }
+
     // Create a Host
     const host = {
         serialNumber: req.body.serialNumber,
+        hostName: req.body.hostName,
         ProjectId: req.body.ProjectId
     };
 

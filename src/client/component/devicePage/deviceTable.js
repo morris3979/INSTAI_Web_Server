@@ -313,7 +313,7 @@ class DeviceTable extends Component {
     convertedValues.command = command
     this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
     } else {
-      //this.props.postDeviceTableData(convertedValues)
+      this.props.postDeviceTableData(convertedValues)
     }
   }
   rec_fps_onChange = (newValue) => {

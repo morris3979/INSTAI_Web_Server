@@ -10,27 +10,33 @@ const { Text } = Typography
 const data = [
     {
       key: 1,
-      description: '00000000674a3751_1_20220728192323_camera1_front_body'
+      details: '00000000674a3751_1_20220728192323_camera1_front_body',
+      rawData: true
     },
     {
       key: 2,
-      description: '00000000674a3751_1_20220728192058_camera1_front_body'
+      details: '00000000674a3751_1_20220728192058_camera1_front_body',
+      rawData: true
     },
     {
       key: 3,
-      description: '00000000674a3751_1_20220808202505_camera1_front_body'
+      details: '00000000674a3751_1_20220808202505_camera1_front_body',
+      rawData: true
     },
     {
       key: 4,
-      description: '00000000674a3751_1_20220728192323_camera1_front_body'
+      details: '00000000674a3751_1_20220728192323_camera1_front_body',
+      rawData: true
     },
     {
       key: 5,
-      description: '00000000674a3751_1_20220728192058_camera1_front_body'
+      details: '00000000674a3751_1_20220728192058_camera1_front_body',
+      rawData: true
     },
     {
       key: 6,
-      description: '00000000674a3751_1_20220808202505_camera1_front_body'
+      details: '00000000674a3751_1_20220808202505_camera1_front_body',
+      rawData: true
     }
 ]
 
@@ -38,7 +44,7 @@ const video = (text) => {
     return (
       <Fragment align='center'>
         <ReactPlayer
-          url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.description}.mp4`}
+          url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
           controls={true}
           position='relative'
           width='100%'
@@ -51,7 +57,7 @@ const video = (text) => {
 const description = (text) => {
     return (
         <Fragment align='center'>
-        <Text>{text.description}</Text>
+          <Text>{text.details}</Text>
         </Fragment>
     )
 }
@@ -59,7 +65,7 @@ const description = (text) => {
 const download = () => {
     return (
         <Fragment>
-            <Button icon={<DownloadOutlined />} />
+          <Button icon={<DownloadOutlined />} />
         </Fragment>
     )
 }
