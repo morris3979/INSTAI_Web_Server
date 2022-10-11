@@ -147,47 +147,47 @@ const reportTable = (props) => {
               return(
                 <Collapse>
                   <Panel header={g.deviceId +' '+'('+g.deviceName+')'}>
-                  <div
-                style={{
-                  marginBottom: 16,
-                }}
-              >
-                <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-                  send
-                </Button>
-                <span
-                  style={{
-                    marginLeft: 8,
-                  }}
-                >
-                  {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-                </span>
-              </div>
-              <Table
-                dataSource={data}
-                rowSelection={rowSelection}
-                pagination={{ position: ['bottomCenter'], pageSize: 2 }}
-              >
-                <Column
-                  title='採集資料'
-                  render={video}
-                  ellipsis={true}
-                  width='30%'
-                  align='center'
-                />
-                <Column
-                  title='資料名稱'
-                  render={description}
-                  ellipsis={true}
-                  align='center'
-                />
-                <Column
-                  title='操作'
-                  render={download}
-                  width='15%'
-                  align='center'
-                />
-              </Table>
+                    <div
+                      style={{
+                        marginBottom: 16,
+                      }}
+                    >
+                      <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
+                        send
+                      </Button>
+                      <span
+                        style={{
+                          marginLeft: 8,
+                        }}
+                      >
+                        {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+                      </span>
+                    </div>
+                    <Table
+                      dataSource={data}
+                      rowSelection={rowSelection}
+                      pagination={{ position: ['bottomCenter'], pageSize: 2 }}
+                    >
+                      <Column
+                        title='採集資料'
+                        render={video}
+                        ellipsis={true}
+                        width='30%'
+                        align='center'
+                      />
+                      <Column
+                        title='資料名稱'
+                        render={description}
+                        ellipsis={true}
+                        align='center'
+                      />
+                      <Column
+                        title='操作'
+                        render={download}
+                        width='15%'
+                        align='center'
+                      />
+                    </Table>
                   </Panel>
                 </Collapse>
               )
