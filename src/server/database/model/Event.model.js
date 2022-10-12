@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         trigger: {
           type: Sequelize.BOOLEAN,
-          allowNull: false,
+          defaultValue: false,
         },
         createdAt: {
             field: 'created_at',

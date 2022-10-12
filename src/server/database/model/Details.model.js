@@ -34,6 +34,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
+        csv: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
         createdAt: {
             field: 'created_at',
             type: Sequelize.DATE,
