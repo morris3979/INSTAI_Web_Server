@@ -288,14 +288,16 @@ class DeviceTable extends Component {
       else if (values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC') {
         if (this.state.rec_fps) {
           if (values.modelSelect === 'S_MOTION_CNN_JPEG') {
-            var command = `rec_after_event: ${this.changeValue(this.state.rec_settings)},\n`+
+            var command = `mode: ${values.modelSelect},\n`+
+                          `rec_after_event: ${this.changeValue(this.state.rec_settings)},\n`+
                           `rec_fps: ${this.state.rec_fps},\n`+
                           `rec_after_event_cycle: ${this.state.rec_after_event_cycle},\n`+
                           `rec_after_event_duration: ${this.state.rec_after_event_duration},\n`+
                           `upload_to_server: ${this.changeValue(this.state.upload2Server)}`
           }
           else if (values.modelSelect === 'JPEG_REC') {
-            var command = `rec_fps: ${this.state.rec_fps},\n`+
+            var command = `mode: ${values.modelSelect},\n`+
+                          `rec_fps: ${this.state.rec_fps},\n`+
                           `upload_to_server: ${this.changeValue(this.state.upload2Server)},\n`+
                           `rec: ${this.state.rec_time}`
           }
