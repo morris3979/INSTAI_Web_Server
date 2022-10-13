@@ -1,44 +1,11 @@
 import React, { Fragment, useState } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Typography } from 'antd'
+import { Badge, Space, Table, Button, Typography } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 
 const { Column } = Table
 const { Text } = Typography
-
-const data = [
-    {
-      key: 1,
-      details: '00000000674a3751_1_20220728192323_camera1_front_body',
-      rawData: true
-    },
-    {
-      key: 2,
-      details: '00000000674a3751_1_20220728192058_camera1_front_body',
-      rawData: true
-    },
-    {
-      key: 3,
-      details: '00000000674a3751_1_20220808202505_camera1_front_body',
-      rawData: true
-    },
-    {
-      key: 4,
-      details: '00000000674a3751_1_20220728192323_camera1_front_body',
-      rawData: true
-    },
-    {
-      key: 5,
-      details: '00000000674a3751_1_20220728192058_camera1_front_body',
-      rawData: true
-    },
-    {
-      key: 6,
-      details: '00000000674a3751_1_20220808202505_camera1_front_body',
-      rawData: true
-    }
-]
 
 const video = (text) => {
     return (
@@ -71,77 +38,153 @@ const download = () => {
 }
 
 const reportTable = (props) => {
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const start = () => {
+    setLoading(true); // ajax request after empty completing
+
+    setTimeout(() => {
+      setSelectedRowKeys([]);
+      setLoading(false);
+    }, 1000);
+  };
+
+  const onSelectChange = (newSelectedRowKeys) => {
+    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+
+  const hasSelected = selectedRowKeys.length > 0;
+
+  const expandedRowRender = (props) => {
     const {} = props
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    const start = () => {
-      setLoading(true); // ajax request after empty completing
-
-      setTimeout(() => {
-        setSelectedRowKeys([]);
-        setLoading(false);
-      }, 1000);
-    };
-
-    const onSelectChange = (newSelectedRowKeys) => {
-      console.log('selectedRowKeys changed: ', selectedRowKeys);
-      setSelectedRowKeys(newSelectedRowKeys);
-    };
-
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: onSelectChange,
-    };
-
-    const hasSelected = selectedRowKeys.length > 0;
+    const data = [
+      {
+        key: 1,
+        details: '00000000674a3751_1_20220728192323_camera1_front_body',
+        rawData: true
+      },
+      {
+        key: 2,
+        details: '00000000674a3751_1_20220728192058_camera1_front_body',
+        rawData: true
+      },
+      {
+        key: 3,
+        details: '00000000674a3751_1_20220808202505_camera1_front_body',
+        rawData: true
+      },
+      {
+        key: 4,
+        details: '00000000674a3751_1_20220728192323_camera1_front_body',
+        rawData: true
+      },
+      {
+        key: 5,
+        details: '00000000674a3751_1_20220728192058_camera1_front_body',
+        rawData: true
+      },
+      {
+        key: 6,
+        details: '00000000674a3751_1_20220808202505_camera1_front_body',
+        rawData: true
+      }
+    ]
 
     return (
       <Fragment>
-        <div
-        style={{
-            marginBottom: 16,
-        }}
-        >
-        <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-            send
-        </Button>
-        <span
-            style={{
-            marginLeft: 8,
-            }}
-        >
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-        </span>
-        </div>
         <Table
         dataSource={data}
         rowSelection={rowSelection}
         pagination={{ position: ['bottomCenter'], pageSize: 2 }}
         >
-        <Column
-            title='採集資料'
-            render={video}
-            ellipsis={true}
-            width='30%'
-            align='center'
-        />
-        <Column
-            title='資料名稱'
-            render={description}
-            ellipsis={true}
-            align='center'
-        />
-        <Column
-            title='操作'
-            render={download}
-            width='15%'
-            align='center'
-        />
+          <Column
+              title='採集資料'
+              render={video}
+              ellipsis={true}
+              width='30%'
+              align='center'
+          />
+          <Column
+              title='資料名稱'
+              render={description}
+              ellipsis={true}
+              align='center'
+          />
+          <Column
+              title='操作'
+              render={download}
+              width='15%'
+              align='center'
+          />
         </Table>
       </Fragment>
     )
+  };
+  const data = [];
+  for (let i = 0; i < 1; ++i) {
+    data.push({
+      key: i.toString(),
+      eventTime: '2022-10-12 15:26:12',
+      trigger: '0',
+    });
+  }
+  return (
+    <>
+      <Table
+        // columns={columns}
+        expandable={{
+          expandedRowRender,
+          defaultExpandedRowKeys: ['0'],
+        }}
+        dataSource={data}
+      >
+        <Column
+            title='事件時間'
+            dataIndex='eventTime'
+            ellipsis={true}
+            align='center'
+        />
+        <Column
+            title='觸發 (0:主動, 1:被動)'
+            dataIndex='trigger'
+            ellipsis={true}
+            align='center'
+        />
+        <Column
+          title='選取數量'
+          render={() =>
+            <span
+              style={{
+              marginLeft: 8,
+              }}
+            >
+                {hasSelected ? `${selectedRowKeys.length}` : ''}
+            </span>
+          }
+          width='15%'
+          align='center'
+        />
+        <Column
+            title='操作'
+            render={() =>
+              <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
+                send
+              </Button>}
+            width='15%'
+            align='center'
+        />
+      </Table>
+    </>
+  );
 }
 
 const mapStateToProps = (state) => {
