@@ -1,43 +1,61 @@
 import React, { Fragment, useState } from 'react'
 import { connect } from 'react-redux'
-import { Badge, Space, Table, Button, Typography } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
+import { Table, Button, Typography } from 'antd'
+import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 
 const { Column } = Table
 const { Text } = Typography
 
 const video = (text) => {
-    return (
-      <Fragment align='center'>
-        <ReactPlayer
-          url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
-          controls={true}
-          position='relative'
-          width='100%'
-          height='100%'
-        />
-      </Fragment>
-    )
+  return (
+    <Fragment align='center'>
+      <ReactPlayer
+        url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
+        controls={true}
+        position='relative'
+        width='100%'
+        height='100%'
+      />
+      <Text>{text.details}</Text>
+    </Fragment>
+  )
 }
 
-const description = (text) => {
+const checkRawData = (text) => {
+  if (text.rawData == true) {
     return (
-        <Fragment align='center'>
-          <Text>{text.details}</Text>
-        </Fragment>
+      <CheckOutlined />
     )
+  } else {
+    return (
+      <CloseOutlined />
+    )
+  }
+}
+
+const checkCleaned = (text) => {
+  if (text.cleaned == true) {
+    return (
+      <CheckOutlined />
+    )
+  } else {
+    return (
+      <CloseOutlined />
+    )
+  }
 }
 
 const download = () => {
-    return (
-        <Fragment>
-          <Button icon={<DownloadOutlined />} />
-        </Fragment>
-    )
+  return (
+    <Fragment>
+      <Button icon={<DownloadOutlined />} />
+    </Fragment>
+  )
 }
 
 const reportTable = (props) => {
+  const {} = props
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -64,59 +82,67 @@ const reportTable = (props) => {
   const hasSelected = selectedRowKeys.length > 0;
 
   const expandedRowRender = (props) => {
-    const {} = props
-
-    const data = [
+    const detailsData = [
       {
         key: 1,
-        details: '00000000674a3751_1_20220728192323_camera1_front_body',
-        rawData: true
+        details: 'projectA_0000000039aed1d2_0x7680_20221013181402_001',
+        rawData: true,
+        cleaned: false
       },
       {
         key: 2,
-        details: '00000000674a3751_1_20220728192058_camera1_front_body',
-        rawData: true
+        details: 'projectA_0000000039aed1d2_0x7680_20221013181129_001',
+        rawData: true,
+        cleaned: false
       },
       {
         key: 3,
-        details: '00000000674a3751_1_20220808202505_camera1_front_body',
-        rawData: true
+        details: 'projectA_0000000039aed1d2_0x7680_20221013180307_001',
+        rawData: true,
+        cleaned: false
       },
       {
         key: 4,
-        details: '00000000674a3751_1_20220728192323_camera1_front_body',
-        rawData: true
+        details: 'projectA_0000000039aed1d2_0x7680_20221013181402_001',
+        rawData: true,
+        cleaned: false
       },
       {
         key: 5,
-        details: '00000000674a3751_1_20220728192058_camera1_front_body',
-        rawData: true
+        details: 'projectA_0000000039aed1d2_0x7680_20221013181129_001',
+        rawData: true,
+        cleaned: false
       },
       {
         key: 6,
-        details: '00000000674a3751_1_20220808202505_camera1_front_body',
-        rawData: true
+        details: 'projectA_0000000039aed1d2_0x7680_20221013180307_001',
+        rawData: true,
+        cleaned: false
       }
     ]
 
     return (
       <Fragment>
         <Table
-        dataSource={data}
+        dataSource={detailsData}
         rowSelection={rowSelection}
         pagination={{ position: ['bottomCenter'], pageSize: 2 }}
         >
           <Column
               title='採集資料'
               render={video}
-              ellipsis={true}
-              width='30%'
+              // ellipsis={true}
+              width='40%'
               align='center'
           />
           <Column
-              title='資料名稱'
-              render={description}
-              ellipsis={true}
+              title='rawData'
+              render={checkRawData}
+              align='center'
+          />
+          <Column
+              title='cleaned'
+              render={checkCleaned}
               align='center'
           />
           <Column
@@ -129,23 +155,27 @@ const reportTable = (props) => {
       </Fragment>
     )
   };
-  const data = [];
-  for (let i = 0; i < 1; ++i) {
-    data.push({
-      key: i.toString(),
+
+  const eventData = [
+    {
+      key: '0',
       eventTime: '2022-10-12 15:26:12',
       trigger: '0',
-    });
-  }
+    },
+    {
+      key: '1',
+      eventTime: '2022-10-12 15:34:32',
+      trigger: '0',
+    },
+  ];
+
   return (
-    <>
+    <Fragment>
       <Table
-        // columns={columns}
         expandable={{
           expandedRowRender,
-          defaultExpandedRowKeys: ['0'],
         }}
-        dataSource={data}
+        dataSource={eventData}
       >
         <Column
             title='事件時間'
@@ -167,7 +197,7 @@ const reportTable = (props) => {
               marginLeft: 8,
               }}
             >
-                {hasSelected ? `${selectedRowKeys.length}` : ''}
+              {hasSelected ? `${selectedRowKeys.length}` : '0'}
             </span>
           }
           width='15%'
@@ -183,18 +213,18 @@ const reportTable = (props) => {
             align='center'
         />
       </Table>
-    </>
+    </Fragment>
   );
 }
 
 const mapStateToProps = (state) => {
-    //state指的是store裡的數據
-    return {}
+  //state指的是store裡的數據
+  return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
-    //dispatch指store.dispatch這個方法
-    return {}
+  //dispatch指store.dispatch這個方法
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(reportTable)
