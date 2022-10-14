@@ -35,7 +35,7 @@ class DeviceTable extends Component {
       recVisible: true, REC: false, RECtime: false, RECfps: true,
       modelSelect: false, uploadServer: true, Settings: false,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
-      rec_time:5, upload2Server: true, rec_settings: false,
+      rec_time: 5, upload2Server: true, rec_settings: false, selectModel: null,
     }
   }
 
@@ -119,7 +119,7 @@ class DeviceTable extends Component {
               </Select>
             </Item>
             <Item label='請選擇可用模型' name='selectModel' disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}>
-              <Select placeholder='Select model to update'
+              <Select placeholder='Select model to update' value={this.state.selectModel}
                       onChange={this.handleSelectModel} disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}
               >
                 {this.props.modelListData.map(c => {
@@ -247,9 +247,9 @@ class DeviceTable extends Component {
     this.props.setWhichModal(text)
   }
 
-  handleSelectModel = (key, value) => {
-    console.log('key: ', key)
-    console.log('value: ', value)
+  handleSelectModel = (value) => {
+    // console.log('value: ', value)
+    this.setState({ selectModel: value })
   }
 
   handleCancel = () => {
@@ -287,10 +287,9 @@ class DeviceTable extends Component {
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
       convertedValues[String(key)] = values[key]
     })
-    console.log('values: ', values)
+    // console.log('values: ', values)
     if (this.props.whichModal.id > 0) {
-      //this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
-      console.log('convertedValues: ', convertedValues)
+      // console.log('convertedValues: ', convertedValues)
       if (values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN') {
         var command = `${mapValues.modelSelect}`
       }
@@ -320,7 +319,8 @@ class DeviceTable extends Component {
         }
      }
      else if (values.modelSelect == 'UPDATE_MODEL') {
-      var command = `UPDATE_MODEL: ${values.selectModel}`
+      var command = `mode: ${values.modelSelect},\n`+
+                    `model: ${this.state.selectModel}`
      }
      else {
       console.log('else: ', values)
@@ -374,7 +374,7 @@ class DeviceTable extends Component {
   }
 
   handleChange = (value) => {
-    console.log(value)
+    console.log('handleChange: ', value)
     if (value === 'S_MOTION_CNN_JPEG') {
       this.setState({ RECtime: false })
       this.setState({ recVisible: false })
