@@ -62,13 +62,14 @@ awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
 // AWS IOT MQTT publish message
 awsRouter.post("/iot/publish", async(req, res) => {
     const { topic, hostName, type } = req.query;
-    const { deviceId, command } = req.body;
+    const { deviceId, deviceName, command } = req.body;
     const today = new Date();
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     const dateTime = date + ' ' + time;
     const sendContent = {
         deviceId: deviceId,
+        deviceName: deviceName,
         command: command,
     }
     const IoTDevice = {

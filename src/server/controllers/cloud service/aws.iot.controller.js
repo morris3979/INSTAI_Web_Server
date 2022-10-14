@@ -52,8 +52,10 @@ exports.receive = () => {
                 .on('message', async function (topic, message) {
                     const messageJson = JSON.parse(message.toString()).message;
                     const serialNumber = messageJson.serialNumber;
+                    const hostName = messageJson.hostName;
                     const response = messageJson.response;
                     const deviceId = response.deviceId;
+                    const deviceName = response.deviceName;
                     const resMessage = response.message;
                     const findSerialNumber = await Host.findOne({
                         where: { serialNumber: serialNumber },
@@ -61,23 +63,23 @@ exports.receive = () => {
                     // console.log(`Message incoming topic(${topic}):`, messageJson);
 
                     // update host (RaspberryPi) response
-                    if ((!deviceId) && findSerialNumber && serialNumber) {
+                    if ((!deviceName) && findSerialNumber && serialNumber) {
                         Host.update({
                             response: resMessage
                         }, {
                             where: { serialNumber: serialNumber }
                         });
-                        console.log(`host(${serialNumber}): `, resMessage);
+                        console.log(`host(${serialNumber} - ${hostName}): `, resMessage);
                     }
 
                     // update device (PAG7681) message
-                    if (deviceId && findSerialNumber && serialNumber) {
+                    if (deviceName && findSerialNumber && serialNumber) {
                         Device.update({
                             message: resMessage
                         }, {
-                            where: { deviceId: deviceId }
+                            where: { deviceName: deviceName }
                         });
-                        console.log(`device(${deviceId}): `, resMessage);
+                        console.log(`device(${deviceId} - ${deviceName}): `, resMessage);
                     }
                 });
             }

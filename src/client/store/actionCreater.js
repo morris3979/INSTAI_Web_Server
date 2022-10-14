@@ -447,13 +447,13 @@ export const PostHostMQTT = (data) => {
         await axios.post('/api/aws/iot/publish', sendData, {
           params: {
             topic: data.serialNumber,
-            device: data.device,
+            hostName: data.hostName,
             type:  data.type
           }
         })
         Modal.success(
           {
-            title: `封包已傳送至主機: ${data.serialNumber}`,
+            title: `封包已傳送至 (${data.serialNumber} - ${data.hostName})`,
             content: `傳送內容: ${data.command}`,
             onOk: () => {
               const action = GetDeviceTableData()
@@ -570,6 +570,7 @@ export const PostDeviceTableData = (data) => {
 export const PostDeviceMQTT = (data) => {
   const sendData = {
     'deviceId': data.deviceId,
+    'deviceName': data.deviceName,
     'command': data.command
   }
   return (
@@ -578,13 +579,13 @@ export const PostDeviceMQTT = (data) => {
         await axios.post('/api/aws/iot/publish', sendData, {
           params: {
             topic: data.Host.serialNumber,
-            device: data.Host.device,
+            hostName: data.Host.hostName,
             type:  data.Host.type
           }
         })
         Modal.success(
           {
-            title: `封包已傳送至板號: ${data.deviceId}`,
+            title: `封包已傳送至 (${data.deviceId} - ${data.deviceName})`,
             content: `傳送內容: ${data.command}`,
             onOk: () => {
               const action = GetDeviceTableData()
