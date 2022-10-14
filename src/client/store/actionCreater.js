@@ -1,10 +1,9 @@
 import axios from 'axios'
-import { message, Modal, Menu} from 'antd'
+import { message, Modal } from 'antd'
 import {
-  Get_Project_Table, Get_Host_Table, Get_Device_Table, Table_Status, Map_Position, Status_Table,
-  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information, Account_Information, Logout_Information,
-  Get_Project_Data, Which_Project, Which_Host, Get_Host_Data,
+  Get_Project_Table, Get_Host_Table, Get_Device_Table, Get_Project_Data, Get_Host_Data,
+  Table_Status, Map_Position, Modal_File, Which_Modal, Which_Project, Which_Host,
+  Login_Information, Account_Information, Logout_Information, Get_Model_List
 } from './actionType'
 
 //共用Function <<<
@@ -77,7 +76,7 @@ export const LoginFormData = (data) => {
         }
       } catch (error) {
         message.destroy()
-        message.error('登入失敗')
+        message.error('登入失敗，請確認後再試一次！')
       }
     }
   )
@@ -143,12 +142,12 @@ export const GetAccountTableData = () => {
           const action = DeliverData(response.data, Account_Information)
           dispatch(action)
         } else {
-          throw '資料獲取失敗'
+          throw '尚未建立資料'
         }
       } catch (error) {
-        Modal.error({
+        Modal.warning({
           title: `${error}`,
-          content: '請重新整理來獲取資料'
+          content: '請新增資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -252,12 +251,12 @@ export const GetProjectTableData = () => {
           const action = DeliverData(response.data, Get_Project_Table)
           dispatch(action)
         } else {
-          throw '資料獲取失敗'
+          throw '尚未建立資料'
         }
       } catch (error) {
-        Modal.error({
+        Modal.warning({
           title: `${error}`,
-          content: '請重新整理來獲取資料'
+          content: '請新增資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -351,12 +350,12 @@ export const GetHostTableData = () => {
           const action = DeliverData(response.data, Get_Host_Table)
           dispatch(action)
         } else {
-          throw '資料獲取失敗'
+          throw '尚未建立資料'
         }
       } catch (error) {
-        Modal.error({
+        Modal.warning({
           title: `${error}`,
-          content: '請重新整理來獲取資料'
+          content: '請新增資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -481,12 +480,12 @@ export const GetDeviceTableData = () => {
           const action = DeliverData(response.data, Get_Device_Table)
           dispatch(action)
         } else {
-          throw '資料獲取失敗'
+          throw '尚未建立資料'
         }
       } catch (error) {
-        Modal.error({
+        Modal.warning({
           title: `${error}`,
-          content: '請重新整理來獲取資料'
+          content: '請新增資料'
         })
       } finally {
         const action = TableStatus(false)
@@ -600,130 +599,6 @@ export const PostDeviceMQTT = (data) => {
   )
 }
 
-export const GetStatusTableData = () => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get('/api/event')
-        console.log(response.data)
-        if (Object.keys(response.data).length > 0) {
-          const action = DeliverData(response.data, Status_Table)
-          dispatch(action)
-        } else {
-          throw '資料獲取失敗'
-        }
-      } catch (error) {
-        Modal.error({
-          title: `${error}`,
-          content: '請重新整理來獲取資料'
-        })
-      } finally {
-        const action = TableStatus(false)
-        dispatch(action)
-      }
-    }
-  )
-}
-
-export const GetModelATableData = () => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get('/api/event')
-        console.log('A: ', response)
-        if (Object.keys(response.data).length > 0) {
-          const filterData = response.data.filter((value) => {
-            if (value.CarNumber) {
-              return (value.CarNumber.modelName[0] == 'A')
-            }
-          })
-          console.log('res: ', filterData)
-          const action = DeliverData(response.data, Model_A_Table)
-          dispatch(action)
-        } else {
-          throw '資料獲取失敗'
-        }
-      } catch (error) {
-        Modal.error({
-          title: `${error}`,
-          content: '請重新整理來獲取資料'
-        })
-      } finally {
-        const action = TableStatus(false)
-        dispatch(action)
-      }
-    }
-  )
-}
-
-export const GetModelBTableData = () => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get('/api/event')
-        console.log('B: ', response)
-        if (Object.keys(response.data).length > 0) {
-          const filterData = response.data.filter((value) => {
-            if (value.CarNumber) {
-              return (value.CarNumber.modelName[0] == 'B')
-            }
-          })
-          const action = DeliverData(filterData, Model_B_Table)
-          dispatch(action)
-        } else {
-          throw '資料獲取失敗'
-        }
-      } catch (error) {
-        Modal.error({
-          title: `${error}`,
-          content: '請重新整理來獲取資料'
-        })
-      } finally {
-        const action = TableStatus(false)
-        dispatch(action)
-      }
-    }
-  )
-}
-
-export const GetModelCTableData = () => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get('/api/event')
-        console.log(response)
-        if (Object.keys(response.data).length > 0) {
-          const filterData = response.data.filter((value) => {
-            if (value.CarNumber) {
-              return (value.CarNumber.modelName[0] == 'C')
-            }
-          })
-          const action = DeliverData(filterData, Model_C_Table)
-          dispatch(action)
-        } else {
-          throw '資料獲取失敗'
-        }
-      } catch (error) {
-        Modal.error({
-          title: `${error}`,
-          content: '請重新整理來獲取資料'
-        })
-      } finally {
-        const action = TableStatus(false)
-        dispatch(action)
-      }
-    }
-  )
-}
-
 export const DownloadImage = (imageName) => {
   return (
     async () => {
@@ -763,6 +638,33 @@ export const DownloadVideo = (videoName) => {
         link.click()
       } catch (error) {
         message.error(error)
+      }
+    }
+  )
+}
+
+export const GetModelListFromS3 = () => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get('/api/aws/s3/listObject')
+        console.log(response.data)
+        if (Object.keys(response.data).length > 0) {
+          const action = DeliverData(response.data, Get_Model_List)
+          dispatch(action)
+        } else {
+          throw '尚未建立資料'
+        }
+      } catch (error) {
+        Modal.warning({
+          title: `${error}`,
+          content: '請新增資料'
+        })
+      } finally {
+        const action = TableStatus(false)
+        dispatch(action)
       }
     }
   )

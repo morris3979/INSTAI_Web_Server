@@ -42,10 +42,7 @@ awsRouter.get("/s3/listObject", async(req, res) => {
             // console.log(item.Key);
             modelList.push({id: index, modelName: item.Key});
         });
-        const model = [{
-            modelList: modelList
-        }]
-        res.send(model);
+        res.send(modelList);
     } catch (error) {
         res.send({error: "Server Error", error});
     }

@@ -1,28 +1,25 @@
 import {
-  Table_Status, Get_Project_Table, Get_Host_Table, Get_Device_Table, Map_Position, Status_Table,
-  Model_A_Table, Model_B_Table, Model_C_Table, Modal_File, Which_Modal,
-  Login_Information, Account_Information, Logout_Information, Get_Project_Data, Which_Project,
-   Get_Host_Data, Which_Host
+  Login_Information, Account_Information, Logout_Information, Modal_File, Which_Modal,
+  Table_Status, Get_Project_Table, Get_Host_Table, Get_Device_Table, Map_Position,
+  Get_Project_Data, Which_Project, Get_Host_Data, Which_Host, Get_Model_List
 } from './actionType'
 
 const defaultState = {
   loginInformation: { admin: false },
   tableStatus: false,
+  whichModal: {},
+  mapPositionData: [],
+  reportTableData: [],
   projectTableData: [],
   hostTableData: [],
   deviceTableData: [],
-  mapPositionData: [],
-  reportTableData: [],
-  modelATableData: [],
-  modelBTableData: [],
-  modelCTableData: [],
   modalFile: [],
   accountData: [],
-  whichModal: {},
   projectList:[],
-  whichProjectName:[],
   hostList:[],
+  whichProjectName:[],
   whichHostName:[],
+  modelListData: [],
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -42,6 +39,10 @@ const Reducer = (state = defaultState, action) => {
     }
     case Account_Information: {
       newState.accountData = action.value
+      return newState
+    }
+    case Get_Model_List: {
+      newState.modelListData = action.value
       return newState
     }
     case Get_Project_Table: {
@@ -66,22 +67,6 @@ const Reducer = (state = defaultState, action) => {
     }
     case Map_Position: {
       newState.mapPositionData = action.value
-      return newState
-    }
-    case Status_Table: {
-      newState.reportTableData = action.value
-      return newState
-    }
-    case Model_A_Table: {
-      newState.modelATableData = action.value
-      return newState
-    }
-    case Model_B_Table: {
-      newState.modelBTableData = action.value
-      return newState
-    }
-    case Model_C_Table: {
-      newState.modelCTableData = action.value
       return newState
     }
     case Modal_File: {

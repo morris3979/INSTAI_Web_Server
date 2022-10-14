@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons'
 import {
     SetWhichModal,
+    GetModelListFromS3,
     GetDeviceTableData,
     DeleteDeviceTableData,
     PatchDeviceTableData,
@@ -40,6 +41,7 @@ class DeviceTable extends Component {
 
   componentDidMount() {
     this.props.getDeviceTableData()
+    this.props.getModelListFromS3Data()
   }
 
   render() {
@@ -116,21 +118,23 @@ class DeviceTable extends Component {
                 <Option value='UPDATE_MODEL'>UPDATE_MODEL</Option>
               </Select>
             </Item>
-            <Item label='可用模型' name='selectModel' disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}>
-              <Select onChange={this.handleSelect} disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}>
-                <Option value='0615CNNFit_pad_CNNInit.bin'>0615CNNFit_pad_CNNInit.bin</Option>
-                <Option value='0719CNNFit_pad_CNNInit.bin'>0719CNNFit_pad_CNNInit.bin</Option>
-                <Option value='CNNFit_20210223_PDFD_BW_400K.bin'>CNNFit_20210223_PDFD_BW_400K.bin</Option>
-                <Option value='CNNFit_20210223_PDFD_BW.bin'>CNNFit_20210223_PDFD_BW.bin</Option>
+            <Item label='請選擇可用模型' name='selectModel' disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}>
+              <Select placeholder='Select model to update'
+                      onChange={this.handleSelectModel} disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}
+              >
+                {this.props.modelListData.map(c => {
+                  return ( <Option key={c.id} value={c.modelName}>{c.modelName}</Option> )
+                })}
               </Select>
             </Item>
             <Item label='相關參數配置' name='REC_switch' hidden={this.state.recVisible}>
               <Switch
-              disabled={this.state.recVisible}
-              defaultChecked={false}
-              onChange={this.handleSwitch}
-              hidden={this.state.recVisible}
-              value={this.state.rec_settings === 'boolean' ? this.state.rec_settings : false}></Switch>
+                disabled={this.state.recVisible}
+                defaultChecked={false}
+                onChange={this.handleSwitch}
+                hidden={this.state.recVisible}
+                value={this.state.rec_settings === 'boolean' ? this.state.rec_settings : false}
+              />
             </Item>
             <Item label='CNN 事件觸發後是否開始錄影' name='Rec after Event' hidden={this.state.detailVisible}>
               <Switch disabled={this.state.detailVisible} hidden={this.state.detailVisible}></Switch>
@@ -243,6 +247,11 @@ class DeviceTable extends Component {
     this.props.setWhichModal(text)
   }
 
+  handleSelectModel = (key, value) => {
+    console.log('key: ', key)
+    console.log('value: ', value)
+  }
+
   handleCancel = () => {
     this.setState({ isModalVisible: false })
     this.setState({ isSelectVisible: true })
@@ -309,7 +318,11 @@ class DeviceTable extends Component {
             }
           })
         }
-     } else {
+     }
+     else if (values.modelSelect == 'UPDATE_MODEL') {
+      var command = `UPDATE_MODEL: ${values.selectModel}`
+     }
+     else {
       console.log('else: ', values)
      }
     convertedValues.command = command
@@ -450,6 +463,7 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     deviceTableData: state.deviceTableData,
+    modelListData: state.modelListData,
     tableStatus: state.tableStatus,
     whichModal: state.whichModal
   }
@@ -460,6 +474,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setWhichModal(text) {
       const action = SetWhichModal(text)
+      dispatch(action)
+    },
+    getModelListFromS3Data() {
+      const action = GetModelListFromS3()
       dispatch(action)
     },
     getDeviceTableData() {
