@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from 'react'
+import React, { lazy, Suspense, useEffect, StrictMode } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
@@ -10,11 +10,13 @@ import {
   SettingOutlined,
   LinkOutlined,
   LogoutOutlined,
-  ToolOutlined
+  ToolOutlined,
+  FormOutlined
 } from '@ant-design/icons'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
+const LabelsPage = lazy(() => import('./page/LabelsPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
@@ -57,6 +59,11 @@ const App = (props) => {
             <Item key='/map' disabled={!loginInformation.admin} icon={<EnvironmentOutlined />}>
               <Link to='/map'>
                 地圖資訊
+              </Link>
+            </Item>
+            <Item key='/labels' disabled={!loginInformation.admin} icon={<FormOutlined />}>
+              <Link to='/labels'>
+                資料標記
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
@@ -121,6 +128,7 @@ const App = (props) => {
               <Routes>
                 <Route path='/' element={<InitialPage />} />
                 <Route path='/map' element={<MapPage />} />
+                <Route path='/labels' element={<LabelsPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)
                   return (<Route path={`/report/${c.project}`} element={<ReportPage />} />)

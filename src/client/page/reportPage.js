@@ -50,17 +50,17 @@ const reportPage = (props) => {
       {projectFilter(projectList).map((f) => {
         return(
           <Collapse>
-          <Panel header={f.serialNumber+' '+'('+f.hostName+')'}>
-            {HostFilter(hostList,f.serialNumber).map((g) => {
-              return(
-                <Collapse>
-                  <Panel header={g.deviceId +' '+'('+g.deviceName+')'}>
-                    <ReportTable />
-                  </Panel>
-                </Collapse>
-              )
-            })}
-          </Panel>
+            <Panel header={f.serialNumber+' '+'('+f.hostName+')'}>
+              {HostFilter(hostList,f.serialNumber).map((g) => {
+                return(
+                  <Collapse>
+                    <Panel header={g.deviceId +' '+'('+g.deviceName+')'}>
+                      <ReportTable />
+                    </Panel>
+                  </Collapse>
+                )
+              })}
+            </Panel>
           </Collapse>
         )
       })}

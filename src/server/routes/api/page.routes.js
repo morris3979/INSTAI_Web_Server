@@ -6,15 +6,7 @@ pageRouter.get("/map", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/modelA", async (req, res) => {
-    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
-});
-
-pageRouter.get("/modelB", async (req, res) => {
-    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
-});
-
-pageRouter.get("/modelC", async (req, res) => {
+pageRouter.get("/labels", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
