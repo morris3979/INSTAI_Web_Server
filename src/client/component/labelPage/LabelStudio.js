@@ -11,19 +11,10 @@ const LabelStudioWrapper = (props) => {
   const [label, setLabel] = useState();
   const [path, setPath] = useState();
 
-  const image1 = 'projectA_1000000057db1e5f_0x7680_20221013163446_049'
-  const image2 = 'projectA_1000000057db1e5f_0x7680_20221013163446_049'
+  const image = 'https://i.pinimg.com/originals/1e/06/e1/1e06e107f0ca520aed316957b685ef5c.jpg'
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
-    if (typeof label === "undefined") {
-      setLabel("Label1");
-    }
-    if (typeof path === "undefined") {
-      setPath(
-        `https://d20cmf4o2f77jz.cloudfront.net/image/${image1}.jpg`
-      );
-    }
     if (rootRef.current) {
       lsfRef.current = new LabelStudio(rootRef.current, {
         /* all the options according to the docs */
@@ -32,9 +23,7 @@ const LabelStudioWrapper = (props) => {
             <View>
               <Image name="img" value="$image"></Image>
               <RectangleLabels name="tag" toName="img">
-                <Label value="` +
-                label +
-                `"></Label>
+                <Label value="${label}"></Label>
                 <Label value="Label2"></Label>
               </RectangleLabels>
             </View>
@@ -83,13 +72,11 @@ const LabelStudioWrapper = (props) => {
             userGenerate: true
           });
           ls.annotationStore.selectAnnotation(c.id);
+          setLabel("Label1");
+          setPath(image);
         },
         onSubmitAnnotation: function (ls, annotation) {
           console.log(annotation.serializeAnnotation());
-          setLabel("Label");
-          setPath(
-            `https://d20cmf4o2f77jz.cloudfront.net/image/${image2}.jpg`
-          );
           console.log(label);
         }
       });
