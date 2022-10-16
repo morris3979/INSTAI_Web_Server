@@ -20,7 +20,6 @@ const LabelsPage = lazy(() => import('./page/LabelsPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
-const modelPage = lazy(() => import('./page/modelPage'))
 const Resource = lazy(() => import('./page/resourcePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const AccountPage = lazy(() => import('./page/accountPage'))
@@ -49,7 +48,7 @@ const App = (props) => {
     getProjectList()
     getHostList()
     /* 上面是 componentDidMount和componentDidUpdate */
-  }, [/* dependencies參數 */]); /* 加入監控的props */
+  }, []); /* 加入監控的props */
 
   if (loginInformation.admin == true) {
     return (
@@ -94,11 +93,6 @@ const App = (props) => {
                   設備配置
                 </Link>
               </Item>
-              <Item key='/model' disabled={!loginInformation.admin}>
-                <Link to='/model'>
-                  模型管理
-                </Link>
-              </Item>
               <Item key='/account' disabled={!loginInformation.admin}>
                 <Link to='/account'>
                   帳號權限配置
@@ -136,7 +130,6 @@ const App = (props) => {
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />
-                <Route path='/model' element={<modelPage />} />
                 <Route path='/resource' element={<Resource />} />
                 <Route path='/account' element={<AccountPage />} />
                 <Route path='/test' element={<Test />} />

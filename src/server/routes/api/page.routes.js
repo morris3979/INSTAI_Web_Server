@@ -22,10 +22,6 @@ pageRouter.get("/device", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/model", async (req, res) => {
-    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
-});
-
 pageRouter.get("/resource", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
@@ -41,8 +37,8 @@ pageRouter.get("/test", async (req, res) => {
 pageRouter.get("/report/:project",
     async (req, res) => {
         res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
-      return;
+        return;
     }
-  );
+);
 
 module.exports = pageRouter;

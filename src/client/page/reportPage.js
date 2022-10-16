@@ -21,7 +21,7 @@ const reportPage = (props) => {
   useEffect(() => {
     getHostList()
     getProjectList()
-  }, [/* dependencies參數 */]);
+  }, []);
 
   const projectFilter = (data) => {
     const EachProjectData = data.filter((c) => {
