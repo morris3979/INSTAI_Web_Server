@@ -4,7 +4,7 @@ import { Typography } from 'antd'
 
 const { Title } = Typography;
 
-export default function LabelsPage() {
+export default function LabelPage() {
   return (
     <div>
       <Title>LabelStudio</Title>

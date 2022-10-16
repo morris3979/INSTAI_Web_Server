@@ -16,7 +16,7 @@ import {
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
-const LabelsPage = lazy(() => import('./page/LabelsPage'))
+const LabelsPage = lazy(() => import('./page/labelPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
@@ -60,8 +60,8 @@ const App = (props) => {
                 地圖資訊
               </Link>
             </Item>
-            <Item key='/labels' disabled={!loginInformation.admin} icon={<FormOutlined />}>
-              <Link to='/labels'>
+            <Item key='/label' disabled={!loginInformation.admin} icon={<FormOutlined />}>
+              <Link to='/label'>
                 資料標記
               </Link>
             </Item>
@@ -122,7 +122,7 @@ const App = (props) => {
               <Routes>
                 <Route path='/' element={<InitialPage />} />
                 <Route path='/map' element={<MapPage />} />
-                <Route path='/labels' element={<LabelsPage />} />
+                <Route path='/label' element={<LabelsPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)
                   return (<Route path={`/report/${c.project}`} element={<ReportPage />} />)

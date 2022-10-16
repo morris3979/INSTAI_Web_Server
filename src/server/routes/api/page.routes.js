@@ -6,7 +6,7 @@ pageRouter.get("/map", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/labels", async (req, res) => {
+pageRouter.get("/label", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
