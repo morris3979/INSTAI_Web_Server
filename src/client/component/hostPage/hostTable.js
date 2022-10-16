@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons'
 import {
     SetWhichModal,
+    GetProjectTableData,
     GetHostTableData,
     DeleteHostTableData,
     PatchHostTableData,
@@ -20,16 +21,18 @@ import {
 
 const { Column } = Table
 const { Item } = Form
+const { Option } = Select
 
 const convertedValues = {}
 
 class HostTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { isModalVisible: false }
+    this.state = { isModalVisible: false, selectProject: null, }
   }
 
   componentDidMount() {
+    this.props.getProjectTableData()
     this.props.getHostTableData()
   }
 
@@ -87,12 +90,13 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請選擇專案' name='ProjectId' rules={[this.rule('專案')]}>
-              <Input
-                defaultValue={
-                  `${this.defaultValue(this.props.whichModal.ProjectId)}`
-                }
-              />
+            <Item label='請選擇專案' name='ProjectId'>
+              <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
+                defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
+                {this.props.projectTableData.map(c => {
+                  return ( <Option key={c.id} value={c.id}>{`${c.project} (${c.displayName})`}</Option> )
+                })}
+              </Select>
             </Item>
             <Item>
               <Button htmlType='submit'>
@@ -120,6 +124,10 @@ class HostTable extends Component {
 
   handleCancel = () => {
     this.setState({ isModalVisible: false })
+  }
+
+  handleSelectProject = (value) => {
+    this.setState({ selectProject: value })
   }
 
   rule = (hint) => {
@@ -175,6 +183,7 @@ class HostTable extends Component {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
+    projectTableData: state.projectTableData,
     hostTableData: state.hostTableData,
     tableStatus: state.tableStatus,
     whichModal: state.whichModal
@@ -186,6 +195,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setWhichModal(text) {
       const action = SetWhichModal(text)
+      dispatch(action)
+    },
+    getProjectTableData() {
+      const action = GetProjectTableData()
       dispatch(action)
     },
     getHostTableData() {

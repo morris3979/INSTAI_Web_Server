@@ -12,6 +12,7 @@ import {
 import {
     SetWhichModal,
     GetModelListFromS3,
+    GetHostTableData,
     GetDeviceTableData,
     DeleteDeviceTableData,
     PatchDeviceTableData,
@@ -35,7 +36,8 @@ class DeviceTable extends Component {
       recVisible: true, REC: false, RECtime: false, RECfps: true,
       modelSelect: false, uploadServer: true, Settings: false,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
-      rec_time: 5, upload2Server: true, rec_settings: false, selectModel: null,
+      rec_time: 5, upload2Server: true, rec_settings: false,
+      selectHost: null, selectModel: null,
     }
   }
 
@@ -98,12 +100,13 @@ class DeviceTable extends Component {
                 }
               />
             </Item>
-            <Item label='請選擇主機' name='HostId' rules={[this.rule('主機')]}>
-              <Input
-                defaultValue={
-                  `${this.defaultValue(this.props.whichModal.HostId)}`
-                }
-              />
+            <Item label='請選擇專案' name='HostId'>
+              <Select placeholder='Select a Host to deploy' onChange={this.handleSelectHost}
+                defaultValue={this.defaultValue(this.props.whichModal.HostId)}>
+                {this.props.hostTableData.map(c => {
+                  return ( <Option key={c.id} value={c.id}>{`${c.serialNumber} (${c.hostName})`}</Option> )
+                })}
+              </Select>
             </Item>
             <Item label='切換運作模式' name='Change_Model'>
               <Switch onChange={this.handleSwitch2}></Switch>
@@ -119,7 +122,7 @@ class DeviceTable extends Component {
               </Select>
             </Item>
             <Item label='請選擇可用模型' name='selectModel' disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}>
-              <Select placeholder='Select model to update' value={this.state.selectModel}
+              <Select placeholder='Select model to update' defaultValue={this.state.selectModel}
                       onChange={this.handleSelectModel} disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}
               >
                 {this.props.modelListData.map(c => {
@@ -250,6 +253,10 @@ class DeviceTable extends Component {
   handleSelectModel = (value) => {
     // console.log('value: ', value)
     this.setState({ selectModel: value })
+  }
+
+  handleSelectHost = (value) => {
+    this.setState({ selectHost: value })
   }
 
   handleCancel = () => {
@@ -462,6 +469,7 @@ class DeviceTable extends Component {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
+    hostTableData: state.hostTableData,
     deviceTableData: state.deviceTableData,
     modelListData: state.modelListData,
     tableStatus: state.tableStatus,
@@ -478,6 +486,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getModelListFromS3Data() {
       const action = GetModelListFromS3()
+      dispatch(action)
+    },
+    getHostTableData() {
+      const action = GetHostTableData()
       dispatch(action)
     },
     getDeviceTableData() {
