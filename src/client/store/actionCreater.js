@@ -2,8 +2,9 @@ import axios from 'axios'
 import { message, Modal } from 'antd'
 import {
   Get_Project_Table, Get_Host_Table, Get_Device_Table, Get_Project_Data, Get_Host_Data,
-  Table_Status, Map_Position, Modal_File, Which_Modal, Which_Project, Which_Host,
-  Login_Information, Account_Information, Logout_Information, Get_Model_List
+  Get_Event_Data,Get_Event_Data_Id,Table_Status, Map_Position, Modal_File, Which_Modal, 
+  Which_Project, Which_Host, Which_Device, Login_Information, Account_Information, Logout_Information, 
+  Get_Model_List
 } from './actionType'
 
 //共用Function <<<
@@ -54,6 +55,12 @@ export const WhichProject = (text) => {
 export const WhichHost = (text) => {
   return({
     type: Which_Host,
+    value: text
+  })
+}
+export const WhichDevice = (text) => {
+  return({
+    type: Which_Device,
     value: text
   })
 }
@@ -229,6 +236,38 @@ export const GetHostList = () => {
         const response = await axios.get('/api/Host')
         //console.log(response.data)
         const action = DeliverData(response.data, Get_Host_Data)
+        dispatch(action)
+        message.destroy()
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+export const GetEventList = () => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.get('/api/event')
+        //console.log(response.data)
+        const action = DeliverData(response.data, Get_Event_Data)
+        dispatch(action)
+        message.destroy()
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+export const GetEventListById = (id) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.get(`/api/event/${id}`)
+        //console.log(response.data)
+        const action = DeliverData(response.data, Get_Event_Data_Id)
         dispatch(action)
         message.destroy()
       } catch (error) {

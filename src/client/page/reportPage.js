@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Collapse } from 'antd'
 import {
     GetProjectList,
-    GetHostList
+    GetHostList,
+    WhichDevice,
 } from '../store/actionCreater'
 
 const ReportTable = lazy(() => import('../component/reportPage/reportTable'))
@@ -16,6 +17,7 @@ const reportPage = (props) => {
     getHostList,
     projectList,
     hostList,
+    whichDevice
   } = props
 
   useEffect(() => {
@@ -45,25 +47,31 @@ const reportPage = (props) => {
     return JSONData[0]
   }
 
+  const handlechange =(e) => {
+    if (e.length>0){
+      whichDevice(e[0])
+    }
+  }
+
   return (
     <Fragment>
+      <Collapse accordion>
       {projectFilter(projectList).map((f) => {
         return(
-          <Collapse>
             <Panel header={f.serialNumber+' '+'('+f.hostName+')'}>
               {HostFilter(hostList,f.serialNumber).map((g) => {
                 return(
-                  <Collapse>
-                    <Panel header={g.deviceId +' '+'('+g.deviceName+')'}>
+                  <Collapse onChange={handlechange}>
+                    <Panel header={g.deviceId +' '+'('+g.deviceName+')'} key={g.id}>
                       <ReportTable />
                     </Panel>
                   </Collapse>
                 )
               })}
             </Panel>
-          </Collapse>
         )
       })}
+      </Collapse>
     </Fragment>
   )
 }
@@ -88,6 +96,10 @@ const mapDispatchToProps = (dispatch) => {
         const action = GetHostList()
         dispatch(action)
       },
+      whichDevice(text) {
+        const action = WhichDevice(text)
+        dispatch(action)
+      }
     }
 }
 

@@ -1,25 +1,41 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Typography } from 'antd'
+import { Table, Button, Typography, Image } from 'antd'
 import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
-
+import { GetEventList, } from '../../store/actionCreater'
 const { Column } = Table
 const { Text } = Typography
 
 const video = (text) => {
-  return (
-    <Fragment align='center'>
-      <ReactPlayer
-        url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
-        controls={true}
-        position='relative'
-        width='100%'
-        height='100%'
-      />
-      <Text>{text.details}</Text>
-    </Fragment>
-  )
+  if((text.image == false)&&(text.video == true)){
+    return (
+      <Fragment align='center'>
+        <ReactPlayer
+          url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
+          controls={true}
+          position='relative'
+          width='100%'
+          height='100%'
+        />
+        <Text>{text.details}</Text>
+      </Fragment>
+    )
+  }
+  else if((text.image == true)&&(text.video == false)){
+    return (
+      <Fragment align='center'>
+        <Image
+          src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
+          controls={true}
+          position='relative'
+          width='100%'
+          height='100%'
+        />
+        <Text>{text.details}</Text>
+      </Fragment>
+    )
+  }
 }
 
 const checkRawData = (text) => {
@@ -46,7 +62,7 @@ const checkCleaned = (text) => {
   }
 }
 
-const download = () => {
+const download = (data) => {
   return (
     <Fragment>
       <Button icon={<DownloadOutlined />} />
@@ -54,8 +70,17 @@ const download = () => {
   )
 }
 
+
 const reportTable = (props) => {
-  const {} = props
+  const {
+    whichDeviceName,
+    eventList,
+    getEventList,
+  } = props
+
+  useEffect(() => {
+    getEventList()
+  }, []);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -81,7 +106,46 @@ const reportTable = (props) => {
 
   const hasSelected = selectedRowKeys.length > 0;
 
+  const eventData1 = (text) => {
+    let string = '';
+    string = text.replace('T',' ').replace('.000Z','')
+    return string;
+  };
+
+  const converttrigger = (value) => {
+    if (value == true){
+      return '1'
+    }
+    else if(value == false){
+      return '0'
+    }
+  };
+
+  const getEventDataId = (data,id) => {
+    const convertedData = data.filter((c) => {
+      return c.DeviceId == id
+    })
+    return convertedData
+  }
+
+  eventList.forEach((array) => {
+    array.key = `${array.id}`
+  })
+
   const expandedRowRender = (props) => {
+
+    const Time = props.eventTime
+
+    const EventFilter = (text) => {
+      const EachEventData = eventList.filter((c) => {
+        return c.eventTime === text
+      });
+      const DetailsData = EachEventData.map((d) => {
+        return d.Details
+      })
+      const JSONData =  JSON.parse(JSON.stringify(DetailsData))
+      return JSONData[0]
+    }
     const detailsData = [
       {
         key: 1,
@@ -124,7 +188,7 @@ const reportTable = (props) => {
     return (
       <Fragment>
         <Table
-        dataSource={detailsData}
+        dataSource={EventFilter(Time)}
         rowSelection={rowSelection}
         pagination={{ position: ['bottomCenter'], pageSize: 2 }}
         >
@@ -175,19 +239,21 @@ const reportTable = (props) => {
         expandable={{
           expandedRowRender,
         }}
-        dataSource={eventData}
+        dataSource={getEventDataId(eventList,whichDeviceName)}
       >
         <Column
             title='事件時間'
             dataIndex='eventTime'
             ellipsis={true}
             align='center'
+            render={eventData1}
         />
         <Column
             title='觸發 (0:主動, 1:被動)'
             dataIndex='trigger'
             ellipsis={true}
             align='center'
+            render={converttrigger}
         />
         <Column
           title='選取數量'
@@ -219,12 +285,20 @@ const reportTable = (props) => {
 
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
-  return {}
+  return {
+    eventList: state.eventList,
+    whichDeviceName: state.whichDeviceName
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
-  return {}
+  return {
+    getEventList(){
+      const action = GetEventList()
+      dispatch(action)
+    },
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(reportTable)
