@@ -146,8 +146,8 @@ export const GetAccountTableData = () => {
         }
       } catch (error) {
         Modal.warning({
-          title: `${error}`,
-          content: '請新增資料'
+          title: '警告',
+          content: `${error}`
         })
       } finally {
         const action = TableStatus(false)
@@ -255,8 +255,8 @@ export const GetProjectTableData = () => {
         }
       } catch (error) {
         Modal.warning({
-          title: `${error}`,
-          content: '請新增資料'
+          title: '警告',
+          content: `${error}`
         })
       } finally {
         const action = TableStatus(false)
@@ -354,8 +354,8 @@ export const GetHostTableData = () => {
         }
       } catch (error) {
         Modal.warning({
-          title: `${error}`,
-          content: '請新增資料'
+          title: '警告',
+          content: `${error}`
         })
       } finally {
         const action = TableStatus(false)
@@ -484,8 +484,8 @@ export const GetDeviceTableData = () => {
         }
       } catch (error) {
         Modal.warning({
-          title: `${error}`,
-          content: '請新增資料'
+          title: '警告',
+          content: `${error}`
         })
       } finally {
         const action = TableStatus(false)
@@ -660,8 +660,8 @@ export const GetModelListFromS3 = () => {
         }
       } catch (error) {
         Modal.warning({
-          title: `${error}`,
-          content: '請新增資料'
+          title: '警告',
+          content: `${error}`
         })
       } finally {
         const action = TableStatus(false)
