@@ -26,8 +26,10 @@ async function app() {
         console.log("Cannot connect to the database!", err);
         process.exit(1);
     });
-    // performs the necessary changes in the table to make it match the model
-    db.sequelize.sync({alter: true});
+    // creates the table if it doesn't exist.
+    db.sequelize.sync(
+        // { alter: true } // performs the necessary changes in the table to make it match the model
+    );
 
     app.use(cors(corsOptions));
     app.use(bodyParser.json()) // for parsing application/json
