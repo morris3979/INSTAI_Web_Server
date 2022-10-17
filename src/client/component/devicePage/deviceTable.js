@@ -93,14 +93,14 @@ class DeviceTable extends Component {
                 }
               />
             </Item>
-            <Item label='請輸入設備描述' name='description' rules={[this.rule('設備描述')]}>
+            <Item label='請輸入設備描述' name='description'>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.description)}`
                 }
               />
             </Item>
-            <Item label='請選擇專案' name='HostId'>
+            <Item label='請選擇主機' name='HostId'>
               <Select placeholder='Select a Host to deploy' onChange={this.handleSelectHost}
                 defaultValue={this.defaultValue(this.props.whichModal.HostId)}>
                 {this.props.hostTableData.map(c => {

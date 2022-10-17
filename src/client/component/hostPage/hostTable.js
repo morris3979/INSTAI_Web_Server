@@ -76,14 +76,14 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請輸入主機類型' name='type' rules={[this.rule('主機類型')]}>
+            <Item label='請輸入主機類型' name='type'>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.type)}`
                 }
               />
             </Item>
-            <Item label='請輸入指令' name='command' rules={[this.rule('指令')]}>
+            <Item label='請輸入指令' name='command'>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.command)}`
