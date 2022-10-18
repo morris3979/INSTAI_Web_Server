@@ -303,7 +303,7 @@ class DeviceTable extends Component {
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
       convertedValues[String(key)] = values[key]
     })
-    console.log('values: ', values)
+    // console.log('values: ', values)
     if (this.props.whichModal.id > 0) {
       // console.log('convertedValues: ', convertedValues)
       if (values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN') {

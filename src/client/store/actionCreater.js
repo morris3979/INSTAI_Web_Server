@@ -495,8 +495,17 @@ export const PostHostMQTT = (data) => {
             title: `封包已傳送至 (${data.serialNumber} - ${data.hostName})`,
             content: `傳送內容: ${data.command}`,
             onOk: () => {
-              const action = GetDeviceTableData()
-              dispatch(action)
+              return new Promise((resolve, reject) => {
+                setTimeout(Math.random() > 0.5 ? resolve : reject, 3000);
+              })
+              .then(() => {
+                const action = GetHostTableData()
+                dispatch(action)
+              })
+              .catch(() => {
+                const action = GetHostTableData()
+                dispatch(action)
+              });
             }
           }
         )
@@ -627,8 +636,16 @@ export const PostDeviceMQTT = (data) => {
             title: `封包已傳送至 (${data.deviceId} - ${data.deviceName})`,
             content: `傳送內容: ${data.command}`,
             onOk: () => {
-              const action = GetDeviceTableData()
-              dispatch(action)
+              return new Promise((resolve, reject) => {
+                setTimeout(Math.random() > 0.5 ? resolve : reject, 3000);
+              })
+              .then(() => {
+                const action = GetDeviceTableData()
+                dispatch(action)
+              }).catch(() => {
+                const action = GetDeviceTableData()
+                dispatch(action)
+              })
             }
           }
         )
