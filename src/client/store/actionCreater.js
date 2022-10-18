@@ -245,6 +245,7 @@ export const GetHostList = () => {
     }
   )
 }
+
 export const GetEventList = () => {
   return (
     async (dispatch) => {
@@ -261,6 +262,7 @@ export const GetEventList = () => {
     }
   )
 }
+
 export const GetEventListById = (id) => {
   return (
     async (dispatch) => {

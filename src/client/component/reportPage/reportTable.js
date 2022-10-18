@@ -8,7 +8,7 @@ const { Column } = Table
 const { Text } = Typography
 
 const video = (text) => {
-  if((text.image == false)&&(text.video == true)){
+  if(text.video == true){
     return (
       <Fragment align='center'>
         <ReactPlayer
@@ -22,7 +22,7 @@ const video = (text) => {
       </Fragment>
     )
   }
-  else if((text.image == true)&&(text.video == false)){
+  else if(text.image == true){
     return (
       <Fragment align='center'>
         <Image
@@ -152,7 +152,7 @@ const reportTable = (props) => {
         <Table
         dataSource={EventFilter(Time)}
         rowSelection={rowSelection}
-        pagination={{ position: ['bottomCenter'], pageSize: 2 }}
+        pagination={{ position: ['bottomCenter'], pageSize: 1 }}
         >
           <Column
               title='採集資料'

@@ -23,8 +23,11 @@ const LabelStudioWrapper = (props) => {
             <View>
               <Image name="img" value="$image"></Image>
               <RectangleLabels name="tag" toName="img">
-                <Label value="${label}"></Label>
+                <Label value="Label1"></Label>
                 <Label value="Label2"></Label>
+                <Label value="Label3"></Label>
+                <Label value="Label4"></Label>
+                <Label value="Label5"></Label>
               </RectangleLabels>
             </View>
           `,
@@ -72,12 +75,11 @@ const LabelStudioWrapper = (props) => {
             userGenerate: true
           });
           ls.annotationStore.selectAnnotation(c.id);
-          setLabel("Label1");
           setPath(image);
         },
         onSubmitAnnotation: function (ls, annotation) {
           console.log(annotation.serializeAnnotation());
-          console.log(label);
+          // console.log(label);
         }
       });
     }
