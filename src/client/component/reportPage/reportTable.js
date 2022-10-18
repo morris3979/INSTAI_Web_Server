@@ -70,7 +70,6 @@ const download = (data) => {
   )
 }
 
-
 const reportTable = (props) => {
   const {
     whichDeviceName,
@@ -112,7 +111,7 @@ const reportTable = (props) => {
     return string;
   };
 
-  const converttrigger = (value) => {
+  const convertTrigger = (value) => {
     if (value == true){
       return '1'
     }
@@ -121,7 +120,7 @@ const reportTable = (props) => {
     }
   };
 
-  const getEventDataId = (data,id) => {
+  const getEventDataId = (data, id) => {
     const convertedData = data.filter((c) => {
       return c.DeviceId == id
     })
@@ -133,57 +132,20 @@ const reportTable = (props) => {
   })
 
   const expandedRowRender = (props) => {
-
     const Time = props.eventTime
 
     const EventFilter = (text) => {
       const EachEventData = eventList.filter((c) => {
         return c.eventTime === text
       });
+
       const DetailsData = EachEventData.map((d) => {
         return d.Details
       })
+
       const JSONData =  JSON.parse(JSON.stringify(DetailsData))
       return JSONData[0]
     }
-    const detailsData = [
-      {
-        key: 1,
-        details: 'projectA_0000000039aed1d2_0x7680_20221013181402_001',
-        rawData: true,
-        cleaned: false
-      },
-      {
-        key: 2,
-        details: 'projectA_0000000039aed1d2_0x7680_20221013181129_001',
-        rawData: true,
-        cleaned: false
-      },
-      {
-        key: 3,
-        details: 'projectA_0000000039aed1d2_0x7680_20221013180307_001',
-        rawData: true,
-        cleaned: false
-      },
-      {
-        key: 4,
-        details: 'projectA_0000000039aed1d2_0x7680_20221013181402_001',
-        rawData: true,
-        cleaned: false
-      },
-      {
-        key: 5,
-        details: 'projectA_0000000039aed1d2_0x7680_20221013181129_001',
-        rawData: true,
-        cleaned: false
-      },
-      {
-        key: 6,
-        details: 'projectA_0000000039aed1d2_0x7680_20221013180307_001',
-        rawData: true,
-        cleaned: false
-      }
-    ]
 
     return (
       <Fragment>
@@ -220,19 +182,6 @@ const reportTable = (props) => {
     )
   };
 
-  const eventData = [
-    {
-      key: '0',
-      eventTime: '2022-10-12 15:26:12',
-      trigger: '0',
-    },
-    {
-      key: '1',
-      eventTime: '2022-10-12 15:34:32',
-      trigger: '0',
-    },
-  ];
-
   return (
     <Fragment>
       <Table
@@ -253,7 +202,7 @@ const reportTable = (props) => {
             dataIndex='trigger'
             ellipsis={true}
             align='center'
-            render={converttrigger}
+            render={convertTrigger}
         />
         <Column
           title='選取數量'
