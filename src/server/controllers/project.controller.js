@@ -35,8 +35,20 @@ exports.findAll = (req, res) => {
     Project.findAll({
       include: [{
           model: db.Host,
-          attributes:['id', 'serialNumber', 'hostName']
+          attributes: {
+              exclude: [
+                'type', 'command', 'response', 'accessKey', 'secretKey',
+                'ProjectId', 'createdAt', 'updatedAt', 'deletedAt'
+              ]
+          },
+          include: [{
+              model: db.Device,
+              attributes:['id', 'deviceId', 'deviceName'],
+          }],
       }],
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      },
       order: [
         ['id', 'ASC'],
       ],

@@ -37,7 +37,7 @@ class DeviceTable extends Component {
       modelSelect: false, uploadServer: true, Settings: false,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
       rec_time: 5, upload2Server: true, rec_settings: false,
-      selectHost: null, selectModel: null,
+      selectHost: null, selectModel: null, selectAskStatus: null,
     }
   }
 
@@ -108,11 +108,18 @@ class DeviceTable extends Component {
                 })}
               </Select>
             </Item>
+            <Item label='請選擇要詢問的指令' name='askStatus'>
+              <Select placeholder='Select the command to ask' onChange={this.handleSelectAskStatus}>
+                <Option value='mode?'>mode?</Option>
+                <Option value='UPDATE_MODEL;progress?'>UPDATE_MODEL;progress?</Option>
+              </Select>
+            </Item>
             <Item label='切換運作模式' name='Change_Model'>
               <Switch onChange={this.handleSwitch2}></Switch>
             </Item>
             <Item label='請選擇PAG7681模式' name='modelSelect' disabled={this.state.isSelectVisible} hidden={this.state.isSelectVisible}>
-              <Select onChange={this.handleChange} disabled={this.state.isSelectVisible} hidden={this.state.isSelectVisible}>
+              <Select placeholder='Select mode to change'
+                      onChange={this.handleChange} disabled={this.state.isSelectVisible} hidden={this.state.isSelectVisible}>
                 <Option value='CNN'>CNN</Option>
                 <Option value='S_MOTION_CNN'>S_MOTION_CNN</Option>
                 <Option value='S_MOTION_CNN_JPEG'>S_MOTION_CNN_JPEG</Option>
@@ -123,8 +130,7 @@ class DeviceTable extends Component {
             </Item>
             <Item label='請選擇可用模型' name='selectModel' disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}>
               <Select placeholder='Select model to update' defaultValue={this.state.selectModel}
-                      onChange={this.handleSelectModel} disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}
-              >
+                      onChange={this.handleSelectModel} disabled={!this.state.modelSelect} hidden={!this.state.modelSelect}>
                 {this.props.modelListData.map(c => {
                   return ( <Option key={c.id} value={c.modelName}>{c.modelName}</Option> )
                 })}
@@ -251,12 +257,15 @@ class DeviceTable extends Component {
   }
 
   handleSelectModel = (value) => {
-    // console.log('value: ', value)
     this.setState({ selectModel: value })
   }
 
   handleSelectHost = (value) => {
     this.setState({ selectHost: value })
+  }
+
+  handleSelectAskStatus = (value) => {
+    this.setState({ selectAskStatus: value })
   }
 
   handleCancel = () => {
@@ -294,7 +303,7 @@ class DeviceTable extends Component {
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
       convertedValues[String(key)] = values[key]
     })
-    // console.log('values: ', values)
+    console.log('values: ', values)
     if (this.props.whichModal.id > 0) {
       // console.log('convertedValues: ', convertedValues)
       if (values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN') {
@@ -328,6 +337,9 @@ class DeviceTable extends Component {
      else if (values.modelSelect == 'UPDATE_MODEL') {
       var command = `mode: ${values.modelSelect},\n`+
                     `model: ${this.state.selectModel}`
+     }
+     else if (values.askStatus) {
+      var command = values.askStatus
      }
      else {
       console.log('else: ', values)

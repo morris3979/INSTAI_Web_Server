@@ -41,10 +41,11 @@ exports.findAll = (req, res) => {
           attributes:['id', 'serialNumber', 'hostName', 'type']
         }, {
             model: db.HwUpdateLog,
-            attributes:['id', 'modelName', 'createdAt']
+            attributes:['id', 'modelName', 'createdAt'],
         }],
         order: [
           ['id', 'DESC'],
+          [db.HwUpdateLog, 'id', 'DESC']
         ],
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt']
