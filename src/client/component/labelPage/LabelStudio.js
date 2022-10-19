@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 import {
-   Button
+  Button
 } from 'antd'
 import {
   BugOutlined
@@ -18,8 +18,7 @@ const LabelStudioWrapper = (props) => {
   const [path, setPath] = useState();
   const annotationArr = [];
   const [json4Training, setJson4Training] = useState();
-
-  const image = 'https://i.pinimg.com/originals/1e/06/e1/1e06e107f0ca520aed316957b685ef5c.jpg'
+  const [openImg, setOpenImg] = useState('https://i.pinimg.com/originals/1e/06/e1/1e06e107f0ca520aed316957b685ef5c.jpg');
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
@@ -83,14 +82,17 @@ const LabelStudioWrapper = (props) => {
             userGenerate: true
           });
           ls.annotationStore.selectAnnotation(c.id);
-          setPath(image);
+          setPath(openImg);
         },
         onSubmitAnnotation: (ls, annotation) => {
+          // if (props.fileList.length > 0) {
+          //   setOpenImg(props.fileList[0].originFileObj)
+          // }
           // console.log('ls info: ', ls);
           console.log('annotation info: ', annotation.serializeAnnotation());
           // console.log(label);
-          const originalWidth = annotation.serializeAnnotation()[0].original_width;
-          const originalHeight = annotation.serializeAnnotation()[0].original_height;
+          const originalWidth = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_width: null;
+          const originalHeight = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_height: null;
           for (let index = 0; index < annotation.serializeAnnotation().length; index++) {
             // console.log('index: ', index);
             const x_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.x / 100));
@@ -100,14 +102,14 @@ const LabelStudioWrapper = (props) => {
             annotationArr.push(
               `{
                   "category_id": ${index},
-                  "bbox": [${x_min}, ${y_min}, ${x_max_min}, ${y_max_min}]
+                  "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
                 }`);
           }
           setJson4Training(`
             {
               "image":
               {
-                "file_name": "${image}",
+                "file_name": "${openImg}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -122,8 +124,8 @@ const LabelStudioWrapper = (props) => {
           // console.log('ls info: ', ls);
           console.log('annotation info: ', annotation.serializeAnnotation());
           // console.log(label);
-          const originalWidth = annotation.serializeAnnotation()[0].original_width;
-          const originalHeight = annotation.serializeAnnotation()[0].original_height;
+          const originalWidth = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_width: null;
+          const originalHeight = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_height: null;
           annotationArr.length = 0;
           for (let index = 0; index < annotation.serializeAnnotation().length; index++) {
             // console.log('index: ', index);
@@ -134,14 +136,14 @@ const LabelStudioWrapper = (props) => {
             annotationArr.push(
               `{
                   "category_id": ${index},
-                  "bbox": [${x_min}, ${y_min}, ${x_max_min}, ${y_max_min}]
+                  "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
                 }`);
           }
-          setJson4Training(`
-            {
+          setJson4Training(
+            `{
               "image":
               {
-                "file_name": "${image}",
+                "file_name": "${openImg}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -149,8 +151,7 @@ const LabelStudioWrapper = (props) => {
               [
                 ${annotationArr}
               ]
-            }
-          `)
+            }`)
         }
       }
       );
