@@ -33,8 +33,6 @@ const LabelStudioWrapper = (props) => {
                 <Label value="Label1"></Label>
                 <Label value="Label2"></Label>
                 <Label value="Label3"></Label>
-                <Label value="Label4"></Label>
-                <Label value="Label5"></Label>
               </RectangleLabels>
             </View>
           `,
@@ -103,7 +101,8 @@ const LabelStudioWrapper = (props) => {
               `{
                   "category_id": ${index},
                   "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
-                }`);
+                }`
+            );
           }
           setJson4Training(`
             {
@@ -115,7 +114,7 @@ const LabelStudioWrapper = (props) => {
               },
               "annotation":
               [
-                ${annotationArr}
+                ${annotationArr.length > 0? annotationArr: null}
               ]
             }
           `)
@@ -123,12 +122,10 @@ const LabelStudioWrapper = (props) => {
         onUpdateAnnotation: (ls, annotation) => {
           // console.log('ls info: ', ls);
           console.log('annotation info: ', annotation.serializeAnnotation());
-          // console.log(label);
           const originalWidth = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_width: null;
           const originalHeight = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_height: null;
           annotationArr.length = 0;
           for (let index = 0; index < annotation.serializeAnnotation().length; index++) {
-            // console.log('index: ', index);
             const x_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.x / 100));
             const y_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.y / 100));
             const x_max_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.width / 100));
@@ -137,10 +134,11 @@ const LabelStudioWrapper = (props) => {
               `{
                   "category_id": ${index},
                   "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
-                }`);
+                }`
+            );
           }
-          setJson4Training(
-            `{
+          setJson4Training(`
+            {
               "image":
               {
                 "file_name": "${openImg}",
@@ -149,18 +147,21 @@ const LabelStudioWrapper = (props) => {
               },
               "annotation":
               [
-                ${annotationArr}
+                ${annotationArr.length > 0? annotationArr: null}
               ]
-            }`)
+            }
+          `)
         }
       }
       );
     }
-  }, [ path ]);
+  }, [ path, openImg ]);
+
   // just a wrapper node to place LSF into
   const onClick = () => {
     console.log('test: ', json4Training)
   }
+
   return (
     <Fragment>
       <div ref={rootRef}></div>
