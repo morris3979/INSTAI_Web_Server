@@ -100,7 +100,7 @@ class DeviceTable extends Component {
                 }
               />
             </Item>
-            <Item label='請選擇主機' name='HostId'>
+            <Item label='請選擇主機配置' name='HostId'>
               <Select placeholder='Select a Host to deploy' onChange={this.handleSelectHost}
                 defaultValue={this.defaultValue(this.props.whichModal.HostId)}>
                 {this.props.hostTableData.map(c => {
@@ -115,7 +115,7 @@ class DeviceTable extends Component {
               </Select>
             </Item>
             <Item label='切換運作模式' name='Change_Model'>
-              <Switch onChange={this.handleSwitch2}></Switch>
+              <Switch onChange={this.handleSwitchMode}></Switch>
             </Item>
             <Item label='請選擇PAG7681模式' name='modelSelect' disabled={this.state.isSelectVisible} hidden={this.state.isSelectVisible}>
               <Select placeholder='Select mode to change'
@@ -140,7 +140,7 @@ class DeviceTable extends Component {
               <Switch
                 disabled={this.state.recVisible}
                 defaultChecked={false}
-                onChange={this.handleSwitch}
+                onChange={this.handleSwitchParam}
                 hidden={this.state.recVisible}
                 value={this.state.rec_settings === 'boolean' ? this.state.rec_settings : false}
               />
@@ -373,7 +373,7 @@ class DeviceTable extends Component {
     this.setState({ upload2Server: newValue })
   }
 
-  handleSwitch = (value) => {
+  handleSwitchParam = (value) => {
     if (value === true) {
       this.setState({ REC: true })
       this.setState({ detailVisible: false })
@@ -391,7 +391,7 @@ class DeviceTable extends Component {
     }
   }
 
-  handleSwitch2 = (value) => {
+  handleSwitchMode = (value) => {
     if (value === true) {
       this.setState({ isSelectVisible: false })
     } else {
@@ -454,6 +454,7 @@ class DeviceTable extends Component {
       this.setState({ RECfps: true })
     }
   }
+
   changeValue = (value) => {
     if(value === true){
       return 'ON'

@@ -12,9 +12,9 @@ const sequelize = new Sequelize(
       collate: 'utf8mb4_unicode_ci',
     },
     pool: {
-      max: 5, //Maximum number of connection in pool
+      max: 10, //Maximum number of connection in pool
       min: 0, //Minimum number of connection in pool
-      idle: 10000, //The maximum time, in milliseconds, that a connection can be idle before being released.
+      idle: 300000, //The maximum time, in milliseconds, that a connection can be idle before being released.
       acquire: 60000, //The maximum time, in milliseconds, that pool will try to get connection before throwing error.
     }
 });

@@ -28,7 +28,7 @@ const convertedValues = {}
 class HostTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { isModalVisible: false, selectProject: null, }
+    this.state = { isModalVisible: false, selectProject: null,  selectCommand: null, }
   }
 
   componentDidMount() {
@@ -83,14 +83,13 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請輸入指令' name='command'>
-              <Input
-                defaultValue={
-                  `${this.defaultValue(this.props.whichModal.command)}`
-                }
-              />
+            <Item label='請選擇主機指令' name='command'>
+              <Select placeholder='Select the command to send' onChange={this.handleSelectCommand}
+                defaultValue={this.defaultValue(this.props.whichModal.command)}>
+                <Option value='deviceList?'>deviceList?</Option>
+              </Select>
             </Item>
-            <Item label='請選擇專案' name='ProjectId'>
+            <Item label='請選擇專案配置' name='ProjectId'>
               <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
                 defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
                 {this.props.projectTableData.map(c => {
@@ -130,6 +129,10 @@ class HostTable extends Component {
     this.setState({ selectProject: value })
   }
 
+  handleSelectCommand = (value) => {
+    this.setState({ selectCommand: value })
+  }
+
   rule = (hint) => {
     if (this.props.whichModal.id == 0) {
       return ({ required: true, message: `請輸入${hint}` })
@@ -152,6 +155,16 @@ class HostTable extends Component {
       convertedValues[String(key)] = values[key]
     })
     if (this.props.whichModal.id > 0) {
+      console.log('values: ', values)
+      if (values.command) {
+        var command = `${values.command}`
+        var response = ''
+      } else {
+        var command = ''
+        var response = ''
+      }
+      convertedValues.command = command
+      convertedValues.response = response
       this.props.patchHostTableData(this.props.whichModal.id, convertedValues)
     } else {
       this.props.postHostTableData(convertedValues)
