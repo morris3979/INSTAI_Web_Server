@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Form, Input, Button, Divider, Typography, Col } from 'antd'
+import { Form, Input, Button, Divider, Typography } from 'antd'
 import { LoginFormData } from '../../store/actionCreater'
 
 import {LoginOutlined} from '@ant-design/icons'

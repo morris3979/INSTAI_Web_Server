@@ -2,41 +2,63 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 import {
-  Button
+  Button,
+  Upload,
+  Modal,
+  Input
 } from 'antd'
 import {
   BugOutlined,
-  DownloadOutlined
+  DownloadOutlined,
+  PlusOutlined,
+  DeleteOutlined
 } from '@ant-design/icons'
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
+  const defaultConfig = `
+    <View>
+      <Image name="img" value="$image"></Image>
+      <RectangleLabels name="tag" toName="img">
+        <Label value="Label1"/>
+        <Label value="Label2"/>
+        <Label value="Label3"/>
+      </RectangleLabels>
+    </View>
+  `
 
 const LabelStudioWrapper = (props) => {
   // we need a reference to a DOM node here so LSF knows where to render
   const rootRef = useRef();
   // this reference will be populated when LSF initialized and can be used somewhere else
   const lsfRef = useRef();
+  const labelRef = useRef();
 
-  // const [label, setLabel] = useState();
+  const [labelConfig, setLabelConfig] = useState(defaultConfig);
+  // const [additionalLabels, setAdditionalLabels] = useState([]);
+
   const [path, setPath] = useState();
   const annotationArr = [];
   const [json4Training, setJson4Training] = useState();
   const [openImg, setOpenImg] = useState('https://i.pinimg.com/originals/1e/06/e1/1e06e107f0ca520aed316957b685ef5c');
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const [fileList, setFileList] = useState([]);
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
     if (rootRef.current) {
       lsfRef.current = new LabelStudio(rootRef.current, {
         /* all the options according to the docs */
-        config:
-          `
-            <View>
-              <Image name="img" value="$image"></Image>
-              <RectangleLabels name="tag" toName="img">
-                <Label value="Label1"></Label>
-                <Label value="Label2"></Label>
-                <Label value="Label3"></Label>
-              </RectangleLabels>
-            </View>
-          `,
+        config: labelConfig,
 
         interfaces: [
           "panel",
@@ -84,16 +106,11 @@ const LabelStudioWrapper = (props) => {
           setPath(openImg+'.jpg');
         },
         onSubmitAnnotation: (ls, annotation) => {
-          // if (props.fileList.length > 0) {
-          //   setOpenImg(props.fileList[0].originFileObj)
-          // }
           // console.log('ls info: ', ls);
           console.log('annotation info: ', annotation.serializeAnnotation());
-          // console.log(label);
           const originalWidth = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_width: null;
           const originalHeight = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_height: null;
           for (let index = 0; index < annotation.serializeAnnotation().length; index++) {
-            // console.log('index: ', index);
             const x_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.x / 100));
             const y_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.y / 100));
             const x_max_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.width / 100));
@@ -156,9 +173,34 @@ const LabelStudioWrapper = (props) => {
       }
       );
     }
-  }, [ path, openImg ]);
+  }, [ path, openImg, previewImage, previewTitle ]);
 
-  // just a wrapper node to place LSF into
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+  };
+
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleCancel = () => setPreviewOpen(false);
+
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+
   const crawler_onClick = () => {
     console.log('test: ', json4Training)
   }
@@ -166,8 +208,7 @@ const LabelStudioWrapper = (props) => {
   const downloadFile = ({ data, fileName, fileType }) => {
     // Create a blob with the data we want to download as a file
     const blob = new Blob([data], { type: fileType })
-    // Create an anchor element and dispatch a click event on it
-    // to trigger a download
+    // Create an anchor element and dispatch a click event on it to trigger a download
     const a = document.createElement('a')
     a.download = fileName
     a.href = window.URL.createObjectURL(blob)
@@ -189,13 +230,61 @@ const LabelStudioWrapper = (props) => {
     })
   }
 
+  // const onAddLabel = () => {
+  //   let currentConfig = labelConfig;
+  //   let currentValue = labelRef.current.input.value;
+  //   console.log('currentValue: ', currentValue)
+  //   let newConfig = currentConfig.split("</RectangleLabels>")[0]
+  //     + `\n <Label value="${currentValue}"/>
+  //         </RectangleLabels>
+  //         <Image name="img" value="$image"/>
+  //         </View>`;
+  //   setAdditionalLabels((current) => {
+  //     return [...current, currentValue];
+  //   });
+  //   setLabelConfig(newConfig);
+  //   labelRef.current.input.value = "";
+  // }
+
+  // const onReset = () => {
+  //   setAdditionalLabels([]);
+  // };
+
+  // just a wrapper node to place LSF into
   return (
     <Fragment>
+      <Upload
+        maxCount={6}
+        listType="picture-card"
+        onPreview={handlePreview}
+        onChange={handleChange}
+      >
+        {fileList.length > 6? null: uploadButton}
+      </Upload>
       <div ref={rootRef}></div>
       <div>
-        <Button onClick={crawler_onClick} icon={<BugOutlined />} />
         <Button onClick={exportToJson} icon={<DownloadOutlined />} />
+        <Button onClick={crawler_onClick} icon={<BugOutlined />} />
       </div>
+      {/* <div>
+        <Input
+          type="text"
+          ref={labelRef}
+          placeholder="Input a Label"
+          style={{ width: 120 }}
+        />
+        <Button onClick={onAddLabel} icon={<PlusOutlined />} />
+        <Button onClick={onReset} icon={<DeleteOutlined />} />
+      </div> */}
+      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <img
+          alt="example"
+          style={{
+            width: '100%',
+          }}
+          src={previewImage}
+        />
+      </Modal>
     </Fragment>
   );
 };

@@ -308,6 +308,7 @@ class DeviceTable extends Component {
       // console.log('convertedValues: ', convertedValues)
       if (values.modelSelect === 'CNN' || values.modelSelect === 'S_MOTION_CNN') {
         var command = `${mapValues.modelSelect}`
+        var message = ''
       }
       else if (values.modelSelect === 'S_MOTION_CNN_JPEG' || values.modelSelect === 'JPEG_REC') {
         if (this.state.rec_fps) {
@@ -318,12 +319,14 @@ class DeviceTable extends Component {
                           `rec_after_event_cycle: ${this.state.rec_after_event_cycle},\n`+
                           `rec_after_event_duration: ${this.state.rec_after_event_duration},\n`+
                           `upload_to_server: ${this.changeValue(this.state.upload2Server)}`
+            var message = ''
           }
           else if (values.modelSelect === 'JPEG_REC') {
             var command = `mode: ${values.modelSelect},\n`+
                           `rec_fps: ${this.state.rec_fps},\n`+
                           `upload_to_server: ${this.changeValue(this.state.upload2Server)},\n`+
                           `rec: ${this.state.rec_time}`
+            var message = ''
           }
         } else {
           Modal.error({
@@ -337,14 +340,18 @@ class DeviceTable extends Component {
      else if (values.modelSelect == 'UPDATE_MODEL') {
       var command = `mode: ${values.modelSelect},\n`+
                     `model: ${this.state.selectModel}`
+      var message = ''
      }
      else if (values.askStatus) {
       var command = values.askStatus
+      var message = ''
      }
      else {
-      console.log('else: ', values)
+      var command = ''
+      var message = ''
      }
     convertedValues.command = command
+    convertedValues.message = message
     this.props.patchDeviceTableData(this.props.whichModal.id, convertedValues)
     } else {
       this.props.postDeviceTableData(convertedValues)
