@@ -5,7 +5,8 @@ import {
   Button
 } from 'antd'
 import {
-  BugOutlined
+  BugOutlined,
+  DownloadOutlined
 } from '@ant-design/icons'
 
 const LabelStudioWrapper = (props) => {
@@ -18,7 +19,7 @@ const LabelStudioWrapper = (props) => {
   const [path, setPath] = useState();
   const annotationArr = [];
   const [json4Training, setJson4Training] = useState();
-  const [openImg, setOpenImg] = useState('https://i.pinimg.com/originals/1e/06/e1/1e06e107f0ca520aed316957b685ef5c.jpg');
+  const [openImg, setOpenImg] = useState('https://i.pinimg.com/originals/1e/06/e1/1e06e107f0ca520aed316957b685ef5c');
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
@@ -80,7 +81,7 @@ const LabelStudioWrapper = (props) => {
             userGenerate: true
           });
           ls.annotationStore.selectAnnotation(c.id);
-          setPath(openImg);
+          setPath(openImg+'.jpg');
         },
         onSubmitAnnotation: (ls, annotation) => {
           // if (props.fileList.length > 0) {
@@ -108,7 +109,7 @@ const LabelStudioWrapper = (props) => {
             {
               "image":
               {
-                "file_name": "${openImg}",
+                "file_name": "${openImg+'.jpg'}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -141,7 +142,7 @@ const LabelStudioWrapper = (props) => {
             {
               "image":
               {
-                "file_name": "${openImg}",
+                "file_name": "${openImg+'.jpg'}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -158,15 +159,42 @@ const LabelStudioWrapper = (props) => {
   }, [ path, openImg ]);
 
   // just a wrapper node to place LSF into
-  const onClick = () => {
+  const crawler_onClick = () => {
     console.log('test: ', json4Training)
+  }
+
+  const downloadFile = ({ data, fileName, fileType }) => {
+    // Create a blob with the data we want to download as a file
+    const blob = new Blob([data], { type: fileType })
+    // Create an anchor element and dispatch a click event on it
+    // to trigger a download
+    const a = document.createElement('a')
+    a.download = fileName
+    a.href = window.URL.createObjectURL(blob)
+    const clickEvt = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    })
+    a.dispatchEvent(clickEvt)
+    a.remove()
+  }
+
+  const exportToJson = () => {
+    console.log('test: ', json4Training)
+    downloadFile({
+      data: JSON.parse(json4Training),
+      fileName: openImg+'.json',
+      fileType: 'text/json',
+    })
   }
 
   return (
     <Fragment>
       <div ref={rootRef}></div>
       <div>
-        <Button onClick={onClick} icon={<BugOutlined />} />
+        <Button onClick={crawler_onClick} icon={<BugOutlined />} />
+        <Button onClick={exportToJson} icon={<DownloadOutlined />} />
       </div>
     </Fragment>
   );
