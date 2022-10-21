@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { Table, Button, Typography, Image } from 'antd'
 import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
-import { GetEventList, } from '../../store/actionCreater'
+import {
+  GetEventList, DownloadImage, DownloadVideo
+} from '../../store/actionCreater'
 const { Column } = Table
 const { Text } = Typography
 
@@ -14,7 +16,6 @@ const video = (text) => {
         <ReactPlayer
           url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
           controls={true}
-          position='relative'
           width='100%'
           height='100%'
         />
@@ -27,8 +28,6 @@ const video = (text) => {
       <Fragment align='center'>
         <Image
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
-          controls={true}
-          position='relative'
           width='100%'
           height='100%'
         />
@@ -62,14 +61,6 @@ const checkCleaned = (text) => {
   }
 }
 
-const download = (data) => {
-  return (
-    <Fragment>
-      <Button icon={<DownloadOutlined />} />
-    </Fragment>
-  )
-}
-
 const reportTable = (props) => {
   const {
     whichDeviceName,
@@ -83,6 +74,26 @@ const reportTable = (props) => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const download = (data) => {
+    return (
+      <Fragment>
+        <Button
+        size='large'
+        icon={<DownloadOutlined />}
+        onClick={() => {
+          if (data.image == true) {
+            props.downloadImage(data.details)
+          } else if (data.video == true) {
+            props.downloadVideo(data.details)
+          } else {
+            console.log('data: ', data)
+          }
+        }}
+      />
+      </Fragment>
+    )
+  }
 
   const start = () => {
     setLoading(true); // ajax request after empty completing
@@ -245,6 +256,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getEventList(){
       const action = GetEventList()
+      dispatch(action)
+    },
+    downloadImage(imageName) {
+      const action = DownloadImage(imageName)
+      dispatch(action)
+    },
+    downloadVideo(videoName) {
+      const action = DownloadVideo(videoName)
       dispatch(action)
     },
   }
