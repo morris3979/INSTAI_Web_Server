@@ -4,7 +4,6 @@ import "label-studio/build/static/css/main.css";
 import {
   Button,
   Upload,
-  Modal,
   Input
 } from 'antd'
 import {
@@ -22,23 +21,23 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-  const defaultConfig = `
-    <View>
-      <Image name="img" value="$image"></Image>
-      <RectangleLabels name="tag" toName="img">
-        <Label value="Label1"/>
-        <Label value="Label2"/>
-        <Label value="Label3"/>
-      </RectangleLabels>
-    </View>
-  `
+const defaultConfig = `
+  <View>
+    <Image name="img" value="$image"></Image>
+    <RectangleLabels name="tag" toName="img">
+      <Label value="Label1"/>
+      <Label value="Label2"/>
+      <Label value="Label3"/>
+    </RectangleLabels>
+  </View>
+`
 
 const LabelStudioWrapper = (props) => {
   // we need a reference to a DOM node here so LSF knows where to render
   const rootRef = useRef();
   // this reference will be populated when LSF initialized and can be used somewhere else
   const lsfRef = useRef();
-  const labelRef = useRef();
+  // const labelRef = useRef();
 
   const [labelConfig, setLabelConfig] = useState(defaultConfig);
   // const [additionalLabels, setAdditionalLabels] = useState([]);
@@ -46,10 +45,8 @@ const LabelStudioWrapper = (props) => {
   const [path, setPath] = useState();
   const annotationArr = [];
   const [json4Training, setJson4Training] = useState();
-  const [openImg, setOpenImg] = useState('https://i.pinimg.com/originals/1e/06/e1/1e06e107f0ca520aed316957b685ef5c');
 
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
+  const [previewImage, setPreviewImage] = useState('http://www.ezcopy.net/wp-content/uploads/2018/02/upload-1.png');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
 
@@ -103,8 +100,9 @@ const LabelStudioWrapper = (props) => {
             userGenerate: true
           });
           ls.annotationStore.selectAnnotation(c.id);
-          setPath(openImg+'.jpg');
+          setPath(previewImage);
         },
+
         onSubmitAnnotation: (ls, annotation) => {
           // console.log('ls info: ', ls);
           console.log('annotation info: ', annotation.serializeAnnotation());
@@ -126,7 +124,7 @@ const LabelStudioWrapper = (props) => {
             {
               "image":
               {
-                "file_name": "${openImg+'.jpg'}",
+                "file_name": "${previewTitle}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -137,6 +135,7 @@ const LabelStudioWrapper = (props) => {
             }
           `)
         },
+
         onUpdateAnnotation: (ls, annotation) => {
           // console.log('ls info: ', ls);
           console.log('annotation info: ', annotation.serializeAnnotation());
@@ -159,7 +158,7 @@ const LabelStudioWrapper = (props) => {
             {
               "image":
               {
-                "file_name": "${openImg+'.jpg'}",
+                "file_name": "${previewTitle}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -173,7 +172,7 @@ const LabelStudioWrapper = (props) => {
       }
       );
     }
-  }, [ path, openImg, previewImage, previewTitle ]);
+  }, [ path, previewImage, previewTitle ]);
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -181,12 +180,16 @@ const LabelStudioWrapper = (props) => {
     }
 
     setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
 
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-  const handleCancel = () => setPreviewOpen(false);
+  const handleUpload = ({ fileList: newFileList }) => setFileList(newFileList);
+
+  const dummyRequest = ({ onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
 
   const uploadButton = (
     <div>
@@ -200,10 +203,6 @@ const LabelStudioWrapper = (props) => {
       </div>
     </div>
   );
-
-  const crawler_onClick = () => {
-    console.log('test: ', json4Training)
-  }
 
   const downloadFile = ({ data, fileName, fileType }) => {
     // Create a blob with the data we want to download as a file
@@ -225,9 +224,13 @@ const LabelStudioWrapper = (props) => {
     console.log('test: ', json4Training)
     downloadFile({
       data: JSON.parse(json4Training),
-      fileName: openImg+'.json',
+      fileName: 'test.json',
       fileType: 'text/json',
     })
+  }
+
+  const crawler_onClick = () => {
+    console.log('test: ', json4Training)
   }
 
   // const onAddLabel = () => {
@@ -255,12 +258,15 @@ const LabelStudioWrapper = (props) => {
     <Fragment>
       <Upload
         maxCount={6}
+        multiple
         listType="picture-card"
         onPreview={handlePreview}
-        onChange={handleChange}
+        onChange={handleUpload}
+        customRequest={dummyRequest}
       >
-        {fileList.length > 6? null: uploadButton}
+        {fileList.length < 6 ? uploadButton : null}
       </Upload>
+      {/* <Button onClick={handleSubmit}>Submit</Button> */}
       <div ref={rootRef}></div>
       <div>
         <Button onClick={exportToJson} icon={<DownloadOutlined />} />
@@ -276,15 +282,6 @@ const LabelStudioWrapper = (props) => {
         <Button onClick={onAddLabel} icon={<PlusOutlined />} />
         <Button onClick={onReset} icon={<DeleteOutlined />} />
       </div> */}
-      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img
-          alt="example"
-          style={{
-            width: '100%',
-          }}
-          src={previewImage}
-        />
-      </Modal>
     </Fragment>
   );
 };
