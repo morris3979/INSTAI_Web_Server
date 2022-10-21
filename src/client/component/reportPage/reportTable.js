@@ -154,8 +154,11 @@ const reportTable = (props) => {
         return d.Details
       })
 
-      const JSONData =  JSON.parse(JSON.stringify(DetailsData))
-      return JSONData[0]
+      const JSONData =  JSON.parse(JSON.stringify(DetailsData))[0]
+      JSONData.forEach((array) => {
+        array.key = array.id
+      })
+      return JSONData
     }
 
     return (
@@ -217,24 +220,48 @@ const reportTable = (props) => {
         />
         <Column
           title='選取數量'
-          render={() =>
-            <span
-              style={{
-              marginLeft: 8,
-              }}
-            >
-              {hasSelected ? `${selectedRowKeys.length}` : '0'}
-            </span>
-          }
+          render={(data) =>{
+            if(data.id == selectedRowKeys[0]){
+              return(
+                <span
+                style={{
+                marginLeft: 8,
+                }}
+                >
+                  {`${selectedRowKeys.length}`}
+                </span>
+              )
+            }else{
+              return(
+                <span
+                style={{
+                marginLeft: 8,
+                }}
+                >
+                  {'0'}
+                </span>
+              )}
+          }}
           width='15%'
           align='center'
         />
         <Column
             title='操作'
-            render={() =>
-              <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-                send
-              </Button>}
+            render={(data) => {
+              if(data.id == selectedRowKeys[0]){
+                return(
+                  <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
+                    send
+                  </Button>
+                )
+              }
+              else{
+                return(
+                  <Button type="primary" onClick={start} disabled={true} loading={loading}>
+                    send
+                  </Button>
+                )}
+            }}
             width='15%'
             align='center'
         />
