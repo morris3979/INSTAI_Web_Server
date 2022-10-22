@@ -4,7 +4,8 @@ import "label-studio/build/static/css/main.css";
 import {
   Button,
   Upload,
-  Input
+  Input,
+  Popconfirm
 } from 'antd'
 import {
   BugOutlined,
@@ -21,32 +22,20 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const defaultConfig = `
-  <View>
-    <Image name="img" value="$image"></Image>
-    <RectangleLabels name="tag" toName="img">
-      <Label value="Label1"/>
-      <Label value="Label2"/>
-      <Label value="Label3"/>
-    </RectangleLabels>
-  </View>
-`
-
 const LabelStudioWrapper = (props) => {
   // we need a reference to a DOM node here so LSF knows where to render
   const rootRef = useRef();
   // this reference will be populated when LSF initialized and can be used somewhere else
   const lsfRef = useRef();
-  // const labelRef = useRef();
+  const labelRef = useRef();
 
-  const [labelConfig, setLabelConfig] = useState(defaultConfig);
-  // const [additionalLabels, setAdditionalLabels] = useState([]);
+  const [additionalLabels, setAdditionalLabels] = useState([]);
 
-  const [path, setPath] = useState();
   const annotationArr = [];
+  const [path, setPath] = useState();
   const [json4Training, setJson4Training] = useState();
 
-  const [previewImage, setPreviewImage] = useState('http://www.ezcopy.net/wp-content/uploads/2018/02/upload-1.png');
+  const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
 
@@ -55,7 +44,15 @@ const LabelStudioWrapper = (props) => {
     if (rootRef.current) {
       lsfRef.current = new LabelStudio(rootRef.current, {
         /* all the options according to the docs */
-        config: labelConfig,
+        config: `
+          <View>
+            <Image name="img" value="$image"></Image>
+            <RectangleLabels name="tag" toName="img">
+              ${additionalLabels},
+              ${console.log('additionalLabels: ',additionalLabels)}
+            </RectangleLabels>
+          </View>
+        `,
 
         interfaces: [
           "panel",
@@ -105,7 +102,7 @@ const LabelStudioWrapper = (props) => {
 
         onSubmitAnnotation: (ls, annotation) => {
           // console.log('ls info: ', ls);
-          console.log('annotation info: ', annotation.serializeAnnotation());
+          // console.log('annotation info: ', annotation.serializeAnnotation());
           const originalWidth = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_width: null;
           const originalHeight = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_height: null;
           for (let index = 0; index < annotation.serializeAnnotation().length; index++) {
@@ -113,9 +110,12 @@ const LabelStudioWrapper = (props) => {
             const y_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.y / 100));
             const x_max_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.width / 100));
             const y_max_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[0].value.height / 100));
+            const categoryId = additionalLabels.indexOf(
+              `<Label value="${annotation.serializeAnnotation()[index].value.rectanglelabels[0]}"/>`
+              );
             annotationArr.push(
               `{
-                  "category_id": ${index},
+                  "category_id": ${categoryId},
                   "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
                 }`
             );
@@ -137,8 +137,7 @@ const LabelStudioWrapper = (props) => {
         },
 
         onUpdateAnnotation: (ls, annotation) => {
-          // console.log('ls info: ', ls);
-          console.log('annotation info: ', annotation.serializeAnnotation());
+          // console.log('annotation info: ', annotation.serializeAnnotation());
           const originalWidth = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_width: null;
           const originalHeight = annotation.serializeAnnotation().length > 0? annotation.serializeAnnotation()[0].original_height: null;
           annotationArr.length = 0;
@@ -147,9 +146,12 @@ const LabelStudioWrapper = (props) => {
             const y_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.y / 100));
             const x_max_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.width / 100));
             const y_max_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[0].value.height / 100));
+            const categoryId = additionalLabels.indexOf(
+              `<Label value="${annotation.serializeAnnotation()[index].value.rectanglelabels[0]}"/>`
+              );
             annotationArr.push(
               `{
-                  "category_id": ${index},
+                  "category_id": ${categoryId},
                   "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
                 }`
             );
@@ -172,7 +174,7 @@ const LabelStudioWrapper = (props) => {
       }
       );
     }
-  }, [ path, previewImage, previewTitle ]);
+  }, [ path, previewImage, previewTitle, additionalLabels ]);
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -221,67 +223,61 @@ const LabelStudioWrapper = (props) => {
   }
 
   const exportToJson = () => {
-    console.log('test: ', json4Training)
+    const jsonData = JSON.parse(json4Training)
     downloadFile({
-      data: JSON.parse(json4Training),
+      data: JSON.stringify(jsonData),
       fileName: 'test.json',
       fileType: 'text/json',
     })
   }
 
   const crawler_onClick = () => {
-    console.log('test: ', json4Training)
+    const jsonData = JSON.parse(json4Training)
+    console.log('web crawler: ', jsonData)
   }
 
-  // const onAddLabel = () => {
-  //   let currentConfig = labelConfig;
-  //   let currentValue = labelRef.current.input.value;
-  //   console.log('currentValue: ', currentValue)
-  //   let newConfig = currentConfig.split("</RectangleLabels>")[0]
-  //     + `\n <Label value="${currentValue}"/>
-  //         </RectangleLabels>
-  //         <Image name="img" value="$image"/>
-  //         </View>`;
-  //   setAdditionalLabels((current) => {
-  //     return [...current, currentValue];
-  //   });
-  //   setLabelConfig(newConfig);
-  //   labelRef.current.input.value = "";
-  // }
+  const onAddLabel = () => {
+    const label = `<Label value="${labelRef.current.input.value}"/>`
+    setAdditionalLabels((value) => [ ...value, label ]);
+  }
 
-  // const onReset = () => {
-  //   setAdditionalLabels([]);
-  // };
+  const onReset = () => {
+    setAdditionalLabels([]);
+  };
 
   // just a wrapper node to place LSF into
   return (
     <Fragment>
-      <Upload
-        maxCount={6}
-        multiple
-        listType="picture-card"
-        onPreview={handlePreview}
-        onChange={handleUpload}
-        customRequest={dummyRequest}
-      >
-        {fileList.length < 6 ? uploadButton : null}
-      </Upload>
-      {/* <Button onClick={handleSubmit}>Submit</Button> */}
-      <div ref={rootRef}></div>
-      <div>
-        <Button onClick={exportToJson} icon={<DownloadOutlined />} />
-        <Button onClick={crawler_onClick} icon={<BugOutlined />} />
+      <div style={{ margin: 5 }}>
+        <Upload
+          maxCount={10}
+          multiple
+          listType="picture-card"
+          onPreview={handlePreview}
+          onChange={handleUpload}
+          customRequest={dummyRequest}
+        >
+          {fileList.length < 10 ? uploadButton : null}
+        </Upload>
       </div>
-      {/* <div>
+      <div>
         <Input
           type="text"
+          placeholder="Input Label Name"
+          style={{ height: 35, width: 140, margin: 5 }}
           ref={labelRef}
-          placeholder="Input a Label"
-          style={{ width: 120 }}
         />
-        <Button onClick={onAddLabel} icon={<PlusOutlined />} />
-        <Button onClick={onReset} icon={<DeleteOutlined />} />
-      </div> */}
+        <Button onClick={onAddLabel} style={{ margin: 2 }} icon={<PlusOutlined />} />
+        <Popconfirm
+          title='Clear all Labels?'
+          onConfirm={onReset}
+        >
+          <Button style={{ margin: 2 }} icon={<DeleteOutlined />} />
+        </Popconfirm>
+        <Button onClick={exportToJson} style={{ margin: 2 }} icon={<DownloadOutlined />} />
+        <Button onClick={crawler_onClick} style={{ margin: 2 }} icon={<BugOutlined />} />
+      </div>
+      <div style={{ margin: 5 }} ref={rootRef}></div>
     </Fragment>
   );
 };
