@@ -11,7 +11,9 @@ import {
   BugOutlined,
   DownloadOutlined,
   PlusOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined
 } from '@ant-design/icons'
 
 const getBase64 = (file) =>
@@ -27,7 +29,7 @@ const LabelStudioWrapper = (props) => {
   const rootRef = useRef();
   // this reference will be populated when LSF initialized and can be used somewhere else
   const lsfRef = useRef();
-  const labelRef = useRef();
+  const labelRef = useRef(true);
 
   const [additionalLabels, setAdditionalLabels] = useState([]);
 
@@ -38,6 +40,7 @@ const LabelStudioWrapper = (props) => {
   const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
+  const [urlImage, setUrlImage] = useState();
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
@@ -48,8 +51,7 @@ const LabelStudioWrapper = (props) => {
           <View>
             <Image name="img" value="$image"></Image>
             <RectangleLabels name="tag" toName="img">
-              ${additionalLabels},
-              ${console.log('additionalLabels: ',additionalLabels)}
+              ${additionalLabels}
             </RectangleLabels>
           </View>
         `,
@@ -206,6 +208,21 @@ const LabelStudioWrapper = (props) => {
     </div>
   );
 
+  const handleInput = (e) => {
+    setUrlImage(e.target.value);
+  }
+
+  const onAddImgUrl = () => {
+    setPreviewImage(urlImage);
+    setPreviewTitle(urlImage);
+  }
+
+  const sendImageUrlButton = (
+    !urlImage?
+    <Button style={{ margin: 5 }} icon={<EyeInvisibleOutlined />} disabled />:
+    <Button onClick={onAddImgUrl} style={{ margin: 5 }} icon={<EyeOutlined />} />
+  );
+
   const downloadFile = ({ data, fileName, fileType }) => {
     // Create a blob with the data we want to download as a file
     const blob = new Blob([data], { type: fileType })
@@ -262,9 +279,20 @@ const LabelStudioWrapper = (props) => {
       </div>
       <div>
         <Input
+          allowClear
+          type="text"
+          placeholder="Input Image URL..."
+          style={{ height: 30, width: 700, margin: 5 }}
+          onChange={handleInput}
+        />
+        {sendImageUrlButton}
+      </div>
+      <div>
+        <Input
+          allowClear
           type="text"
           placeholder="Input Label Name"
-          style={{ height: 35, width: 140, margin: 5 }}
+          style={{ height: 30, width: 160, margin: 5 }}
           ref={labelRef}
         />
         <Button onClick={onAddLabel} style={{ margin: 2 }} icon={<PlusOutlined />} />
@@ -277,7 +305,7 @@ const LabelStudioWrapper = (props) => {
         <Button onClick={exportToJson} style={{ margin: 2 }} icon={<DownloadOutlined />} />
         <Button onClick={crawler_onClick} style={{ margin: 2 }} icon={<BugOutlined />} />
       </div>
-      <div style={{ margin: 5 }} ref={rootRef}></div>
+      <div style={{ margin: 5 }} ref={rootRef} />
     </Fragment>
   );
 };
