@@ -144,7 +144,7 @@ export const GetAccountTableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/user')
-        console.log(response.data)
+        // console.log(response.data)
         if (Object.keys(response.data).length > 0) {
           const action = DeliverData(response.data, Account_Information)
           dispatch(action)
@@ -287,7 +287,7 @@ export const GetProjectTableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/project')
-        console.log(response.data)
+        // console.log(response.data)
         if (Object.keys(response.data).length > 0) {
           const action = DeliverData(response.data, Get_Project_Table)
           dispatch(action)
@@ -386,7 +386,7 @@ export const GetHostTableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/host')
-        console.log(response.data)
+        // console.log(response.data)
         if (Object.keys(response.data).length > 0) {
           const action = DeliverData(response.data, Get_Host_Table)
           dispatch(action)
@@ -525,7 +525,7 @@ export const GetDeviceTableData = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/device')
-        console.log(response.data)
+        // console.log(response.data)
         if (Object.keys(response.data).length > 0) {
           const action = DeliverData(response.data, Get_Device_Table)
           dispatch(action)
@@ -709,7 +709,7 @@ export const GetModelListFromS3 = () => {
       dispatch(action)
       try {
         const response = await axios.get('/api/aws/s3/listObject')
-        console.log(response.data)
+        // console.log(response.data)
         if (Object.keys(response.data).length > 0) {
           const action = DeliverData(response.data, Get_Model_List)
           dispatch(action)
