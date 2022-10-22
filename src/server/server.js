@@ -44,6 +44,7 @@ async function app() {
         console.error('unhandledRejection', error);
         process.exit(1) // To exit with a 'failure' code
     });
+    require('events').EventEmitter.defaultMaxListeners = 15; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
     awsIot.receive();
 
