@@ -4,7 +4,7 @@ import { Table, Button, Typography, Image } from 'antd'
 import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 import {
-  GetEventList, DownloadImage, DownloadVideo
+  GetEventList, PatchDetailsTableData, DownloadImage, DownloadVideo
 } from '../../store/actionCreater'
 const { Column } = Table
 const { Text } = Typography
@@ -66,6 +66,7 @@ const reportTable = (props) => {
     whichDeviceName,
     eventList,
     getEventList,
+    patchDetailsTableData,
   } = props
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const reportTable = (props) => {
   }, []);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [selectedDetailsId, setSelectedDetailsId] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const download = (data) => {
@@ -96,8 +98,9 @@ const reportTable = (props) => {
   }
 
   const start = () => {
+    const cleaned = { cleaned : '1' }
+    patchDetailsTableData(selectedRowKeys[0],cleaned)
     setLoading(true); // ajax request after empty completing
-
     setTimeout(() => {
       setSelectedRowKeys([]);
       setLoading(false);
@@ -142,9 +145,44 @@ const reportTable = (props) => {
     array.key = `${array.id}`
   })
 
+  const DetailsFilter = (data) => {
+    const DetailsData = data.map((d) => {
+      return d.id
+    })
+    const JSONData =  JSON.parse(JSON.stringify(DetailsData))
+    return JSONData
+  }
+
+  const findDetailsId = (array) => {
+    const found = array.find(element => element == selectedRowKeys[0])
+    return found
+  }
+  const onExpand = (props,record) => {
+    if(props){
+      const EventFilter = () => {
+        const EachEventData = eventList.filter((c) => {
+          return c.eventTime === record.eventTime
+        });
+  
+        const DetailsData = EachEventData.map((d) => {
+          return d.Details
+        })
+  
+        const JSONData =  JSON.parse(JSON.stringify(DetailsData))[0]
+        JSONData.forEach((array) => {
+          array.key = array.id
+        })
+        return JSONData
+      }
+      const DetailsId = EventFilter(record.eventTime).map((c) => {
+        return c.id
+      })
+      setSelectedDetailsId(DetailsId)
+    }
+  }
+
   const expandedRowRender = (props) => {
     const Time = props.eventTime
-
     const EventFilter = (text) => {
       const EachEventData = eventList.filter((c) => {
         return c.eventTime === text
@@ -200,6 +238,7 @@ const reportTable = (props) => {
     <Fragment>
       <Table
         expandable={{
+          onExpand,
           expandedRowRender,
         }}
         dataSource={getEventDataId(eventList,whichDeviceName)}
@@ -221,7 +260,7 @@ const reportTable = (props) => {
         <Column
           title='選取數量'
           render={(data) =>{
-            if(data.id == selectedRowKeys[0]){
+            if(findDetailsId(DetailsFilter(data.Details))){
               return(
                 <span
                 style={{
@@ -248,7 +287,7 @@ const reportTable = (props) => {
         <Column
             title='操作'
             render={(data) => {
-              if(data.id == selectedRowKeys[0]){
+              if(findDetailsId(DetailsFilter(data.Details))){
                 return(
                   <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
                     send
@@ -257,7 +296,7 @@ const reportTable = (props) => {
               }
               else{
                 return(
-                  <Button type="primary" onClick={start} disabled={true} loading={loading}>
+                  <Button type="primary" disabled={true} loading={loading}>
                     send
                   </Button>
                 )}
@@ -274,7 +313,7 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     eventList: state.eventList,
-    whichDeviceName: state.whichDeviceName
+    whichDeviceName: state.whichDeviceName,
   }
 }
 
@@ -283,6 +322,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getEventList(){
       const action = GetEventList()
+      dispatch(action)
+    },
+    patchDetailsTableData(id,data){
+      const action = PatchDetailsTableData(id,data)
       dispatch(action)
     },
     downloadImage(imageName) {
