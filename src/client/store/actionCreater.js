@@ -658,6 +658,28 @@ export const PostDeviceMQTT = (data) => {
   )
 }
 
+export const PatchDetailsTableData = (id, data) => {
+  return (
+    async (dispatch) => {
+      message.loading('修改中，請稍後...', 0)
+      try {
+        await axios.patch(`/api/event/details/${id}`, data)
+        message.destroy()
+        Modal.success({
+          title: '修改成功',
+          onOk: () => {
+            const action = GetEventList()
+            dispatch(action)
+          }
+        })
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const DownloadImage = (imageName) => {
   return (
     async () => {

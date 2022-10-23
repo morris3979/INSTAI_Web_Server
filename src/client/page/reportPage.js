@@ -48,8 +48,8 @@ const reportPage = (props) => {
   }
 
   const handlechange =(e) => {
-    if (e.length>0){
-      whichDevice(e[0])
+    if (e){
+      whichDevice(e[e.length-1])  
     }
   }
 
@@ -61,7 +61,7 @@ const reportPage = (props) => {
             <Panel header={f.serialNumber+' '+'('+f.hostName+')'}>
               {HostFilter(hostList,f.serialNumber).map((g) => {
                 return(
-                  <Collapse onChange={handlechange}>
+                  <Collapse onChange={handlechange} accordion>
                     <Panel header={g.deviceId +' '+'('+g.deviceName+')'} key={g.id}>
                       <ReportTable />
                     </Panel>
