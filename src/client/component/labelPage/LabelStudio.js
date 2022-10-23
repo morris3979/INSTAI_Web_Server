@@ -5,6 +5,7 @@ import {
   Button,
   Upload,
   Input,
+  Modal,
   Popconfirm,
   Typography
 } from 'antd'
@@ -243,16 +244,27 @@ const LabelStudioWrapper = (props) => {
 
   const exportToJson = () => {
     const jsonData = JSON.parse(json4Training)
+    const fileName = previewTitle;
+    const extIndex = fileName.lastIndexOf('.');
+    const newFileName = extIndex != -1? fileName.substring(0, extIndex): 'filename';
     downloadFile({
       data: JSON.stringify(jsonData),
-      fileName: 'test.json',
+      fileName: newFileName+'.json',
       fileType: 'text/json',
     })
   }
 
   const crawler_onClick = () => {
-    const jsonData = JSON.parse(json4Training)
-    console.log('web crawler: ', jsonData)
+    // const jsonData = JSON.parse(json4Training)
+    // console.log('web crawler: ', jsonData)
+    Modal.info({
+      title: 'JSON Data',
+      content:(
+        <div>
+          <p>{!json4Training? 'No Data': json4Training}</p>
+        </div>
+      )
+    })
   }
 
   const onAddLabel = () => {
