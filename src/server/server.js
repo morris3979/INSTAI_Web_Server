@@ -15,7 +15,7 @@ async function app() {
     const pageRouter = require('./routes/api/page.routes'); // page routes
     const db = require('./database');
     const awsIot = require('./controllers/cloud service/aws.iot.controller');
-    const tcp = require('./protocol/tcp/index');
+    // const tcp = require('./protocol/tcp/index');
     const http = require('./protocol/http/index');
     const https = require('./protocol/https/index');
 
@@ -44,11 +44,12 @@ async function app() {
         console.error('unhandledRejection', error);
         process.exit(1) // To exit with a 'failure' code
     });
-    require('events').EventEmitter.defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
+    process.setMaxListeners(0); // turn off the limit for listener
+    // require('events').EventEmitter.defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
     awsIot.receive();
 
-    tcp.connect();
+    // tcp.connect();
     http.connect(app);
     https.connect(app);
 }
