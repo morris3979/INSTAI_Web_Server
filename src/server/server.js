@@ -15,9 +15,9 @@ async function app() {
     const pageRouter = require('./routes/api/page.routes'); // page routes
     const db = require('./database');
     const awsIot = require('./controllers/cloud service/aws.iot.controller');
-    const tcp = require('./tcp/index');
-    const http = require('./http/index');
-    const https = require('./https/index');
+    const tcp = require('./protocol/tcp/index');
+    const http = require('./protocol/http/index');
+    const https = require('./protocol/https/index');
 
     // check connection is OK
     db.sequelize.authenticate().then(() => {

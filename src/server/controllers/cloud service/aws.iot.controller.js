@@ -62,7 +62,7 @@ exports.receive = () => {
                     }, {
                         where: { serialNumber: serialNumber }
                     });
-                    console.log(`Host (${serialNumber} - ${hostName}): `, resMessage);
+                    // console.log(`Host (${serialNumber} - ${hostName}): `, resMessage);
                 }
 
                 // update device (PAG7681) message
@@ -72,7 +72,7 @@ exports.receive = () => {
                     }, {
                         where: { deviceName: deviceName }
                     });
-                    console.log(`Device (${deviceId} - ${deviceName}): `, resMessage);
+                    // console.log(`Device (${deviceId} - ${deviceName}): `, resMessage);
                 }
             });
         })
