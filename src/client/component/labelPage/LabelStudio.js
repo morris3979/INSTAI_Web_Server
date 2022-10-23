@@ -258,7 +258,7 @@ const LabelStudioWrapper = (props) => {
     // const jsonData = JSON.parse(json4Training)
     // console.log('web crawler: ', jsonData)
     Modal.info({
-      title: 'JSON Data',
+      title: previewTitle,
       content:(
         <div>
           <p>{!json4Training? 'No Data': json4Training}</p>
