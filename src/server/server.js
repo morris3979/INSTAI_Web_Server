@@ -15,9 +15,9 @@ async function app() {
     const pageRouter = require('./routes/api/page.routes'); // page routes
     const db = require('./database');
     const awsIot = require('./controllers/cloud service/aws.iot.controller');
-    const tcp = require('./tcp/index');
-    const http = require('./http/index');
-    const https = require('./https/index');
+    // const tcp = require('./protocol/tcp/index');
+    const http = require('./protocol/http/index');
+    const https = require('./protocol/https/index');
 
     // check connection is OK
     db.sequelize.authenticate().then(() => {
@@ -40,14 +40,15 @@ async function app() {
     app.use(pageRouter); // serve html on frontend route
     app.use('/api', apiRouter); // mount api router
 
+    // process.setMaxListeners(0); // turn off the limit for listener
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
         process.exit(1) // To exit with a 'failure' code
     });
+    require('events').defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
     awsIot.receive();
-
-    tcp.connect();
+    // tcp.connect();
     http.connect(app);
     https.connect(app);
 }

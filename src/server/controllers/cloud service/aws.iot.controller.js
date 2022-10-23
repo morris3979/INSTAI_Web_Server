@@ -41,49 +41,40 @@ exports.publish = (topic, message) => {
 
 // aws iot mqtt subscribe
 exports.receive = () => {
-    const topic = 'lobby';
-
     device
-    .on('connect', function () {
+    .on('connect', () => {
         console.log('=> Connecting to AWS IoT Core!');
-        device.subscribe(topic, function (err) {
-            if (!err) {
-                device
-                .on('message', async function (topic, message) {
-                    const messageJson = JSON.parse(message.toString()).message;
-                    const serialNumber = messageJson.serialNumber;
-                    const hostName = messageJson.hostName;
-                    const response = messageJson.response;
-                    const deviceId = response.deviceId;
-                    const deviceName = response.deviceName;
-                    const resMessage = response.message;
-                    const findSerialNumber = await Host.findOne({
-                        where: { serialNumber: serialNumber },
-                    });
-                    // console.log(`Message incoming topic(${topic}):`, messageJson);
-
-                    // update host (RaspberryPi) response
-                    if ((!deviceName) && findSerialNumber && serialNumber) {
-                        Host.update({
-                            response: resMessage
-                        }, {
-                            where: { serialNumber: serialNumber }
-                        });
-                        console.log(`Host (${serialNumber} - ${hostName}): `, resMessage);
-                    }
-
-                    // update device (PAG7681) message
-                    if (deviceName && findSerialNumber && serialNumber) {
-                        Device.update({
-                            message: resMessage
-                        }, {
-                            where: { deviceName: deviceName }
-                        });
-                        console.log(`Device (${deviceId} - ${deviceName}): `, resMessage);
-                    }
+        device.subscribe('lobby', (err) => {
+            if (err) console.log('AWS IoT Core ...err: ', err);
+            device
+            .on('message', async (topic, message) => {
+                const messageJson = JSON.parse(message.toString()).message;
+                const { serialNumber, hostName, response } = messageJson;
+                const { deviceId, deviceName, message: resMessage } = response;
+                const findSerialNumber = await Host.findOne({
+                    where: { serialNumber: serialNumber },
                 });
-            }
-            console.log('   ...err: ', err);
+
+                // update host (RaspberryPi) response
+                if ((!deviceName) && findSerialNumber && serialNumber) {
+                    Host.update({
+                        response: resMessage
+                    }, {
+                        where: { serialNumber: serialNumber }
+                    });
+                    // console.log(`Host (${serialNumber} - ${hostName}): `, resMessage);
+                }
+
+                // update device (PAG7681) message
+                if (deviceName && findSerialNumber && serialNumber) {
+                    Device.update({
+                        message: resMessage
+                    }, {
+                        where: { deviceName: deviceName }
+                    });
+                    // console.log(`Device (${deviceId} - ${deviceName}): `, resMessage);
+                }
+            });
         })
     });
 }
