@@ -40,12 +40,12 @@ async function app() {
     app.use(pageRouter); // serve html on frontend route
     app.use('/api', apiRouter); // mount api router
 
+    // process.setMaxListeners(0); // turn off the limit for listener
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
-        process.setMaxListeners(0); // turn off the limit for listener
         process.exit(1) // To exit with a 'failure' code
     });
-    // require('events').EventEmitter.defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
+    require('events').defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
     awsIot.receive();
     // tcp.connect();

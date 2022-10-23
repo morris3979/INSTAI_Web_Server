@@ -53,20 +53,21 @@ class DeviceTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
           style={{ whiteSpace: 'pre'}}
+          scroll={{ x: 2000, y: 600 }}
         >
-          <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
-          <Column title='設備代號' dataIndex='deviceId' align='center' />
-          <Column title='設備名稱' dataIndex='deviceName' align='center' />
-          <Column title='設備描述' dataIndex='description' align='center' />
+          <Column title='操作' render={this.buttonGroup} fixed='left' align='center' width={150} />
+          <Column title='設備代號' dataIndex='deviceId' align='center' width={150} />
+          <Column title='設備名稱' dataIndex='deviceName' align='center' width={150} />
+          <Column title='設備描述' dataIndex='description' align='center' width={150} />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='message' align='center' />
           <ColumnGroup title="模型更新紀錄">
-            <Column title='模型' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width='15%'
+            <Column title='模型' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
               render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+'\n').join('')} />
-            <Column title='更新時間' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width='10%'
+            <Column title='更新時間' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width={180}
               render={(HwUpdateLogs) => HwUpdateLogs.map(c => '('+c.createdAt.slice(0, -5).replace('T', ' ')+')'+'\n').join('')} />
           </ColumnGroup>
-          <Column title='所屬主機' dataIndex={['Host', 'hostName']} align='center' />
+          <Column title='所屬主機' dataIndex={['Host', 'hostName']} align='center' width={180} />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
@@ -112,8 +113,8 @@ class DeviceTable extends Component {
                 <Option value='reset'>reset</Option>
                 <Option value='mode?'>mode?</Option>
                 <Option value='fw_ver?'>fw_ver?</Option>
+                <Option value='progress?'>progress?</Option>
                 <Option value='current_model?'>current_model?</Option>
-                <Option value='UPDATE_MODEL;progress?'>UPDATE_MODEL;progress?</Option>
               </Select>
             </Item>
             <Item label='切換運作模式' name='Change_Mode'>
@@ -457,7 +458,7 @@ class DeviceTable extends Component {
 
   buttonGroup = (text) => {
     return (
-      <Space size='large'>
+      <Space size={10}>
         <Button
           onClick={() => { this.props.PostDeviceMQTT(text) }}
           icon={<DeploymentUnitOutlined />}

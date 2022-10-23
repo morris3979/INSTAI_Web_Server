@@ -44,15 +44,16 @@ class HostTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
           style={{ whiteSpace: 'pre'}}
+          scroll={{ x: 1500, y: 600 }}
         >
-          <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
+          <Column title='操作' render={this.buttonGroup} fixed='left' align='center' width={150} />
           <Column title='主機代號' dataIndex='serialNumber' align='center' />
-          <Column title='主機名稱' dataIndex='hostName' align='center' />
-          <Column title='主機類型' dataIndex='type' align='center' />
+          <Column title='主機名稱' dataIndex='hostName' align='center' width={180} />
+          <Column title='主機類型' dataIndex='type' align='center' width={180} />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='response' align='center' />
-          <Column title='所屬專案' dataIndex={['Project', 'displayName']} align='center' />
-          <Column title='已配置的設備' dataIndex='Devices' key="Devices" align='center'
+          <Column title='所屬專案' dataIndex={['Project', 'displayName']} align='center' width={150} />
+          <Column title='已配置的設備' dataIndex='Devices' key="Devices" align='center' width={150}
             render={(Devices) => Devices.map(c => c.deviceId+' ('+c.deviceName+')'+'\n').join('')} />
         </Table>
         <Modal
@@ -173,7 +174,7 @@ class HostTable extends Component {
 
   buttonGroup = (text) => {
     return (
-      <Space size='large'>
+      <Space size={10}>
         <Button
           onClick={() => { this.props.PostHostMQTT(text) }}
           icon={<DeploymentUnitOutlined />}
