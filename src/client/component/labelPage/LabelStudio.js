@@ -5,7 +5,8 @@ import {
   Button,
   Upload,
   Input,
-  Popconfirm
+  Popconfirm,
+  Typography
 } from 'antd'
 import {
   BugOutlined,
@@ -16,6 +17,7 @@ import {
   EyeInvisibleOutlined
 } from '@ant-design/icons'
 
+const { Title } = Typography;
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -265,7 +267,16 @@ const LabelStudioWrapper = (props) => {
   // just a wrapper node to place LSF into
   return (
     <Fragment>
+      <Title level={4} style={{ margin: 5 }}>Upload Image</Title>
       <div style={{ margin: 5 }}>
+        <Input
+          allowClear
+          type="text"
+          placeholder="Input Image URL..."
+          style={{ height: 30, width: 700 }}
+          onChange={handleInput}
+        />
+        {sendImageUrlButton}
         <Upload
           maxCount={10}
           multiple
@@ -277,22 +288,13 @@ const LabelStudioWrapper = (props) => {
           {fileList.length < 10 ? uploadButton : null}
         </Upload>
       </div>
-      <div>
-        <Input
-          allowClear
-          type="text"
-          placeholder="Input Image URL..."
-          style={{ height: 30, width: 700, margin: 5 }}
-          onChange={handleInput}
-        />
-        {sendImageUrlButton}
-      </div>
-      <div>
+      <div style={{ margin: 5 }}>
+        <Title level={4}>Label Image</Title>
         <Input
           allowClear
           type="text"
           placeholder="Input Label Name"
-          style={{ height: 30, width: 160, margin: 5 }}
+          style={{ height: 30, width: 160 }}
           ref={labelRef}
         />
         <Button onClick={onAddLabel} style={{ margin: 2 }} icon={<PlusOutlined />} />
