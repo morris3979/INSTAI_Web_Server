@@ -108,7 +108,7 @@ class DeviceTable extends Component {
               </Select>
             </Item>
             <Item label='請選擇指令' name='Command'>
-              <Select placeholder='Select the command to ask' onChange={this.handleSelectAskStatus}>
+              <Select placeholder='Please select command to send' onChange={this.handleSelectAskStatus}>
                 <Option value='reset'>reset</Option>
                 <Option value='mode?'>mode?</Option>
                 <Option value='fw_ver?'>fw_ver?</Option>
@@ -120,7 +120,7 @@ class DeviceTable extends Component {
               <Switch onChange={this.handleSwitchMode}></Switch>
             </Item>
             <Item label='請選擇執行模式' name='modeSelect' disabled={this.state.isSelectMode} hidden={this.state.isSelectMode}>
-              <Select placeholder='Select mode to change'
+              <Select placeholder='Please select mode to change'
                       onChange={this.handleChange} disabled={this.state.isSelectMode} hidden={this.state.isSelectMode}>
                 <Option value='CNN'>CNN</Option>
                 <Option value='S_MOTION_CNN'>S_MOTION_CNN</Option>
@@ -131,7 +131,7 @@ class DeviceTable extends Component {
               </Select>
             </Item>
             <Item label='請選擇可用模型' name='selectModel' disabled={!this.state.modeSelect} hidden={!this.state.modeSelect}>
-              <Select placeholder='Select model to update' defaultValue={this.state.selectModel}
+              <Select placeholder='Please select model to update' defaultValue={this.state.selectModel}
                       onChange={this.handleSelectModel} disabled={!this.state.modeSelect} hidden={!this.state.modeSelect}>
                 {this.props.modelListData.map(c => {
                   return ( <Option key={c.id} value={c.modelName}>{c.modelName}</Option> )

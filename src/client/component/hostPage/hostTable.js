@@ -84,7 +84,7 @@ class HostTable extends Component {
               />
             </Item>
             <Item label='請選擇主機指令' name='command'>
-              <Select placeholder='Select the command to send' onChange={this.handleSelectCommand}
+              <Select placeholder='Please select command to send' onChange={this.handleSelectCommand}
                 defaultValue={this.defaultValue(this.props.whichModal.command)}>
                 <Option value='deviceList?'>deviceList?</Option>
               </Select>

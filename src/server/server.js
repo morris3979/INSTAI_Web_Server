@@ -42,13 +42,12 @@ async function app() {
 
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
+        process.setMaxListeners(0); // turn off the limit for listener
         process.exit(1) // To exit with a 'failure' code
     });
-    process.setMaxListeners(0); // turn off the limit for listener
     // require('events').EventEmitter.defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
     awsIot.receive();
-
     // tcp.connect();
     http.connect(app);
     https.connect(app);
