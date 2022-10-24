@@ -156,14 +156,14 @@ class DeviceTable extends Component {
                 <Col span={12}>
                   <Slider
                     disabled={!this.state.RECtime} hidden={!this.state.RECtime}
-                    min={1} max={15} onChange={this.rec_time_onChange}
+                    min={1} max={60} onChange={this.rec_time_onChange}
                     value={typeof this.state.rec_time === 'number' ? this.state.rec_time : 15}
                   />
                 </Col>
                 <Col span={4}>
                   <InputNumber
                     disabled={!this.state.RECtime} hidden={!this.state.RECtime}
-                    min={1} max={15} style={{ margin: '0 12px', }}
+                    min={1} max={60} style={{ margin: '0 12px', }}
                     value={this.state.rec_time}
                     onChange={this.rec_time_onChange}
                   />
@@ -220,7 +220,7 @@ class DeviceTable extends Component {
                 <Col span={4}>
                   <InputNumber
                     disabled={this.state.CNNEventVisible} hidden={this.state.CNNEventVisible}
-                    min={1} max={5} style={{ margin: '0 12px', }}
+                    min={1} max={60} style={{ margin: '0 12px', }}
                     value={this.state.rec_after_event_duration}
                     onChange={this.rec_after_event_duration_onChange}
                   />
