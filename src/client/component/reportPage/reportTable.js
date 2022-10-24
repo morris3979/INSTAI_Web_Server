@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Typography, Image } from 'antd'
+import { Table, Button, Typography, Image, Modal } from 'antd'
 import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 import {
@@ -99,7 +99,15 @@ const reportTable = (props) => {
 
   const start = () => {
     const cleaned = { cleaned : '1' }
-    patchDetailsTableData(selectedRowKeys[0],cleaned)
+    selectedRowKeys.map((element) => {
+      //console.log(element)
+      patchDetailsTableData(element,cleaned)
+    })
+    Modal.success({
+      title: '修改成功',
+      onOk: () => {
+      }
+    })
     setLoading(true); // ajax request after empty completing
     setTimeout(() => {
       setSelectedRowKeys([]);
