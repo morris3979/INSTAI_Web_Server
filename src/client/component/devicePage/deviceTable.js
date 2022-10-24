@@ -35,7 +35,7 @@ class DeviceTable extends Component {
       recVisible: true, REC: false, RECtime: false, RECfps: true,
       modeSelect: false, uploadServer: true, CNNEventVisible: true,
       rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
-      rec_time: 5, upload2Server: true, rec_settings: false,
+      rec_time: 5, uploadAllPics: true, upload2Server: true, rec_settings: false,
       selectHost: null, selectModel: null, selectAskStatus: null,
     }
   }
@@ -227,12 +227,20 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='是否將錄製影片上傳至雲端' name='UPLOAD_DATA' hidden={this.state.uploadServer}>
+            <Item label='是否將所有圖片上傳' name='upload_all_pics' hidden={this.state.uploadServer}>
+              <Switch
+                defaultChecked={true}
+                hidden={this.state.uploadServer}
+                value={this.state.uploadAllPics === 'boolean' ? this.state.uploadAllPics : true}
+                onChange={this.uploadAllPics2ServerChange}>
+              </Switch>
+            </Item>
+            <Item label='是否將採集資料上傳至雲端' name='UPLOAD_DATA' hidden={this.state.uploadServer}>
               <Switch
                 defaultChecked={true}
                 hidden={this.state.uploadServer}
                 value={this.state.upload2Server === 'boolean' ? this.state.upload2Server : true}
-                onChange={this.upload2ServerChange}>
+                onChange={this.uploadAll2ServerChange}>
               </Switch>
             </Item>
             <Item>
@@ -319,12 +327,14 @@ class DeviceTable extends Component {
                           `rec_fps: ${this.state.rec_fps},\n`+
                           `rec_after_event_cycle: ${this.state.rec_after_event_cycle},\n`+
                           `rec_after_event_duration: ${this.state.rec_after_event_duration},\n`+
+                          `upload_all_pics: ${this.changeValue(this.state.uploadAllPics)},\n`+
                           `upload_to_server: ${this.changeValue(this.state.upload2Server)}`
             var message = ''
           }
           else if (values.modeSelect === 'JPEG_REC') {
             var command = `mode: ${values.modeSelect},\n`+
                           `rec_fps: ${this.state.rec_fps},\n`+
+                          `upload_all_pics: ${this.changeValue(this.state.uploadAllPics)},\n`+
                           `upload_to_server: ${this.changeValue(this.state.upload2Server)},\n`+
                           `rec: ${this.state.rec_time}`
             var message = ''
@@ -370,8 +380,11 @@ class DeviceTable extends Component {
   rec_time_onChange = (newValue) => {
     this.setState({ rec_time: newValue })
   }
-  upload2ServerChange  = (newValue) => {
+  uploadAll2ServerChange  = (newValue) => {
     this.setState({ upload2Server: newValue })
+  }
+  uploadAllPics2ServerChange  = (newValue) => {
+    this.setState({ uploadAllPics: newValue })
   }
 
   handleSwitchParam = (value) => {
