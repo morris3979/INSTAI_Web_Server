@@ -257,8 +257,11 @@ const LabelStudioWrapper = (props) => {
   const crawler_onClick = () => {
     // const jsonData = JSON.parse(json4Training)
     // console.log('web crawler: ', jsonData)
+    const fileName = previewTitle;
+    const extIndex = fileName.lastIndexOf('.');
+    const newFileName = extIndex != -1? fileName.substring(0, extIndex): 'filename';
     Modal.info({
-      title: previewTitle,
+      title: newFileName+'.json',
       content:(
         <div>
           <p>{!json4Training? 'No Data': json4Training}</p>
@@ -284,7 +287,7 @@ const LabelStudioWrapper = (props) => {
         <Input
           allowClear
           type="text"
-          placeholder="Input Image URL..."
+          placeholder="Input Image URL ..."
           style={{ height: 30, width: 700 }}
           onChange={handleInput}
         />
@@ -305,19 +308,38 @@ const LabelStudioWrapper = (props) => {
         <Input
           allowClear
           type="text"
-          placeholder="Input Label Name"
-          style={{ height: 30, width: 160 }}
+          placeholder="Input Label Name ..."
+          style={{ height: 30, width: 180 }}
           ref={labelRef}
         />
-        <Button onClick={onAddLabel} style={{ margin: 2 }} icon={<PlusOutlined />} />
+        <Button
+          onClick={onAddLabel}
+          style={{ margin: 2 }}
+          icon={<PlusOutlined />}
+          >Add Label
+        </Button>
         <Popconfirm
           title='Clear all Labels?'
           onConfirm={onReset}
         >
-          <Button style={{ margin: 2 }} icon={<DeleteOutlined />} />
+          <Button
+            style={{ margin: 2 }}
+            icon={<DeleteOutlined />}
+            >Delete Labels
+          </Button>
         </Popconfirm>
-        <Button onClick={exportToJson} style={{ margin: 2 }} icon={<DownloadOutlined />} />
-        <Button onClick={crawler_onClick} style={{ margin: 2 }} icon={<BugOutlined />} />
+        <Button
+          onClick={exportToJson}
+          style={{ margin: 2 }}
+          icon={<DownloadOutlined />}
+          >Download JSON
+        </Button>
+        <Button
+          onClick={crawler_onClick}
+          style={{ margin: 2 }}
+          icon={<BugOutlined />}
+          >View JSON
+        </Button>
       </div>
       <div style={{ margin: 5 }} ref={rootRef} />
     </Fragment>
