@@ -80,19 +80,27 @@ const reportTable = (props) => {
   const download = (data) => {
     return (
       <Fragment>
-        <Button
-        size='large'
-        icon={<DownloadOutlined />}
-        onClick={() => {
-          if (data.image == true) {
-            props.downloadImage(data.details)
-          } else if (data.video == true) {
-            props.downloadVideo(data.details)
-          } else {
-            console.log('data: ', data)
-          }
-        }}
-      />
+        {
+          data.cleaned == true?
+          <Button
+            size='large'
+            icon={<DownloadOutlined />}
+            onClick={() => {
+              if (data.image == true) {
+                props.downloadImage(data.details)
+              } else if (data.video == true) {
+                props.downloadVideo(data.details)
+              } else {
+                console.log('data: ', data)
+              }
+            }}
+          />:
+          <Button
+            disabled
+            size='large'
+            icon={<DownloadOutlined />}
+          />
+        }
       </Fragment>
     )
   }
@@ -163,11 +171,11 @@ const reportTable = (props) => {
         const EachEventData = eventList.filter((c) => {
           return c.eventTime === record.eventTime
         });
-  
+
         const DetailsData = EachEventData.map((d) => {
           return d.Details
         })
-  
+
         const JSONData =  JSON.parse(JSON.stringify(DetailsData))[0]
         JSONData.forEach((array) => {
           array.key = array.id
