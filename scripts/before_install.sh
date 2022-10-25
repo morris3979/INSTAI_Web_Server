@@ -1,15 +1,17 @@
 #!/bin/bash
 
-#download node and npm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-. ~/.nvm/nvm.sh
-nvm install node
+# Install node.js
+sudo apt-get install python-software-properties -y
+sudo apt-add-repository ppa:chris-lea/node.js -y
+sudo apt-get update
+sudo apt-get install nodejs -y
 
-#create our working directory if it doesnt exist
-DIR="/home/ec2-user/lab321-app"
-if [ -d "$DIR" ]; then
-  echo "${DIR} exists"
-else
-  echo "Creating ${DIR} directory"
-  mkdir ${DIR}
-fi
+# Install nodemon
+# sudo npm install nodemon -g
+
+# Install forever module
+# https://www.npmjs.com/package/forever
+sudo npm install forever -g
+
+# Clean working folder
+# sudo find /home/ubuntu/test -type f -delete
