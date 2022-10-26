@@ -44,7 +44,7 @@ class HostTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
           style={{ whiteSpace: 'pre'}}
-          scroll={{ x: 1500, y: 600 }}
+          scroll={{ x: 1500, y: 750 }}
         >
           <Column title='操作' render={this.buttonGroup} fixed='left' align='center' width={150} />
           <Column title='主機代號' dataIndex='serialNumber' align='center' />

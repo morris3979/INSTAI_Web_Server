@@ -39,10 +39,11 @@ class ProjectTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
           style={{ whiteSpace: 'pre'}}
+          scroll={{ x: 1000, y: 750 }}
         >
           <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
-          <Column title='專案代號' dataIndex='project' align='center' />
-          <Column title='專案名稱' dataIndex='displayName' align='center' />
+          <Column title='專案代號' dataIndex='project' align='center' width='15%' />
+          <Column title='專案名稱' dataIndex='displayName' align='center' width='15%' />
           <Column title='已配置的主機' dataIndex='Hosts' key="Hosts" align='center'
             render={(Hosts) => Hosts.map(c => c.serialNumber+' ('+c.hostName+')'+'\n').join('')} />
           <Column title='已配置的設備' dataIndex='Hosts' key='Hosts' align='center'
