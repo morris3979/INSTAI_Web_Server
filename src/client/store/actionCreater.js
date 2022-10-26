@@ -661,10 +661,10 @@ export const PostDeviceMQTT = (data) => {
 export const PatchDetailsTableData = (id, data) => {
   return (
     async (dispatch) => {
-      message.loading('修改中，請稍後...', 0)
+      //message.loading('修改中，請稍後...', 0)
       try {
         await axios.patch(`/api/event/details/${id}`, data)
-        message.destroy()
+        //message.destroy()
         const action = GetEventList()
         dispatch(action)
       } catch (error) {
