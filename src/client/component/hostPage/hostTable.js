@@ -72,7 +72,7 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請輸入主機裝置' name='hostName' rules={[this.rule('主機裝置')]}>
+            <Item label='請輸入主機名稱' name='hostName' rules={[this.rule('主機名稱')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.hostName)}`

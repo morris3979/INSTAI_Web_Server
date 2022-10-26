@@ -272,22 +272,6 @@ class DeviceTable extends Component {
     )
   }
 
-  rule = (hint) => {
-    if (this.props.whichModal.id == 0) {
-      return ({ required: true, message: `請輸入${hint}` })
-    } else {
-      return ({ required: false })
-    }
-  }
-
-  defaultValue = (value) => {
-    if (this.props.whichModal.id > 0) {
-      return (value)
-    } else {
-      return ('')
-    }
-  }
-
   rec_fps_onChange = (newValue) => {
     this.setState({ rec_fps: newValue })
   }
@@ -431,25 +415,20 @@ class DeviceTable extends Component {
     }
   }
 
-  buttonGroup = (text) => {
-    return (
-      <Space size={10}>
-        <Button
-          onClick={() => { this.props.postDeviceMQTT(text) }}
-          icon={<DeploymentUnitOutlined />}
-        />
-        <Button
-          onClick={() => { this.onClick(text) }}
-          icon={<EditOutlined />}
-        />
-        <Popconfirm
-          title='確定刪除?'
-          onConfirm={() => { this.props.deleteDeviceTableData(text.id) }}
-        >
-          <Button icon={<DeleteOutlined />} />
-        </Popconfirm>
-      </Space>
-    )
+  rule = (hint) => {
+    if (this.props.whichModal.id == 0) {
+      return ({ required: true, message: `請輸入${hint}` })
+    } else {
+      return ({ required: false })
+    }
+  }
+
+  defaultValue = (value) => {
+    if (this.props.whichModal.id > 0) {
+      return (value)
+    } else {
+      return ('')
+    }
   }
 
   onFinish = (values) => {
@@ -468,11 +447,12 @@ class DeviceTable extends Component {
         if (this.state.rec_fps) {
           if (values.modeSelect == 'S_MOTION_CNN_JPEG') {
             const rec_value = this.state.rec_after_event_switch == true ?
-              `rec_fps: ${this.state.rec_fps},\n`+
-              `rec_after_event_cycle: ${this.state.rec_after_event_cycle},\n`+
-              `rec_after_event_duration: ${this.state.rec_after_event_duration},\n` : ''
+                              `rec_fps: ${this.state.rec_fps},\n`+
+                              `rec_after_event_cycle: ${this.state.rec_after_event_cycle},\n`+
+                              `rec_after_event_duration: ${this.state.rec_after_event_duration},\n` : ''
             var command = `mode: ${values.modeSelect},\n`+
-                          `rec_after_event_switch: ${this.changeValue(this.state.rec_after_event_switch)},\n`+rec_value+
+                          `rec_after_event_switch: ${this.changeValue(this.state.rec_after_event_switch)},\n`+
+                          rec_value+
                           `upload_all_pics: ${this.changeValue(this.state.upload_all_pictures_switch)},\n`+
                           `upload_to_server: ${this.changeValue(this.state.upload_all_files_switch)}`
             var message = ''
@@ -521,6 +501,26 @@ class DeviceTable extends Component {
     }
   }
 
+  buttonGroup = (text) => {
+    return (
+      <Space size={10}>
+        <Button
+          onClick={() => { this.props.postDeviceMQTT(text) }}
+          icon={<DeploymentUnitOutlined />}
+        />
+        <Button
+          onClick={() => { this.onClick(text) }}
+          icon={<EditOutlined />}
+        />
+        <Popconfirm
+          title='確定刪除?'
+          onConfirm={() => { this.props.deleteDeviceTableData(text.id) }}
+        >
+          <Button icon={<DeleteOutlined />} />
+        </Popconfirm>
+      </Space>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
