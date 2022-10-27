@@ -161,7 +161,7 @@ class DeviceTable extends Component {
                 value={this.state.rec_after_event_switch}
               />
             </Item>
-            <Item label='錄影時間(秒)' name='REC_Time' hidden={!this.state.recTimeVisible}>
+            <Item label='錄影時間(秒)' name='rec_time' hidden={!this.state.recTimeVisible}>
             <Row>
                 <Col span={12}>
                   <Slider
@@ -180,7 +180,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='錄影時每秒幀數(fps)' name='REC_FPS' hidden={!this.state.recFpsVisible}>
+            <Item label='錄影時每秒幀數(fps)' name='rec_fps' hidden={!this.state.recFpsVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
@@ -199,7 +199,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='CNN 事件觸發後錄影循環次數' name='REC_after_event_cycle' hidden={!this.state.cnnEventTriggerVisible}>
+            <Item label='CNN 事件觸發後錄影循環次數' name='rec_after_event_cycle' hidden={!this.state.cnnEventTriggerVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
@@ -218,7 +218,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='CNN 事件觸發後每次循環時間長度' name='Cycle_Duration' hidden={!this.state.cnnEventTriggerVisible}>
+            <Item label='CNN 事件觸發後每次循環時間長度' name='rec_after_event_duration' hidden={!this.state.cnnEventTriggerVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
@@ -237,7 +237,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='是否將所有圖片上傳' name='upload_all_pics' hidden={!this.state.uploadPicturesVisible}>
+            <Item label='是否將所有圖片上傳' name='upload_all_pictures' hidden={!this.state.uploadPicturesVisible}>
               <Switch
                 defaultChecked={true}
                 hidden={!this.state.uploadPicturesVisible}
@@ -245,7 +245,7 @@ class DeviceTable extends Component {
                 onChange={this.uploadAllPics2ServerChange}>
               </Switch>
             </Item>
-            <Item label='是否將採集資料上傳至雲端' name='UPLOAD_DATA' hidden={!this.state.uploadServerVisible}>
+            <Item label='是否將採集資料上傳至雲端' name='upload_all_files' hidden={!this.state.uploadServerVisible}>
               <Switch
                 defaultChecked={true}
                 hidden={!this.state.uploadServerVisible}

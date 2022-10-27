@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir /home/ubuntu/nodejs
-cd /home/ubuntu/nodejs
+mkdir /home/ec2-user/my_project
+cd /home/ec2-user/my_project
 
 sudo npm install
