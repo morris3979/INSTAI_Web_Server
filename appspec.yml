@@ -23,11 +23,7 @@ os: linux
 #   may cause associated deployments to fail.
 files:
   - source: /
-<<<<<<< HEAD
-    destination: /home/ec2-user/nodejs
-=======
     destination: /home/ec2-user/my_project
->>>>>>> branch-v2.0.0
 # For deployments to Amazon Linux and Ubuntu Server instances,
 #   you can specify a "permissions"
 #   section here that describes special permissions to apply to the files
@@ -80,8 +76,4 @@ hooks:
   ApplicationStart:
     - location: scripts/application_start.sh
       timeout: 300
-<<<<<<< HEAD
       runas: ec2-user
-=======
-      runas: ec2-user
->>>>>>> branch-v2.0.0
