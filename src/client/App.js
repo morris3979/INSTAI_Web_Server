@@ -50,22 +50,31 @@ const App = (props) => {
     /* 上面是 componentDidMount和componentDidUpdate */
   }, []); /* 加入監控的props */
 
-  if (loginInformation.admin == true) {
+  if (loginInformation.admin == true || loginInformation.authA == true) {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint='md' collapsedWidth='0'>
           <Menu theme='dark' selectedKeys={[]} mode='inline'>
-            <Item key='/map' disabled={!loginInformation.admin} icon={<EnvironmentOutlined />}>
+            <Item key='/map'
+              hidden={!(loginInformation.admin || loginInformation.authA)}
+              icon={<EnvironmentOutlined />}
+            >
               <Link to='/map'>
                 地圖資訊
               </Link>
             </Item>
-            <Item key='/label' disabled={!loginInformation.admin} icon={<FormOutlined />}>
+            <Item key='/label'
+              hidden={!(loginInformation.admin || loginInformation.authA)}
+              icon={<FormOutlined />}
+            >
               <Link to='/label'>
                 資料標記
               </Link>
             </Item>
-            <SubMenu key='subreport' title='報表查詢' disabled={!loginInformation.admin} icon={<AppstoreOutlined />}>
+            <SubMenu key='subreport' title='報表查詢'
+              hidden={!(loginInformation.admin || loginInformation.authA)}
+              icon={<AppstoreOutlined />}
+            >
               {projectList.map((c) => {
                 // console.log(c)
                 return (
@@ -77,39 +86,49 @@ const App = (props) => {
                 )
               })}
             </SubMenu>
-            <SubMenu key='subset' title='配置設定' disabled={!loginInformation.admin} icon={<SettingOutlined />}>
-              <Item key='/project' disabled={!loginInformation.admin}>
+            <SubMenu key='subset' title='配置設定'
+              hidden={!(loginInformation.admin || loginInformation.authA)}
+              icon={<SettingOutlined />}
+            >
+              <Item key='/project' hidden={!(loginInformation.admin || loginInformation.authA)}>
                 <Link to='/project'>
                   專案管理
                 </Link>
               </Item>
-              <Item key='/host' disabled={!loginInformation.admin}>
+              <Item key='/host' hidden={!(loginInformation.admin || loginInformation.authA)}>
                 <Link to='/host'>
                   主機配置
                 </Link>
               </Item>
-              <Item key='/device' disabled={!loginInformation.admin}>
+              <Item key='/device' hidden={!(loginInformation.admin || loginInformation.authA)}>
                 <Link to='/device'>
                   設備配置
                 </Link>
               </Item>
-              <Item key='/account' disabled={!loginInformation.admin}>
+              <Item key='/account' hidden={!loginInformation.admin}>
                 <Link to='/account'>
                   帳號權限配置
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/test' disabled={!loginInformation.admin} icon={<ToolOutlined />}>
+            <Item key='/test' hidden={!loginInformation.admin} icon={<ToolOutlined />}>
               <Link to='/test'>
                 測試
               </Link>
             </Item>
-              <Item key='/resource' disabled={!loginInformation.admin} icon={<LinkOutlined />}>
+              <Item key='/resource'
+                hidden={!(loginInformation.admin || loginInformation.authA)}
+                icon={<LinkOutlined />}
+              >
                 <Link to='/resource'>
                   關於
                 </Link>
               </Item>
-            <Item key='/logout' disabled={!loginInformation.admin} onClick={onClick} icon={<LogoutOutlined />}>
+            <Item key='/logout'
+              hidden={!(loginInformation.admin || loginInformation.authA)}
+              onClick={onClick}
+              icon={<LogoutOutlined />}
+            >
               <Link to='/'>
                 登出
               </Link>

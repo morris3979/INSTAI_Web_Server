@@ -29,7 +29,7 @@ const adminStatus = (text) => {
   }
 }
 
-const modelAStatus = (text) => {
+const statusA = (text) => {
   if (text.authA == true) {
     return (
       <CheckOutlined />
@@ -41,7 +41,7 @@ const modelAStatus = (text) => {
   }
 }
 
-const modelBStatus = (text) => {
+const statusB = (text) => {
   if (text.authB == true) {
     return (
       <CheckOutlined />
@@ -53,7 +53,7 @@ const modelBStatus = (text) => {
   }
 }
 
-const modelCStatus = (text) => {
+const statusC = (text) => {
   if (text.authC == true) {
     return (
       <CheckOutlined />
@@ -89,9 +89,9 @@ class AccountManageTable extends Component {
           <Column title='帳號' dataIndex='username' align='center' />
           <ColumnGroup title='權限' align='center'>
             <Column title='admin' render={adminStatus} align='center' />
-            <Column title='modelA' render={modelAStatus} align='center' />
-            <Column title='modelB' render={modelBStatus} align='center' />
-            <Column title='modelC' render={modelCStatus} align='center' />
+            <Column title='authA' render={statusA} align='center' />
+            <Column title='authB' render={statusB} align='center' />
+            <Column title='authC' render={statusC} align='center' />
             <Column title='操作' render={this.buttonGroup} align='center' />
           </ColumnGroup>
         </Table >
@@ -107,17 +107,17 @@ class AccountManageTable extends Component {
                 defaultChecked={this.props.whichModal.admin}
               />
             </Item>
-            <Item label='modelA' name='authA'>
+            <Item label='authA' name='authA'>
               <Switch
                 defaultChecked={this.props.whichModal.authA}
               />
             </Item>
-            <Item label='modelB' name='authB'>
+            <Item label='authB' name='authB'>
               <Switch
                 defaultChecked={this.props.whichModal.authB}
               />
             </Item>
-            <Item label='modelC' name='authC'>
+            <Item label='authC' name='authC'>
               <Switch
                 defaultChecked={this.props.whichModal.authC}
               />
