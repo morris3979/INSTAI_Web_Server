@@ -19,7 +19,6 @@ import {
     PostDeviceTableData,
     PostDeviceMQTT
 } from '../../store/actionCreater'
-import { mapValues } from 'async'
 
 const { Column, ColumnGroup } = Table
 const { Item } = Form
@@ -31,13 +30,15 @@ class DeviceTable extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isModalVisible: false, isSelectMode: true,
+      isModalVisible: false, isSelectMode: false,
       modeSelect: false, modelVisible: false,
-      CNNParamVisible: true, REC: false, RECtime: false, RECfps: true,
-      rec_fps: 15, rec_after_event_cycle: 1, rec_after_event_duration: 5,
-      rec_time: 5, rec_settings: false, CNNEventVisible: true,
-      uploadServerVisible: true, uploadAllFiles: true,
-      uploadPicturesVisible: true, uploadAllPics: true,
+      relatedParamsVisible: false, related_params_switch: false,
+      recTimeVisible: false, recFpsVisible: false,
+      cnnEventTriggerVisible: false, recAfterEventVisible: false,
+      rec_after_event_switch: false, rec_after_event_duration: 5,
+      rec_fps: 15, rec_after_event_cycle: 1, rec_time: 5,
+      uploadPicturesVisible: false, upload_all_pictures_switch: true,
+      uploadServerVisible: false, upload_all_files_switch: true,
       selectHost: null, selectModel: null, selectAskStatus: null,
     }
   }
@@ -120,11 +121,11 @@ class DeviceTable extends Component {
               </Select>
             </Item>
             <Item label='切換運作模式' name='Change_Mode'>
-              <Switch onChange={this.handleSwitchMode}></Switch>
+              <Switch onChange={this.handleOperationModeSwitch}></Switch>
             </Item>
-            <Item label='請選擇執行模式' name='modeSelect' disabled={this.state.isSelectMode} hidden={this.state.isSelectMode}>
+            <Item label='請選擇執行模式' name='modeSelect' disabled={!this.state.isSelectMode} hidden={!this.state.isSelectMode}>
               <Select placeholder='Please select mode to change'
-                      onChange={this.handleChange} disabled={this.state.isSelectMode} hidden={this.state.isSelectMode}>
+                      onChange={this.onChangeSelectMode} disabled={!this.state.isSelectMode} hidden={!this.state.isSelectMode}>
                 <Option value='CNN'>CNN</Option>
                 <Option value='S_MOTION_CNN'>S_MOTION_CNN</Option>
                 <Option value='S_MOTION_CNN_JPEG'>S_MOTION_CNN_JPEG</Option>
@@ -142,30 +143,36 @@ class DeviceTable extends Component {
                 })}
               </Select>
             </Item>
-            <Item label='相關參數配置' name='REC_Switch' hidden={this.state.CNNParamVisible}>
+            <Item label='相關參數配置' name='related_params' hidden={!this.state.relatedParamsVisible}>
               <Switch
-                disabled={this.state.CNNParamVisible}
+                disabled={!this.state.relatedParamsVisible}
+                hidden={!this.state.relatedParamsVisible}
                 defaultChecked={false}
-                onChange={this.handleSwitchParam}
-                hidden={this.state.CNNParamVisible}
-                value={this.state.rec_settings === 'boolean' ? this.state.rec_settings : false}
+                onChange={this.handleRelatedParamsSwitch}
+                value={this.state.related_params_switch}
               />
             </Item>
-            <Item label='CNN 事件觸發後是否開始錄影' name='Rec after Event' hidden={this.state.CNNEventVisible}>
-              <Switch disabled={this.state.CNNEventVisible} hidden={this.state.CNNEventVisible}></Switch>
+            <Item label='CNN 事件觸發後是否開始錄影' name='rec_after_event' hidden={!this.state.recAfterEventVisible}>
+              <Switch
+                disabled={!this.state.recAfterEventVisible}
+                hidden={!this.state.recAfterEventVisible}
+                defaultChecked={false}
+                onChange={this.handleRecAfterEventSwitch}
+                value={this.state.rec_after_event_switch}
+              />
             </Item>
-            <Item label='錄影時間(秒)' name='REC_Time' hidden={!this.state.RECtime}>
+            <Item label='錄影時間(秒)' name='rec_time' hidden={!this.state.recTimeVisible}>
             <Row>
                 <Col span={12}>
                   <Slider
-                    disabled={!this.state.RECtime} hidden={!this.state.RECtime}
+                    disabled={!this.state.recTimeVisible} hidden={!this.state.recTimeVisible}
                     min={1} max={60} onChange={this.rec_time_onChange}
                     value={typeof this.state.rec_time === 'number' ? this.state.rec_time : 15}
                   />
                 </Col>
                 <Col span={4}>
                   <InputNumber
-                    disabled={!this.state.RECtime} hidden={!this.state.RECtime}
+                    disabled={!this.state.recTimeVisible} hidden={!this.state.recTimeVisible}
                     min={1} max={60} style={{ margin: '0 12px', }}
                     value={this.state.rec_time}
                     onChange={this.rec_time_onChange}
@@ -173,18 +180,18 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='錄影時每秒幀數(fps)' name='REC_FPS' hidden={this.state.RECfps}>
+            <Item label='錄影時每秒幀數(fps)' name='rec_fps' hidden={!this.state.recFpsVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
-                    disabled={this.state.RECfps} hidden={this.state.RECfps}
+                    disabled={!this.state.recFpsVisible} hidden={!this.state.recFpsVisible}
                     min={1} max={15} onChange={this.rec_fps_onChange}
                     value={typeof this.state.rec_fps === 'number' ? this.state.rec_fps : 15}
                   />
                 </Col>
                 <Col span={4}>
                   <InputNumber
-                    disabled={this.state.RECfps} hidden={this.state.RECfps}
+                    disabled={!this.state.recFpsVisible} hidden={!this.state.recFpsVisible}
                     min={1} max={15} style={{ margin: '0 12px', }}
                     value={this.state.rec_fps}
                     onChange={this.rec_fps_onChange}
@@ -192,18 +199,18 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='CNN 事件觸發後錄影循環次數' name='REC_after_event_cycle' hidden={this.state.CNNEventVisible}>
+            <Item label='CNN 事件觸發後錄影循環次數' name='rec_after_event_cycle' hidden={!this.state.cnnEventTriggerVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
-                    disabled={this.state.CNNEventVisible} hidden={this.state.CNNEventVisible}
+                    disabled={!this.state.cnnEventTriggerVisible} hidden={!this.state.cnnEventTriggerVisible}
                     min={1} max={15} onChange={this.rec_after_event_cycle_onChange}
                     value={typeof this.state.rec_after_event_cycle === 'number' ? this.state.rec_after_event_cycle : 1}
                   />
                 </Col>
                 <Col span={4}>
                   <InputNumber
-                    disabled={this.state.CNNEventVisible} hidden={this.state.CNNEventVisible}
+                    disabled={!this.state.cnnEventTriggerVisible} hidden={!this.state.cnnEventTriggerVisible}
                     min={1} max={15} style={{ margin: '0 12px', }}
                     value={this.state.rec_after_event_cycle}
                     onChange={this.rec_after_event_cycle_onChange}
@@ -211,18 +218,18 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='CNN 事件觸發後每次循環時間長度' name='Cycle_Duration' hidden={this.state.CNNEventVisible}>
+            <Item label='CNN 事件觸發後每次循環時間長度' name='rec_after_event_duration' hidden={!this.state.cnnEventTriggerVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
-                    disabled={this.state.CNNEventVisible} hidden={this.state.CNNEventVisible}
+                    disabled={!this.state.cnnEventTriggerVisible} hidden={!this.state.cnnEventTriggerVisible}
                     min={1} max={60} onChange={this.rec_after_event_duration_onChange}
                     value={typeof this.state.rec_after_event_duration === 'number' ? this.state.rec_after_event_duration : 5}
                   />
                 </Col>
                 <Col span={4}>
                   <InputNumber
-                    disabled={this.state.CNNEventVisible} hidden={this.state.CNNEventVisible}
+                    disabled={!this.state.cnnEventTriggerVisible} hidden={!this.state.cnnEventTriggerVisible}
                     min={1} max={60} style={{ margin: '0 12px', }}
                     value={this.state.rec_after_event_duration}
                     onChange={this.rec_after_event_duration_onChange}
@@ -230,19 +237,19 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='是否將所有圖片上傳' name='upload_all_pics' hidden={this.state.uploadPicturesVisible}>
+            <Item label='是否將所有圖片上傳' name='upload_all_pictures' hidden={!this.state.uploadPicturesVisible}>
               <Switch
                 defaultChecked={true}
-                hidden={this.state.uploadPicturesVisible}
-                value={this.state.uploadAllPics === 'boolean' ? this.state.uploadAllPics : true}
+                hidden={!this.state.uploadPicturesVisible}
+                value={this.state.upload_all_pictures_switch === 'boolean' ? this.state.upload_all_pictures_switch : true}
                 onChange={this.uploadAllPics2ServerChange}>
               </Switch>
             </Item>
-            <Item label='是否將採集資料上傳至雲端' name='UPLOAD_DATA' hidden={this.state.uploadServerVisible}>
+            <Item label='是否將採集資料上傳至雲端' name='upload_all_files' hidden={!this.state.uploadServerVisible}>
               <Switch
                 defaultChecked={true}
-                hidden={this.state.uploadServerVisible}
-                value={this.state.uploadAllFiles === 'boolean' ? this.state.uploadAllFiles : true}
+                hidden={!this.state.uploadServerVisible}
+                value={this.state.upload_all_files_switch === 'boolean' ? this.state.upload_all_files_switch : true}
                 onChange={this.uploadAll2ServerChange}>
               </Switch>
             </Item>
@@ -265,6 +272,30 @@ class DeviceTable extends Component {
     )
   }
 
+  rec_fps_onChange = (newValue) => {
+    this.setState({ rec_fps: newValue })
+  }
+
+  rec_after_event_cycle_onChange = (newValue) => {
+    this.setState({ rec_after_event_cycle: newValue })
+  }
+
+  rec_after_event_duration_onChange = (newValue) => {
+    this.setState({ rec_after_event_duration: newValue })
+  }
+
+  rec_time_onChange = (newValue) => {
+    this.setState({ rec_time: newValue })
+  }
+
+  uploadAll2ServerChange  = (newValue) => {
+    this.setState({ upload_all_files_switch: newValue })
+  }
+
+  uploadAllPics2ServerChange  = (newValue) => {
+    this.setState({ upload_all_pictures_switch: newValue })
+  }
+
   onClick = (text) => {
     this.setState({ isModalVisible: true })
     this.props.setWhichModal(text)
@@ -283,17 +314,105 @@ class DeviceTable extends Component {
   }
 
   handleCancel = () => {
-    this.setState({ isModalVisible: false })
-    this.setState({ isSelectMode: true })
-    this.setState({ CNNParamVisible: true })
-    this.setState({ CNNEventVisible: true })
-    this.setState({ modeSelect: false })
-    this.setState({ modelVisible: false })
-    this.setState({ uploadPicturesVisible: true })
-    this.setState({ uploadServerVisible: true })
-    this.setState({ RECtime: false })
-    this.setState({ RECfps: true })
-    this.setState({ REC: true })
+    this.setState({
+      isModalVisible: false, isSelectMode: false, relatedParamsVisible: false,
+      recAfterEventVisible: false, cnnEventTriggerVisible: false, modeSelect: false,
+      modelVisible: false, recTimeVisible: false, recFpsVisible: false,
+      uploadPicturesVisible: false, uploadServerVisible: false
+    })
+  }
+
+  handleOperationModeSwitch = (value) => {
+    this.setState({
+      isSelectMode: value, relatedParamsVisible: false, recFpsVisible: false,
+      recAfterEventVisible: false, cnnEventTriggerVisible: false,
+      uploadPicturesVisible: false, uploadServerVisible: false
+    })
+  }
+
+  handleRelatedParamsSwitch = (value) => {
+    if (value == true) {
+      this.setState({
+        related_params_switch: true,
+        recAfterEventVisible: true, recTimeVisible: false,
+        recFpsVisible: false, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: true, uploadServerVisible: true
+      })
+    } else {
+      this.setState({
+        related_params_switch: false,
+        recAfterEventVisible: false, recTimeVisible: false,
+        recFpsVisible: false, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: false, uploadServerVisible: false
+      })
+    }
+  }
+
+  handleRecAfterEventSwitch = (value) => {
+    if (value == true) {
+      this.setState({
+        rec_after_event_switch: true,
+        recAfterEventVisible: true, rec_after_event_switch: true,
+        recTimeVisible: false, recFpsVisible: true, cnnEventTriggerVisible: true,
+        uploadPicturesVisible: true, uploadServerVisible: true
+      })
+    } else {
+      this.setState({
+        rec_after_event_switch: false,
+        recAfterEventVisible: true, rec_after_event_switch: false,
+        recTimeVisible: false, recFpsVisible: false, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: true, uploadServerVisible: true
+      })
+    }
+  }
+
+  onChangeSelectMode = (value) => {
+    // console.log('SelectMode: ', value)
+    if (value == 'S_MOTION_CNN_JPEG') {
+      this.setState({
+        modeSelect: true, modelVisible: false, relatedParamsVisible: true,
+        related_params_switch: false, recAfterEventVisible: false,
+        recTimeVisible: false, recFpsVisible: false, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: false, uploadServerVisible: false
+      })
+    } else if (value == 'JPEG_REC') {
+      this.setState({
+        modeSelect: false, modelVisible: false, relatedParamsVisible: false,
+        related_params_switch: false, recAfterEventVisible: false,
+        recTimeVisible: true, recFpsVisible: true, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: true, uploadServerVisible: true
+      })
+    } else if (value == 'UPDATE_MODEL') {
+      this.setState({
+        modeSelect: false, modelVisible: true, relatedParamsVisible: false,
+        related_params_switch: false, recAfterEventVisible: false,
+        recTimeVisible: false, recFpsVisible: false, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: false, uploadServerVisible: true
+      })
+    } else if (value == 'CNN_JPEG' || value == 'CONT_JPEG_CNN') {
+      this.setState({
+        modeSelect: false, modelVisible: false, relatedParamsVisible: false,
+        related_params_switch: false, recAfterEventVisible: false,
+        recTimeVisible: false, recFpsVisible: false, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: false, uploadServerVisible: true
+      })
+    } else {
+      this.setState({
+        modeSelect: false, modelVisible: false, relatedParamsVisible: false,
+        related_params_switch: false, recAfterEventVisible: false,
+        recTimeVisible: false, recFpsVisible: false, cnnEventTriggerVisible: false,
+        uploadPicturesVisible: false, uploadServerVisible: false
+      })
+    }
+  }
+
+  changeValue = (value) => {
+    if(value === true){
+      return 'ON'
+    }
+    else if(value === false){
+      return 'OFF'
+    }
   }
 
   rule = (hint) => {
@@ -321,26 +440,28 @@ class DeviceTable extends Component {
     if (this.props.whichModal.id > 0) {
       // console.log('convertedValues: ', convertedValues)
       if (values.modeSelect == 'CNN' || values.modeSelect == 'S_MOTION_CNN') {
-        var command = `${mapValues.modeSelect}`
+        var command = `mode: ${values.modeSelect}`
         var message = ''
       }
       else if (values.modeSelect == 'S_MOTION_CNN_JPEG' || values.modeSelect == 'JPEG_REC') {
         if (this.state.rec_fps) {
           if (values.modeSelect == 'S_MOTION_CNN_JPEG') {
+            const rec_value = this.state.rec_after_event_switch == true ?
+                              `rec_fps: ${this.state.rec_fps},\n`+
+                              `rec_after_event_cycle: ${this.state.rec_after_event_cycle},\n`+
+                              `rec_after_event_duration: ${this.state.rec_after_event_duration},\n` : ''
             var command = `mode: ${values.modeSelect},\n`+
-                          `rec_after_event: ${this.changeValue(this.state.rec_settings)},\n`+
-                          `rec_fps: ${this.state.rec_fps},\n`+
-                          `rec_after_event_cycle: ${this.state.rec_after_event_cycle},\n`+
-                          `rec_after_event_duration: ${this.state.rec_after_event_duration},\n`+
-                          `upload_all_pics: ${this.changeValue(this.state.uploadAllPics)},\n`+
-                          `upload_to_server: ${this.changeValue(this.state.uploadAllFiles)}`
+                          `rec_after_event_switch: ${this.changeValue(this.state.rec_after_event_switch)},\n`+
+                          rec_value+
+                          `upload_all_pics: ${this.changeValue(this.state.upload_all_pictures_switch)},\n`+
+                          `upload_to_server: ${this.changeValue(this.state.upload_all_files_switch)}`
             var message = ''
           }
           else if (values.modeSelect == 'JPEG_REC') {
             var command = `mode: ${values.modeSelect},\n`+
                           `rec_fps: ${this.state.rec_fps},\n`+
-                          `upload_all_pics: ${this.changeValue(this.state.uploadAllPics)},\n`+
-                          `upload_to_server: ${this.changeValue(this.state.uploadAllFiles)},\n`+
+                          `upload_all_pics: ${this.changeValue(this.state.upload_all_pictures_switch)},\n`+
+                          `upload_to_server: ${this.changeValue(this.state.upload_all_files_switch)},\n`+
                           `rec: ${this.state.rec_time}`
             var message = ''
           }
@@ -355,7 +476,7 @@ class DeviceTable extends Component {
      }
      else if (values.modeSelect == 'CNN_JPEG' || values.modeSelect == 'CONT_JPEG_CNN') {
       var command = `mode: ${values.modeSelect},\n`+
-                    `upload_to_server: ${this.changeValue(this.state.uploadAllFiles)}`
+                    `upload_to_server: ${this.changeValue(this.state.upload_all_files_switch)}`
       var message = ''
 
      }
@@ -380,126 +501,11 @@ class DeviceTable extends Component {
     }
   }
 
-  rec_fps_onChange = (newValue) => {
-    this.setState({ rec_fps: newValue })
-  }
-  rec_after_event_cycle_onChange = (newValue) => {
-    this.setState({ rec_after_event_cycle: newValue })
-  }
-  rec_after_event_duration_onChange = (newValue) => {
-    this.setState({ rec_after_event_duration: newValue })
-  }
-  rec_time_onChange = (newValue) => {
-    this.setState({ rec_time: newValue })
-  }
-  uploadAll2ServerChange  = (newValue) => {
-    this.setState({ uploadAllFiles: newValue })
-  }
-  uploadAllPics2ServerChange  = (newValue) => {
-    this.setState({ uploadAllPics: newValue })
-  }
-
-  handleSwitchParam = (value) => {
-    if (value == true) {
-      this.setState({ REC: true })
-      this.setState({ CNNEventVisible: false })
-      this.setState({ uploadPicturesVisible: false })
-      this.setState({ uploadServerVisible: false })
-      this.setState({ RECtime: false })
-      this.setState({ RECfps: false })
-      this.setState({ rec_settings: true })
-    } else {
-      this.setState({ REC: false })
-      this.setState({ CNNEventVisible: true })
-      this.setState({ uploadPicturesVisible: true })
-      this.setState({ uploadServerVisible: true })
-      this.setState({ RECtime: false })
-      this.setState({ RECfps: true })
-      this.setState({ rec_settings: false })
-    }
-  }
-
-  handleSwitchMode = (value) => {
-    if (value == true) {
-      this.setState({ isSelectMode: false })
-    } else {
-      this.setState({ isSelectMode: true })
-    }
-  }
-
-  handleChange = (value) => {
-    console.log('handleChange: ', value)
-    if (value == 'S_MOTION_CNN_JPEG') {
-      this.setState({ RECtime: false })
-      this.setState({ CNNParamVisible: false })
-      if (this.state.REC == true) {
-        this.setState({ modeSelect: false })
-        this.setState({ modelVisible: false })
-        this.setState({ uploadPicturesVisible: false })
-        this.setState({ uploadServerVisible: false })
-        this.setState({ CNNEventVisible: false })
-        this.setState({ RECfps: false })
-      } else {
-        this.setState({ modeSelect: false })
-        this.setState({ modelVisible: false })
-        this.setState({ uploadPicturesVisible: true })
-        this.setState({ uploadServerVisible: true })
-        this.setState({ CNNEventVisible: true })
-        this.setState({ RECfps: true })
-      }
-    } else if (value == 'JPEG_REC') {
-      this.setState({ modeSelect: false })
-      this.setState({ modelVisible: false })
-      this.setState({ uploadPicturesVisible: false })
-      this.setState({ uploadServerVisible: false })
-      this.setState({ CNNParamVisible: true })
-      this.setState({ CNNEventVisible: true })
-      this.setState({ RECtime: true })
-      this.setState({ RECfps: false })
-    } else if (value == 'UPDATE_MODEL') {
-      this.setState({ modeSelect: false })
-      this.setState({ modelVisible: true })
-      this.setState({ uploadPicturesVisible: false })
-      this.setState({ uploadServerVisible: false })
-      this.setState({ CNNParamVisible: true })
-      this.setState({ CNNEventVisible: true })
-      this.setState({ RECtime: false })
-      this.setState({ RECfps: true })
-    } else if (value == 'CNN_JPEG' || value == 'CONT_JPEG_CNN') {
-      this.setState({ modeSelect: false })
-      this.setState({ modelVisible: false })
-      this.setState({ uploadPicturesVisible: true })
-      this.setState({ uploadServerVisible: false })
-      this.setState({ CNNParamVisible: true })
-      this.setState({ CNNEventVisible: true })
-      this.setState({ RECtime: false })
-      this.setState({ RECfps: true })
-    } else {
-      this.setState({ modeSelect: true })
-      this.setState({ modelVisible: false })
-      this.setState({ uploadPicturesVisible: true })
-      this.setState({ uploadServerVisible: true })
-      this.setState({ CNNParamVisible: true })
-      this.setState({ CNNEventVisible: true })
-      this.setState({ RECtime: false })
-      this.setState({ RECfps: true })
-    }
-  }
-
-  changeValue = (value) => {
-    if(value === true){
-      return 'ON'
-    }
-    else if(value === false){
-      return 'OFF'
-    }
-  }
-
   buttonGroup = (text) => {
     return (
       <Space size={10}>
         <Button
-          onClick={() => { this.props.PostDeviceMQTT(text) }}
+          onClick={() => { this.props.postDeviceMQTT(text) }}
           icon={<DeploymentUnitOutlined />}
         />
         <Button
@@ -559,7 +565,7 @@ const mapDispatchToProps = (dispatch) => {
       const action = PostDeviceTableData(data)
       dispatch(action)
     },
-    PostDeviceMQTT(data) {
+    postDeviceMQTT(data) {
       const action = PostDeviceMQTT(data)
       dispatch(action)
     }

@@ -111,16 +111,16 @@ const reportTable = (props) => {
       //console.log(element)
       patchDetailsTableData(element,cleaned)
     })
-    Modal.success({
-      title: '修改成功',
-      onOk: () => {
-      }
-    })
     setLoading(true); // ajax request after empty completing
     setTimeout(() => {
       setSelectedRowKeys([]);
       setLoading(false);
     }, 1000);
+    Modal.success({
+      title: '修改成功',
+      onOk: () => {
+      }
+    })
   };
 
   const onSelectChange = (newSelectedRowKeys) => {

@@ -28,7 +28,9 @@ const convertedValues = {}
 class HostTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { isModalVisible: false, selectProject: null,  selectCommand: null, }
+    this.state = {
+      isModalVisible: false, selectProject: null,  selectCommand: null
+    }
   }
 
   componentDidMount() {
@@ -70,7 +72,7 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請輸入主機裝置' name='hostName' rules={[this.rule('主機裝置')]}>
+            <Item label='請輸入主機名稱' name='hostName' rules={[this.rule('主機名稱')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.hostName)}`
@@ -176,7 +178,7 @@ class HostTable extends Component {
     return (
       <Space size={10}>
         <Button
-          onClick={() => { this.props.PostHostMQTT(text) }}
+          onClick={() => { this.props.postHostMQTT(text) }}
           icon={<DeploymentUnitOutlined />}
         />
         <Button
@@ -231,7 +233,7 @@ const mapDispatchToProps = (dispatch) => {
       const action = PostHostTableData(data)
       dispatch(action)
     },
-    PostHostMQTT(data) {
+    postHostMQTT(data) {
       const action = PostHostMQTT(data)
       dispatch(action)
     }
