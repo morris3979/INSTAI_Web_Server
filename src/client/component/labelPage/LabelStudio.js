@@ -188,7 +188,7 @@ const LabelStudioWrapper = (props) => {
 
     setPreviewImage(file.url || file.preview);
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  };
+  }
 
   const handleUpload = ({ fileList: newFileList }) => setFileList(newFileList);
 
@@ -196,7 +196,7 @@ const LabelStudioWrapper = (props) => {
     setTimeout(() => {
       onSuccess("ok");
     }, 0);
-  };
+  }
 
   const uploadButton = (
     <div>
@@ -209,7 +209,7 @@ const LabelStudioWrapper = (props) => {
         Upload
       </div>
     </div>
-  );
+  )
 
   const handleInput = (e) => {
     setUrlImage(e.target.value);
@@ -224,7 +224,7 @@ const LabelStudioWrapper = (props) => {
     !urlImage?
     <Button icon={<EyeInvisibleOutlined />} disabled style={{ margin: 2 }} />:
     <Button onClick={onAddImgUrl} icon={<EyeOutlined />} style={{ margin: 2 }} />
-  );
+  )
 
   const downloadFile = ({ data, fileName, fileType }) => {
     // Create a blob with the data we want to download as a file
@@ -259,7 +259,7 @@ const LabelStudioWrapper = (props) => {
     // console.log('web crawler: ', jsonData)
     const fileName = previewTitle;
     const extIndex = fileName.lastIndexOf('.');
-    const newFileName = extIndex != -1? fileName.substring(0, extIndex): 'filename';
+    const newFileName = extIndex != -1? fileName.substring(0, extIndex): fileName;
     Modal.info({
       title: newFileName+'.json',
       content:(
@@ -267,7 +267,7 @@ const LabelStudioWrapper = (props) => {
           <p>{!json4Training? 'No Data': json4Training}</p>
         </div>
       )
-    })
+    });
   }
 
   const onAddLabel = () => {
@@ -277,7 +277,7 @@ const LabelStudioWrapper = (props) => {
 
   const onReset = () => {
     setAdditionalLabels([]);
-  };
+  }
 
   // just a wrapper node to place LSF into
   return (
