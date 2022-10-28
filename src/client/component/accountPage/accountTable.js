@@ -1,15 +1,28 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import {
-  Table, Modal, Switch, Form, Button, Space, Popconfirm, Affix
+  Table,
+  Modal,
+  Switch,
+  Form,
+  Button,
+  Space,
+  Popconfirm,
+  Affix
 } from 'antd'
 import {
-  GetAccountTableData, SetWhichModal, PatchAccountTableData,
+  GetAccountTableData,
+  SetWhichModal,
+  PatchAccountTableData,
   DeleteAccountTableData
 } from '../../store/actionCreater'
 import RegisterForm from './registerForm'
 import {
-  CheckOutlined, CloseOutlined, EditOutlined, DeleteOutlined, PlusOutlined
+  CheckOutlined,
+  CloseOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined
 } from '@ant-design/icons'
 
 const { Column, ColumnGroup } = Table

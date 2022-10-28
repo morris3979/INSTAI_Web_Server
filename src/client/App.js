@@ -1,9 +1,14 @@
-import React, { lazy, Suspense, useEffect, StrictMode } from 'react'
+import React, { lazy, Suspense, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
-import { LogoutData , GetProjectList , GetHostList , WhichProject } from './store/actionCreater'
+import {
+  LogoutData,
+  GetProjectList,
+  GetHostList,
+  WhichProject
+} from './store/actionCreater'
 import {
   AppstoreOutlined,
   EnvironmentOutlined,

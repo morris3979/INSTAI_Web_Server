@@ -1,7 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import {
-    Popconfirm, Table, Button, Space, Modal, Form, Input, Affix
+    Popconfirm,
+    Table,
+    Button,
+    Space,
+    Modal,
+    Form,
+    Input,
+    Affix
 } from 'antd'
 import {
     EditOutlined,

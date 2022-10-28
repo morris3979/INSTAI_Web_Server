@@ -1,6 +1,12 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Form, Input, Button, Divider, Typography } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  Divider,
+  Typography
+} from 'antd'
 import { RegisterFormData } from '../../store/actionCreater'
 
 const { Item } = Form

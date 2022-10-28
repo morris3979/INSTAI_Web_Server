@@ -1,10 +1,23 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, Typography, Image, Modal } from 'antd'
-import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import {
+  Table,
+  Button,
+  Typography,
+  Image,
+  Modal
+} from 'antd'
+import {
+  DownloadOutlined,
+  CheckOutlined,
+  CloseOutlined
+} from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 import {
-  GetEventList, PatchDetailsTableData, DownloadImage, DownloadVideo
+  GetEventList,
+  PatchDetailsTableData,
+  DownloadImage,
+  DownloadVideo
 } from '../../store/actionCreater'
 const { Column } = Table
 const { Text } = Typography
