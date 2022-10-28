@@ -3,4 +3,5 @@
 mkdir /home/ec2-user/my_project
 cd /home/ec2-user/my_project
 
+sudo npm audit fix --force
 sudo npm install
