@@ -71,7 +71,7 @@ exports.login = async(req, res) => {
       return res.status(401).send({message: "Invalid Password!"});
     }
 
-    const auth = user.admin || user.authA || user.authB || user.authC;
+    const auth = user.developer || user.admin;
     if (!(auth == true)) {
       return res.status(401).send({message: "Invalid Authority!"});
     }
@@ -126,14 +126,13 @@ exports.update = async(req, res) => {
   const id = req.params.id;
   const {
     // username, password,
-    developer, admin,
+    admin,
   } = req.body;
   // const encryptedPassword = bcrypt.hashSync(password, 10);
 
   User.update({
     // username: username,
     // password: encryptedPassword,
-      developer: developer,
     admin: admin,
   }, {
     where: { id: id }

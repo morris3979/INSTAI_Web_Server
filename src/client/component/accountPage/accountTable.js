@@ -90,11 +90,6 @@ class AccountManageTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='developer' name='developer'>
-              <Switch
-                defaultChecked={this.props.whichModal.developer}
-              />
-            </Item>
             <Item label='admin' name='admin'>
               <Switch
                 defaultChecked={this.props.whichModal.admin}

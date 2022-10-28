@@ -10,7 +10,7 @@ const { Title } = Typography;
 export default function LabelPage() {
   return (
     <Fragment>
-      <Title style={{ margin: 5 }}>{'<LabelStudio>'}</Title>
+      <Title style={{ margin: 5 }}>{'<INSTAI INC.>'}</Title>
       <Suspense fallback={<Loading />}>
         <LabelStudioWrapper/>
       </Suspense>

@@ -109,7 +109,10 @@ export const LoginToken = (data) => {
 export const LogoutData = () => {
   return ({
     type: Logout_Information,
-    value: { admin: false }
+    value: {
+      developer: false,
+      admin: false
+    }
   })
 }
 
