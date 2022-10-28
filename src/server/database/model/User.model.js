@@ -14,21 +14,13 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
+        developer: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
         admin: {
             type: Sequelize.BOOLEAN,
-            defaultValue: false,
-        },
-        authA: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
-        },
-        authB: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
-        },
-        authC: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
+            defaultValue: true,
         },
         token: {
             type: Sequelize.STRING,

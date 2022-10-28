@@ -55,13 +55,13 @@ const App = (props) => {
     /* 上面是 componentDidMount和componentDidUpdate */
   }, []); /* 加入監控的props */
 
-  if (loginInformation.admin == true || loginInformation.authA == true) {
+  if (loginInformation.developer == true || loginInformation.admin == true) {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint='md' collapsedWidth='0'>
           <Menu theme='dark' selectedKeys={[]} mode='inline'>
             <Item key='/map'
-              hidden={!(loginInformation.admin || loginInformation.authA)}
+              hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<EnvironmentOutlined />}
             >
               <Link to='/map'>
@@ -69,7 +69,7 @@ const App = (props) => {
               </Link>
             </Item>
             <Item key='/label'
-              hidden={!(loginInformation.admin || loginInformation.authA)}
+              hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<FormOutlined />}
             >
               <Link to='/label'>
@@ -77,7 +77,7 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢'
-              hidden={!(loginInformation.admin || loginInformation.authA)}
+              hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<AppstoreOutlined />}
             >
               {projectList.map((c) => {
@@ -92,37 +92,37 @@ const App = (props) => {
               })}
             </SubMenu>
             <SubMenu key='subset' title='配置設定'
-              hidden={!(loginInformation.admin || loginInformation.authA)}
+              hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<SettingOutlined />}
             >
-              <Item key='/project' hidden={!(loginInformation.admin || loginInformation.authA)}>
+              <Item key='/project' hidden={!(loginInformation.developer || loginInformation.admin)}>
                 <Link to='/project'>
                   專案管理
                 </Link>
               </Item>
-              <Item key='/host' hidden={!(loginInformation.admin || loginInformation.authA)}>
+              <Item key='/host' hidden={!(loginInformation.developer || loginInformation.admin)}>
                 <Link to='/host'>
                   主機配置
                 </Link>
               </Item>
-              <Item key='/device' hidden={!(loginInformation.admin || loginInformation.authA)}>
+              <Item key='/device' hidden={!(loginInformation.developer || loginInformation.admin)}>
                 <Link to='/device'>
                   設備配置
                 </Link>
               </Item>
-              <Item key='/account' hidden={!loginInformation.admin}>
+              <Item key='/account' hidden={!loginInformation.developer}>
                 <Link to='/account'>
                   帳號權限配置
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/test' hidden={!loginInformation.admin} icon={<ToolOutlined />}>
+            <Item key='/test' hidden={!loginInformation.developer} icon={<ToolOutlined />}>
               <Link to='/test'>
                 測試
               </Link>
             </Item>
               <Item key='/resource'
-                hidden={!(loginInformation.admin || loginInformation.authA)}
+                hidden={!(loginInformation.developer || loginInformation.admin)}
                 icon={<LinkOutlined />}
               >
                 <Link to='/resource'>
@@ -130,7 +130,7 @@ const App = (props) => {
                 </Link>
               </Item>
             <Item key='/logout'
-              hidden={!(loginInformation.admin || loginInformation.authA)}
+              hidden={!(loginInformation.developer || loginInformation.admin)}
               onClick={onClick}
               icon={<LogoutOutlined />}
             >

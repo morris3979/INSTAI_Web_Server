@@ -90,10 +90,8 @@ exports.login = async(req, res) => {
 
     res.status(200).send({
       username: username,
+      developer: user.developer,
       admin: user.admin,
-      authA: user.authA,
-      authB: user.authB,
-      authC: user.authC,
       token: token
     });
   })
@@ -128,17 +126,15 @@ exports.update = async(req, res) => {
   const id = req.params.id;
   const {
     // username, password,
-    admin, authA, authB, authC
+    developer, admin,
   } = req.body;
   // const encryptedPassword = bcrypt.hashSync(password, 10);
 
   User.update({
     // username: username,
     // password: encryptedPassword,
+      developer: developer,
     admin: admin,
-    authA: authA,
-    authB: authB,
-    authC: authC
   }, {
     where: { id: id }
   })
@@ -165,7 +161,7 @@ exports.delete = async(req, res) => {
   const id = req.params.id;
   const findAdmin = await User.findOne({ where:{ id: id }});
 
-  if (findAdmin.dataValues.admin == false) {
+  if (findAdmin.dataValues.developer == false) {
     User.destroy({
       where: { id: id }
     })
