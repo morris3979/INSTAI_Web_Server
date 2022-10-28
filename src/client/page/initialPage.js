@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Result } from 'antd'
 
 const InitialPage = () => {
   return (
-    <Result status='success' title='登入成功，歡迎使用' />
+    <Fragment>
+      <Result status='success' title='登入成功，歡迎使用' />
+    </Fragment>
   )
 }
 

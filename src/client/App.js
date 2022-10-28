@@ -31,6 +31,8 @@ const AccountPage = lazy(() => import('./page/accountPage'))
 const Test = lazy(() => import('./component/test'))
 const ReportPage = lazy(() => import('./page/reportPage'))
 
+import InstAI from './icon image/instai.png'
+
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
 
@@ -59,6 +61,9 @@ const App = (props) => {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint='md' collapsedWidth='0'>
+          <div>
+            <img src={InstAI} alt='Logo' style={{ width: '100%', height: '100%' }} />
+          </div>
           <Menu theme='dark' selectedKeys={[]} mode='inline'>
             <Item key='/map'
               hidden={!(loginInformation.developer || loginInformation.admin)}
