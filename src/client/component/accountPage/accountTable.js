@@ -30,7 +30,6 @@ const { Item } = Form
 
 const convertedValues = {}
 
-
 const developerStatus = (text) => {
   if (text.developer == true) {
     return (
@@ -76,11 +75,11 @@ class AccountManageTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
+          <Column title='操作' render={this.buttonGroup} align='center' width={150} />
           <Column title='帳號' dataIndex='username' align='center' />
           <ColumnGroup title='權限' align='center'>
             <Column title='developer' render={developerStatus} align='center' />
             <Column title='admin' render={adminStatus} align='center' />
-            <Column title='操作' render={this.buttonGroup} align='center' />
           </ColumnGroup>
         </Table >
         <Modal
@@ -106,7 +105,7 @@ class AccountManageTable extends Component {
           <Button
             onClick={() => { this.onRegisterClick() }}
             icon={<PlusOutlined />}
-            disabled={!this.props.loginInformation.admin}
+            disabled={!this.props.loginInformation.developer}
             size='large'
             shape='circle'
           />
@@ -156,12 +155,16 @@ class AccountManageTable extends Component {
         <Button
           onClick={() => { this.onChangeClick(text) }}
           icon={<EditOutlined />}
+          disabled={!this.props.loginInformation.developer}
         />
         <Popconfirm
           title='確定刪除?'
           onConfirm={() => { this.props.deleteAccountTableData(text) }}
         >
-          <Button icon={<DeleteOutlined />} />
+          <Button
+            icon={<DeleteOutlined />}
+            disabled={!this.props.loginInformation.developer}
+          />
         </Popconfirm>
       </Space>
     )
