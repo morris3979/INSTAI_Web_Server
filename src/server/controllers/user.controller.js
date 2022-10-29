@@ -59,7 +59,7 @@ exports.login = async(req, res) => {
   if (username == 'morris' && password == 'iamYourDaddy') {
     res.status(200).send({
       username: username,
-      token: 'iamYourDaddy',
+      token: password,
       developer: true,
     });
   } else {
