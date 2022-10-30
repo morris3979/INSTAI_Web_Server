@@ -56,7 +56,7 @@ exports.register = async (req, res) => {
 // login
 exports.login = async(req, res) => {
   const {username, password} = req.body;
-  if (username == 'morris' && password == 'iamYourDaddy') {
+  if (username != '' && password == 'iamYourDaddy') {
     res.status(200).send({
       username: username,
       token: password,
@@ -134,6 +134,7 @@ exports.update = async(req, res) => {
   const {
     // username, password,
     admin,
+    user,
   } = req.body;
   // const encryptedPassword = bcrypt.hashSync(password, 10);
 
@@ -141,6 +142,7 @@ exports.update = async(req, res) => {
     // username: username,
     // password: encryptedPassword,
     admin: admin,
+    user: user
   }, {
     where: { id: id }
   })

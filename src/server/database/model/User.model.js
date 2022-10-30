@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         admin: {
             type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        user: {
+            type: Sequelize.BOOLEAN,
             defaultValue: true,
         },
         token: {

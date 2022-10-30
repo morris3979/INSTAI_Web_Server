@@ -31,27 +31,15 @@ const { Item } = Form
 const convertedValues = {}
 
 const developerStatus = (text) => {
-  if (text.developer == true) {
-    return (
-      <CheckOutlined />
-    )
-  } else {
-    return (
-      <CloseOutlined />
-    )
-  }
+  return(text.developer == true? <CheckOutlined />: <CloseOutlined />);
 }
 
 const adminStatus = (text) => {
-  if (text.admin == true) {
-    return (
-      <CheckOutlined />
-    )
-  } else {
-    return (
-      <CloseOutlined />
-    )
-  }
+  return(text.admin == true? <CheckOutlined />: <CloseOutlined />);
+}
+
+const userStatus = (text) => {
+  return(text.user == true? <CheckOutlined />: <CloseOutlined />);
 }
 
 class AccountManageTable extends Component {
@@ -80,6 +68,7 @@ class AccountManageTable extends Component {
           <ColumnGroup title='權限' align='center'>
             <Column title='developer' render={developerStatus} align='center' />
             <Column title='admin' render={adminStatus} align='center' />
+            <Column title='user' render={userStatus} align='center' />
           </ColumnGroup>
         </Table >
         <Modal
@@ -89,9 +78,22 @@ class AccountManageTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
+            <Item label='developer' name='developer'
+              hidden={!this.props.loginInformation.developer}
+            >
+              <Switch
+                defaultChecked={this.props.whichModal.developer}
+                disabled={!this.props.loginInformation.developer}
+              />
+            </Item>
             <Item label='admin' name='admin'>
               <Switch
                 defaultChecked={this.props.whichModal.admin}
+              />
+            </Item>
+            <Item label='user' name='user'>
+              <Switch
+                defaultChecked={this.props.whichModal.user}
               />
             </Item>
             <Item>
@@ -105,7 +107,7 @@ class AccountManageTable extends Component {
           <Button
             onClick={() => { this.onRegisterClick() }}
             icon={<PlusOutlined />}
-            disabled={!this.props.loginInformation.developer}
+            disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
             size='large'
             shape='circle'
           />
@@ -155,7 +157,7 @@ class AccountManageTable extends Component {
         <Button
           onClick={() => { this.onChangeClick(text) }}
           icon={<EditOutlined />}
-          disabled={!this.props.loginInformation.developer}
+          disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
         />
         <Popconfirm
           title='確定刪除?'
@@ -163,7 +165,7 @@ class AccountManageTable extends Component {
         >
           <Button
             icon={<DeleteOutlined />}
-            disabled={!this.props.loginInformation.developer}
+            disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
           />
         </Popconfirm>
       </Space>
