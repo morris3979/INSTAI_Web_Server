@@ -496,6 +496,7 @@ class DeviceTable extends Component {
      }
      else if (values.modeSelect == 'UPDATE_MODEL') {
       var command = `mode: ${values.modeSelect},\n`+
+                    `upload_to_server: ${this.changeValue(this.state.upload_all_files_switch)},\n`+
                     `model: ${this.state.selectModel}`
       var message = ''
      }

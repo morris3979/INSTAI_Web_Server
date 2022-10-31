@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Typography } from 'antd'
 import Loading from './loading'
 import {
   LogoutData,
@@ -16,9 +16,11 @@ import {
   LinkOutlined,
   LogoutOutlined,
   ToolOutlined,
-  FormOutlined
+  FormOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 
+const { Text } = Typography;
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
@@ -30,6 +32,8 @@ const LoginPage = lazy(() => import('./page/loginPage'))
 const AccountPage = lazy(() => import('./page/accountPage'))
 const Test = lazy(() => import('./component/test'))
 const ReportPage = lazy(() => import('./page/reportPage'))
+
+import InstAI from './icon image/instai.png'
 
 const { Content, Sider } = Layout
 const { Item, SubMenu } = Menu
@@ -55,13 +59,28 @@ const App = (props) => {
     /* 上面是 componentDidMount和componentDidUpdate */
   }, []); /* 加入監控的props */
 
-  if (loginInformation.developer == true || loginInformation.admin == true) {
+  if (loginInformation.developer == true ||
+      loginInformation.admin == true ||
+      loginInformation.user == true) {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint='md' collapsedWidth='0'>
+          <div>
+            <img src={InstAI} alt='Logo' style={{ width: '100%', height: '100%' }} />
+          </div>
           <Menu theme='dark' selectedKeys={[]} mode='inline'>
+            <Item
+              icon={<UserOutlined />}
+              style={{ color: "yellow", pointerEvents: 'none' }}
+            >
+              {`Hi ${loginInformation.username}!`}
+            </Item>
             <Item key='/map'
-              hidden={!(loginInformation.developer || loginInformation.admin)}
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin ||
+                  loginInformation.user)
+              }
               icon={<EnvironmentOutlined />}
             >
               <Link to='/map'>
@@ -69,7 +88,11 @@ const App = (props) => {
               </Link>
             </Item>
             <Item key='/label'
-              hidden={!(loginInformation.developer || loginInformation.admin)}
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin ||
+                  loginInformation.user)
+              }
               icon={<FormOutlined />}
             >
               <Link to='/label'>
@@ -77,7 +100,11 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢'
-              hidden={!(loginInformation.developer || loginInformation.admin)}
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin ||
+                  loginInformation.user)
+              }
               icon={<AppstoreOutlined />}
             >
               {projectList.map((c) => {
@@ -95,34 +122,63 @@ const App = (props) => {
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<SettingOutlined />}
             >
-              <Item key='/project' hidden={!(loginInformation.developer || loginInformation.admin)}>
+              <Item key='/project'
+                hidden={
+                  !(loginInformation.developer ||
+                    loginInformation.admin ||
+                    loginInformation.user)
+                }
+              >
                 <Link to='/project'>
                   專案管理
                 </Link>
               </Item>
-              <Item key='/host' hidden={!(loginInformation.developer || loginInformation.admin)}>
+              <Item key='/host'
+                hidden={
+                  !(loginInformation.developer ||
+                    loginInformation.admin ||
+                    loginInformation.user)
+                }
+              >
                 <Link to='/host'>
                   主機配置
                 </Link>
               </Item>
-              <Item key='/device' hidden={!(loginInformation.developer || loginInformation.admin)}>
+              <Item key='/device'
+                hidden={
+                  !(loginInformation.developer ||
+                    loginInformation.admin ||
+                    loginInformation.user)
+                }
+              >
                 <Link to='/device'>
                   設備配置
                 </Link>
               </Item>
-              <Item key='/account' hidden={!loginInformation.developer}>
+              <Item key='/account'
+                hidden={
+                  !(loginInformation.developer || loginInformation.admin)
+                }
+              >
                 <Link to='/account'>
                   帳號權限配置
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/test' hidden={!loginInformation.developer} icon={<ToolOutlined />}>
+            <Item key='/test'
+              hidden={!loginInformation.developer}
+              icon={<ToolOutlined />}
+            >
               <Link to='/test'>
                 測試
               </Link>
             </Item>
               <Item key='/resource'
-                hidden={!(loginInformation.developer || loginInformation.admin)}
+                hidden={
+                  !(loginInformation.developer ||
+                    loginInformation.admin ||
+                    loginInformation.user)
+                }
                 icon={<LinkOutlined />}
               >
                 <Link to='/resource'>
@@ -130,7 +186,11 @@ const App = (props) => {
                 </Link>
               </Item>
             <Item key='/logout'
-              hidden={!(loginInformation.developer || loginInformation.admin)}
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin ||
+                  loginInformation.user)
+              }
               onClick={onClick}
               icon={<LogoutOutlined />}
             >
