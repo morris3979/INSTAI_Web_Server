@@ -5,20 +5,23 @@ import {
   Button,
   Typography,
   Image,
-  Modal
+  Modal,
+  Switch
 } from 'antd'
 import {
   DownloadOutlined,
   CheckOutlined,
-  CloseOutlined
+  CloseOutlined,
+  FileOutlined,
 } from '@ant-design/icons'
 import ReactPlayer from 'react-player/lazy'
 import {
   GetEventList,
   PatchDetailsTableData,
   DownloadImage,
-  DownloadVideo
+  DownloadVideo,
 } from '../../store/actionCreater'
+import Papa from 'papaparse';
 const { Column } = Table
 const { Text } = Typography
 
@@ -62,17 +65,6 @@ const checkRawData = (text) => {
   }
 }
 
-const checkCleaned = (text) => {
-  if (text.cleaned == true) {
-    return (
-      <CheckOutlined />
-    )
-  } else {
-    return (
-      <CloseOutlined />
-    )
-  }
-}
 
 const reportTable = (props) => {
   const {
@@ -89,7 +81,12 @@ const reportTable = (props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedDetailsId, setSelectedDetailsId] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [detailstext,setdetailstext] = useState([]) 
+  const [detailsID, setdetailsID] = useState([])
+  const [eventID, seteventID] = useState()
+  const [isModalVisible, setisModalVisible] = useState(false)
+  const [csvdata, setcsvdata] = useState([])
+ 
   const download = (data) => {
     return (
       <Fragment>
@@ -114,19 +111,56 @@ const reportTable = (props) => {
             icon={<DownloadOutlined />}
           />
         }
+        {
+          data.csv == true?
+          <Button
+          size='large'
+          icon={<FileOutlined />}
+          onClick={() => csvonClick()}/>:
+          <Button
+            disabled
+            size='large'
+            icon={<FileOutlined />}
+          />
+
+        }
       </Fragment>
     )
   }
 
+  const value2cleaned = (value) => {
+    if(value == true){
+      const cleaned = { cleaned : '1' }
+      return cleaned
+    }else{
+      const cleaned = { cleaned : '0' }
+      return cleaned
+    }
+  }
+
   const start = () => {
-    const cleaned = { cleaned : '1' }
-    selectedRowKeys.map((element) => {
-      //console.log(element)
-      patchDetailsTableData(element,cleaned)
+    const eventId = eventList.filter((array) => {
+      return array.id == eventID
+    })
+    const details = eventId.map((array) => {
+      return array.Details
+    })
+    const detailsId = details[0].map((array) => {
+      return array.id
+    })
+    const results = detailstext.filter((c) => {
+      if (detailsId.includes(c.id)){
+        return c
+      }
+    })
+    results.map((element) => {
+      patchDetailsTableData(element.id,value2cleaned(element.text))
     })
     setLoading(true); // ajax request after empty completing
     setTimeout(() => {
       setSelectedRowKeys([]);
+      setdetailstext([]);
+      setdetailsID([])
       setLoading(false);
     }, 1000);
     Modal.success({
@@ -174,6 +208,14 @@ const reportTable = (props) => {
     array.key = `${array.id}`
   })
 
+  const setValue = (id,value) => {
+    setdetailstext([...detailstext,{id:id,text:value}])
+  }
+
+  const setID =(id) => {
+    setdetailsID([...detailsID,id])
+  }
+
   const DetailsFilter = (data) => {
     const DetailsData = data.map((d) => {
       return d.id
@@ -182,10 +224,44 @@ const reportTable = (props) => {
     return JSONData
   }
 
-  const findDetailsId = (array) => {
+  const selectedDataId = (array) => {
     const found = array.find(element => element == selectedRowKeys[0])
     return found
   }
+
+  const selectedDataCleaned = (array) => {
+    const found = array.find(element => element == detailsID[detailsID.length-1])
+    return found
+  }
+
+  const csvonClick = (text) => {
+    setisModalVisible(true)
+    Papa.parse("https://d20cmf4o2f77jz.cloudfront.net/csv/projectB_0000000039aed1d2_0x7680_20221031175254_001.csv", {
+              download: true,
+              complete: function(results) {
+                const detailData = results.data[1]
+                setcsvdata(detailData)
+              }
+            })
+  }
+
+  const csvdatasource = [
+    {
+      key: '1',
+      index: csvdata[0],
+      center_x: csvdata[1],
+      center_y: csvdata[2],
+      width: csvdata[3],
+      height: csvdata[4],
+      type: csvdata[5],
+      confidence_level: csvdata[6],
+    },
+  ]
+
+  const ModalCancel = () => {
+    setisModalVisible(false)
+  }
+
   const onExpand = (props,record) => {
     if(props){
       const EventFilter = () => {
@@ -249,7 +325,33 @@ const reportTable = (props) => {
           />
           <Column
               title='cleaned'
-              render={checkCleaned}
+              render={(text) => {
+                if (text.cleaned == true) {
+                  return (
+                    <Switch
+                    checkedChildren={<CheckOutlined />}
+                    unCheckedChildren={<CloseOutlined />}
+                    defaultChecked
+                    onChange={(e) => {
+                      setID(text.id)
+                      setValue(text.id,e)
+                    }}
+                    />
+                  );
+                  
+                } else {
+                  return (
+                    <Switch
+                    checkedChildren={<CheckOutlined />}
+                    unCheckedChildren={<CloseOutlined />}
+                    onChange={(e) => {
+                      setID(text.id)
+                      setValue(text.id,e)
+                    }}
+                    />
+                  )
+                }
+              }}
               align='center'
           />
           <Column
@@ -259,6 +361,60 @@ const reportTable = (props) => {
               align='center'
           />
         </Table>
+        <Modal
+          visible={isModalVisible}
+          onCancel={ModalCancel}
+          footer={null}
+          destroyOnClose={true}
+          width={800}
+        >
+          <Table
+          dataSource={csvdatasource}>
+            <Column
+              title='index'
+              dataIndex='index'
+              width='15%'
+              align='center'
+            >
+            </Column>
+            <Column
+              title='center x'
+              dataIndex='center_x'
+              width='15%'
+              align='center'
+            />
+            <Column
+              title='center y'
+              dataIndex='center_y'
+              width='15%'
+              align='center'
+            />
+            <Column
+              title='width'
+              dataIndex='width'
+              width='15%'
+              align='center'
+            />
+            <Column
+              title='height'
+              dataIndex='height'
+              width='15%'
+              align='center'
+            />
+            <Column
+              title='type'
+              dataIndex='type'
+              width='15%'
+              align='center'
+            />
+            <Column
+              title='confidence level'
+              dataIndex='confidence_level'
+              width='15%'
+              align='center'
+            />
+          </Table>
+        </Modal>
       </Fragment>
     )
   };
@@ -289,7 +445,7 @@ const reportTable = (props) => {
         <Column
           title='選取數量'
           render={(data) =>{
-            if(findDetailsId(DetailsFilter(data.Details))){
+            if(selectedDataId(DetailsFilter(data.Details))){
               return(
                 <span
                 style={{
@@ -316,17 +472,18 @@ const reportTable = (props) => {
         <Column
             title='操作'
             render={(data) => {
-              if(findDetailsId(DetailsFilter(data.Details))){
+              if(selectedDataCleaned(DetailsFilter(data.Details))){
+                seteventID(data.id)
                 return(
-                  <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-                    send
+                  <Button type="primary" onClick={start} disabled={false} loading={loading}>
+                    save
                   </Button>
                 )
               }
               else{
                 return(
                   <Button type="primary" disabled={true} loading={loading}>
-                    send
+                    save
                   </Button>
                 )}
             }}
