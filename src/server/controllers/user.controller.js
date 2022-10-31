@@ -77,7 +77,7 @@ exports.login = async(req, res) => {
         return res.status(401).send({message: "Invalid Password!"});
       }
 
-      const auth = user.developer || user.admin;
+      const auth = user.developer || user.admin || user.user;
       if (!(auth == true)) {
         return res.status(401).send({message: "Invalid Authority!"});
       }
@@ -98,6 +98,7 @@ exports.login = async(req, res) => {
         username: username,
         developer: user.developer,
         admin: user.admin,
+        user: user.user,
         token: token
       });
     })
