@@ -14,4 +14,4 @@ sudo apt-get install nodejs -y
 sudo npm install forever -g
 
 # Clean working folder
-sudo find /home/ec2-user -type f -delete
+sudo find /home/ec2-user/my_project -type f -delete

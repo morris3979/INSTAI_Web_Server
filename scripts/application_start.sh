@@ -6,4 +6,4 @@ sudo pkill -f nodejs
 sudo pm2 stop all
 sudo pm2 delete all
 
-sudo pm2 start npm --name car -- start
+sudo pm2 start npm -- start
