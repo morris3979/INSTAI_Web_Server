@@ -8,9 +8,11 @@ import {
   Button,
   Space,
   Popconfirm,
-  Affix
+  Affix,
+  Select,
 } from 'antd'
 import {
+  GetProjectTableData,
   GetAccountTableData,
   SetWhichModal,
   PatchAccountTableData,
@@ -53,6 +55,7 @@ class AccountManageTable extends Component {
 
   componentDidMount() {
     this.props.getAccountTableData()
+    this.props.getProjectTableData()
   }
 
   render() {
@@ -70,6 +73,7 @@ class AccountManageTable extends Component {
             <Column title='admin' render={adminStatus} align='center' />
             <Column title='user' render={userStatus} align='center' />
           </ColumnGroup>
+          <Column title='所屬專案' dataIndex={['Project', 'displayName']} align='center' />
         </Table >
         <Modal
           visible={this.state.isChangeModalVisible}
@@ -95,6 +99,14 @@ class AccountManageTable extends Component {
               <Switch
                 defaultChecked={this.props.whichModal.user}
               />
+            </Item>
+            <Item label='請選擇專案配置' name='ProjectId'>
+              <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
+                defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
+                {this.props.projectTableData.map(c => {
+                  return ( <Option key={c.id} value={c.id}>{`${c.project} (${c.displayName})`}</Option> )
+                })}
+              </Select>
             </Item>
             <Item>
               <Button htmlType='submit' onClick={this.handleCancel}>
@@ -122,6 +134,18 @@ class AccountManageTable extends Component {
         </Modal>
       </Fragment>
     )
+  }
+
+  handleSelectProject = (value) => {
+    this.setState({ selectProject: value })
+  }
+
+  defaultValue = (value) => {
+    if (this.props.whichModal.id > 0) {
+      return (value)
+    } else {
+      return ('')
+    }
   }
 
   onChangeClick = (text) => {
@@ -179,7 +203,8 @@ const mapStateToProps = (state) => {
     accountData: state.accountData,
     tableStatus: state.tableStatus,
     whichModal: state.whichModal,
-    loginInformation: state.loginInformation
+    loginInformation: state.loginInformation,
+    projectTableData: state.projectTableData,
   }
 }
 
@@ -201,7 +226,11 @@ const mapDispatchToProps = (dispatch) => {
     deleteAccountTableData(id) {
       const action = DeleteAccountTableData(id)
       dispatch(action)
-    }
+    },
+    getProjectTableData() {
+      const action = GetProjectTableData()
+      dispatch(action)
+    },
   }
 }
 

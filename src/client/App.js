@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
-import { Layout, Menu, Typography } from 'antd'
+import { Layout, Menu } from 'antd'
 import Loading from './loading'
 import {
   LogoutData,
@@ -20,7 +20,6 @@ import {
   UserOutlined
 } from '@ant-design/icons'
 
-const { Text } = Typography;
 const InitialPage = lazy(() => import('./page/initialPage'))
 const MapPage = lazy(() => import('./page/mapPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
@@ -108,9 +107,31 @@ const App = (props) => {
               icon={<AppstoreOutlined />}
             >
               {projectList.map((c) => {
-                // console.log(c)
+                // console.log('loginInformation: ', loginInformation)
+                // console.log('c: ', c)
                 return (
-                  <Item key={c.project} onClick={onClickProject}>
+                  loginInformation.developer == true || loginInformation.admin == true?
+                  <Item key={c.project}
+                    onClick={onClickProject}
+                    hidden={
+                      !(loginInformation.developer ||
+                        loginInformation.admin ||
+                        loginInformation.user)
+                    }
+                  >
+                    <Link to={`/report/${c.project}`}>
+                      {c.displayName}
+                    </Link>
+                  </Item>:
+                  <Item key={c.project}
+                    onClick={onClickProject}
+                    hidden={
+                      !(loginInformation.developer ||
+                        loginInformation.admin ||
+                        loginInformation.user) ||
+                        loginInformation.project != c.project
+                    }
+                  >
                     <Link to={`/report/${c.project}`}>
                       {c.displayName}
                     </Link>

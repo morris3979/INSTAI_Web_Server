@@ -64,6 +64,10 @@ exports.login = async(req, res) => {
     });
   } else {
     User.findOne({
+      include: [{
+          model: db.Project,
+          attributes:['id', 'project', 'displayName']
+      }],
       where: {
         username: username
       }
@@ -94,12 +98,15 @@ exports.login = async(req, res) => {
         where: { username: username }
       })
 
+      const selectedProject = user.Project == null? 'none': user.Project.project
+
       res.status(200).send({
         username: username,
         developer: user.developer,
         admin: user.admin,
         user: user.user,
-        token: token
+        token: token,
+        project: selectedProject
       });
     })
     .catch(err => {
@@ -111,6 +118,10 @@ exports.login = async(req, res) => {
 // Retrieve all User from the database.
 exports.findAll = (req, res) => {
   User.findAll({
+      include: [{
+          model: db.Project,
+          attributes:['id', 'project', 'displayName']
+      }],
       order: [
           ['id', 'DESC'],
       ],
@@ -132,19 +143,8 @@ exports.findAll = (req, res) => {
 // Update a User by the id in the request
 exports.update = async(req, res) => {
   const id = req.params.id;
-  const {
-    // username, password,
-    admin,
-    user,
-  } = req.body;
-  // const encryptedPassword = bcrypt.hashSync(password, 10);
 
-  User.update({
-    // username: username,
-    // password: encryptedPassword,
-    admin: admin,
-    user: user
-  }, {
+  User.update(req.body, {
     where: { id: id }
   })
     .then(num => {
