@@ -15,4 +15,4 @@ export NVM_DIR="$HOME/.nvm"
 npm install
 
 #start our node app in the background
-sudo pm2 start npm --name instai -- start > app.out.log 2> app.err.log < /dev/null &
+npm start > app.out.log 2> app.err.log < /dev/null &
