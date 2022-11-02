@@ -7,6 +7,8 @@ sudo nvm install node
 
 #create our working directory if it doesnt exist
 DIR="/home/ec2-user/my_project"
+sudo rm -rf ${DIR}
+
 if [ -d "$DIR" ]; then
   echo "${DIR} exists"
 else
