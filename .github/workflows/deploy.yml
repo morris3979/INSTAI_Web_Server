@@ -23,7 +23,7 @@ jobs:
       id: deploy
       run: |
         aws deploy create-deployment \
-        --application-name carv2 \
-        --deployment-group-name carv2 \
+        --application-name lab321v2-2 \
+        --deployment-group-name lab321v2-2 \
         --deployment-config-name CodeDeployDefault.OneAtATime \
         --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
