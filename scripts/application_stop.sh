@@ -3,4 +3,4 @@
 # Stop all servers and start the server as a daemon
 # sudo forever stopall
 echo "Stopping any existing node servers"
-sudo pkill -f node
+sudo pkill node
