@@ -6,7 +6,8 @@ import {
   Typography,
   Image,
   Modal,
-  Switch
+  Switch,
+  Space
 } from 'antd'
 import {
   DownloadOutlined,
@@ -90,6 +91,7 @@ const reportTable = (props) => {
   const download = (data) => {
     return (
       <Fragment>
+        <Space>
         {
           data.cleaned == true?
           <Button
@@ -124,6 +126,7 @@ const reportTable = (props) => {
           />
 
         }
+        </Space>
       </Fragment>
     )
   }
