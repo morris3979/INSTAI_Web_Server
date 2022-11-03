@@ -165,12 +165,9 @@ class AccountManageTable extends Component {
   }
 
   onFinish = (values) => {
+    convertedValues.length == 0
     Object.keys(JSON.parse(JSON.stringify(values))).forEach((key) => {
-      if (values[key] == true) {
-        convertedValues[String(key)] = '1'
-      } else {
-        convertedValues[String(key)] = '0'
-      }
+      convertedValues[String(key)] = values[key]
     })
     this.props.patchAccountTableData(this.props.whichModal.id, convertedValues)
   }

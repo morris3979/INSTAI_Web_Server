@@ -4,6 +4,7 @@ const User = db.User;
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { CompassOutlined } = require('@ant-design/icons');
 
 // Create and Save a new User
 exports.register = async (req, res) => {
