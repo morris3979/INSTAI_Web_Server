@@ -1,13 +1,10 @@
 #!/bin/bash
 
-#give permission for everything in the my_project directory
+# give permission for everything in the my_project directory
 sudo chmod -R 777 /home/ec2-user/my_project
 
 #navigate into our working directory where we have all our github files
 cd /home/ec2-user/my_project
-
-pm2 stop all
-pm2 delete all
 
 #add npm and node to path
 export NVM_DIR="$HOME/.nvm"
@@ -17,5 +14,8 @@ export NVM_DIR="$HOME/.nvm"
 #install node modules
 npm install --legacy-peer-deps
 
-#start our node app in the background
+# stop and clean
+pm2 stop all
+pm2 delete all
+# start our node app in the background
 pm2 start npm --name my_project -- start
