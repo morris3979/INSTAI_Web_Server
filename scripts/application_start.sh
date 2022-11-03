@@ -15,4 +15,4 @@ export NVM_DIR="$HOME/.nvm"
 npm install --legacy-peer-deps
 
 #start our node app in the background
-npm start > app.out.log
+npm start
