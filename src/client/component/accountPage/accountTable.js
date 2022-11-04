@@ -23,8 +23,8 @@ import {
   CheckOutlined,
   CloseOutlined,
   EditOutlined,
-  DeleteOutlined,
-  PlusOutlined
+  UserDeleteOutlined,
+  UserAddOutlined
 } from '@ant-design/icons'
 
 const { Column, ColumnGroup } = Table
@@ -118,7 +118,7 @@ class AccountManageTable extends Component {
         <Affix style={{ position: 'fixed', bottom: 10, right: 10 }}>
           <Button
             onClick={() => { this.onRegisterClick() }}
-            icon={<PlusOutlined />}
+            icon={<UserAddOutlined />}
             disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
             size='large'
             shape='circle'
@@ -185,7 +185,7 @@ class AccountManageTable extends Component {
           onConfirm={() => { this.props.deleteAccountTableData(text) }}
         >
           <Button
-            icon={<DeleteOutlined />}
+            icon={<UserDeleteOutlined />}
             disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
           />
         </Popconfirm>

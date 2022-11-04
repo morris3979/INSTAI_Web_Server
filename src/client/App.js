@@ -12,6 +12,7 @@ import {
 import {
   AppstoreOutlined,
   EnvironmentOutlined,
+  TableOutlined,
   SettingOutlined,
   LinkOutlined,
   LogoutOutlined,
@@ -21,7 +22,8 @@ import {
 } from '@ant-design/icons'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
-const MapPage = lazy(() => import('./page/mapPage'))
+const OverviewPage = lazy(() => import('./page/overviewPage'))
+// const MapPage = lazy(() => import('./page/mapPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
@@ -74,7 +76,18 @@ const App = (props) => {
             >
               {`Hi ${loginInformation.username}!`}
             </Item>
-            <Item key='/map'
+            <Item key='/overview'
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin)
+              }
+              icon={<TableOutlined />}
+            >
+              <Link to='/overview'>
+                資料總覽
+              </Link>
+            </Item>
+            {/* <Item key='/map'
               hidden={
                 !(loginInformation.developer ||
                   loginInformation.admin ||
@@ -85,7 +98,7 @@ const App = (props) => {
               <Link to='/map'>
                 地圖資訊
               </Link>
-            </Item>
+            </Item> */}
             <Item key='/label'
               hidden={
                 !(loginInformation.developer ||
@@ -226,7 +239,8 @@ const App = (props) => {
             <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path='/' element={<InitialPage />} />
-                <Route path='/map' element={<MapPage />} />
+                <Route path='/overview' element={<OverviewPage />} />
+                {/* <Route path='/map' element={<MapPage />} /> */}
                 <Route path='/label' element={<LabelsPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)

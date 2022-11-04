@@ -2,7 +2,7 @@ import {
   Login_Information, Account_Information, Logout_Information, Modal_File, Which_Modal,
   Table_Status, Get_Project_Table, Get_Host_Table, Get_Device_Table, Map_Position,
   Get_Project_Data, Which_Project, Get_Host_Data, Which_Host, Which_Device,
-  Get_Model_List, Get_Event_Data, Get_Event_Data_Id,
+  Get_Model_List, Get_Event_Data, Get_Event_Data_Id, Get_Details_Data
 } from './actionType'
 
 const defaultState = {
@@ -24,6 +24,7 @@ const defaultState = {
   modelListData: [],
   eventList:[],
   eventListID:[],
+  detailsData:[],
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -99,6 +100,10 @@ const Reducer = (state = defaultState, action) => {
     }
     case Which_Device:{
       newState.whichDeviceName = action.value
+      return newState
+    }
+    case Get_Details_Data:{
+      newState.detailsData = action.value
       return newState
     }
     default: {

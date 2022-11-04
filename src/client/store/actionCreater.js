@@ -4,7 +4,7 @@ import {
   Get_Project_Table, Get_Host_Table, Get_Device_Table, Get_Project_Data, Get_Host_Data,
   Get_Event_Data,Get_Event_Data_Id,Table_Status, Map_Position, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device, Login_Information, Account_Information, Logout_Information,
-  Get_Model_List
+  Get_Model_List, Get_Details_Data
 } from './actionType'
 
 //共用Function <<<
@@ -661,12 +661,29 @@ export const PostDeviceMQTT = (data) => {
   )
 }
 
+export const GetDetailsData = () => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.get('/api/details')
+        console.log(response.data)
+        const action = DeliverData(response.data, Get_Details_Data)
+        dispatch(action)
+        message.destroy()
+      } catch (error) {
+        message.destroy()
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const PatchDetailsTableData = (id, data) => {
   return (
     async (dispatch) => {
       //message.loading('修改中，請稍後...', 0)
       try {
-        await axios.patch(`/api/event/details/${id}`, data)
+        await axios.patch(`/api/details/${id}`, data)
         //message.destroy()
         const action = GetEventList()
         dispatch(action)

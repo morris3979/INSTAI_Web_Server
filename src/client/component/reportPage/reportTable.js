@@ -27,9 +27,14 @@ const { Column } = Table
 const { Text } = Typography
 
 const video = (text) => {
-  if(text.video == true){
+  if (text.image == true && text.video == true) {
     return (
       <Fragment align='center'>
+        <Image
+          src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
+          width='100%'
+          height='100%'
+        />
         <ReactPlayer
           url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
           controls={true}
@@ -39,12 +44,23 @@ const video = (text) => {
         <Text>{text.details}</Text>
       </Fragment>
     )
-  }
-  else if(text.image == true){
+  } else if (text.image == true) {
     return (
       <Fragment align='center'>
         <Image
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
+          width='100%'
+          height='100%'
+        />
+        <Text>{text.details}</Text>
+      </Fragment>
+    )
+  } else if (text.video == true) {
+    return (
+      <Fragment align='center'>
+        <ReactPlayer
+          url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
+          controls={true}
           width='100%'
           height='100%'
         />
@@ -66,7 +82,6 @@ const checkRawData = (text) => {
   }
 }
 
-
 const reportTable = (props) => {
   const {
     whichDeviceName,
@@ -82,12 +97,12 @@ const reportTable = (props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedDetailsId, setSelectedDetailsId] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [detailstext,setdetailstext] = useState([]) 
-  const [detailsID, setdetailsID] = useState([])
-  const [eventID, seteventID] = useState()
-  const [isModalVisible, setisModalVisible] = useState(false)
-  const [csvdata, setcsvdata] = useState([])
- 
+  const [detailsText,setDetailsText] = useState([]) 
+  const [detailsID, setDetailsID] = useState([])
+  const [eventID, setEventID] = useState()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [csvData, setCsvData] = useState([])
+
   const download = (data) => {
     return (
       <Fragment>
@@ -118,7 +133,7 @@ const reportTable = (props) => {
           <Button
           size='large'
           icon={<FileOutlined />}
-          onClick={() => csvonClick()}/>:
+          onClick={() => csv_onClick()}/>:
           <Button
             disabled
             size='large'
@@ -151,7 +166,7 @@ const reportTable = (props) => {
     const detailsId = details[0].map((array) => {
       return array.id
     })
-    const results = detailstext.filter((c) => {
+    const results = detailsText.filter((c) => {
       if (detailsId.includes(c.id)){
         return c
       }
@@ -162,8 +177,8 @@ const reportTable = (props) => {
     setLoading(true); // ajax request after empty completing
     setTimeout(() => {
       setSelectedRowKeys([]);
-      setdetailstext([]);
-      setdetailsID([])
+      setDetailsText([]);
+      setDetailsID([])
       setLoading(false);
     }, 1000);
     Modal.success({
@@ -212,11 +227,11 @@ const reportTable = (props) => {
   })
 
   const setValue = (id,value) => {
-    setdetailstext([...detailstext,{id:id,text:value}])
+    setDetailsText([...detailsText,{id:id,text:value}])
   }
 
   const setID =(id) => {
-    setdetailsID([...detailsID,id])
+    setDetailsID([...detailsID,id])
   }
 
   const DetailsFilter = (data) => {
@@ -237,32 +252,32 @@ const reportTable = (props) => {
     return found
   }
 
-  const csvonClick = (text) => {
-    setisModalVisible(true)
+  const csv_onClick = (text) => {
+    setIsModalVisible(true)
     Papa.parse("https://d20cmf4o2f77jz.cloudfront.net/csv/projectB_0000000039aed1d2_0x7680_20221031175254_001.csv", {
               download: true,
               complete: function(results) {
                 const detailData = results.data[1]
-                setcsvdata(detailData)
+                setCsvData(detailData)
               }
             })
   }
 
-  const csvdatasource = [
+  const csvDataSource = [
     {
       key: '1',
-      index: csvdata[0],
-      center_x: csvdata[1],
-      center_y: csvdata[2],
-      width: csvdata[3],
-      height: csvdata[4],
-      type: csvdata[5],
-      confidence_level: csvdata[6],
+      index: csvData[0],
+      center_x: csvData[1],
+      center_y: csvData[2],
+      width: csvData[3],
+      height: csvData[4],
+      type: csvData[5],
+      confidence_level: csvData[6],
     },
   ]
 
   const ModalCancel = () => {
-    setisModalVisible(false)
+    setIsModalVisible(false)
   }
 
   const onExpand = (props,record) => {
@@ -310,9 +325,9 @@ const reportTable = (props) => {
     return (
       <Fragment>
         <Table
-        dataSource={EventFilter(Time)}
-        rowSelection={rowSelection}
-        pagination={{ position: ['bottomCenter'], pageSize: 1 }}
+          dataSource={EventFilter(Time)}
+          rowSelection={rowSelection}
+          pagination={{ position: ['bottomCenter'], pageSize: 1 }}
         >
           <Column
               title='採集資料'
@@ -341,7 +356,6 @@ const reportTable = (props) => {
                     }}
                     />
                   );
-                  
                 } else {
                   return (
                     <Switch
@@ -372,7 +386,7 @@ const reportTable = (props) => {
           width={800}
         >
           <Table
-          dataSource={csvdatasource}>
+          dataSource={csvDataSource}>
             <Column
               title='index'
               dataIndex='index'
@@ -429,7 +443,7 @@ const reportTable = (props) => {
           onExpand,
           expandedRowRender,
         }}
-        dataSource={getEventDataId(eventList,whichDeviceName)}
+        dataSource={ getEventDataId(eventList, whichDeviceName) }
       >
         <Column
             title='事件時間'
@@ -476,7 +490,7 @@ const reportTable = (props) => {
             title='操作'
             render={(data) => {
               if(selectedDataCleaned(DetailsFilter(data.Details))){
-                seteventID(data.id)
+                setEventID(data.id)
                 return(
                   <Button type="primary" onClick={start} disabled={false} loading={loading}>
                     save

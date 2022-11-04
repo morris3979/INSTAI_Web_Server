@@ -1,12 +1,12 @@
 import React, { Fragment, Suspense } from "react";
 import Loading from '../loading'
-import LabelStudioWrapper from '../component/labelPage/LabelStudio'
+import OverviewCard from '../component/overviewPage/overviewCard'
 
-export default function LabelPage() {
+export default function OverviewPage() {
   return (
     <Fragment>
       <Suspense fallback={<Loading />}>
-        <LabelStudioWrapper/>
+        <OverviewCard/>
       </Suspense>
     </Fragment>
   );

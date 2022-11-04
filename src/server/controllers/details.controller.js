@@ -1,6 +1,45 @@
 const db = require('../database');
 const Details = db.Details;
 
+// Retrieve all Details from the database.
+exports.findAll = (req, res) => {
+  Details.findAll({
+      include: [{
+        model: db.Event,
+        attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+        },
+        include: [{
+          model: db.Device,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt', 'deletedAt', 'HwUpdateLogs']
+          },
+          include: [{
+            model: db.Host,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt', 'deletedAt']
+            },
+          }]
+        }]
+      }],
+      order: [
+        ['id', 'DESC']
+      ],
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      }
+  })
+  .then(data => {
+      res.send(data);
+  })
+  .catch(err => {
+      res.status(500).send({
+          message:
+          err.message || "Some error occurred while retrieving devices."
+      });
+  });
+};
+
 // Update a Details by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
