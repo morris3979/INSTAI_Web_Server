@@ -19,6 +19,12 @@ exports.findAll = (req, res) => {
             attributes: {
               exclude: ['createdAt', 'updatedAt', 'deletedAt']
             },
+            include: [{
+              model: db.Project,
+              attributes: {
+                exclude: ['createdAt', 'updatedAt', 'deletedAt']
+              },
+            }]
           }]
         }]
       }],

@@ -666,7 +666,7 @@ export const GetDetailsData = () => {
     async (dispatch) => {
       try {
         const response = await axios.get('/api/details')
-        console.log(response.data)
+        // console.log(response.data)
         const action = DeliverData(response.data, Get_Details_Data)
         dispatch(action)
         message.destroy()

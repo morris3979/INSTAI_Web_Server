@@ -63,19 +63,22 @@ const OverviewCard = (props) => {
                                 height='100%'
                             />:''
                         }
-                        actions={[
-                            <SettingOutlined key="setting" />,
-                            <EditOutlined key="edit" />,
-                            <EllipsisOutlined key="ellipsis" />,
-                        ]}
+                        // actions={[
+                        //     <SettingOutlined key="setting" />,
+                        //     <EditOutlined key="edit" />,
+                        //     <EllipsisOutlined key="ellipsis" />,
+                        // ]}
                     >
                         <Meta
                             style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
                             avatar={<Avatar src="https://cdn.pixabay.com/photo/2015/12/22/03/35/store-1103556_1280.png" />}
                             description={
-                                `filename: ${c.details}\n`+
-                                `Host: ${c.Event.Device.Host.serialNumber} \n`+
+                                `Project: ${c.Event.Device.Host.Project.project} (${c.Event.Device.Host.Project.displayName})\n`+
+                                `Host: ${c.Event.Device.Host.serialNumber}\n`+
                                 `Device: ${c.Event.Device.deviceId} (${c.Event.Device.deviceName})\n`+
+                                `filename: ${c.details}\n`+
+                                `image: ${c.image}\n`+
+                                `video: ${c.video}\n`+
                                 `rawData: ${c.rawData}\n`+
                                 `cleaned: ${c.cleaned}\n`+
                                 `labeled: ${c.labeled}`
