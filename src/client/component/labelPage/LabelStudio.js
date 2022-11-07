@@ -353,7 +353,7 @@ const LabelStudioWrapper = (props) => {
               addonAfter=".jpg"
               style={{ height: 30, width: '90%', margin: 2}}
               onChange={handleInput}
-              value={ urlImage? urlImage:''}
+              value={ urlImage? urlImage: ''}
             />
             {sendImageUrlButton}
             <Upload

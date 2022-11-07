@@ -28,6 +28,7 @@ const OverviewCard = (props) => {
 
     const CardData = (
         detailsData.map(c => {
+            console.log('c: ', c)
             return(
                 <Col>
                     <Card
@@ -82,7 +83,8 @@ const OverviewCard = (props) => {
                                 `video: ${c.video}\n`+
                                 `rawData: ${c.rawData}\n`+
                                 `cleaned: ${c.cleaned}\n`+
-                                `labeled: ${c.labeled}`
+                                `labeled: ${c.labeled}\n`+
+                                `createdAt: ${c.createdAt.replace('T',' ').replace('.000Z','')}`
                             }
                         />
                     </Card>
