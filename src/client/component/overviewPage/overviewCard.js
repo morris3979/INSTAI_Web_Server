@@ -28,7 +28,6 @@ const OverviewCard = (props) => {
 
     const CardData = (
         detailsData.map(c => {
-            console.log('c: ', c)
             return(
                 <Col>
                     <Card
