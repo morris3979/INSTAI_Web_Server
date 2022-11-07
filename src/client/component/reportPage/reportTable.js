@@ -21,6 +21,7 @@ import {
   PatchDetailsTableData,
   DownloadImage,
   DownloadVideo,
+  DownloadCsvFile,
 } from '../../store/actionCreater'
 import Papa from 'papaparse';
 
@@ -100,11 +101,12 @@ const reportTable = (props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedDetailsId, setSelectedDetailsId] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [detailsText,setDetailsText] = useState([])
+  const [detailsText,setDetailsText] = useState([]) 
   const [detailsID, setDetailsID] = useState([])
   const [eventID, setEventID] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [csvData, setCsvData] = useState([])
+  const [csvUrl, setcsvUrl] = useState()
 
   const download = (data) => {
     return (
@@ -136,7 +138,7 @@ const reportTable = (props) => {
           <Button
           size='large'
           icon={<FileOutlined />}
-          onClick={() => csv_onClick()}/>:
+          onClick={() => csv_onClick(data.details)}/>:
           <Button
             disabled
             size='large'
@@ -257,7 +259,8 @@ const reportTable = (props) => {
 
   const csv_onClick = (text) => {
     setIsModalVisible(true)
-    Papa.parse("https://d20cmf4o2f77jz.cloudfront.net/csv/projectB_0000000039aed1d2_0x7680_20221031175254_001.csv", {
+    setcsvUrl(text)
+    Papa.parse(`https://d20cmf4o2f77jz.cloudfront.net/csv/${text}.csv`, {
               download: true,
               complete: function(results) {
                 const detailData = results.data[1]
@@ -389,7 +392,7 @@ const reportTable = (props) => {
           width={800}
         >
           <Table
-          dataSource={csvDataSource}>
+          dataSource={csvData}>
             <Column
               title='index'
               dataIndex='index'
@@ -434,6 +437,11 @@ const reportTable = (props) => {
               align='center'
             />
           </Table>
+          <Button
+            icon ={<DownloadOutlined />}
+            onClick={() => {
+              props.downloadCsvFile(csvUrl)
+            }}/>
         </Modal>
       </Fragment>
     )
@@ -542,6 +550,10 @@ const mapDispatchToProps = (dispatch) => {
       const action = DownloadVideo(videoName)
       dispatch(action)
     },
+    downloadCsvFile(csvName) {
+      const action = DownloadCsvFile(csvName)
+      dispatch(action)
+    }
   }
 }
 
