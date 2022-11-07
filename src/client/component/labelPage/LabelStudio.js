@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import LabelStudio from "label-studio";
+import { connect } from 'react-redux'
 import "label-studio/build/static/css/main.css";
 import {
   Button,
@@ -7,7 +8,10 @@ import {
   Input,
   Modal,
   Popconfirm,
-  Typography
+  Typography,
+  Collapse,
+  Table,
+  Image
 } from 'antd'
 import {
   BugOutlined,
@@ -17,8 +21,14 @@ import {
   EyeOutlined,
   EyeInvisibleOutlined
 } from '@ant-design/icons'
+import {
+  GetProjectTableData,
+  GetEventList,
+} from '../../store/actionCreater'
 
 const { Title } = Typography;
+const { Panel } = Collapse;
+const { Column } = Table;
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -45,8 +55,15 @@ const LabelStudioWrapper = (props) => {
   const [fileList, setFileList] = useState([]);
   const [urlImage, setUrlImage] = useState();
 
+  const {
+    loginInformation,
+    eventList,
+    getEventList
+  } = props
+
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
+    getEventList()
     if (rootRef.current) {
       lsfRef.current = new LabelStudio(rootRef.current, {
         /* all the options according to the docs */
@@ -278,74 +295,169 @@ const LabelStudioWrapper = (props) => {
   const onReset = () => {
     setAdditionalLabels([]);
   }
+  const FilterData = (value) => {
+    const response = eventList.filter((c) => {
+      return c.Details
+    })
+    const FilterDetails = response.map((d) => {
+      return d.Details
+    }) 
+    const DataArray = [].concat(...FilterDetails);
+    const CleanedData = DataArray.filter((c) => {
+      return (
+        loginInformation.user == true?
+        c.details.slice(0,8) == value:
+        c.details.slice(0,8)
+      )
+    })
+    return CleanedData
+  } 
+  const onClick = (data) => {
+    //console.log(id)
+    return(
+      <Button
+      icon={<PlusOutlined />}
+      onClick={() => {
+        setUrlImage(data.details)
+      }}>
+      </Button>
+    )
+  }
+
+  const findImageByDetail = (text) => {
+    return (
+      <Fragment align='center'>
+        <Image
+          src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
+          width='100%'
+          height='100%'
+        />
+      </Fragment>
+    )
+  }
 
   // just a wrapper node to place LSF into
   return (
     <Fragment>
-      <div style={{ margin: 5 }}>
-        <Title level={3}>Upload Image</Title>
-        <Input
-          allowClear
-          type="text"
-          addonBefore="../S3/Image/"
-          placeholder="Input Image Name ..."
-          addonAfter=".jpg"
-          style={{ height: 30, width: 660, margin: 2}}
-          onChange={handleInput}
-        />
-        {sendImageUrlButton}
-        <Upload
-          maxCount={10}
-          multiple
-          listType="picture-card"
-          onPreview={handlePreview}
-          onChange={handleUpload}
-          customRequest={dummyRequest}
-        >
-          {fileList.length < 10 ? uploadButton : null}
-        </Upload>
-      </div>
-      <div style={{ margin: 5 }}>
-        <Title level={3}>Label Image</Title>
-        <Input
-          allowClear
-          type="text"
-          placeholder="Input Label Name ..."
-          style={{ height: 30, width: 180 }}
-          ref={labelRef}
-        />
-        <Button
-          onClick={onAddLabel}
-          style={{ margin: 2 }}
-          icon={<PlusOutlined />}
-          >Add Label
-        </Button>
-        <Popconfirm
-          title='Clear all Labels?'
-          onConfirm={onReset}
-        >
-          <Button
-            style={{ margin: 2 }}
-            icon={<DeleteOutlined />}
-            >Delete Labels
-          </Button>
-        </Popconfirm>
-        <Button
-          onClick={exportToJson}
-          style={{ margin: 2 }}
-          icon={<DownloadOutlined />}
-          >Download JSON
-        </Button>
-        <Button
-          onClick={crawler_onClick}
-          style={{ margin: 2 }}
-          icon={<BugOutlined />}
-          >View JSON
-        </Button>
-      </div>
+      <Collapse accordion>
+        <Panel header='Select Image'>
+          <span style={{ margin: 5,width:'45%',float:'left'}}>
+            <Title level={3}>Upload Image</Title>
+            <Input
+              allowClear
+              type="text"
+              addonBefore="../S3/Image/"
+              placeholder="Input Image Name ..."
+              addonAfter=".jpg"
+              style={{ height: 30, width: '90%', margin: 2}}
+              onChange={handleInput}
+              value={ urlImage? urlImage:''}
+            />
+            {sendImageUrlButton}
+            <Upload
+              maxCount={10}
+              multiple
+              listType="picture-card"
+              onPreview={handlePreview}
+              onChange={handleUpload}
+              customRequest={dummyRequest}
+            >
+              {fileList.length < 10 ? uploadButton : null}
+            </Upload>
+          </span>
+          <span style={{width:'45%',float:'left',margin:5}}>
+            <Title level={3}>Cleaned Image</Title>
+              <Table 
+                dataSource={FilterData(loginInformation.project)}
+                pagination={{ position: ['bottomCenter'] ,pageSize: 1 }}>
+                <Column 
+                  title='Image'
+                  align="center"
+                  render={findImageByDetail}
+                  width='40%'
+                />
+                <Column 
+                  title='Image detail'
+                  align="center"
+                  dataIndex='details'
+                  width='40%'
+                />         
+                <Column 
+                  title='Action'
+                  align="center"
+                  render={onClick}
+                  width='20%'
+                />       
+              </Table>
+          </span>
+        </Panel>
+      </Collapse>
+      <Collapse accordion>
+        <Panel header='Label Image'>
+          <div style={{ margin: 5 }}>
+            <Title level={3}>Label Image</Title>
+            <Input
+              allowClear
+              type="text"
+              placeholder="Input Label Name ..."
+              style={{ height: 30, width: 180 }}
+              ref={labelRef}
+            />
+            <Button
+              onClick={onAddLabel}
+              style={{ margin: 2 }}
+              icon={<PlusOutlined />}
+              >Add Label
+            </Button>
+            <Popconfirm
+              title='Clear all Labels?'
+              onConfirm={onReset}
+            >
+              <Button
+                style={{ margin: 2 }}
+                icon={<DeleteOutlined />}
+                >Delete Labels
+              </Button>
+            </Popconfirm>
+            <Button
+              onClick={exportToJson}
+              style={{ margin: 2 }}
+              icon={<DownloadOutlined />}
+              >Download JSON
+            </Button>
+            <Button
+              onClick={crawler_onClick}
+              style={{ margin: 2 }}
+              icon={<BugOutlined />}
+              >View JSON
+            </Button>
+          </div>
+        </Panel>
+      </Collapse>
       <div style={{ margin: 5 }} ref={rootRef} />
     </Fragment>
   );
 };
+const mapStateToProps = (state) => {
+  //state指的是store裡的數據
+  return {
+    loginInformation: state.loginInformation,
+    projectTableData: state.projectTableData,
+    eventList: state.eventList
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  //dispatch指store.dispatch這個方法
+  return {
+    getProjectTableData() {
+      const action = GetProjectTableData()
+      dispatch(action)
+    },
+    getEventList() {
+      const action = GetEventList()
+      dispatch(action)
+    }
+  }
+}
 
-export default (LabelStudioWrapper)
+export default connect(mapStateToProps, mapDispatchToProps)(LabelStudioWrapper)
