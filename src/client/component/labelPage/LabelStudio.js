@@ -295,13 +295,14 @@ const LabelStudioWrapper = (props) => {
   const onReset = () => {
     setAdditionalLabels([]);
   }
+
   const FilterData = (value) => {
     const response = eventList.filter((c) => {
       return c.Details
     })
     const FilterDetails = response.map((d) => {
       return d.Details
-    }) 
+    })
     const DataArray = [].concat(...FilterDetails);
     const CleanedData = DataArray.filter((c) => {
       return (
@@ -311,7 +312,8 @@ const LabelStudioWrapper = (props) => {
       )
     })
     return CleanedData
-  } 
+  }
+
   const onClick = (data) => {
     //console.log(id)
     return(
@@ -367,27 +369,27 @@ const LabelStudioWrapper = (props) => {
           </span>
           <span style={{width:'45%',float:'left',margin:5}}>
             <Title level={3}>Cleaned Image</Title>
-              <Table 
+              <Table
                 dataSource={FilterData(loginInformation.project)}
                 pagination={{ position: ['bottomCenter'] ,pageSize: 1 }}>
-                <Column 
+                <Column
                   title='Image'
                   align="center"
                   render={findImageByDetail}
                   width='40%'
                 />
-                <Column 
-                  title='Image detail'
+                <Column
+                  title='Image Name'
                   align="center"
                   dataIndex='details'
                   width='40%'
-                />         
-                <Column 
+                />
+                <Column
                   title='Action'
                   align="center"
                   render={onClick}
                   width='20%'
-                />       
+                />
               </Table>
           </span>
         </Panel>
@@ -438,6 +440,7 @@ const LabelStudioWrapper = (props) => {
     </Fragment>
   );
 };
+
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
@@ -446,6 +449,7 @@ const mapStateToProps = (state) => {
     eventList: state.eventList
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {

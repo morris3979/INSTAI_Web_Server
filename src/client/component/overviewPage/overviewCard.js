@@ -2,18 +2,19 @@ import React, { useEffect, Fragment } from "react";
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player/lazy'
 import {
-    Col, Row, Card, Avatar, Image,
+    Col, Row, Card, Avatar, Image, Typography
 } from 'antd'
 import {
     GetDetailsData,
 } from '../../store/actionCreater'
-import {
-    EditOutlined,
-    EllipsisOutlined,
-    SettingOutlined
-} from '@ant-design/icons'
+// import {
+//     EditOutlined,
+//     EllipsisOutlined,
+//     SettingOutlined
+// } from '@ant-design/icons'
 
 const { Meta } = Card;
+const { Title } = Typography;
 
 const OverviewCard = (props) => {
     const {
@@ -99,6 +100,7 @@ const OverviewCard = (props) => {
   return (
     <Fragment>
         <div className="site-card-wrapper" style={{ margin: 6 }}>
+            <Title level={2} style={{ margin: 2 }}>共 {detailsData.length} 筆資料</Title>
             {CardRow}
         </div>
     </Fragment>
