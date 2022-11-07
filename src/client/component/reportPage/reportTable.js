@@ -23,6 +23,7 @@ import {
   DownloadVideo,
 } from '../../store/actionCreater'
 import Papa from 'papaparse';
+
 const { Column } = Table
 const { Text } = Typography
 
@@ -31,11 +32,13 @@ const video = (text) => {
     return (
       <Fragment align='center'>
         <Image
+          style={{ margin: 2 }}
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
           width='100%'
           height='100%'
         />
         <ReactPlayer
+          style={{ margin: 2 }}
           url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
           controls={true}
           width='100%'
@@ -97,7 +100,7 @@ const reportTable = (props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedDetailsId, setSelectedDetailsId] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [detailsText,setDetailsText] = useState([]) 
+  const [detailsText,setDetailsText] = useState([])
   const [detailsID, setDetailsID] = useState([])
   const [eventID, setEventID] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)

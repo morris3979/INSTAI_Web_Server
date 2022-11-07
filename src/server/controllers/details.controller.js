@@ -32,7 +32,7 @@ exports.findAll = (req, res) => {
         ['id', 'DESC']
       ],
       attributes: {
-          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+          exclude: ['updatedAt', 'deletedAt']
       }
   })
   .then(data => {
