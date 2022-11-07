@@ -304,12 +304,15 @@ const LabelStudioWrapper = (props) => {
       return d.Details
     })
     const DataArray = [].concat(...FilterDetails);
-    const CleanedData = DataArray.filter((c) => {
+    const EachDetailData = DataArray.filter((e) => {
       return (
         loginInformation.user == true?
-        c.details.slice(0,8) == value:
-        c.details.slice(0,8)
+        e.details.slice(0,8) == value:
+        e.details.slice(0,8)
       )
+    })
+    const CleanedData = EachDetailData.filter((data) => {
+      return data.cleaned == '1'
     })
     return CleanedData
   }
