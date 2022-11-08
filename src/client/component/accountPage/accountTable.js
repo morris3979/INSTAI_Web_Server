@@ -44,6 +44,15 @@ const userStatus = (text) => {
   return(text.user == true? <CheckOutlined />: <CloseOutlined />);
 }
 
+const convertedBoolean = (text) => {
+  if (text == 1){
+    return true
+  } 
+  else{
+    return false
+  }
+}
+
 class AccountManageTable extends Component {
   constructor(props) {
     super(props)
@@ -86,13 +95,13 @@ class AccountManageTable extends Component {
               hidden={!this.props.loginInformation.developer}
             >
               <Switch
-                defaultChecked={this.props.whichModal.developer}
+                defaultChecked={convertedBoolean(this.props.whichModal.developer)}
                 disabled={!this.props.loginInformation.developer}
               />
             </Item>
             <Item label='admin' name='admin'>
               <Switch
-                defaultChecked={this.props.whichModal.admin}
+                defaultChecked={convertedBoolean(this.props.whichModal.admin)}
               />
             </Item>
             <Item label='user' name='user'>
