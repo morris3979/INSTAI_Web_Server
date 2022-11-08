@@ -14,10 +14,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        developer: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
-        },
         admin: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
