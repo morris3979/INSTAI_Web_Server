@@ -100,7 +100,7 @@ class AccountManageTable extends Component {
                 defaultChecked={convertedBoolean(this.props.whichModal.user)}
               />
             </Item>
-            <Item label='請選擇專案配置' name='ProjectId'>
+            <Item label='請選擇專案配置' name='ProjectId' hidden={this.props.whichModal.admin == true}>
               <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
                 defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
                 {this.props.projectTableData.map(c => {
