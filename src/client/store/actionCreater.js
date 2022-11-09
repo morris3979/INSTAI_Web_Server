@@ -178,8 +178,8 @@ export const PatchAccountTableData = (id, data) => {
           title: '修改成功',
           onOk: () => {
             const action = GetAccountTableData()
-            dispatch(action)
             location.reload()
+            dispatch(action)
           }
         })
       } catch (error) {
@@ -350,8 +350,8 @@ export const PatchProjectTableData = (id, data) => {
           title: '修改成功',
           onOk: () => {
             const action = GetProjectTableData()
-            dispatch(action)
             location.reload()
+            dispatch(action)
           }
         })
       } catch (error) {
@@ -378,8 +378,8 @@ export const PostProjectTableData = (data) => {
             title: '新增成功',
             onOk: () => {
               const action = GetProjectTableData()
-              dispatch(action)
               location.reload()
+              dispatch(action)
             }
           })
         }
@@ -451,8 +451,8 @@ export const PatchHostTableData = (id, data) => {
           title: '修改成功',
           onOk: () => {
             const action = GetHostTableData()
-            dispatch(action)
             location.reload()
+            dispatch(action)
           }
         })
       } catch (error) {
@@ -479,8 +479,8 @@ export const PostHostTableData = (data) => {
             title: '新增成功',
             onOk: () => {
               const action = GetDeviceTableData()
-              dispatch(action)
               location.reload()
+              dispatch(action)
             }
           })
         }
@@ -512,7 +512,7 @@ export const PostHostMQTT = (data) => {
             content: `傳送內容: ${data.command}`,
             onOk: () => {
               return new Promise((resolve, reject) => {
-                setTimeout(Math.random() > 0.5 ? resolve : reject, 3000);
+                setTimeout(Math.random() > 0.5 ? resolve : reject, 3600);
               })
               .then(() => {
                 const action = GetHostTableData()
@@ -592,8 +592,8 @@ export const PatchDeviceTableData = (id, data) => {
           title: '修改成功',
           onOk: () => {
             const action = GetDeviceTableData()
-            dispatch(action)
             location.reload()
+            dispatch(action)
           }
         })
       } catch (error) {
@@ -620,8 +620,8 @@ export const PostDeviceTableData = (data) => {
             title: '新增成功',
             onOk: () => {
               const action = GetDeviceTableData()
-              dispatch(action)
               location.reload()
+              dispatch(action)
             }
           })
         }
@@ -655,7 +655,7 @@ export const PostDeviceMQTT = (data) => {
             content: `傳送內容: ${data.command}`,
             onOk: () => {
               return new Promise((resolve, reject) => {
-                setTimeout(Math.random() > 0.5 ? resolve : reject, 3000);
+                setTimeout(Math.random() > 0.5 ? resolve : reject, 3600);
               })
               .then(() => {
                 const action = GetDeviceTableData()
