@@ -2,7 +2,7 @@ import React, { useEffect, Fragment } from "react";
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player/lazy'
 import {
-    Col, Row, Card, Avatar, Image, Typography
+    Col, Row, Card, Avatar, Image, Typography, Carousel
 } from 'antd'
 import {
     GetDetailsData,
@@ -37,7 +37,7 @@ const OverviewCard = (props) => {
                         }}
                         cover={
                             c.video == true && c.image == true?
-                            <Fragment align='center'>
+                            <Carousel effect='fade' dotPosition='top'>
                                 <ReactPlayer
                                     url={`https://d20cmf4o2f77jz.cloudfront.net/video/${c.details}.mp4`}
                                     controls={true}
@@ -49,7 +49,7 @@ const OverviewCard = (props) => {
                                     width='100%'
                                     height='100%'
                                 />
-                            </Fragment>:'' ||
+                            </Carousel>:'' ||
                             c.image == true?
                             <Image
                                 src={`https://d20cmf4o2f77jz.cloudfront.net/image/${c.details}.jpg`}

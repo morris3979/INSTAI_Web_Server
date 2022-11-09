@@ -47,7 +47,7 @@ const userStatus = (text) => {
 const convertedBoolean = (text) => {
   if (text == 1){
     return true
-  } 
+  }
   else{
     return false
   }
@@ -78,7 +78,6 @@ class AccountManageTable extends Component {
           <Column title='操作' render={this.buttonGroup} align='center' width={150} />
           <Column title='帳號' dataIndex='username' align='center' />
           <ColumnGroup title='權限' align='center'>
-            <Column title='developer' render={developerStatus} align='center' />
             <Column title='admin' render={adminStatus} align='center' />
             <Column title='user' render={userStatus} align='center' />
           </ColumnGroup>
@@ -91,14 +90,6 @@ class AccountManageTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='developer' name='developer'
-              hidden={!this.props.loginInformation.developer}
-            >
-              <Switch
-                defaultChecked={convertedBoolean(this.props.whichModal.developer)}
-                disabled={!this.props.loginInformation.developer}
-              />
-            </Item>
             <Item label='admin' name='admin'>
               <Switch
                 defaultChecked={convertedBoolean(this.props.whichModal.admin)}
@@ -106,7 +97,7 @@ class AccountManageTable extends Component {
             </Item>
             <Item label='user' name='user'>
               <Switch
-                defaultChecked={this.props.whichModal.user}
+                defaultChecked={convertedBoolean(this.props.whichModal.user)}
               />
             </Item>
             <Item label='請選擇專案配置' name='ProjectId'>

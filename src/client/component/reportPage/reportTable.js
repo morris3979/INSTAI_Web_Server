@@ -7,7 +7,8 @@ import {
   Image,
   Modal,
   Switch,
-  Space
+  Space,
+  Carousel
 } from 'antd'
 import {
   DownloadOutlined,
@@ -31,7 +32,7 @@ const { Text } = Typography
 const video = (text) => {
   if (text.image == true && text.video == true) {
     return (
-      <Fragment align='center'>
+      <Carousel effect='fade' dotPosition='top'>
         <Image
           style={{ margin: 2 }}
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
@@ -46,7 +47,7 @@ const video = (text) => {
           height='100%'
         />
         <Text>{text.details}</Text>
-      </Fragment>
+      </Carousel>
     )
   } else if (text.image == true) {
     return (
@@ -101,12 +102,12 @@ const reportTable = (props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedDetailsId, setSelectedDetailsId] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [detailsText,setDetailsText] = useState([]) 
+  const [detailsText,setDetailsText] = useState([])
   const [detailsID, setDetailsID] = useState([])
   const [eventID, setEventID] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [csvData, setCsvData] = useState([])
-  const [csvUrl, setcsvUrl] = useState()
+  const [csvUrl, setCsvUrl] = useState()
 
   const download = (data) => {
     return (
@@ -259,7 +260,7 @@ const reportTable = (props) => {
 
   const csv_onClick = (text) => {
     setIsModalVisible(true)
-    setcsvUrl(text)
+    setCsvUrl(text)
     Papa.parse(`https://d20cmf4o2f77jz.cloudfront.net/csv/${text}.csv`, {
               download: true,
               complete: function(results) {
