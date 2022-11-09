@@ -7,8 +7,7 @@ import {
   Image,
   Modal,
   Switch,
-  Space,
-  Carousel
+  Space
 } from 'antd'
 import {
   DownloadOutlined,
@@ -32,7 +31,7 @@ const { Text } = Typography
 const video = (text) => {
   if (text.image == true && text.video == true) {
     return (
-      <Carousel effect='fade' dotPosition='top'>
+      <Fragment align='center'>
         <Image
           style={{ margin: 2 }}
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
@@ -47,7 +46,7 @@ const video = (text) => {
           height='100%'
         />
         <Text>{text.details}</Text>
-      </Carousel>
+      </Fragment>
     )
   } else if (text.image == true) {
     return (
