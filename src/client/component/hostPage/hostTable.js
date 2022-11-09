@@ -94,18 +94,18 @@ class HostTable extends Component {
                 }
               />
             </Item>
-            <Item label='請選擇主機指令' name='command'>
-              <Select placeholder='Please select command to send' onChange={this.handleSelectCommand}
-                defaultValue={this.defaultValue(this.props.whichModal.command)}>
-                <Option value='deviceList?'>deviceList?</Option>
-              </Select>
-            </Item>
             <Item label='請選擇專案配置' name='ProjectId'>
               <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
                 defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
                 {this.props.projectTableData.map(c => {
                   return ( <Option key={c.id} value={c.id}>{`${c.project} (${c.displayName})`}</Option> )
                 })}
+              </Select>
+            </Item>
+            <Item label='請選擇主機指令' name='command'>
+              <Select placeholder='Please select command to send' onChange={this.handleSelectCommand}
+                defaultValue={this.defaultValue(this.props.whichModal.command)}>
+                <Option value='deviceList?'>deviceList?</Option>
               </Select>
             </Item>
             <Item>

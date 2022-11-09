@@ -2,7 +2,6 @@ const express = require('express');
 const apiRouter = express.Router();
 
 const awsRouter = require("./api/aws.routes");
-const aliyunRouter = require("./api/aliyun.routes");
 
 const projectRouter = require('./api/project.routes');
 const hostRouter = require('./api/host.routes');
@@ -13,7 +12,6 @@ const userRouter = require('./api/user.routes');
 
 // cloud
 apiRouter.use("/aws", awsRouter);
-apiRouter.use("/aliyun", aliyunRouter);
 
 // database
 apiRouter.use('/project', projectRouter);
