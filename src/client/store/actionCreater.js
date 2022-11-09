@@ -179,6 +179,7 @@ export const PatchAccountTableData = (id, data) => {
           onOk: () => {
             const action = GetAccountTableData()
             dispatch(action)
+            location.reload()
           }
         })
       } catch (error) {
@@ -218,6 +219,8 @@ export const DeleteAccountTableData = (data) => {
 export const GetProjectList = () => {
   return (
     async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
       try {
         const response = await axios.get('/api/project')
         //console.log(response.data)
@@ -235,6 +238,8 @@ export const GetProjectList = () => {
 export const GetHostList = () => {
   return (
     async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
       try {
         const response = await axios.get('/api/Host')
         //console.log(response.data)
@@ -252,6 +257,8 @@ export const GetHostList = () => {
 export const GetEventList = () => {
   return (
     async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
       try {
         const response = await axios.get('/api/event')
         //console.log(response.data)
@@ -344,6 +351,7 @@ export const PatchProjectTableData = (id, data) => {
           onOk: () => {
             const action = GetProjectTableData()
             dispatch(action)
+            location.reload()
           }
         })
       } catch (error) {
@@ -371,6 +379,7 @@ export const PostProjectTableData = (data) => {
             onOk: () => {
               const action = GetProjectTableData()
               dispatch(action)
+              location.reload()
             }
           })
         }
@@ -443,6 +452,7 @@ export const PatchHostTableData = (id, data) => {
           onOk: () => {
             const action = GetHostTableData()
             dispatch(action)
+            location.reload()
           }
         })
       } catch (error) {
@@ -470,6 +480,7 @@ export const PostHostTableData = (data) => {
             onOk: () => {
               const action = GetDeviceTableData()
               dispatch(action)
+              location.reload()
             }
           })
         }
@@ -582,6 +593,7 @@ export const PatchDeviceTableData = (id, data) => {
           onOk: () => {
             const action = GetDeviceTableData()
             dispatch(action)
+            location.reload()
           }
         })
       } catch (error) {
@@ -609,6 +621,7 @@ export const PostDeviceTableData = (data) => {
             onOk: () => {
               const action = GetDeviceTableData()
               dispatch(action)
+              location.reload()
             }
           })
         }
@@ -664,6 +677,8 @@ export const PostDeviceMQTT = (data) => {
 export const GetDetailsData = () => {
   return (
     async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
       try {
         const response = await axios.get('/api/details')
         // console.log(response.data)
