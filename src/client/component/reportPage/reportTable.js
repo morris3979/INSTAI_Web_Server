@@ -257,8 +257,6 @@ const reportTable = (props) => {
     return found
   }
 
-  const csvDataSource = []
-
   const csv_onClick = (text) => {
     setIsModalVisible(true)
     setCsvFilename(text)
