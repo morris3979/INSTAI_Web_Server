@@ -106,7 +106,7 @@ const reportTable = (props) => {
   const [eventID, setEventID] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [csvData, setCsvData] = useState([])
-  const [csvUrl, setCsvUrl] = useState()
+  const [csvFilename, setCsvFilename] = useState()
 
   const download = (data) => {
     return (
@@ -136,15 +136,15 @@ const reportTable = (props) => {
         {
           data.csv == true?
           <Button
-          size='large'
-          icon={<FileOutlined />}
-          onClick={() => csv_onClick(data.details)}/>:
+            size='large'
+            icon={<FileOutlined />}
+            onClick={() => csv_onClick(data.details)}
+          />:
           <Button
             disabled
             size='large'
             icon={<FileOutlined />}
           />
-
         }
         </Space>
       </Fragment>
@@ -232,11 +232,11 @@ const reportTable = (props) => {
   })
 
   const setValue = (id,value) => {
-    setDetailsText([...detailsText,{id:id,text:value}])
+    setDetailsText([...detailsText, { id: id, text: value }])
   }
 
   const setID =(id) => {
-    setDetailsID([...detailsID,id])
+    setDetailsID([...detailsID, id])
   }
 
   const DetailsFilter = (data) => {
@@ -259,28 +259,17 @@ const reportTable = (props) => {
 
   const csv_onClick = (text) => {
     setIsModalVisible(true)
-    setCsvUrl(text)
+    setCsvFilename(text)
     Papa.parse(`https://d20cmf4o2f77jz.cloudfront.net/csv/${text}.csv`, {
-              download: true,
-              complete: function(results) {
-                const detailData = results.data[1]
-                setCsvData(detailData)
-              }
-            })
+      download: true,
+      complete: function(results) {
+        results.data.shift()
+        results.data.map((c) => {
+          setCsvData(c)
+        })
+      }
+    })
   }
-
-  const csvDataSource = [
-    {
-      key: '1',
-      index: csvData[0],
-      center_x: csvData[1],
-      center_y: csvData[2],
-      width: csvData[3],
-      height: csvData[4],
-      type: csvData[5],
-      confidence_level: csvData[6],
-    },
-  ]
 
   const ModalCancel = () => {
     setIsModalVisible(false)
@@ -338,7 +327,6 @@ const reportTable = (props) => {
           <Column
               title='採集資料'
               render={video}
-              // ellipsis={true}
               width='40%'
               align='center'
           />
@@ -353,24 +341,24 @@ const reportTable = (props) => {
                 if (text.cleaned == true) {
                   return (
                     <Switch
-                    checkedChildren={<CheckOutlined />}
-                    unCheckedChildren={<CloseOutlined />}
-                    defaultChecked
-                    onChange={(e) => {
-                      setID(text.id)
-                      setValue(text.id,e)
-                    }}
+                      checkedChildren={<CheckOutlined />}
+                      unCheckedChildren={<CloseOutlined />}
+                      defaultChecked
+                      onChange={(e) => {
+                        setID(text.id)
+                        setValue(text.id,e)
+                      }}
                     />
                   );
                 } else {
                   return (
                     <Switch
-                    checkedChildren={<CheckOutlined />}
-                    unCheckedChildren={<CloseOutlined />}
-                    onChange={(e) => {
-                      setID(text.id)
-                      setValue(text.id,e)
-                    }}
+                      checkedChildren={<CheckOutlined />}
+                      unCheckedChildren={<CloseOutlined />}
+                      onChange={(e) => {
+                        setID(text.id)
+                        setValue(text.id,e)
+                      }}
                     />
                   )
                 }
@@ -378,10 +366,10 @@ const reportTable = (props) => {
               align='center'
           />
           <Column
-              title='操作'
-              render={download}
-              width='15%'
-              align='center'
+            title='操作'
+            render={download}
+            width='15%'
+            align='center'
           />
         </Table>
         <Modal
@@ -391,15 +379,13 @@ const reportTable = (props) => {
           destroyOnClose={true}
           width={800}
         >
-          <Table
-          dataSource={csvData}>
+          <Table dataSource={csvData}>
             <Column
               title='index'
               dataIndex='index'
               width='15%'
               align='center'
-            >
-            </Column>
+            />
             <Column
               title='center x'
               dataIndex='center_x'
@@ -440,8 +426,9 @@ const reportTable = (props) => {
           <Button
             icon ={<DownloadOutlined />}
             onClick={() => {
-              props.downloadCsvFile(csvUrl)
-            }}/>
+              props.downloadCsvFile(csvFilename)
+            }}
+          />
         </Modal>
       </Fragment>
     )
@@ -457,18 +444,18 @@ const reportTable = (props) => {
         dataSource={ getEventDataId(eventList, whichDeviceName) }
       >
         <Column
-            title='事件時間'
-            dataIndex='eventTime'
-            ellipsis={true}
-            align='center'
-            render={eventData1}
+          title='事件時間'
+          dataIndex='eventTime'
+          ellipsis={true}
+          align='center'
+          render={eventData1}
         />
         <Column
-            title='觸發 (0:主動, 1:被動)'
-            dataIndex='trigger'
-            ellipsis={true}
-            align='center'
-            render={convertTrigger}
+          title='觸發 (0:主動, 1:被動)'
+          dataIndex='trigger'
+          ellipsis={true}
+          align='center'
+          render={convertTrigger}
         />
         <Column
           title='選取數量'
@@ -476,9 +463,9 @@ const reportTable = (props) => {
             if(selectedDataId(DetailsFilter(data.Details))){
               return(
                 <span
-                style={{
-                marginLeft: 8,
-                }}
+                  style={{
+                  marginLeft: 8,
+                  }}
                 >
                   {`${selectedRowKeys.length}`}
                 </span>
@@ -486,9 +473,9 @@ const reportTable = (props) => {
             }else{
               return(
                 <span
-                style={{
-                marginLeft: 8,
-                }}
+                  style={{
+                  marginLeft: 8,
+                  }}
                 >
                   {'0'}
                 </span>
