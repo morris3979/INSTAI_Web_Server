@@ -257,6 +257,8 @@ const reportTable = (props) => {
     return found
   }
 
+  const csvDataSource = []
+
   const csv_onClick = (text) => {
     setIsModalVisible(true)
     setCsvFilename(text)
@@ -265,7 +267,15 @@ const reportTable = (props) => {
       complete: function(results) {
         results.data.shift()
         results.data.map((c) => {
-          setCsvData(c)
+          setCsvData((value) => [...value, {
+            index: c[0],
+            center_x: c[1],
+            center_y: c[2],
+            width: c[3],
+            height: c[4],
+            type: c[5],
+            confidence_level: c[6]
+          }])
         })
       }
     })
