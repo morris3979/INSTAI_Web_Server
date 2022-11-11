@@ -118,7 +118,10 @@ const reportTable = (props) => {
             size='large'
             icon={<DownloadOutlined />}
             onClick={() => {
-              if (data.image == true) {
+              if (data.image == true || data.video == true) {
+                props.downloadImage(data.details)
+                props.downloadVideo(data.details)
+              } else if (data.image == true) {
                 props.downloadImage(data.details)
               } else if (data.video == true) {
                 props.downloadVideo(data.details)
