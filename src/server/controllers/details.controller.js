@@ -24,6 +24,12 @@ exports.findAll = (req, res) => {
               attributes: {
                 exclude: ['createdAt', 'updatedAt', 'deletedAt']
               },
+              include: [{
+                model: db.User,
+                attributes: {
+                  exclude: ['password', 'admin', 'token', 'createdAt', 'updatedAt', 'deletedAt']
+                }
+              }]
             }]
           }]
         }]
