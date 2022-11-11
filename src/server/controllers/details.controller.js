@@ -12,12 +12,12 @@ exports.findAll = (req, res) => {
         include: [{
           model: db.Device,
           attributes: {
-            exclude: ['createdAt', 'updatedAt', 'deletedAt', 'HwUpdateLogs']
+            exclude: ['command', 'message', 'createdAt', 'updatedAt', 'deletedAt', 'HwUpdateLogs']
           },
           include: [{
             model: db.Host,
             attributes: {
-              exclude: ['createdAt', 'updatedAt', 'deletedAt']
+              exclude: ['command', 'response', 'accessKey', 'secretKey', 'createdAt', 'updatedAt', 'deletedAt']
             },
             include: [{
               model: db.Project,
