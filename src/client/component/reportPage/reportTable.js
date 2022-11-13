@@ -92,6 +92,7 @@ const reportTable = (props) => {
     eventList,
     getEventList,
     patchDetailsTableData,
+    downloadCsvFile
   } = props
 
   useEffect(() => {
@@ -118,7 +119,7 @@ const reportTable = (props) => {
             size='large'
             icon={<DownloadOutlined />}
             onClick={() => {
-              if (data.image == true || data.video == true) {
+              if (data.image == true && data.video == true) {
                 props.downloadImage(data.details)
                 props.downloadVideo(data.details)
               } else if (data.image == true) {
@@ -284,6 +285,7 @@ const reportTable = (props) => {
 
   const ModalCancel = () => {
     setIsModalVisible(false)
+    setCsvData([])
   }
 
   const onExpand = (props,record) => {
@@ -328,6 +330,10 @@ const reportTable = (props) => {
       return JSONData
     }
 
+    const downloadCsv = () => {
+      downloadCsvFile(csvFilename)
+    }
+  
     return (
       <Fragment>
         <Table
@@ -390,7 +396,10 @@ const reportTable = (props) => {
           destroyOnClose={true}
           width={800}
         >
-          <Table dataSource={csvData}>
+          <div>
+          <Table 
+          dataSource={csvData}
+          pagination={{ position: ['bottomCenter'] }}>
             <Column
               title='index'
               dataIndex='index'
@@ -434,12 +443,14 @@ const reportTable = (props) => {
               align='center'
             />
           </Table>
+          </div>
+          <div style={{ display: "flex" }}>
           <Button
             icon ={<DownloadOutlined />}
-            onClick={() => {
-              props.downloadCsvFile(csvFilename)
-            }}
+            style={{ marginLeft: "auto" }}
+            onClick={downloadCsv}
           />
+          </div>
         </Modal>
       </Fragment>
     )
