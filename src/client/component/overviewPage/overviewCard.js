@@ -1,11 +1,12 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player/lazy'
 import {
-    Col, Row, Card, Avatar, Image, Typography, Carousel
+    Col, Row, Card, Avatar, Image, Typography, Carousel, Select
 } from 'antd'
 import {
     GetDetailsData,
+    GetProjectList
 } from '../../store/actionCreater'
 // import {
 //     EditOutlined,
@@ -15,19 +16,40 @@ import {
 
 const { Meta } = Card;
 const { Title } = Typography;
+const { Option } = Select;
 
 const OverviewCard = (props) => {
     const {
         detailsData,
         getDetailsData,
+        loginInformation,
+        getProjectList,
+        projectList
     } = props
+
+    const [selectedProject, setselectedProject]= useState();
 
     useEffect(() => {
         getDetailsData()
+        getProjectList()
     }, []);
 
+    const filterData = detailsData.filter((data) => {
+        if(loginInformation.user == true){
+            return data.Event.Device.Host.Project.project === loginInformation.project
+        }
+        else{
+            if(selectedProject){
+                return data.Event.Device.Host.Project.project === selectedProject
+            }else{
+                return data
+            }
+            
+        }
+    })
+
     const CardData = (
-        detailsData.map(c => {
+        filterData.map(c => {
             return(
                 <Col>
                     <Card
@@ -98,10 +120,29 @@ const OverviewCard = (props) => {
         </Row>
     )
 
+    const handleselect = (value) => {
+        //console.log(value)
+        setselectedProject(value)
+    }
+
   return (
     <Fragment>
         <div className="site-card-wrapper" style={{ margin: 6 }}>
-            <Title level={2} style={{ margin: 2 }}>共 {detailsData.length} 筆資料</Title>
+            <span>
+                <Title level={2} style={{ margin: 2 }}>共 {filterData.length} 筆資料</Title>
+            </span>
+            <span>
+                <Select 
+                placeholder='Please select project' 
+                hidden={!(loginInformation.developer || loginInformation.admin)}
+                onChange={handleselect}>
+                    {projectList.map((c) => {
+                        return(
+                            <Option value={`${c.project}`}>{`${c.displayName}`}</Option>
+                        )
+                    })}
+                </Select>
+            </span>
             {CardRow}
         </div>
     </Fragment>
@@ -113,6 +154,7 @@ const mapStateToProps = (state) => {
     return {
       loginInformation: state.loginInformation,
       detailsData: state.detailsData,
+      projectList: state.projectList,
     }
 }
 
@@ -123,6 +165,10 @@ const mapDispatchToProps = (dispatch) => {
           const action = GetDetailsData()
           dispatch(action)
         },
+        getProjectList() {
+            const action = GetProjectList()
+            dispatch(action)
+          },
     }
 }
 

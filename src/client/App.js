@@ -79,7 +79,8 @@ const App = (props) => {
             <Item key='/overview'
               hidden={
                 !(loginInformation.developer ||
-                  loginInformation.admin)
+                  loginInformation.admin||
+                  loginInformation.user)
               }
               icon={<TableOutlined />}
             >
