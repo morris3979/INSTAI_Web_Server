@@ -59,7 +59,7 @@ awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
     });
 });
 
-// AWS IOT MQTT publish message
+// AWS IOT MQTT publish message for OTA Device
 awsRouter.post("/iot/publish", async(req, res) => {
     const { topic, hostName, type } = req.query;
     const { deviceId, deviceName, command } = req.body;
@@ -81,6 +81,28 @@ awsRouter.post("/iot/publish", async(req, res) => {
     }
     try {
         return IotController.publish(topic, IoTDevice).pipe();
+    } catch (callback) {
+        res.send(callback);
+    }
+});
+
+// AWS IOT MQTT publish message for AI Server
+awsRouter.post("/iot/publish/AIServer", async(req, res) => {
+    const { command } = req.body;
+    const today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    const dateTime = date + ' ' + time;
+    const sendContent = {
+        command: command,
+    }
+    const toServer = {
+        server: 'AIServer',
+        request: {...sendContent},
+        dateTime
+    }
+    try {
+        return IotController.publish('AIServer', toServer).pipe();
     } catch (callback) {
         res.send(callback);
     }

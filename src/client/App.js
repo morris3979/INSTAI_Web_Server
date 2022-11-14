@@ -18,13 +18,15 @@ import {
   LogoutOutlined,
   ToolOutlined,
   FormOutlined,
-  UserOutlined
+  UserOutlined,
+  CoffeeOutlined
 } from '@ant-design/icons'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
 const OverviewPage = lazy(() => import('./page/overviewPage'))
 // const MapPage = lazy(() => import('./page/mapPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
+const TrainingPage = lazy(() => import('./page/trainingPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
@@ -76,18 +78,6 @@ const App = (props) => {
             >
               {`Hi ${loginInformation.username}!`}
             </Item>
-            <Item key='/overview'
-              hidden={
-                !(loginInformation.developer ||
-                  loginInformation.admin||
-                  loginInformation.user)
-              }
-              icon={<TableOutlined />}
-            >
-              <Link to='/overview'>
-                資料總覽
-              </Link>
-            </Item>
             {/* <Item key='/map'
               hidden={
                 !(loginInformation.developer ||
@@ -100,6 +90,18 @@ const App = (props) => {
                 地圖資訊
               </Link>
             </Item> */}
+            <Item key='/overview'
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin||
+                  loginInformation.user)
+              }
+              icon={<TableOutlined />}
+            >
+              <Link to='/overview'>
+                資料總覽
+              </Link>
+            </Item>
             <Item key='/label'
               hidden={
                 !(loginInformation.developer ||
@@ -110,6 +112,18 @@ const App = (props) => {
             >
               <Link to='/label'>
                 資料標記
+              </Link>
+            </Item>
+            <Item key='/training'
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin ||
+                  loginInformation.user)
+              }
+              icon={<CoffeeOutlined />}
+            >
+              <Link to='/training'>
+                資料訓練
               </Link>
             </Item>
             <SubMenu key='subreport' title='報表查詢'
@@ -240,9 +254,10 @@ const App = (props) => {
             <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path='/' element={<InitialPage />} />
-                <Route path='/overview' element={<OverviewPage />} />
                 {/* <Route path='/map' element={<MapPage />} /> */}
+                <Route path='/overview' element={<OverviewPage />} />
                 <Route path='/label' element={<LabelsPage />} />
+                <Route path='/training' element={<TrainingPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)
                   return (<Route path={`/report/${c.project}`} element={<ReportPage />} />)

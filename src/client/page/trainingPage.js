@@ -1,14 +1,14 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const StatusTable = lazy(() => import('../component/reportPage/statusTable'))
+const AIServer = lazy(() => import('../component/trainingPage/AIServer'))
 
-const StatusPage = () => {
+const TrainingPage = () => {
   return (
     <Suspense fallback={<Loading />}>
-      <StatusTable />
+      <AIServer />
     </Suspense>
   )
 }
 
-export default StatusPage
+export default TrainingPage

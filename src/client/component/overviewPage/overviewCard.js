@@ -2,7 +2,15 @@ import React, { useState, useEffect, Fragment } from "react";
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player/lazy'
 import {
-    Col, Row, Card, Avatar, Image, Typography, Carousel, Select
+    Col,
+    Row,
+    Card,
+    Avatar,
+    Image,
+    Typography,
+    Carousel,
+    Select,
+    Checkbox
 } from 'antd'
 import {
     GetDetailsData,
@@ -27,7 +35,7 @@ const OverviewCard = (props) => {
         projectList
     } = props
 
-    const [selectedProject, setselectedProject]= useState();
+    const [selectedProject, setSelectedProject]= useState();
 
     useEffect(() => {
         getDetailsData()
@@ -35,16 +43,15 @@ const OverviewCard = (props) => {
     }, []);
 
     const filterData = detailsData.filter((data) => {
-        if(loginInformation.user == true){
+        if (loginInformation.user == true) {
             return data.Event.Device.Host.Project.project === loginInformation.project
         }
         else{
-            if(selectedProject){
+            if (selectedProject) {
                 return data.Event.Device.Host.Project.project === selectedProject
-            }else{
+            } else {
                 return data
             }
-            
         }
     })
 
@@ -120,10 +127,25 @@ const OverviewCard = (props) => {
         </Row>
     )
 
-    const handleselect = (value) => {
+    const handleSelect = (value) => {
         //console.log(value)
-        setselectedProject(value)
+        setSelectedProject(value)
     }
+
+    const onChange_checkBox = (checkedValues) => {
+        console.log('checked = ', checkedValues);
+    };
+
+    const options = [
+        {
+          label: 'cleaned',
+          value: 'cleaned',
+        },
+        {
+          label: 'labeled',
+          value: 'labeled',
+        },
+    ];
 
   return (
     <Fragment>
@@ -132,16 +154,20 @@ const OverviewCard = (props) => {
                 <Title level={2} style={{ margin: 2 }}>共 {filterData.length} 筆資料</Title>
             </span>
             <span>
-                <Select 
-                placeholder='Please select project' 
-                hidden={!(loginInformation.developer || loginInformation.admin)}
-                onChange={handleselect}>
-                    {projectList.map((c) => {
-                        return(
-                            <Option value={`${c.project}`}>{`${c.displayName}`}</Option>
-                        )
-                    })}
+                <Select
+                    style={{ margin: 5 }}
+                    placeholder='Please select project'
+                    hidden={!(loginInformation.developer || loginInformation.admin)}
+                    onChange={handleSelect}
+                >{projectList.map((c) => {
+                    return( <Option value={`${c.project}`}>{`${c.displayName}`}</Option> )
+                })}
                 </Select>
+                <Checkbox.Group
+                    style={{ margin: 5 }}
+                    options={options}
+                    onChange={onChange_checkBox}
+                />
             </span>
             {CardRow}
         </div>
