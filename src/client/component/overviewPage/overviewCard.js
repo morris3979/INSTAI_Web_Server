@@ -10,7 +10,8 @@ import {
     Typography,
     Carousel,
     Select,
-    Checkbox
+    Checkbox,
+    DatePicker
 } from 'antd'
 import {
     GetDetailsData,
@@ -156,13 +157,14 @@ const OverviewCard = (props) => {
             <span>
                 <Select
                     style={{ margin: 5 }}
-                    placeholder='Please select project'
+                    placeholder='Please Select project'
                     hidden={!(loginInformation.developer || loginInformation.admin)}
                     onChange={handleSelect}
                 >{projectList.map((c) => {
                     return( <Option value={`${c.project}`}>{`${c.displayName}`}</Option> )
                 })}
                 </Select>
+                <DatePicker style={{ margin: 5 }}/>
                 <Checkbox.Group
                     style={{ margin: 5 }}
                     options={options}
@@ -188,13 +190,13 @@ const mapDispatchToProps = (dispatch) => {
 //dispatch指store.dispatch這個方法
     return {
         getDetailsData(){
-          const action = GetDetailsData()
-          dispatch(action)
+            const action = GetDetailsData()
+            dispatch(action)
         },
         getProjectList() {
             const action = GetProjectList()
             dispatch(action)
-          },
+        },
     }
 }
 

@@ -7,7 +7,8 @@ import {
   Image,
   Modal,
   Switch,
-  Space
+  Space,
+  DatePicker
 } from 'antd'
 import {
   DownloadOutlined,
@@ -333,7 +334,7 @@ const reportTable = (props) => {
     const downloadCsv = () => {
       downloadCsvFile(csvFilename)
     }
-  
+
     return (
       <Fragment>
         <Table
@@ -397,7 +398,7 @@ const reportTable = (props) => {
           width={800}
         >
           <div>
-          <Table 
+          <Table
           dataSource={csvData}
           pagination={{ position: ['bottomCenter'] }}>
             <Column
@@ -458,6 +459,7 @@ const reportTable = (props) => {
 
   return (
     <Fragment>
+      <DatePicker style={{ margin: 2 }}/>
       <Table
         expandable={{
           onExpand,

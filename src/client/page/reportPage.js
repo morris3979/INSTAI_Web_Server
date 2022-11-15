@@ -1,6 +1,8 @@
 import React, { lazy, Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Collapse } from 'antd'
+import {
+  Collapse
+} from 'antd'
 import {
     GetProjectList,
     GetHostList,
@@ -47,21 +49,21 @@ const reportPage = (props) => {
     return JSONData[0]
   }
 
-  const handlechange =(e) => {
+  const handleChange =(e) => {
     if (e){
-      whichDevice(e[e.length-1])  
+      whichDevice(e[e.length-1])
     }
   }
 
   return (
     <Fragment>
-      <Collapse accordion>
+      <Collapse accordion style={{ margin: 5 }}>
       {projectFilter(projectList).map((f) => {
         return(
             <Panel header={f.serialNumber+' '+'('+f.hostName+')'}>
               {HostFilter(hostList,f.serialNumber).map((g) => {
                 return(
-                  <Collapse onChange={handlechange} accordion>
+                  <Collapse onChange={handleChange} accordion>
                     <Panel header={g.deviceId +' '+'('+g.deviceName+')'} key={g.id}>
                       <ReportTable />
                     </Panel>

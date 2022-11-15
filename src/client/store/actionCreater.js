@@ -674,6 +674,27 @@ export const PostDeviceMQTT = (data) => {
   )
 }
 
+export const PostAIServerMQTT = (data) => {
+  const sendData = {
+    'command': data
+  }
+  return (
+    async () => {
+      try {
+        await axios.post('/api/aws/iot/publish/AIServer', sendData)
+        Modal.success(
+          {
+            title: '封包已傳送至 AIServer',
+            content: `傳送內容: ${data}`
+          }
+        )
+      } catch (error) {
+        message.error(`${error}`)
+      }
+    }
+  )
+}
+
 export const GetDetailsData = () => {
   return (
     async (dispatch) => {

@@ -102,7 +102,7 @@ awsRouter.post("/iot/publish/AIServer", async(req, res) => {
         dateTime
     }
     try {
-        return IotController.publish('AIServer', toServer).pipe();
+        return IotController.publish('toAIServer', toServer).pipe();
     } catch (callback) {
         res.send(callback);
     }

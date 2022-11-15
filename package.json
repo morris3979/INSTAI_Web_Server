@@ -51,6 +51,7 @@
         "reflect-metadata": "^0.1.13",
         "sequelize": "^6.25.5",
         "socket.io": "^4.5.3",
+        "socket.io-client": "^4.5.3",
         "web-vitals": "^3.0.4",
         "webpack-bundle-analyzer": "^4.7.0"
     },

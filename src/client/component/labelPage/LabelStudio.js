@@ -360,14 +360,14 @@ const LabelStudioWrapper = (props) => {
             />
             {sendImageUrlButton}
             <Upload
-              maxCount={10}
+              maxCount={8}
               multiple
               listType="picture-card"
               onPreview={handlePreview}
               onChange={handleUpload}
               customRequest={dummyRequest}
             >
-              {fileList.length < 10 ? uploadButton : null}
+              {fileList.length < 8 ? uploadButton : null}
             </Upload>
           </span>
           <span style={{width:'45%',float:'left',margin:5}}>
