@@ -92,9 +92,10 @@ const App = (props) => {
             </Item> */}
             <Item key='/overview'
               hidden={
-                !(loginInformation.developer ||
-                  loginInformation.admin||
-                  loginInformation.user)
+                !(loginInformation.developer
+                  // || loginInformation.admin
+                  // || loginInformation.user
+                  )
               }
               icon={<TableOutlined />}
             >
@@ -116,9 +117,10 @@ const App = (props) => {
             </Item>
             <Item key='/training'
               hidden={
-                !(loginInformation.developer ||
-                  loginInformation.admin ||
-                  loginInformation.user)
+                !(loginInformation.developer
+                  // || loginInformation.admin
+                  // || loginInformation.user
+                  )
               }
               icon={<CoffeeOutlined />}
             >
