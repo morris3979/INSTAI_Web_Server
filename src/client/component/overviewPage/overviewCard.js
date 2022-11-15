@@ -156,7 +156,7 @@ const OverviewCard = (props) => {
             </span>
             <span>
                 <Select
-                    style={{ margin: 5 }}
+                    style={{ margin: 5, width: '200px' }}
                     placeholder='Please Select project'
                     hidden={!(loginInformation.developer || loginInformation.admin)}
                     onChange={handleSelect}

@@ -22,7 +22,7 @@ const AIServer = (props) => {
 
     const [time, setTime]= useState('fetching clock ...');
     const [message, setMessage]= useState('fetching AI Server ...');
-    const [sendToAI, setSendToAI]= useState('hi AIServer ...');
+    const [sendToAI, setSendToAI]= useState('Hi AIServer ...');
 
     useEffect(() => {
         const socket = io('http://localhost:8080')
