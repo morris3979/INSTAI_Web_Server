@@ -25,7 +25,7 @@ const AIServer = (props) => {
     const [sendToAI, setSendToAI]= useState('Hi AIServer ...');
 
     useEffect(() => {
-        const SERVER = "http://127.0.0.1:8080";
+        const SERVER = "http://0.0.0.0:8080";
         const socket = io(SERVER)
         socket.on('connect', () => console.log(socket.id))
         socket.on('connect_error', () => {
