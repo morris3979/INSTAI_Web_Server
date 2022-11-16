@@ -8,13 +8,14 @@ exports.connect = (app) => {
     const socketIo = require('socket.io')
     const io = socketIo(httpServer, {
         cors: {
-          origin: 'http://localhost:3000'
+            origin: "*",
+            methods: ["GET", "POST"],
+            credentials: true
         }
     })
 
     io.on('connection', (socket) => {
         console.log('client connected: ', socket.id)
-
         socket.join('room')
         socket.on('disconnect', (reason) => {
           console.log(reason)
