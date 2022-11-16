@@ -110,6 +110,8 @@ const OverviewCard = (props) => {
                                 `filename: ${c.details}\n`+
                                 `image: ${c.image}\n`+
                                 `video: ${c.video}\n`+
+                                `json: ${c.json}\n`+
+                                `csv: ${c.csv}\n`+
                                 `rawData: ${c.rawData}\n`+
                                 `cleaned: ${c.cleaned}\n`+
                                 `labeled: ${c.labeled}\n`+

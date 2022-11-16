@@ -19,7 +19,8 @@ import {
   PlusOutlined,
   DeleteOutlined,
   EyeOutlined,
-  EyeInvisibleOutlined
+  EyeInvisibleOutlined,
+  RocketOutlined
 } from '@ant-design/icons'
 import {
   GetProjectTableData,
@@ -321,11 +322,11 @@ const LabelStudioWrapper = (props) => {
     //console.log(id)
     return(
       <Button
-      icon={<PlusOutlined />}
-      onClick={() => {
-        setUrlImage(data.details)
-      }}>
-      </Button>
+        icon={<RocketOutlined />}
+        onClick={() => {
+          setUrlImage(data.details)
+        }}
+      />
     )
   }
 
@@ -382,13 +383,13 @@ const LabelStudioWrapper = (props) => {
                   width='40%'
                 />
                 <Column
-                  title='Image Name'
+                  title='filename'
                   align="center"
                   dataIndex='details'
                   width='40%'
                 />
                 <Column
-                  title='Action'
+                  title='操作'
                   align="center"
                   render={onClick}
                   width='20%'

@@ -175,7 +175,7 @@ const AIServer = (props) => {
                     width='15%'
                 />
                 <Column
-                    title='FileName'
+                    title='filename'
                     dataIndex='details'
                     align='center'
                     width='40%'
