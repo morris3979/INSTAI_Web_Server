@@ -344,9 +344,9 @@ const LabelStudioWrapper = (props) => {
   // just a wrapper node to place LSF into
   return (
     <Fragment>
-      <Collapse accordion>
+      <Collapse accordion style={{ margin: 5 }}>
         <Panel header='Select Image'>
-          <span style={{ margin: 5,width:'45%',float:'left'}}>
+          <span style={{ margin: 5, width: '45%', float: 'left'}}>
             <Title level={3}>Upload Image</Title>
             <Input
               allowClear
@@ -370,7 +370,7 @@ const LabelStudioWrapper = (props) => {
               {fileList.length < 8 ? uploadButton : null}
             </Upload>
           </span>
-          <span style={{width:'45%',float:'left',margin:5}}>
+          <span style={{ width: '45%', float: 'left', margin: 5 }}>
             <Title level={3}>Cleaned Image</Title>
               <Table
                 dataSource={FilterData(loginInformation.project)}
@@ -397,7 +397,7 @@ const LabelStudioWrapper = (props) => {
           </span>
         </Panel>
       </Collapse>
-      <Collapse accordion>
+      <Collapse accordion style={{ margin: 5 }}>
         <Panel header='Label Image'>
           <div style={{ margin: 5 }}>
             <Title level={3}>Label Image</Title>

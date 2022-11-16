@@ -4,12 +4,11 @@ const async = require('async');
 const s3 = require("../../controllers/cloud service/aws.s3.controller");
 const IotController = require('../../controllers/cloud service/aws.iot.controller');
 
-// upload model file
-awsRouter.post("/s3/upload/:modelName/:modelVersion", (req, res) => {
-    const {modelName, modelVersion} = req.params;
+// upload labeled json file
+awsRouter.post("/s3/upload/json", (req, res) => {
     async.parallel([
         function(callback) {
-            s3.uploadToS3(modelName, modelVersion, req, res, 'file', callback);
+            s3.uploadToS3(req, res, 'file', callback);
         }], function(err, result){
         if (err) {
             return res.status(422).send(err);

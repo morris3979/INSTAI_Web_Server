@@ -18,7 +18,8 @@ const constantParams = {
     Bucket: process.env.AWS_BUCKET_NAME,
 }
 
-exports.uploadToS3 = async(modelName, modelVersion, req, res, key, callback) => {
+// upload labeled json file to s3
+exports.uploadToS3 = async(req, res, key, callback) => {
     const upload = multer({
         storage: multerS3({
             s3: s3,
@@ -28,7 +29,7 @@ exports.uploadToS3 = async(modelName, modelVersion, req, res, key, callback) => 
                 cb(null, {fieldName: file.fieldname});
             },
             key: (req, file, cb) => {
-                cb(null, 'model' + '/' + `${modelName}_${modelVersion}.bin`); // file.originalname
+                cb(null, 'json' + '/' + file.originalname); // file.originalname
             }
         })
     });
@@ -42,7 +43,7 @@ exports.uploadToS3 = async(modelName, modelVersion, req, res, key, callback) => 
     });
 };
 
-//download file from s3 bucket
+// download file from s3 bucket
 exports.getFileFromS3 = (folder, key) => {
     const downloadParams = {
         Key: folder + '/' + key,
@@ -59,7 +60,7 @@ exports.listObject = () => {
     return s3.listObjects(params).promise();
 }
 
-//delete file from s3 bucket
+// delete file from s3 bucket
 exports.deleteFileFromS3 = (folder, key, next) => {
     const deleteParams = {
         Key: folder + '/' + key,

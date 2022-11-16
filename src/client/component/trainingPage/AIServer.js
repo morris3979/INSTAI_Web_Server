@@ -23,6 +23,42 @@ import { io } from 'socket.io-client'
 const { Title } = Typography
 const { Column } = Table
 
+const checkLabeled = (text) => {
+    if (text.labeled == true) {
+        return (
+            <CheckOutlined />
+        )
+    } else {
+        return (
+            <CloseOutlined />
+        )
+    }
+}
+
+const checkImage = (text) => {
+    if (text.image == true) {
+        return (
+            <CheckOutlined />
+        )
+    } else {
+        return (
+            <CloseOutlined />
+        )
+    }
+}
+
+const checkJson = (text) => {
+    if (text.json == true) {
+        return (
+            <CheckOutlined />
+        )
+    } else {
+        return (
+            <CloseOutlined />
+        )
+    }
+}
+
 const AIServer = (props) => {
     const {
         loginInformation,
@@ -80,57 +116,29 @@ const AIServer = (props) => {
           return d.Details
         })
         const DataArray = [].concat(...FilterDetails);
-        const EachDetailData = DataArray.filter((e) => {
+        const EachDetailsData = DataArray.filter((e) => {
           return (
             loginInformation.user == true?
             e.details.slice(0,8) == value:
             e.details.slice(0,8)
           )
         })
-        const CleanedData = EachDetailData.filter((data) => {
+        const labeledData = EachDetailsData.filter((data) => {
           return data.labeled == '1'
         })
-        return CleanedData
+        return labeledData
     }
 
-    const checkLabeled = (text) => {
-        if (text.labeled == true) {
-            return (
-                <CheckOutlined />
+    const sendOnlyData = (c) => {
+        if ((c.labeled == '1') && (c.image == '1') && (c.json == '1')) {
+            return(
+                <Button type="primary" icon={<SendOutlined />} />
             )
         } else {
-            return (
-                <CloseOutlined />
+            return(
+                <Button type="primary" disabled icon={<SendOutlined />} />
             )
         }
-    }
-
-    const checkImage = (text) => {
-        if (text.labeled == true) {
-            return (
-                <CheckOutlined />
-            )
-        } else {
-            return (
-                <CloseOutlined />
-            )
-        }
-    }
-
-    const checkJson = (text) => {
-        if (text.labeled == true) {
-            return (
-                <CheckOutlined />
-            )
-        } else {
-            return (
-                <CloseOutlined />
-            )
-        }
-    }
-
-    const sendOnlyData = (text) => {
-        return(<Button type="primary" icon={<SendOutlined />} />)
     }
 
     return (

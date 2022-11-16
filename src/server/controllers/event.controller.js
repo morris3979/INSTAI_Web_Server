@@ -10,7 +10,7 @@ exports.findAll = (req, res) => {
             attributes:['id', 'deviceId']
         }, {
             model: db.Details,
-            attributes:['id', 'details', 'image', 'video', 'csv', 'rawData', 'cleaned', 'labeled', 'trained']
+            attributes:['id', 'details', 'image', 'video', 'csv', 'json', 'rawData', 'cleaned', 'labeled', 'trained']
         }],
         order: [
           ['id', 'DESC'],
@@ -41,7 +41,7 @@ exports.findByDevice = (req, res) => {
             attributes:['id', 'deviceId']
         }, {
             model: db.Details,
-            attributes:['id', 'details', 'image', 'video', 'csv', 'rawData', 'cleaned', 'labeled', 'trained']
+            attributes:['id', 'details', 'image', 'video', 'csv', 'json', 'rawData', 'cleaned', 'labeled', 'trained']
         }],
         order: [
           ['id', 'DESC'],
