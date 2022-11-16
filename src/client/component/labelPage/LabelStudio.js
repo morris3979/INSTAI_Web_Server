@@ -137,7 +137,7 @@ const LabelStudioWrapper = (props) => {
               );
             annotationArr.push(
               `{
-                  "category_id": ${categoryId},
+                  "category_id": ${categoryId+1},
                   "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
                 }`
             );
@@ -173,7 +173,7 @@ const LabelStudioWrapper = (props) => {
               );
             annotationArr.push(
               `{
-                  "category_id": ${categoryId},
+                  "category_id": ${categoryId+1},
                   "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
                 }`
             );
