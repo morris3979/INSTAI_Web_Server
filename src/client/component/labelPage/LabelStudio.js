@@ -374,7 +374,7 @@ const LabelStudioWrapper = (props) => {
             <Title level={3}>Cleaned Image</Title>
               <Table
                 dataSource={FilterData(loginInformation.project)}
-                pagination={{ position: ['bottomCenter'] ,pageSize: 1 }}>
+                pagination={{ position: ['bottomCenter'], pageSize: 1 }}>
                 <Column
                   title='Image'
                   align="center"
