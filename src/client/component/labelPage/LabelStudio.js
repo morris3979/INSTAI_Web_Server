@@ -11,7 +11,8 @@ import {
   Typography,
   Collapse,
   Table,
-  Image
+  Image,
+  message
 } from 'antd'
 import {
   BugOutlined,
@@ -293,8 +294,12 @@ const LabelStudioWrapper = (props) => {
   }
 
   const onAddLabel = () => {
-    const label = `<Label value="${labelRef.current.input.value}"/>`
-    setAdditionalLabels((value) => [ ...value, label ]);
+    if (labelRef.current.input.value != '') {
+      const label = `<Label value="${labelRef.current.input.value}"/>`
+      setAdditionalLabels((value) => [ ...value, label ]);
+    } else {
+      message.warning('Input Label Name is NULL')
+    }
   }
 
   const onReset = () => {
