@@ -20,23 +20,26 @@ import {
   DeleteOutlined,
   EyeOutlined,
   EyeInvisibleOutlined,
-  RocketOutlined
+  RocketOutlined,
+  UploadOutlined
 } from '@ant-design/icons'
 import {
   GetProjectTableData,
   GetEventList,
+  UploadJsonFile
 } from '../../store/actionCreater'
 
 const { Title } = Typography;
 const { Panel } = Collapse;
 const { Column } = Table;
-const getBase64 = (file) =>
+const getBase64 = (file) => {
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
-  });
+  })
+}
 
 const LabelStudioWrapper = (props) => {
   // we need a reference to a DOM node here so LSF knows where to render
@@ -59,7 +62,8 @@ const LabelStudioWrapper = (props) => {
   const {
     loginInformation,
     eventList,
-    getEventList
+    getEventList,
+    uploadJsonFile
   } = props
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
@@ -208,7 +212,7 @@ const LabelStudioWrapper = (props) => {
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   }
 
-  const handleUpload = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleUploadImage = ({ fileList: newFileList }) => setFileList(newFileList);
 
   const dummyRequest = ({ onSuccess }) => {
     setTimeout(() => {
@@ -240,8 +244,8 @@ const LabelStudioWrapper = (props) => {
 
   const sendImageUrlButton = (
     !urlImage?
-    <Button icon={<EyeInvisibleOutlined />} disabled style={{ margin: 2 }} />:
-    <Button onClick={onAddImgUrl} icon={<EyeOutlined />} style={{ margin: 2 }} />
+    <Button icon={<EyeInvisibleOutlined />} disabled />:
+    <Button onClick={onAddImgUrl} icon={<EyeOutlined />} />
   )
 
   const downloadFile = ({ data, fileName, fileType }) => {
@@ -342,6 +346,11 @@ const LabelStudioWrapper = (props) => {
     )
   }
 
+  const handleUploadJson = async (file) => {
+    console.log('file: ', file)
+    uploadJsonFile(file)
+  }
+
   // just a wrapper node to place LSF into
   return (
     <Fragment>
@@ -355,21 +364,23 @@ const LabelStudioWrapper = (props) => {
               addonBefore="../S3/Image/"
               placeholder="Input Image Name ..."
               addonAfter=".jpg"
-              style={{ height: 30, width: '90%', margin: 2}}
+              style={{ height: 30, width: '90%'}}
               onChange={handleInput}
               value={ urlImage? urlImage: ''}
             />
             {sendImageUrlButton}
-            <Upload
-              maxCount={8}
-              multiple
-              listType="picture-card"
-              onPreview={handlePreview}
-              onChange={handleUpload}
-              customRequest={dummyRequest}
-            >
-              {fileList.length < 8 ? uploadButton : null}
-            </Upload>
+            <div style={{ marginTop: 3 }}>
+              <Upload
+                maxCount={8}
+                multiple
+                listType="picture-card"
+                onPreview={handlePreview}
+                onChange={handleUploadImage}
+                customRequest={dummyRequest}
+              >
+                {fileList.length < 8 ? uploadButton : null}
+              </Upload>
+            </div>
           </span>
           <span style={{ width: '45%', float: 'left', margin: 5 }}>
             <Title level={3}>Cleaned Image</Title>
@@ -413,7 +424,8 @@ const LabelStudioWrapper = (props) => {
               onClick={onAddLabel}
               style={{ margin: 2 }}
               icon={<PlusOutlined />}
-              >Add Label
+            >
+              Add Label
             </Button>
             <Popconfirm
               title='Clear all Labels?'
@@ -422,21 +434,37 @@ const LabelStudioWrapper = (props) => {
               <Button
                 style={{ margin: 2 }}
                 icon={<DeleteOutlined />}
-                >Delete Labels
+              >
+                Delete Labels
               </Button>
             </Popconfirm>
-            <Button
-              onClick={exportToJson}
-              style={{ margin: 2 }}
-              icon={<DownloadOutlined />}
-              >Download JSON
-            </Button>
             <Button
               onClick={crawler_onClick}
               style={{ margin: 2 }}
               icon={<BugOutlined />}
-              >View JSON
+            >
+              View JSON
             </Button>
+            {
+              json4Training?
+              <Button
+                onClick={exportToJson}
+                style={{ margin: 2 }}
+                icon={<DownloadOutlined />}
+              >
+                Download JSON
+              </Button>:
+              <Button
+                style={{ margin: 2 }}
+                icon={<DownloadOutlined />}
+                disabled
+              >
+                Download JSON
+              </Button>
+            }
+            <Upload onChange={handleUploadJson}>
+              <Button icon={<UploadOutlined />} disabled>Upload JSON</Button>
+            </Upload>
           </div>
         </Panel>
       </Collapse>
@@ -463,6 +491,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getEventList() {
       const action = GetEventList()
+      dispatch(action)
+    },
+    uploadJsonFile(file) {
+      const action = UploadJsonFile(file)
       dispatch(action)
     }
   }

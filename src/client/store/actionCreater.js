@@ -781,7 +781,6 @@ export const DownloadCsvFile = (csvName) => {
       try {
         const response = await axios.get(
           `/api/aws/s3/getFile/csv/${csvName}.csv`, //AWS
-          // `/api/aliyun/oss/getFile/image/${imageName}.jpg`, //Aliyun
           { responseType: 'blob' }
         )
         const url = window.URL.createObjectURL(new Blob([response.data]))
@@ -793,6 +792,21 @@ export const DownloadCsvFile = (csvName) => {
       } catch (error) {
         message.error(error)
       }
+    }
+  )
+}
+
+export const UploadJsonFile = (file) => {
+  return (
+    async () => {
+      let formData = new FormData();
+      return axios.post(
+        `/api/aws/s3/upload/json`, formData
+      ).then(response => {
+        // JSON responses are automatically parsed.
+      }).catch(e => {
+        this.errors.push(e);
+      });
     }
   )
 }

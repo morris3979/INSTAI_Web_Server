@@ -17,6 +17,7 @@ import {
     RobotOutlined,
     CheckOutlined,
     CloseOutlined,
+    MessageOutlined
 } from '@ant-design/icons'
 import { io } from 'socket.io-client'
 
@@ -67,7 +68,7 @@ const AIServer = (props) => {
     } = props;
 
     const [time, setTime]= useState('fetching clock ...');
-    const [message, setMessage]= useState('fetching AI Server ...');
+    const [message, setMessage]= useState('fetching AI Server message ...');
     const [sendToAI, setSendToAI]= useState('Hi AIServer ...');
 
     useEffect(() => {
@@ -161,7 +162,7 @@ const AIServer = (props) => {
                     onClick={() => { props.postAIServerMQTT(sendToAI) }}
                 />
             </Input.Group>
-            <Title level={4} style={{ margin: 8 }}>response: {message}</Title>
+            <Title level={4} style={{ margin: 8 }}><MessageOutlined /> {message}</Title>
             <Table
                 dataSource={FilterData(loginInformation.project)}
                 // loading={tableStatus}
