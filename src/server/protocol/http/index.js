@@ -4,6 +4,9 @@ exports.connect = (app) => {
     const http = require('http'); // nodejs http
     const httpPort = process.env.HTTP_PORT;
     const httpServer = http.createServer(app);
+    const db = require('../../database');
+    const Host = db.Host;
+    const Device = db.Device;
 
     const socketIo = require('socket.io')
     const io = socketIo(httpServer, {
@@ -35,24 +38,53 @@ exports.connect = (app) => {
         caPath: path.resolve(__dirname, '../../certs/AmazonRootCA1.pem'),
     });
 
-    device
-    .on('connect', () => {
-        console.log('=> Connecting to AWS IoT Core on Socket!');
-        io.to('room').emit('message', 'fetching AI Server ...')
-        device.subscribe('fromAIServer', (err) => {
-            if (err) console.log('AWS IoT Core ...err: ', err);
-            device
-            .on('message', async (topic, message) => {
-                const messageJson = JSON.parse(message.toString()).message;
-                const { server, response } = messageJson;
-                const { message: resMessage } = response;
+    const onMessage = () => {
+        device.on('message', async (topic, message) => {
+            const messageJson = JSON.parse(message.toString()).message;
+            const { server, serialNumber, hostName, response } = messageJson;
+            const { deviceId, deviceName, message: resMessage } = response;
 
-                console.log('message: ', messageJson)
-
+            if (server) {
                 if (server == 'AIServer') {
                     io.to('room').emit('message', resMessage)
                 }
-            })
+            } else if (serialNumber) {
+                const findSerialNumber = await Host.findOne({
+                    where: { serialNumber: serialNumber },
+                });
+                // update host (RaspberryPi) response
+                if ((!deviceName) && findSerialNumber && serialNumber) {
+                    Host.update({
+                        response: resMessage
+                    }, {
+                        where: { serialNumber: serialNumber }
+                    });
+                    // console.log(`Host (${serialNumber} - ${hostName}): `, resMessage);
+                }
+                // update device (PAG7681) message
+                if (deviceName && findSerialNumber && serialNumber) {
+                    Device.update({
+                        message: resMessage
+                    }, {
+                        where: { deviceName: deviceName }
+                    });
+                    // console.log(`Device (${deviceId} - ${deviceName}): `, resMessage);
+                }
+            }
+            // console.log('message: ', messageJson)
+        })
+    }
+
+    device.on('connect', () => {
+        console.log('=> Connecting to AWS IoT Core!');
+        io.to('room').emit('message', 'fetching AI Server ...')
+        device.subscribe('fromAIServer', async (err) => {
+            if (err) console.log('AWS IoT Core ...err: ', err);
+            await onMessage();
+        })
+        device.subscribe('lobby', async (err) => {
+            if (err) console.log('AWS IoT Core ...err: ', err);
+            await onMessage();
         })
     });
 

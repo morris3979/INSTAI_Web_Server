@@ -14,7 +14,6 @@ async function app() {
     const apiRouter = require('./routes/index'); // db routes
     const pageRouter = require('./routes/api/page.routes'); // page routes
     const db = require('./database');
-    const awsIot = require('./controllers/cloud service/aws.iot.controller');
     // const tcp = require('./protocol/tcp/index');
     const http = require('./protocol/http/index');
     const https = require('./protocol/https/index');
@@ -47,7 +46,6 @@ async function app() {
     });
     require('events').defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
-    awsIot.receive();
     // tcp.connect();
     http.connect(app);
     https.connect(app);

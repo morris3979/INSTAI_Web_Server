@@ -41,6 +41,10 @@ const OverviewCard = (props) => {
     useEffect(() => {
         getDetailsData()
         getProjectList()
+        const interval = window.setInterval(() => {
+            location.reload()
+        }, 20000)
+        return () => window.clearInterval(interval);
     }, []);
 
     const filterData = detailsData.filter((data) => {
