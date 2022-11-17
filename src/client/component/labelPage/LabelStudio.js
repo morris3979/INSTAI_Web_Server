@@ -298,7 +298,7 @@ const LabelStudioWrapper = (props) => {
       const label = `<Label value="${labelRef.current.input.value}"/>`
       setAdditionalLabels((value) => [ ...value, label ]);
     } else {
-      message.warning('Input Label Name is NULL')
+      message.warning('Input Label Name cannot be empty !')
     }
   }
 
