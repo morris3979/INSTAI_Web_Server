@@ -109,6 +109,7 @@ const reportTable = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [csvData, setCsvData] = useState([])
   const [csvFilename, setCsvFilename] = useState()
+  const [selectedDate, setSelectedDate]= useState();
 
   const download = (data) => {
     return (
@@ -229,7 +230,17 @@ const reportTable = (props) => {
     const convertedData = data.filter((c) => {
       return c.DeviceId == id
     })
-    return convertedData
+    const DateFilter = convertedData.filter((data) => {
+      if(selectedDate){
+          return data.eventTime.slice(0,10) === selectedDate
+          // console.log(data.createdAt.slice(0,10))
+      }
+      else{
+          return data
+          // console.log(data.createdAt.slice(0,10))
+      }
+  })
+    return DateFilter
   }
 
   eventList.forEach((array) => {
@@ -459,7 +470,12 @@ const reportTable = (props) => {
 
   return (
     <Fragment>
-      <DatePicker style={{ margin: 2 }}/>
+      <DatePicker 
+        style={{ margin: 2 }}
+        onChange={(date, dateString) => {
+          // console.log(dateString);
+          setSelectedDate(dateString)
+        }}/>
       <Table
         expandable={{
           onExpand,
