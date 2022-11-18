@@ -37,6 +37,7 @@ const OverviewCard = (props) => {
     } = props
 
     const [selectedProject, setSelectedProject]= useState();
+    const [selectedDate, setSelectedDate]= useState();
 
     useEffect(() => {
         getDetailsData()
@@ -60,8 +61,19 @@ const OverviewCard = (props) => {
         }
     })
 
+    const DateFilter = filterData.filter((data) => {
+        if(selectedDate){
+            return data.createdAt.slice(0,10) === selectedDate
+            // console.log(data.createdAt.slice(0,10))
+        }
+        else{
+            return data
+            // console.log(data.createdAt.slice(0,10))
+        }
+    })
+
     const CardData = (
-        filterData.map(c => {
+        DateFilter.map(c => {
             return(
                 <Col>
                     <Card
@@ -158,7 +170,7 @@ const OverviewCard = (props) => {
     <Fragment>
         <div className="site-card-wrapper" style={{ margin: 6 }}>
             <span>
-                <Title level={2} style={{ margin: 2 }}>共 {filterData.length} 筆資料</Title>
+                <Title level={2} style={{ margin: 2 }}>共 {DateFilter.length} 筆資料</Title>
             </span>
             <span>
                 <Select
@@ -170,7 +182,12 @@ const OverviewCard = (props) => {
                     return( <Option value={`${c.project}`}>{`${c.displayName}`}</Option> )
                 })}
                 </Select>
-                <DatePicker style={{ margin: 5 }}/>
+                <DatePicker 
+                    style={{ margin: 5 }}
+                    onChange={(date, dateString) => {
+                        // console.log(dateString);
+                        setSelectedDate(dateString)
+                      }}/>
                 <Checkbox.Group
                     style={{ margin: 5 }}
                     options={options}
