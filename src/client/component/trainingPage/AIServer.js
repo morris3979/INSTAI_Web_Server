@@ -70,6 +70,7 @@ const AIServer = (props) => {
     const [time, setTime]= useState('fetching clock ...');
     const [message, setMessage]= useState('fetching AI Server message ...');
     const [sendToAI, setSendToAI]= useState('Hi AIServer ...');
+    const [selectedRowKeys, setSelectedRowKeys]= useState([]);
 
     useEffect(() => {
         getEventList()
@@ -95,7 +96,15 @@ const AIServer = (props) => {
         setSendToAI(e.target.value)
     }
 
-    const rowSelection = {};
+    const onSelectChange = (newSelectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    }
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange
+    }
 
     const findImageByDetail = (text) => {
         return (
@@ -164,9 +173,8 @@ const AIServer = (props) => {
             </Input.Group>
             <Title level={4} style={{ margin: 8 }}><MessageOutlined /> {message}</Title>
             <Table
-                dataSource={FilterData(loginInformation.project)}
-                // loading={tableStatus}
                 style={{ margin: 8 }}
+                dataSource={FilterData(loginInformation.project)}
                 rowSelection={rowSelection}
             >
                 <Column

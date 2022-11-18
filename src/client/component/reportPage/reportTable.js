@@ -209,8 +209,6 @@ const reportTable = (props) => {
     onChange: onSelectChange,
   };
 
-  const hasSelected = selectedRowKeys.length > 0;
-
   const eventData1 = (text) => {
     let string = '';
     string = text.replace('T',' ').replace('.000Z','')
