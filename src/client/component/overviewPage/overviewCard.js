@@ -43,7 +43,7 @@ const OverviewCard = (props) => {
         getProjectList()
         const interval = window.setInterval(() => {
             location.reload()
-        }, 20000)
+        }, 30*1000)
         return () => window.clearInterval(interval);
     }, []);
 
