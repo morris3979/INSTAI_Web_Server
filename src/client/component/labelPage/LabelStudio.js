@@ -22,7 +22,9 @@ import {
   EyeOutlined,
   EyeInvisibleOutlined,
   RocketOutlined,
-  UploadOutlined
+  UploadOutlined,
+  CheckOutlined,
+  CloseOutlined
 } from '@ant-design/icons'
 import {
   GetProjectTableData,
@@ -40,6 +42,30 @@ const getBase64 = (file) => {
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   })
+}
+
+const checkLabeled = (text) => {
+  if (text.labeled == true) {
+      return (
+          <CheckOutlined />
+      )
+  } else {
+      return (
+          <CloseOutlined />
+      )
+  }
+}
+
+const checkImage = (text) => {
+  if (text.image == true) {
+      return (
+          <CheckOutlined />
+      )
+  } else {
+      return (
+          <CloseOutlined />
+      )
+  }
 }
 
 const LabelStudioWrapper = (props) => {
@@ -328,7 +354,6 @@ const LabelStudioWrapper = (props) => {
   }
 
   const onClick = (data) => {
-    //console.log(id)
     return(
       <Button
         icon={<RocketOutlined />}
@@ -337,6 +362,101 @@ const LabelStudioWrapper = (props) => {
         }}
       />
     )
+  }
+
+  const handleUploadJson = async (file) => {
+    console.log('file: ', file)
+    // uploadJsonFile(file)
+  }
+
+  const checkJson = (text) => {
+    if (text.json == true) {
+      if (text.labeled == true) {
+        return (
+          <Fragment>
+            <CheckOutlined />
+            <Upload onChange={handleUploadJson}>
+              <Button
+                style={{ margin: 2 }}
+                type="primary"
+                icon={<UploadOutlined />}
+                disabled
+              >
+                Upload JSON
+              </Button>
+            </Upload>
+          </Fragment>
+        )
+      } else {
+        return (
+          <Fragment>
+            <CheckOutlined />
+            <Upload onChange={handleUploadJson}>
+              <Button
+                style={{ margin: 2 }}
+                type="primary"
+                icon={<UploadOutlined />}
+              >
+                Upload JSON
+              </Button>
+            </Upload>
+          </Fragment>
+        )
+      }
+    } else {
+      return (
+        <Fragment>
+          <CloseOutlined />
+          <Upload onChange={handleUploadJson}>
+            <Button
+              style={{ margin: 2 }}
+              type="primary"
+              icon={<UploadOutlined />}
+            >
+              Upload JSON
+            </Button>
+          </Upload>
+        </Fragment>
+      )
+    }
+  }
+  // const saveBtn = (c) => {
+  //   if (c.labeled == '1' || c.json == '1') {
+  //     return(
+  //       <Fragment>
+  //         <Upload onChange={handleUploadJson}>
+  //           <Button
+  //             style={{ margin: 2 }}
+  //             type="primary"
+  //             icon={<UploadOutlined />}
+  //             disabled
+  //           >
+  //             Upload JSON
+  //           </Button>
+  //         </Upload>
+  //         <Button style={{ margin: 2 }} type="primary">save</Button>
+  //       </Fragment>
+  //     )
+  //   } else {
+  //     return(
+  //       <Fragment>
+  //         <Upload onChange={handleUploadJson}>
+  //           <Button
+  //             style={{ margin: 2 }}
+  //             type="primary"
+  //             icon={<UploadOutlined />}
+  //           >
+  //             Upload JSON
+  //           </Button>
+  //         </Upload>
+  //         <Button style={{ margin: 2 }} type="primary">save</Button>
+  //       </Fragment>
+  //     )
+  //   }
+  // }
+
+  const saveBtn = () => {
+    return(<Button type="primary">save</Button>)
   }
 
   const findImageByDetail = (text) => {
@@ -351,43 +471,12 @@ const LabelStudioWrapper = (props) => {
     )
   }
 
-  const handleUploadJson = async (file) => {
-    console.log('file: ', file)
-    uploadJsonFile(file)
-  }
-
   // just a wrapper node to place LSF into
   return (
     <Fragment>
       <Collapse accordion style={{ margin: 5 }}>
         <Panel header='Select Image'>
-          <span style={{ margin: 5, width: '45%', float: 'left'}}>
-            <Title level={3}>Upload Image</Title>
-            <Input
-              allowClear
-              type="text"
-              addonBefore="../S3/Image/"
-              placeholder="Input Image Name ..."
-              addonAfter=".jpg"
-              style={{ height: 30, width: '90%'}}
-              onChange={handleInput}
-              value={ urlImage? urlImage: ''}
-            />
-            {sendImageUrlButton}
-            <div style={{ marginTop: 3 }}>
-              <Upload
-                maxCount={8}
-                multiple
-                listType="picture-card"
-                onPreview={handlePreview}
-                onChange={handleUploadImage}
-                customRequest={dummyRequest}
-              >
-                {fileList.length < 8 ? uploadButton : null}
-              </Upload>
-            </div>
-          </span>
-          <span style={{ width: '45%', float: 'left', margin: 5 }}>
+          <span style={{ width: '45%', float: 'left', margin: 4 }}>
             <Title level={3}>Cleaned Image</Title>
               <Table
                 dataSource={FilterData(loginInformation.project)}
@@ -412,67 +501,131 @@ const LabelStudioWrapper = (props) => {
                 />
               </Table>
           </span>
-        </Panel>
-      </Collapse>
-      <Collapse accordion style={{ margin: 5 }}>
-        <Panel header='Label Image'>
-          <div style={{ margin: 5 }}>
-            <Title level={3}>Label Image</Title>
+          <span style={{ width: '48%', float: 'right', margin: 3}}>
+            <Title level={3}>Upload Cleaned Image</Title>
             <Input
               allowClear
               type="text"
-              placeholder="Input Label Name ..."
-              style={{ height: 30, width: 180 }}
-              ref={labelRef}
+              addonBefore="../S3/Image/"
+              placeholder="Input Image Name ..."
+              addonAfter=".jpg"
+              style={{ height: 30, width: '90%'}}
+              onChange={handleInput}
+              value={ urlImage? urlImage: ''}
             />
-            <Button
-              onClick={onAddLabel}
-              style={{ margin: 2 }}
-              icon={<PlusOutlined />}
-            >
-              Add Label
-            </Button>
-            <Popconfirm
-              title='Clear all Labels?'
-              onConfirm={onReset}
-            >
-              <Button
-                style={{ margin: 2 }}
-                icon={<DeleteOutlined />}
+            {sendImageUrlButton}
+            <div style={{ marginTop: 3 }}>
+              <Upload
+                maxCount={8}
+                multiple
+                listType="picture-card"
+                onPreview={handlePreview}
+                onChange={handleUploadImage}
+                customRequest={dummyRequest}
               >
-                Delete Labels
-              </Button>
-            </Popconfirm>
-            <Button
-              onClick={crawler_onClick}
-              style={{ margin: 2 }}
-              icon={<BugOutlined />}
-            >
-              View JSON
-            </Button>
-            {
-              json4Training?
-              <Button
-                onClick={exportToJson}
-                style={{ margin: 2 }}
-                icon={<DownloadOutlined />}
-              >
-                Download JSON
-              </Button>:
-              <Button
-                style={{ margin: 2 }}
-                icon={<DownloadOutlined />}
-                disabled
-              >
-                Download JSON
-              </Button>
-            }
-            <Upload onChange={handleUploadJson}>
-              <Button icon={<UploadOutlined />} disabled>Upload JSON</Button>
-            </Upload>
-          </div>
+                {fileList.length < 8 ? uploadButton : null}
+              </Upload>
+            </div>
+          </span>
         </Panel>
       </Collapse>
+      <Collapse accordion style={{ margin: 5 }}>
+        <Panel header='Save Labeled Data'>
+          <Table
+            dataSource={FilterData(loginInformation.project)}
+            pagination={{ position: ['bottomCenter'], pageSize: 1 }}>
+            <Column
+              title='Image'
+              align="center"
+              render={findImageByDetail}
+              width='20%'
+            />
+            <Column
+              title='filename'
+              align="center"
+              dataIndex='details'
+              width='35%'
+            />
+            <Column
+                title='labeled'
+                render={checkLabeled}
+                align='center'
+                width='10%'
+            />
+            <Column
+                title='image'
+                render={checkImage}
+                align='center'
+                width='10%'
+            />
+            <Column
+              title='json'
+              render={checkJson}
+              align='center'
+              width='15%'
+            />
+            <Column
+              title='操作'
+              align="center"
+              render={saveBtn}
+              width='10%'
+            />
+          </Table>
+        </Panel>
+      </Collapse>
+      <div style={{ margin: 5 }}>
+        <Title level={3}>Label Image</Title>
+        <Input
+          allowClear
+          type="text"
+          placeholder="Input Label Name ..."
+          style={{ height: 30, width: 220 }}
+          ref={labelRef}
+        />
+        <Button
+          onClick={onAddLabel}
+          style={{ margin: 2 }}
+          icon={<PlusOutlined />}
+        >
+          Add Label
+        </Button>
+        <Popconfirm
+          title='Clear all Labels?'
+          onConfirm={onReset}
+        >
+          <Button
+            style={{ margin: 2 }}
+            icon={<DeleteOutlined />}
+          >
+            Delete Labels
+          </Button>
+        </Popconfirm>
+        <Button
+          onClick={crawler_onClick}
+          style={{ margin: 2 }}
+          icon={<BugOutlined />}
+        >
+          View JSON
+        </Button>
+        {
+          json4Training?
+          <Button
+            type="primary"
+            onClick={exportToJson}
+            style={{ margin: 2 }}
+            icon={<DownloadOutlined />}
+          >
+            Download JSON
+          </Button>:
+          <Button
+            style={{ margin: 2 }}
+            icon={<DownloadOutlined />}
+            disabled
+          >
+            Download JSON
+          </Button>
+        }
+      </div>
       <div style={{ margin: 5 }} ref={rootRef} />
     </Fragment>
   );
