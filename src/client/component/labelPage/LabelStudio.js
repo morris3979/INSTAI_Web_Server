@@ -420,40 +420,6 @@ const LabelStudioWrapper = (props) => {
       )
     }
   }
-  // const saveBtn = (c) => {
-  //   if (c.labeled == '1' || c.json == '1') {
-  //     return(
-  //       <Fragment>
-  //         <Upload onChange={handleUploadJson}>
-  //           <Button
-  //             style={{ margin: 2 }}
-  //             type="primary"
-  //             icon={<UploadOutlined />}
-  //             disabled
-  //           >
-  //             Upload JSON
-  //           </Button>
-  //         </Upload>
-  //         <Button style={{ margin: 2 }} type="primary">save</Button>
-  //       </Fragment>
-  //     )
-  //   } else {
-  //     return(
-  //       <Fragment>
-  //         <Upload onChange={handleUploadJson}>
-  //           <Button
-  //             style={{ margin: 2 }}
-  //             type="primary"
-  //             icon={<UploadOutlined />}
-  //           >
-  //             Upload JSON
-  //           </Button>
-  //         </Upload>
-  //         <Button style={{ margin: 2 }} type="primary">save</Button>
-  //       </Fragment>
-  //     )
-  //   }
-  // }
 
   const saveBtn = () => {
     return(<Button type="primary">save</Button>)
