@@ -12,7 +12,9 @@ import {
   Collapse,
   Table,
   Image,
-  message
+  message,
+  Switch,
+  Col
 } from 'antd'
 import {
   BugOutlined,
@@ -47,23 +49,30 @@ const getBase64 = (file) => {
 const checkLabeled = (text) => {
   if (text.labeled == true) {
       return (
-          <CheckOutlined />
+        <Fragment>
+          <Col><CheckOutlined /></Col>
+          <Col>
+            <Switch
+              style={{ margin: 3 }}
+              checkedChildren={<CheckOutlined />}
+              unCheckedChildren={<CloseOutlined />}
+              defaultChecked
+            />
+          </Col>
+        </Fragment>
       )
   } else {
       return (
-          <CloseOutlined />
-      )
-  }
-}
-
-const checkImage = (text) => {
-  if (text.image == true) {
-      return (
-          <CheckOutlined />
-      )
-  } else {
-      return (
-          <CloseOutlined />
+        <Fragment>
+          <Col><CloseOutlined /></Col>
+          <Col>
+            <Switch
+              style={{ margin: 3 }}
+              checkedChildren={<CheckOutlined />}
+              unCheckedChildren={<CloseOutlined />}
+            />
+          </Col>
+        </Fragment>
       )
   }
 }
@@ -375,31 +384,47 @@ const LabelStudioWrapper = (props) => {
         return (
           <Fragment>
             <CheckOutlined />
-            <Upload onChange={handleUploadJson}>
-              <Button
-                style={{ margin: 2 }}
-                type="primary"
-                icon={<UploadOutlined />}
-                disabled
-              >
-                Upload JSON
-              </Button>
-            </Upload>
+            <Col>
+              <Switch
+                style={{ margin: 3 }}
+                checkedChildren={<CheckOutlined />}
+                unCheckedChildren={<CloseOutlined />}
+                defaultChecked
+              />
+              <Upload onChange={handleUploadJson}>
+                <Button
+                  style={{ margin: 3 }}
+                  type="primary"
+                  icon={<UploadOutlined />}
+                  disabled
+                >
+                  Upload JSON
+                </Button>
+              </Upload>
+            </Col>
           </Fragment>
         )
       } else {
         return (
           <Fragment>
             <CheckOutlined />
-            <Upload onChange={handleUploadJson}>
-              <Button
-                style={{ margin: 2 }}
-                type="primary"
-                icon={<UploadOutlined />}
-              >
-                Upload JSON
-              </Button>
-            </Upload>
+            <Col>
+              <Switch
+                style={{ margin: 3 }}
+                checkedChildren={<CheckOutlined />}
+                unCheckedChildren={<CloseOutlined />}
+                defaultChecked
+              />
+              <Upload onChange={handleUploadJson}>
+                <Button
+                  style={{ margin: 3 }}
+                  type="primary"
+                  icon={<UploadOutlined />}
+                >
+                  Upload JSON
+                </Button>
+              </Upload>
+            </Col>
           </Fragment>
         )
       }
@@ -407,15 +432,22 @@ const LabelStudioWrapper = (props) => {
       return (
         <Fragment>
           <CloseOutlined />
-          <Upload onChange={handleUploadJson}>
-            <Button
-              style={{ margin: 2 }}
-              type="primary"
-              icon={<UploadOutlined />}
-            >
-              Upload JSON
-            </Button>
-          </Upload>
+          <Col>
+            <Switch
+              style={{ margin: 3 }}
+              checkedChildren={<CheckOutlined />}
+              unCheckedChildren={<CloseOutlined />}
+            />
+            <Upload onChange={handleUploadJson}>
+              <Button
+                style={{ margin: 3 }}
+                type="primary"
+                icon={<UploadOutlined />}
+              >
+                Upload JSON
+              </Button>
+            </Upload>
+          </Col>
         </Fragment>
       )
     }
@@ -519,16 +551,10 @@ const LabelStudioWrapper = (props) => {
                 width='10%'
             />
             <Column
-                title='image'
-                render={checkImage}
-                align='center'
-                width='10%'
-            />
-            <Column
               title='json'
               render={checkJson}
               align='center'
-              width='15%'
+              width='25%'
             />
             <Column
               title='操作'

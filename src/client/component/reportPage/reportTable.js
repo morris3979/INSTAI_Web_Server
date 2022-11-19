@@ -408,8 +408,8 @@ const reportTable = (props) => {
         >
           <div>
           <Table
-          dataSource={csvData}
-          pagination={{ position: ['bottomCenter'] }}>
+            dataSource={csvData}
+            pagination={{ position: ['bottomCenter'] }}>
             <Column
               title='index'
               dataIndex='index'

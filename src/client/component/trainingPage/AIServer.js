@@ -176,6 +176,7 @@ const AIServer = (props) => {
                 style={{ margin: 8 }}
                 dataSource={FilterData(loginInformation.project)}
                 rowSelection={rowSelection}
+                pagination={{ position: ['bottomCenter'], pageSize: 5 }}
             >
                 <Column
                     title='Image'
