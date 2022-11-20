@@ -19,7 +19,8 @@ import {
   ToolOutlined,
   FormOutlined,
   UserOutlined,
-  CoffeeOutlined
+  CoffeeOutlined,
+  LineChartOutlined
 } from '@ant-design/icons'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
@@ -27,6 +28,7 @@ const OverviewPage = lazy(() => import('./page/overviewPage'))
 // const MapPage = lazy(() => import('./page/mapPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
 const TrainingPage = lazy(() => import('./page/trainingPage'))
+const TrendPage = lazy(() => import('./page/trendPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
@@ -103,31 +105,6 @@ const App = (props) => {
                 資料總覽
               </Link>
             </Item>
-            <Item key='/label'
-              hidden={
-                !(loginInformation.developer ||
-                  loginInformation.admin ||
-                  loginInformation.user)
-              }
-              icon={<FormOutlined />}
-            >
-              <Link to='/label'>
-                資料標記
-              </Link>
-            </Item>
-            <Item key='/training'
-              hidden={
-                !(loginInformation.developer
-                  // || loginInformation.admin
-                  // || loginInformation.user
-                  )
-              }
-              icon={<CoffeeOutlined />}
-            >
-              <Link to='/training'>
-                資料訓練
-              </Link>
-            </Item>
             <SubMenu key='subreport' title='報表查詢'
               hidden={
                 !(loginInformation.developer ||
@@ -169,6 +146,44 @@ const App = (props) => {
                 )
               })}
             </SubMenu>
+            <Item key='/label'
+              hidden={
+                !(loginInformation.developer ||
+                  loginInformation.admin ||
+                  loginInformation.user)
+              }
+              icon={<FormOutlined />}
+            >
+              <Link to='/label'>
+                資料標記
+              </Link>
+            </Item>
+            <Item key='/training'
+              hidden={
+                !(loginInformation.developer
+                  // || loginInformation.admin
+                  // || loginInformation.user
+                  )
+              }
+              icon={<CoffeeOutlined />}
+            >
+              <Link to='/training'>
+                資料訓練
+              </Link>
+            </Item>
+            <Item key='/TrendChart'
+              hidden={
+                !(loginInformation.developer
+                  // || loginInformation.admin
+                  // || loginInformation.user
+                  )
+              }
+              icon={<LineChartOutlined />}
+            >
+              <Link to='/TrendChart'>
+                統計趨勢
+              </Link>
+            </Item>
             <SubMenu key='subset' title='配置設定'
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<SettingOutlined />}
@@ -260,6 +275,7 @@ const App = (props) => {
                 <Route path='/overview' element={<OverviewPage />} />
                 <Route path='/label' element={<LabelsPage />} />
                 <Route path='/training' element={<TrainingPage />} />
+                <Route path='/TrendChart' element={<TrendPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)
                   return (<Route path={`/report/${c.project}`} element={<ReportPage />} />)

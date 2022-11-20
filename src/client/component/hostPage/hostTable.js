@@ -9,7 +9,8 @@ import {
     Form,
     Input,
     Select,
-    Affix
+    Affix,
+    Tag
 } from 'antd'
 import {
     EditOutlined,
@@ -59,7 +60,7 @@ class HostTable extends Component {
           <Column title='操作' render={this.buttonGroup} fixed='left' align='center' width={150} />
           <Column title='主機代號' dataIndex='serialNumber' align='center' />
           <Column title='主機名稱' dataIndex='hostName' align='center' width={180} />
-          <Column title='主機類型' dataIndex='type' align='center' width={180} />
+          <Column title='主機類型' dataIndex='type' align='center' width={180} render={(data) => {return(<Tag>{data}</Tag>)}} />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='response' align='center' />
           <Column title='所屬專案' dataIndex={['Project', 'displayName']} align='center' width={150} />

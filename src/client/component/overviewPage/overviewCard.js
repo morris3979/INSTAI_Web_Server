@@ -38,7 +38,7 @@ const OverviewCard = (props) => {
 
     const [selectedProject, setSelectedProject]= useState();
     const [selectedDate, setSelectedDate]= useState();
-    const [checkValues, setcheckedValues]= useState([])
+    const [checkValues, setCheckedValues]= useState([])
 
     useEffect(() => {
         getDetailsData()
@@ -62,12 +62,12 @@ const OverviewCard = (props) => {
         }
     })
 
-    const iscleaned = (element) => element == 'cleaned';
-    const islabeled = (element) => element == 'labeled';
+    const isCleaned = (element) => element == 'cleaned';
+    const isLabeled = (element) => element == 'labeled';
     const DateFilter = filterData.filter((data) => {
         if(selectedDate){
             return data.createdAt.slice(0,10) === selectedDate
-                // console.log(data.createdAt.slice(0,10))
+            // console.log(data.createdAt.slice(0,10))
         }
         else{
             return data
@@ -75,13 +75,13 @@ const OverviewCard = (props) => {
         }
     })
     const checkValueFilter = DateFilter.filter((data) => {
-        if((checkValues.findIndex(iscleaned)!=-1)&&(checkValues.findIndex(islabeled)!=-1)){
+        if((checkValues.findIndex(isCleaned)!=-1)&&(checkValues.findIndex(isLabeled)!=-1)){
             return data.cleaned == true && data.labeled == true
         }
-        else if(checkValues.findIndex(iscleaned)!=-1){
+        else if(checkValues.findIndex(isCleaned)!=-1){
             return data.cleaned == true
         }
-        else if(checkValues.findIndex(islabeled)!=-1){
+        else if(checkValues.findIndex(isLabeled)!=-1){
             return data.labeled == true
         }
         else{
@@ -169,8 +169,8 @@ const OverviewCard = (props) => {
     }
 
     const onChange_checkBox = (checkedValues) => {
-        console.log('checked = ', checkedValues);
-        setcheckedValues(checkedValues)
+        // console.log('checked ', checkedValues);
+        setCheckedValues(checkedValues)
     };
 
     const options = [
@@ -189,23 +189,25 @@ const OverviewCard = (props) => {
         <div className="site-card-wrapper" style={{ margin: 6 }}>
             <span>
                 <Title level={2} style={{ margin: 2 }}>共 {checkValueFilter.length} 筆資料</Title>
-            </span> 
+            </span>
             <span>
                 <Select
                     style={{ margin: 5, width: '200px' }}
                     placeholder='Please Select project'
                     hidden={!(loginInformation.developer || loginInformation.admin)}
                     onChange={handleSelect}
-                >{projectList.map((c) => {
-                    return( <Option value={`${c.project}`}>{`${c.displayName}`}</Option> )
-                })}
+                >
+                    {projectList.map((c) => {
+                        return( <Option value={`${c.project}`}>{`${c.displayName}`}</Option> )
+                    })}
                 </Select>
-                <DatePicker 
+                <DatePicker
                     style={{ margin: 5 }}
                     onChange={(date, dateString) => {
                         // console.log(dateString);
                         setSelectedDate(dateString)
-                      }}/>
+                    }}
+                />
                 <Checkbox.Group
                     style={{ margin: 5 }}
                     options={options}

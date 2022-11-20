@@ -15,7 +15,8 @@ import {
     Row,
     Col,
     InputNumber,
-    Slider
+    Slider,
+    Tag
 } from 'antd'
 import {
     EditOutlined,
@@ -75,7 +76,7 @@ class DeviceTable extends Component {
           <Column title='操作' render={this.buttonGroup} fixed='left' align='center' width={150} />
           <Column title='設備代號' dataIndex='deviceId' align='center' width={150} />
           <Column title='設備名稱' dataIndex='deviceName' align='center' width={150} />
-          <Column title='設備描述' dataIndex='description' align='center' width={150} />
+          <Column title='設備描述' dataIndex='description' align='center' width={150} render={(data) => {return(<Tag>{data}</Tag>)}} />
           <Column title='指令' dataIndex='command' align='center' />
           <Column title='訊息' dataIndex='message' align='center' />
           <ColumnGroup title="模型更新紀錄">
