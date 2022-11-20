@@ -26,7 +26,8 @@ import {
   RocketOutlined,
   UploadOutlined,
   CheckOutlined,
-  CloseOutlined
+  CloseOutlined,
+  SaveOutlined
 } from '@ant-design/icons'
 import {
   GetProjectTableData,
@@ -37,45 +38,6 @@ import {
 const { Title } = Typography;
 const { Panel } = Collapse;
 const { Column } = Table;
-const getBase64 = (file) => {
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  })
-}
-
-const checkLabeled = (text) => {
-  if (text.labeled == true) {
-      return (
-        <Fragment>
-          <Col><CheckOutlined /></Col>
-          <Col>
-            <Switch
-              style={{ margin: 3 }}
-              checkedChildren={<CheckOutlined />}
-              unCheckedChildren={<CloseOutlined />}
-              defaultChecked
-            />
-          </Col>
-        </Fragment>
-      )
-  } else {
-      return (
-        <Fragment>
-          <Col><CloseOutlined /></Col>
-          <Col>
-            <Switch
-              style={{ margin: 3 }}
-              checkedChildren={<CheckOutlined />}
-              unCheckedChildren={<CloseOutlined />}
-            />
-          </Col>
-        </Fragment>
-      )
-  }
-}
 
 const LabelStudioWrapper = (props) => {
   // we need a reference to a DOM node here so LSF knows where to render
@@ -84,15 +46,13 @@ const LabelStudioWrapper = (props) => {
   const lsfRef = useRef();
   const labelRef = useRef(true);
 
-  const [additionalLabels, setAdditionalLabels] = useState([]);
-
   const annotationArr = [];
   const [path, setPath] = useState();
   const [json4Training, setJson4Training] = useState();
+  const [additionalLabels, setAdditionalLabels] = useState([]);
 
   const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([]);
   const [urlImage, setUrlImage] = useState();
 
   const {
@@ -239,36 +199,6 @@ const LabelStudioWrapper = (props) => {
     }
   }, [ path, previewImage, previewTitle, additionalLabels ]);
 
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-
-    setPreviewImage(file.url || file.preview);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  }
-
-  const handleUploadImage = ({ fileList: newFileList }) => setFileList(newFileList);
-
-  const dummyRequest = ({ onSuccess }) => {
-    setTimeout(() => {
-      onSuccess("ok");
-    }, 0);
-  }
-
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  )
-
   const handleInput = (e) => {
     setUrlImage(e.target.value);
   }
@@ -362,99 +292,130 @@ const LabelStudioWrapper = (props) => {
     return CleanedData
   }
 
-  const onClick = (data) => {
-    return(
-      <Button
-        icon={<RocketOutlined />}
-        onClick={() => {
-          setUrlImage(data.details)
-        }}
-      />
-    )
-  }
-
   const handleUploadJson = async (file) => {
     console.log('file: ', file)
     // uploadJsonFile(file)
   }
 
+  const checkCleaned = (text) => {
+    if (text.cleaned == true) {
+        return (
+          <CheckOutlined />
+        )
+    } else {
+        return (
+          <CloseOutlined />
+        )
+    }
+  }
+
+  const checkLabeled = (text) => {
+    if (text.labeled == true) {
+        return (
+          <Fragment>
+            {/* <Col><CheckOutlined /></Col> */}
+            <Col>
+              <Switch
+                style={{ margin: 3 }}
+                checkedChildren={<CheckOutlined />}
+                unCheckedChildren={<CloseOutlined />}
+                defaultChecked
+                onChange={(click) => {console.log('click T', click)}}
+              />
+            </Col>
+          </Fragment>
+        )
+    } else {
+        return (
+          <Fragment>
+            {/* <Col><CloseOutlined /></Col> */}
+            <Col>
+              <Switch
+                style={{ margin: 3 }}
+                checkedChildren={<CheckOutlined />}
+                unCheckedChildren={<CloseOutlined />}
+                onChange={(click) => {console.log('click F', click)}}
+              />
+            </Col>
+          </Fragment>
+        )
+    }
+  }
+
   const checkJson = (text) => {
     if (text.json == true) {
-      if (text.labeled == true) {
-        return (
-          <Fragment>
-            <CheckOutlined />
-            <Col>
-              <Switch
-                style={{ margin: 3 }}
-                checkedChildren={<CheckOutlined />}
-                unCheckedChildren={<CloseOutlined />}
-                defaultChecked
-              />
-              <Upload onChange={handleUploadJson}>
-                <Button
-                  style={{ margin: 3 }}
-                  type="primary"
-                  icon={<UploadOutlined />}
-                  disabled
-                >
-                  Upload JSON
-                </Button>
-              </Upload>
-            </Col>
-          </Fragment>
-        )
-      } else {
-        return (
-          <Fragment>
-            <CheckOutlined />
-            <Col>
-              <Switch
-                style={{ margin: 3 }}
-                checkedChildren={<CheckOutlined />}
-                unCheckedChildren={<CloseOutlined />}
-                defaultChecked
-              />
-              <Upload onChange={handleUploadJson}>
-                <Button
-                  style={{ margin: 3 }}
-                  type="primary"
-                  icon={<UploadOutlined />}
-                >
-                  Upload JSON
-                </Button>
-              </Upload>
-            </Col>
-          </Fragment>
-        )
-      }
+      return (
+        <Fragment>
+          {/* <Col><CheckOutlined /></Col> */}
+          <Col>
+            <Switch
+              style={{ margin: 3 }}
+              checkedChildren={<CheckOutlined />}
+              unCheckedChildren={<CloseOutlined />}
+              defaultChecked
+            />
+          </Col>
+        </Fragment>
+      )
     } else {
       return (
         <Fragment>
-          <CloseOutlined />
+          {/* <Col><CloseOutlined /></Col> */}
           <Col>
             <Switch
               style={{ margin: 3 }}
               checkedChildren={<CheckOutlined />}
               unCheckedChildren={<CloseOutlined />}
             />
-            <Upload onChange={handleUploadJson}>
-              <Button
-                style={{ margin: 3 }}
-                type="primary"
-                icon={<UploadOutlined />}
-              >
-                Upload JSON
-              </Button>
-            </Upload>
           </Col>
         </Fragment>
       )
     }
   }
 
-  const saveBtn = () => {
-    return(<Button type="primary">save</Button>)
+  const actionBtn = (data) => {
+    return(
+      <Fragment>
+        <Button
+          style={{ margin: 2 }}
+          icon={<RocketOutlined />}
+          onClick={() => {
+            setUrlImage(data.details)
+          }}
+        >
+          Send to Input
+        </Button>
+        {
+          data.json == true?
+          <Upload onChange={handleUploadJson}>
+            <Button
+              style={{ margin: 2 }}
+              type="primary"
+              icon={<UploadOutlined />}
+              disabled
+            >
+              Upload JSON
+            </Button>
+          </Upload>:
+          <Upload onChange={handleUploadJson}>
+            <Button
+              style={{ margin: 2 }}
+              type="primary"
+              icon={<UploadOutlined />}
+            >
+              Upload JSON
+            </Button>
+          </Upload>
+        }
+        <Button
+          type="primary"
+          style={{ margin: 2 }}
+          icon={<SaveOutlined />}
+        >
+          Save Labeled
+        </Button>
+      </Fragment>
+    )
   }
 
   const findImageByDetail = (text) => {
@@ -473,63 +434,22 @@ const LabelStudioWrapper = (props) => {
   return (
     <Fragment>
       <Collapse accordion style={{ margin: 5 }}>
-        <Panel header='Select Image'>
-          <span style={{ width: '45%', float: 'left', margin: 4 }}>
-            <Title level={3}>Cleaned Image</Title>
-              <Table
-                dataSource={FilterData(loginInformation.project)}
-                pagination={{ position: ['bottomCenter'], pageSize: 1 }}>
-                <Column
-                  title='Image'
-                  align="center"
-                  render={findImageByDetail}
-                  width='40%'
-                />
-                <Column
-                  title='filename'
-                  align="center"
-                  dataIndex='details'
-                  width='40%'
-                />
-                <Column
-                  title='操作'
-                  align="center"
-                  render={onClick}
-                  width='20%'
-                />
-              </Table>
-          </span>
-          <span style={{ width: '48%', float: 'right', margin: 3}}>
-            <Title level={3}>Upload Cleaned Image</Title>
+        <Panel header='Data Store'>
+          <span style={{ margin: 5 }}>
             <Input
               allowClear
               type="text"
               addonBefore="../S3/Image/"
               placeholder="Input Image Name ..."
               addonAfter=".jpg"
-              style={{ height: 30, width: '90%'}}
+              style={{ height: 30, width: '60%'}}
               onChange={handleInput}
               value={ urlImage? urlImage: ''}
             />
             {sendImageUrlButton}
-            <div style={{ marginTop: 3 }}>
-              <Upload
-                maxCount={8}
-                multiple
-                listType="picture-card"
-                onPreview={handlePreview}
-                onChange={handleUploadImage}
-                customRequest={dummyRequest}
-              >
-                {fileList.length < 8 ? uploadButton : null}
-              </Upload>
-            </div>
           </span>
-        </Panel>
-      </Collapse>
-      <Collapse accordion style={{ margin: 5 }}>
-        <Panel header='Save Labeled Data'>
           <Table
+            style={{ margin: 5 }}
             dataSource={FilterData(loginInformation.project)}
             pagination={{ position: ['bottomCenter'], pageSize: 1 }}>
             <Column
@@ -545,6 +465,12 @@ const LabelStudioWrapper = (props) => {
               width='35%'
             />
             <Column
+                title='cleaned'
+                render={checkCleaned}
+                align='center'
+                width='10%'
+            />
+            <Column
                 title='labeled'
                 render={checkLabeled}
                 align='center'
@@ -554,19 +480,19 @@ const LabelStudioWrapper = (props) => {
               title='json'
               render={checkJson}
               align='center'
-              width='25%'
+              width='10%'
             />
             <Column
               title='操作'
               align="center"
-              render={saveBtn}
-              width='10%'
+              render={actionBtn}
+              width='15%'
             />
           </Table>
         </Panel>
       </Collapse>
       <div style={{ margin: 5 }}>
-        <Title level={3}>Label Image</Title>
+        <Title level={3}>Label Workspace</Title>
         <Input
           allowClear
           type="text"

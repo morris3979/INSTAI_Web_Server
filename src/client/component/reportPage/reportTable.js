@@ -245,7 +245,7 @@ const reportTable = (props) => {
     array.key = `${array.id}`
   })
 
-  const setValue = (id,value) => {
+  const setValue = (id, value) => {
     setDetailsText([...detailsText, { id: id, text: value }])
   }
 
@@ -373,7 +373,7 @@ const reportTable = (props) => {
                       defaultChecked
                       onChange={(e) => {
                         setID(text.id)
-                        setValue(text.id,e)
+                        setValue(text.id, e)
                       }}
                     />
                   );
@@ -384,7 +384,7 @@ const reportTable = (props) => {
                       unCheckedChildren={<CloseOutlined />}
                       onChange={(e) => {
                         setID(text.id)
-                        setValue(text.id,e)
+                        setValue(text.id, e)
                       }}
                     />
                   )
@@ -468,7 +468,7 @@ const reportTable = (props) => {
 
   return (
     <Fragment>
-      <DatePicker 
+      <DatePicker
         style={{ margin: 2 }}
         onChange={(date, dateString) => {
           // console.log(dateString);

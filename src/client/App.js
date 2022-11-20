@@ -95,9 +95,9 @@ const App = (props) => {
             <Item key='/overview'
               hidden={
                 !(loginInformation.developer
-                  // || loginInformation.admin
-                  // || loginInformation.user
-                  )
+                  || loginInformation.admin
+                  || loginInformation.user
+                )
               }
               icon={<TableOutlined />}
             >
@@ -181,7 +181,7 @@ const App = (props) => {
               icon={<LineChartOutlined />}
             >
               <Link to='/TrendChart'>
-                統計趨勢
+                統計圖表
               </Link>
             </Item>
             <SubMenu key='subset' title='配置設定'

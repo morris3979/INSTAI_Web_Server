@@ -22,6 +22,7 @@ import {
 //     EllipsisOutlined,
 //     SettingOutlined
 // } from '@ant-design/icons'
+import { io } from 'socket.io-client'
 
 const { Meta } = Card;
 const { Title } = Typography;
@@ -38,7 +39,8 @@ const OverviewCard = (props) => {
 
     const [selectedProject, setSelectedProject]= useState();
     const [selectedDate, setSelectedDate]= useState();
-    const [checkValues, setCheckedValues]= useState([])
+    const [checkValues, setCheckedValues]= useState([]);
+    const [time, setTime]= useState('fetching clock ...');
 
     useEffect(() => {
         getDetailsData()
@@ -47,6 +49,18 @@ const OverviewCard = (props) => {
         //     location.reload()
         // }, 30*1000)
         // return () => window.clearInterval(interval);
+        const SERVER = ":8080";
+        const socket = io(SERVER)
+        socket.on('connect', () => console.log(socket.id))
+        socket.on('connect_error', () => {
+            setTimeout(() => socket.connect(), 5000)
+        })
+        socket.on('time', (data) => {
+            setTime(data)
+        })
+        socket.on('disconnect', () => {
+            setTime('Clock disconnected ...')
+        })
     }, []);
 
     const filterData = detailsData.filter((data) => {
@@ -188,7 +202,7 @@ const OverviewCard = (props) => {
     <Fragment>
         <div className="site-card-wrapper" style={{ margin: 6 }}>
             <span>
-                <Title level={2} style={{ margin: 2 }}>共 {checkValueFilter.length} 筆資料</Title>
+                <Title level={2} style={{ margin: 2 }}>共 {checkValueFilter.length} 筆資料，{time}</Title>
             </span>
             <span>
                 <Select

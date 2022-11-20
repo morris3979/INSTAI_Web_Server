@@ -7,7 +7,6 @@ import {
 } from '../../store/actionCreater'
 import {
 } from '@ant-design/icons'
-import ReactDOM from 'react-dom';
 import { DualAxes } from '@ant-design/plots';
 
 const { Title } = Typography
