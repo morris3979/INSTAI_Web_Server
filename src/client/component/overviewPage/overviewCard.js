@@ -38,6 +38,7 @@ const OverviewCard = (props) => {
 
     const [selectedProject, setSelectedProject]= useState();
     const [selectedDate, setSelectedDate]= useState();
+    const [checkValues, setcheckedValues]= useState([])
 
     useEffect(() => {
         getDetailsData()
@@ -61,19 +62,35 @@ const OverviewCard = (props) => {
         }
     })
 
+    const iscleaned = (element) => element == 'cleaned';
+    const islabeled = (element) => element == 'labeled';
     const DateFilter = filterData.filter((data) => {
         if(selectedDate){
             return data.createdAt.slice(0,10) === selectedDate
-            // console.log(data.createdAt.slice(0,10))
+                // console.log(data.createdAt.slice(0,10))
         }
         else{
             return data
             // console.log(data.createdAt.slice(0,10))
         }
     })
+    const checkValueFilter = DateFilter.filter((data) => {
+        if((checkValues.findIndex(iscleaned)!=-1)&&(checkValues.findIndex(islabeled)!=-1)){
+            return data.cleaned == true && data.labeled == true
+        }
+        else if(checkValues.findIndex(iscleaned)!=-1){
+            return data.cleaned == true
+        }
+        else if(checkValues.findIndex(islabeled)!=-1){
+            return data.labeled == true
+        }
+        else{
+            return data
+        }
+    })
 
     const CardData = (
-        DateFilter.map(c => {
+        checkValueFilter.map(c => {
             return(
                 <Col>
                     <Card
@@ -153,6 +170,7 @@ const OverviewCard = (props) => {
 
     const onChange_checkBox = (checkedValues) => {
         console.log('checked = ', checkedValues);
+        setcheckedValues(checkedValues)
     };
 
     const options = [
@@ -170,8 +188,8 @@ const OverviewCard = (props) => {
     <Fragment>
         <div className="site-card-wrapper" style={{ margin: 6 }}>
             <span>
-                <Title level={2} style={{ margin: 2 }}>共 {DateFilter.length} 筆資料</Title>
-            </span>
+                <Title level={2} style={{ margin: 2 }}>共 {checkValueFilter.length} 筆資料</Title>
+            </span> 
             <span>
                 <Select
                     style={{ margin: 5, width: '200px' }}
