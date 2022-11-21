@@ -124,37 +124,38 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                 dataSource={filteredItems}
                 rowSelection={rowSelection}
                 columns={columns}
+                scroll={{ x: 500, y: 400 }}
                 pagination={{ position: ['bottomCenter'] }}
             >
                 <Column
                     title='Data'
                     align="center"
                     render={findImageByDetail}
-                    width='30%'
+                    width='20%'
                 />
                 <Column
                     title='filename'
                     dataIndex='details'
                     align='center'
-                    width='40%'
+                    width='30%'
                 />
                 <Column
                     title='labeled'
                     render={checkLabeled}
                     align='center'
-                    width='10%'
+                    width='15%'
                 />
                 <Column
                     title='image'
                     render={checkImage}
                     align='center'
-                    width='10%'
+                    width='15%'
                 />
                 <Column
                     title='json'
                     render={checkJson}
                     align='center'
-                    width='10%'
+                    width='15%'
                 />
             </Table>
         </Fragment>
