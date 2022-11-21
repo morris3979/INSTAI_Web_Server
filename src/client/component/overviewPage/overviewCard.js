@@ -27,6 +27,12 @@ import { io } from 'socket.io-client'
 const { Meta } = Card;
 const { Title } = Typography;
 const { Option } = Select;
+const border = {
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    borderBottomLeftRadius: '12px',
+    borderBottomRightRadius: '12px',
+}
 
 const OverviewCard = (props) => {
     const {
@@ -108,21 +114,24 @@ const OverviewCard = (props) => {
             return(
                 <Col>
                     <Card
-                        bordered={false}
                         style={{
-                            width: 280,
-                            margin: 2
+                            width: 260,
+                            margin: 6,
+                            borderBottomLeftRadius: '12px',
+                            borderBottomRightRadius: '12px',
                         }}
                         cover={
                             c.video == true && c.image == true?
                             <Carousel effect='fade' dotPosition='top'>
                                 <ReactPlayer
+                                    style={ border }
                                     url={`https://d20cmf4o2f77jz.cloudfront.net/video/${c.details}.mp4`}
                                     controls={true}
                                     width='100%'
                                     height='100%'
                                 />
                                 <Image
+                                    style={ border }
                                     src={`https://d20cmf4o2f77jz.cloudfront.net/image/${c.details}.jpg`}
                                     width='100%'
                                     height='100%'
@@ -130,12 +139,14 @@ const OverviewCard = (props) => {
                             </Carousel>:'' ||
                             c.image == true?
                             <Image
+                                style={ border }
                                 src={`https://d20cmf4o2f77jz.cloudfront.net/image/${c.details}.jpg`}
                                 width='100%'
                                 height='100%'
                             />:'' ||
                             c.video == true?
                             <ReactPlayer
+                                style={ border }
                                 url={`https://d20cmf4o2f77jz.cloudfront.net/video/${c.details}.mp4`}
                                 controls={true}
                                 width='100%'
@@ -203,11 +214,11 @@ const OverviewCard = (props) => {
     <Fragment>
         <div className="site-card-wrapper" style={{ margin: 6 }}>
             <span>
-                <Title level={2} style={{ margin: 2 }}>共 {checkValueFilter.length} 筆資料，{time}</Title>
+                <Title level={2} style={{ margin: 6 }}>共 {checkValueFilter.length} 筆資料，{time}</Title>
             </span>
             <span>
                 <Select
-                    style={{ margin: 5, width: '200px' }}
+                    style={{ margin: 6, width: '200px' }}
                     placeholder='Please Select project'
                     hidden={!(loginInformation.developer || loginInformation.admin)}
                     onChange={handleSelect}
@@ -217,14 +228,14 @@ const OverviewCard = (props) => {
                     })}
                 </Select>
                 <DatePicker
-                    style={{ margin: 5 }}
+                    style={{ margin: 6 }}
                     onChange={(date, dateString) => {
                         // console.log(dateString);
                         setSelectedDate(dateString)
                     }}
                 />
                 <Checkbox.Group
-                    style={{ margin: 5 }}
+                    style={{ margin: 6 }}
                     options={options}
                     onChange={onChange_checkBox}
                 />

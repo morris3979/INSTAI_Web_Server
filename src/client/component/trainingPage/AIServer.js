@@ -24,6 +24,12 @@ import { io } from 'socket.io-client'
 
 const { Title } = Typography
 const { Column } = Table
+const border = {
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    borderBottomLeftRadius: '12px',
+    borderBottomRightRadius: '12px',
+}
 
 const checkLabeled = (text) => {
     if (text.labeled == true) {
@@ -65,6 +71,7 @@ const findImageByDetail = (text) => {
     return (
         <Fragment align='center'>
             <Image
+                style={ border }
                 src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
                 width='100%'
                 height='100%'
@@ -238,6 +245,7 @@ const AIServer = (props) => {
             title: 'Data',
             render: (text) =>
                 <Image
+                    style={ border }
                     src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text}.jpg`}
                     width='100%'
                     height='100%'
@@ -295,12 +303,20 @@ const AIServer = (props) => {
             <Input.Group compact style={{ margin: 8 }}>
                 <Input
                     size="large"
-                    style={{ width: '200px' }}
+                    style={{
+                        width: '200px',
+                        borderTopLeftRadius: '12px',
+                        borderBottomLeftRadius: '12px',
+                    }}
                     icon={<RobotOutlined />}
                     defaultValue={sendToAI}
                     onChange={onChangeInput}
                 />
                 <Button
+                    style={{
+                        borderTopRightRadius: '12px',
+                        borderBottomRightRadius: '12px',
+                    }}
                     size="large"
                     type="primary"
                     icon={<SendOutlined />}

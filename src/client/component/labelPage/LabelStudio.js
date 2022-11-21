@@ -38,6 +38,12 @@ import {
 const { Title } = Typography;
 const { Panel } = Collapse;
 const { Column } = Table;
+const border = {
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    borderBottomLeftRadius: '12px',
+    borderBottomRightRadius: '12px',
+}
 
 const LabelStudioWrapper = (props) => {
   // we need a reference to a DOM node here so LSF knows where to render
@@ -210,8 +216,8 @@ const LabelStudioWrapper = (props) => {
 
   const sendImageUrlButton = (
     !urlImage?
-    <Button icon={<EyeInvisibleOutlined />} disabled />:
-    <Button onClick={onAddImgUrl} icon={<EyeOutlined />} />
+    <Button icon={<EyeInvisibleOutlined />} size="large" disabled />:
+    <Button onClick={onAddImgUrl} icon={<EyeOutlined />} size="large" />
   )
 
   const downloadFile = ({ data, fileName, fileType }) => {
@@ -378,7 +384,7 @@ const LabelStudioWrapper = (props) => {
       <Fragment>
         <div style={{ margin: 18 }}>
           <Button
-            style={{ margin: 2 }}
+            style={{ margin: 2, ...border }}
             icon={<RocketOutlined />}
             onClick={() => {
               setUrlImage(data.details)
@@ -392,7 +398,7 @@ const LabelStudioWrapper = (props) => {
             data.json == true?
             <Upload onChange={handleUploadJson}>
               <Button
-                style={{ margin: 2 }}
+                style={{ margin: 2, ...border }}
                 type="primary"
                 icon={<UploadOutlined />}
                 disabled
@@ -402,7 +408,7 @@ const LabelStudioWrapper = (props) => {
             </Upload>:
             <Upload onChange={handleUploadJson}>
               <Button
-                style={{ margin: 2 }}
+                style={{ margin: 2, ...border }}
                 type="primary"
                 icon={<UploadOutlined />}
               >
@@ -412,7 +418,7 @@ const LabelStudioWrapper = (props) => {
           }
           <Button
             type="primary"
-            style={{ margin: 2 }}
+            style={{ margin: 2, ...border }}
             icon={<SaveOutlined />}
           >
             Save Labeled
@@ -426,6 +432,7 @@ const LabelStudioWrapper = (props) => {
     return (
       <Fragment align='center'>
         <Image
+          style={ border }
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
           width='100%'
           height='100%'
@@ -443,10 +450,11 @@ const LabelStudioWrapper = (props) => {
             <Input
               allowClear
               type="text"
+              size="large"
               addonBefore="../S3/Image/"
               placeholder="Input Image Name ..."
               addonAfter=".jpg"
-              style={{ height: 30, width: '60%'}}
+              style={{ height: 30, width: '50%' }}
               onChange={handleInput}
               value={ urlImage? urlImage: ''}
             />
@@ -501,12 +509,12 @@ const LabelStudioWrapper = (props) => {
           allowClear
           type="text"
           placeholder="Input Label Name ..."
-          style={{ height: 30, width: 220 }}
+          style={{ height: 32, width: 180, ...border }}
           ref={labelRef}
         />
         <Button
           onClick={onAddLabel}
-          style={{ margin: 2 }}
+          style={{ marginLeft: 5, ...border }}
           icon={<PlusOutlined />}
         >
           Add Label
@@ -516,7 +524,7 @@ const LabelStudioWrapper = (props) => {
           onConfirm={onReset}
         >
           <Button
-            style={{ margin: 2 }}
+            style={{ marginLeft: 3, ...border }}
             icon={<DeleteOutlined />}
           >
             Delete Labels
@@ -524,7 +532,7 @@ const LabelStudioWrapper = (props) => {
         </Popconfirm>
         <Button
           onClick={crawler_onClick}
-          style={{ margin: 2 }}
+          style={{ marginLeft: 3, ...border }}
           icon={<BugOutlined />}
         >
           View JSON
@@ -534,13 +542,13 @@ const LabelStudioWrapper = (props) => {
           <Button
             type="primary"
             onClick={exportToJson}
-            style={{ margin: 2 }}
+            style={{ marginLeft: 3, ...border }}
             icon={<DownloadOutlined />}
           >
             Download JSON
           </Button>:
           <Button
-            style={{ margin: 2 }}
+            style={{ marginLeft: 3, ...border }}
             icon={<DownloadOutlined />}
             disabled
           >

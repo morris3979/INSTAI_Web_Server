@@ -28,19 +28,26 @@ import Papa from 'papaparse';
 
 const { Column } = Table
 const { Text } = Typography
+const border = {
+    margin: 2,
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    borderBottomLeftRadius: '12px',
+    borderBottomRightRadius: '12px',
+}
 
 const video = (text) => {
   if (text.image == true && text.video == true) {
     return (
       <Fragment align='center'>
         <Image
-          style={{ margin: 2 }}
+          style={ border }
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
           width='100%'
           height='100%'
         />
         <ReactPlayer
-          style={{ margin: 2 }}
+          style={ border }
           url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
           controls={true}
           width='100%'
@@ -53,6 +60,7 @@ const video = (text) => {
     return (
       <Fragment align='center'>
         <Image
+          style={ border }
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
           width='100%'
           height='100%'
@@ -64,6 +72,7 @@ const video = (text) => {
     return (
       <Fragment align='center'>
         <ReactPlayer
+          style={ border }
           url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
           controls={true}
           width='100%'
