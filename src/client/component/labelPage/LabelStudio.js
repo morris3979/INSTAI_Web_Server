@@ -444,8 +444,8 @@ const LabelStudioWrapper = (props) => {
   // just a wrapper node to place LSF into
   return (
     <Fragment>
-      <Collapse accordion style={{ margin: 5 }}>
-        <Panel header='Data Store'>
+      <Collapse accordion style={{ margin: 5 }} defaultActiveKey={['1']}>
+        <Panel header='Data Store' key={'1'}>
           <span style={{ margin: 5 }}>
             <Input
               allowClear

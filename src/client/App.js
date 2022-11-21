@@ -73,7 +73,11 @@ const App = (props) => {
           <div>
             <img src={InstAI} alt='Logo' style={{ width: '100%', height: '100%' }} />
           </div>
-          <Menu theme='dark' selectedKeys={[]} mode='inline'>
+          <Menu
+            theme='dark'
+            selectedKeys={[]}
+            mode='inline'
+            defaultOpenKeys={['subreport', 'subset']}>
             <Item
               icon={<UserOutlined />}
               style={{ color: "yellow", pointerEvents: 'none' }}

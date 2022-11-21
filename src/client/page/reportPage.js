@@ -57,10 +57,10 @@ const reportPage = (props) => {
 
   return (
     <Fragment>
-      <Collapse accordion style={{ margin: 5 }}>
+      <Collapse accordion style={{ margin: 5 }} defaultActiveKey={['1']}>
       {projectFilter(projectList).map((f) => {
         return(
-            <Panel header={f.serialNumber+' '+'('+f.hostName+')'}>
+            <Panel header={f.serialNumber+' '+'('+f.hostName+')'} key={'1'}>
               {HostFilter(hostList,f.serialNumber).map((g) => {
                 return(
                   <Collapse onChange={handleChange} accordion>
