@@ -115,7 +115,7 @@ const OverviewCard = (props) => {
                 <Col>
                     <Card
                         style={{
-                            width: 260,
+                            width: 270,
                             margin: 6,
                             borderBottomLeftRadius: '12px',
                             borderBottomRightRadius: '12px',
