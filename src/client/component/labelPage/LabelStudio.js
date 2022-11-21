@@ -376,44 +376,48 @@ const LabelStudioWrapper = (props) => {
   const actionBtn = (data) => {
     return(
       <Fragment>
-        <Button
-          style={{ margin: 2 }}
-          icon={<RocketOutlined />}
-          onClick={() => {
-            setUrlImage(data.details)
-          }}
-        >
-          Send to Input
-        </Button>
-        {
-          data.json == true?
-          <Upload onChange={handleUploadJson}>
-            <Button
-              style={{ margin: 2 }}
-              type="primary"
-              icon={<UploadOutlined />}
-              disabled
-            >
-              Upload JSON
-            </Button>
-          </Upload>:
-          <Upload onChange={handleUploadJson}>
-            <Button
-              style={{ margin: 2 }}
-              type="primary"
-              icon={<UploadOutlined />}
-            >
-              Upload JSON
-            </Button>
-          </Upload>
-        }
-        <Button
-          type="primary"
-          style={{ margin: 2 }}
-          icon={<SaveOutlined />}
-        >
-          Save Labeled
-        </Button>
+        <div style={{ margin: 18 }}>
+          <Button
+            style={{ margin: 2 }}
+            icon={<RocketOutlined />}
+            onClick={() => {
+              setUrlImage(data.details)
+            }}
+          >
+            Send to Input
+          </Button>
+        </div>
+        <div style={{ margin: 18 }}>
+          {
+            data.json == true?
+            <Upload onChange={handleUploadJson}>
+              <Button
+                style={{ margin: 2 }}
+                type="primary"
+                icon={<UploadOutlined />}
+                disabled
+              >
+                Upload JSON
+              </Button>
+            </Upload>:
+            <Upload onChange={handleUploadJson}>
+              <Button
+                style={{ margin: 2 }}
+                type="primary"
+                icon={<UploadOutlined />}
+              >
+                Upload JSON
+              </Button>
+            </Upload>
+          }
+          <Button
+            type="primary"
+            style={{ margin: 2 }}
+            icon={<SaveOutlined />}
+          >
+            Save Labeled
+          </Button>
+        </div>
       </Fragment>
     )
   }
@@ -453,7 +457,7 @@ const LabelStudioWrapper = (props) => {
             dataSource={FilterData(loginInformation.project)}
             pagination={{ position: ['bottomCenter'], pageSize: 1 }}>
             <Column
-              title='Image'
+              title='Data'
               align="center"
               render={findImageByDetail}
               width='20%'
