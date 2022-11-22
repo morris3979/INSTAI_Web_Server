@@ -6,7 +6,9 @@ import {
     Input,
     Table,
     Transfer,
-    Image
+    Image,
+    Tag,
+    Col
 } from 'antd'
 import {
     GetProjectTableData,
@@ -175,7 +177,8 @@ const AIServer = (props) => {
     const [message, setMessage] = useState('fetching AI Server message ...');
     const [sendToAI, setSendToAI] = useState('Hi AIServer ...');
     const [filterData, setFilterData] = useState([])
-    const [targetKeys, setTargetKeys] = useState(originTargetKeys); // originTargetKeys
+    const [targetKeys, setTargetKeys] = useState(originTargetKeys);
+    const [selectLabeledData, setSelectLabeledData] = useState([])
 
     useEffect(() => {
         getEventList()
@@ -205,14 +208,29 @@ const AIServer = (props) => {
                 json: data.json,
             }])
         })
-    }, []);
+
+        if (!targetKeys) {
+            return;
+        } else {
+            setSelectLabeledData([])
+            targetKeys.map((value) => {
+                const filename = filterData[value].details
+                setSelectLabeledData((value) => [...value, filename])
+            })
+        }
+    }, [targetKeys]);
+
 
     const originTargetKeys = filterData
         .filter((item) => Number(item.key) % 3 > 1)
         .map((item) => item.key);
 
     const onChangeInput = (e) => {
-        setSendToAI(e.target.value)
+        if (!selectLabeledData) {
+            setSendToAI(e.target.value)
+        } else {
+            setSendToAI(e.target.value+';['+[selectLabeledData]+']')
+        }
     }
 
     const FilterData = (value) => {
