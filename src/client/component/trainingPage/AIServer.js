@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { connect } from 'react-redux'
 import {
     Typography,
@@ -7,8 +7,10 @@ import {
     Table,
     Transfer,
     Image,
-    Tag,
-    Col
+    Divider,
+    Select,
+    Space,
+    message
 } from 'antd'
 import {
     GetProjectTableData,
@@ -17,10 +19,10 @@ import {
 } from '../../store/actionCreater'
 import {
     SendOutlined,
-    RobotOutlined,
     CheckOutlined,
     CloseOutlined,
-    MessageOutlined
+    MessageOutlined,
+    PlusOutlined
 } from '@ant-design/icons'
 import { io } from 'socket.io-client'
 
@@ -166,6 +168,8 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
     </Transfer>
 )
 
+let index = 0;
+
 const AIServer = (props) => {
     const {
         loginInformation,
@@ -174,11 +178,14 @@ const AIServer = (props) => {
     } = props;
 
     const [time, setTime] = useState('fetching clock ...');
-    const [message, setMessage] = useState('fetching AI Server message ...');
-    const [sendToAI, setSendToAI] = useState('Hi AIServer ...');
+    const [messageFromAIServer, setMessageFromAIServer] = useState('fetching AI Server message ...');
+    const [sendToAI, setSendToAI] = useState();
     const [filterData, setFilterData] = useState([])
     const [targetKeys, setTargetKeys] = useState(originTargetKeys);
     const [selectLabeledData, setSelectLabeledData] = useState([])
+    const [items, setItems] = useState(['Hi AIServer', 'download']);
+    const [name, setName] = useState('');
+    const inputRef = useRef(null);
 
     useEffect(() => {
         getEventList()
@@ -192,11 +199,11 @@ const AIServer = (props) => {
             setTime(data)
         })
         socket.on('message', (data) => {
-            setMessage(data)
+            setMessageFromAIServer(data)
         })
         socket.on('disconnect', () => {
             setTime('Clock disconnected ...')
-            setMessage('AI Server disconnected ...')
+            setMessageFromAIServer('AI Server disconnected ...')
         })
 
         FilterData(loginInformation.project).map((data, i) => {
@@ -213,7 +220,7 @@ const AIServer = (props) => {
 
     const originTargetKeys = filterData
         .filter((item) => Number(item.key) % 3 > 1)
-        .map((item) => item.key);
+        .map((item) => item.key)
 
     const onChangeInput = (e) => {
         if (!selectLabeledData) {
@@ -221,6 +228,23 @@ const AIServer = (props) => {
         } else {
             setSendToAI(e.target.value+';['+[selectLabeledData]+']')
         }
+    }
+
+    const onNameChange = (event) => {
+        setName(event.target.value);
+    }
+
+    const addItem = (e) => {
+        e.preventDefault();
+        setItems([...items, name || `New item ${index++}`]);
+        setName('');
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
+    }
+
+    const onSelected = (value) => {
+        setSendToAI(value)
     }
 
     const FilterData = (value) => {
@@ -314,17 +338,41 @@ const AIServer = (props) => {
             <span>
                 <Title level={2} style={{ margin: 8 }}>{time}</Title>
             </span>
-            <Input.Group compact style={{ margin: 8 }}>
-                <Input
+            <div style={{ margin: 8 }}>
+                <Select
                     size="large"
-                    style={{
-                        width: '200px',
-                        borderTopLeftRadius: '12px',
-                        borderBottomLeftRadius: '12px',
-                    }}
-                    icon={<RobotOutlined />}
-                    defaultValue={sendToAI}
-                    onChange={onChangeInput}
+                    style={{ width: 300, ...border }}
+                    placeholder="Select Command to AI Server"
+                    dropdownRender={(menu) => (
+                        <div>
+                            {menu}
+                            <Divider
+                                style={{
+                                    margin: '8px 0',
+                                }}
+                            />
+                            <Space
+                                style={{
+                                    padding: '0 8px 4px',
+                                }}
+                            >
+                                <Input
+                                    placeholder="Please enter item"
+                                    ref={inputRef}
+                                    value={name}
+                                    onChange={onNameChange}
+                                />
+                                <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
+                                    Add item
+                                </Button>
+                            </Space>
+                        </div>
+                    )}
+                    options={items.map((item) => ({
+                        label: item,
+                        value: item,
+                    }))}
+                    onChange={onSelected}
                 />
                 <Button
                     style={{
@@ -334,10 +382,20 @@ const AIServer = (props) => {
                     size="large"
                     type="primary"
                     icon={<SendOutlined />}
-                    onClick={() => { props.postAIServerMQTT(sendToAI) }}
+                    onClick={() => {
+                        if (!sendToAI) {
+                            message.warning('Please Select Command !')
+                        } else if (sendToAI == 'download') {
+                            selectLabeledData.length == '0'?
+                            message.warning('Please Select Data to Data Waiting Area !'):
+                            props.postAIServerMQTT(sendToAI+`;[${selectLabeledData}]`)
+                        } else {
+                            props.postAIServerMQTT(sendToAI)
+                        }
+                    }}
                 />
-            </Input.Group>
-            <Title level={4} style={{ margin: 12 }}><MessageOutlined /> {message}</Title>
+            </div>
+            <Title level={4} style={{ margin: 12 }}><MessageOutlined /> {messageFromAIServer}</Title>
             <TableTransfer
                 titles={['Labeled Data Area', 'Data Waiting Area (To AI Server)']}
                 showSearch
