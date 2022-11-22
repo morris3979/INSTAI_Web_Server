@@ -208,17 +208,7 @@ const AIServer = (props) => {
                 json: data.json,
             }])
         })
-
-        if (!targetKeys) {
-            return;
-        } else {
-            setSelectLabeledData([])
-            targetKeys.map((value) => {
-                const filename = filterData[value].details
-                setSelectLabeledData((value) => [...value, filename])
-            })
-        }
-    }, [targetKeys]);
+    }, []);
 
 
     const originTargetKeys = filterData
@@ -255,7 +245,12 @@ const AIServer = (props) => {
     }
 
     const onChange = (nextTargetKeys) => {
+        setSelectLabeledData([])
         setTargetKeys(nextTargetKeys)
+        nextTargetKeys.map(value => {
+            const filename = filterData[value].details
+            setSelectLabeledData((value) => [...value, filename])
+        })
     }
 
     const rightTableColumns = [

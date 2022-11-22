@@ -165,9 +165,9 @@ const App = (props) => {
             <Item key='/training'
               hidden={
                 !(loginInformation.developer
-                  // || loginInformation.admin
-                  // || loginInformation.user
-                  )
+                  || loginInformation.admin
+                  || loginInformation.user
+                )
               }
               icon={<CoffeeOutlined />}
             >
