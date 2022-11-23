@@ -57,14 +57,14 @@ class HostTable extends Component {
           style={{ whiteSpace: 'pre'}}
           scroll={{ x: 1500, y: 750 }}
         >
-          <Column title='操作' render={this.buttonGroup} fixed='left' align='center' width={150} />
-          <Column title='主機代號' dataIndex='serialNumber' align='center' />
-          <Column title='主機名稱' dataIndex='hostName' align='center' width={180} />
-          <Column title='主機類型' dataIndex='type' align='center' width={180} render={(data) => {return(<Tag>{data}</Tag>)}} />
-          <Column title='指令' dataIndex='command' align='center' />
-          <Column title='訊息' dataIndex='response' align='center' />
-          <Column title='所屬專案' dataIndex={['Project', 'displayName']} align='center' width={150} />
-          <Column title='已配置的設備' dataIndex='Devices' key="Devices" align='center' width={150}
+          <Column title='Action' render={this.buttonGroup} fixed='left' align='center' width={150} />
+          <Column title='SerialNumber' dataIndex='serialNumber' align='center' />
+          <Column title='Host Name' dataIndex='hostName' align='center' width={180} />
+          <Column title='Type' dataIndex='type' align='center' width={180} render={(data) => {return(<Tag>{data}</Tag>)}} />
+          <Column title='Command' dataIndex='command' align='center' />
+          <Column title='Message' dataIndex='response' align='center' />
+          <Column title='Project' dataIndex={['Project', 'displayName']} align='center' width={150} />
+          <Column title='Builded Device' dataIndex='Devices' key="Devices" align='center' width={150}
             render={(Devices) => Devices.map(c => c.deviceId+' ('+c.deviceName+')'+'\n').join('')} />
         </Table>
         <Modal
@@ -74,28 +74,28 @@ class HostTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='請輸入主機代號' name='serialNumber' rules={[this.rule('主機代號')]}>
+            <Item label='Please Input SerialNumber' name='serialNumber' rules={[this.rule('主機代號')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.serialNumber)}`
                 }
               />
             </Item>
-            <Item label='請輸入主機名稱' name='hostName' rules={[this.rule('主機名稱')]}>
+            <Item label='Please Input Host Name' name='hostName' rules={[this.rule('主機名稱')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.hostName)}`
                 }
               />
             </Item>
-            <Item label='請輸入主機類型' name='type'>
+            <Item label='Please Input Type' name='type'>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.type)}`
                 }
               />
             </Item>
-            <Item label='請選擇專案配置' name='ProjectId'>
+            <Item label='Please Select Project to deploy' name='ProjectId'>
               <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
                 defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
                 {this.props.projectTableData.map(c => {
@@ -103,7 +103,7 @@ class HostTable extends Component {
                 })}
               </Select>
             </Item>
-            <Item label='請選擇主機指令' name='command'>
+            <Item label='Please Select Command' name='command'>
               <Select placeholder='Please select command to send' onChange={this.handleSelectCommand}
                 defaultValue={this.defaultValue(this.props.whichModal.command)}>
                 <Option value='deviceList?'>deviceList?</Option>
@@ -111,7 +111,7 @@ class HostTable extends Component {
             </Item>
             <Item>
               <Button htmlType='submit'>
-                確認
+                submit
               </Button>
             </Item>
           </Form>

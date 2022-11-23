@@ -361,7 +361,7 @@ const reportTable = (props) => {
           pagination={{ position: ['bottomCenter'], pageSize: 1 }}
         >
           <Column
-              title='採集資料'
+              title='Data'
               render={video}
               width='40%'
               align='center'
@@ -402,7 +402,7 @@ const reportTable = (props) => {
               align='center'
           />
           <Column
-            title='操作'
+            title='Action'
             render={download}
             width='15%'
             align='center'
@@ -491,21 +491,21 @@ const reportTable = (props) => {
         dataSource={ getEventDataId(eventList, whichDeviceName) }
       >
         <Column
-          title='事件時間'
+          title='Event Time'
           dataIndex='eventTime'
           ellipsis={true}
           align='center'
           render={eventData1}
         />
         <Column
-          title='觸發 (0:主動, 1:被動)'
+          title='Trigger (Initiative: 0, Passive: 1)'
           dataIndex='trigger'
           ellipsis={true}
           align='center'
           render={convertTrigger}
         />
         <Column
-          title='選取數量'
+          title='Quantity'
           render={(data) =>{
             if(selectedDataId(DetailsFilter(data.Details))){
               return(
@@ -532,7 +532,7 @@ const reportTable = (props) => {
           align='center'
         />
         <Column
-            title='操作'
+            title='Action'
             render={(data) => {
               if(selectedDataCleaned(DetailsFilter(data.Details))){
                 setEventID(data.id)

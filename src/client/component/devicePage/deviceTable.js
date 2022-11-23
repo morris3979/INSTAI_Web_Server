@@ -73,19 +73,19 @@ class DeviceTable extends Component {
           style={{ whiteSpace: 'pre'}}
           scroll={{ x: 2000, y: 750 }}
         >
-          <Column title='操作' render={this.buttonGroup} fixed='left' align='center' width={150} />
-          <Column title='設備代號' dataIndex='deviceId' align='center' width={150} />
-          <Column title='設備名稱' dataIndex='deviceName' align='center' width={150} />
-          <Column title='設備描述' dataIndex='description' align='center' width={150} render={(data) => {return(<Tag>{data}</Tag>)}} />
-          <Column title='指令' dataIndex='command' align='center' />
-          <Column title='訊息' dataIndex='message' align='center' />
-          <ColumnGroup title="模型更新紀錄">
-            <Column title='模型' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
+          <Column title='Action' render={this.buttonGroup} fixed='left' align='center' width={150} />
+          <Column title='Device ID' dataIndex='deviceId' align='center' width={150} />
+          <Column title='Device Name' dataIndex='deviceName' align='center' width={150} />
+          <Column title='Description' dataIndex='description' align='center' width={150} render={(data) => {return(<Tag>{data}</Tag>)}} />
+          <Column title='Command' dataIndex='command' align='center' />
+          <Column title='Message' dataIndex='message' align='center' />
+          <ColumnGroup title="Update Record">
+            <Column title='Model' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
               render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+'\n').join('')} />
-            <Column title='更新時間' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width={180}
+            <Column title='Time' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width={180}
               render={(HwUpdateLogs) => HwUpdateLogs.map(c => '('+c.createdAt.slice(0, -5).replace('T', ' ')+')'+'\n').join('')} />
           </ColumnGroup>
-          <Column title='所屬主機' dataIndex={['Host', 'hostName']} align='center' width={180} />
+          <Column title='Host' dataIndex={['Host', 'hostName']} align='center' width={180} />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
@@ -94,31 +94,31 @@ class DeviceTable extends Component {
           destroyOnClose={true}
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            請選擇PAG7681功能
+            Please Select PAG7681 Function
           </Typography>
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='請輸入設備代號' name='deviceId' rules={[this.rule('設備代號')]}>
+            <Item label='Please Input Device Code' name='deviceId' rules={[this.rule('設備代號')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.deviceId)}`
                 }
               />
             </Item>
-            <Item label='請輸入設備名稱' name='deviceName' rules={[this.rule('設備名稱')]}>
+            <Item label='Please Input Device Name' name='deviceName' rules={[this.rule('設備名稱')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.deviceName)}`
                 }
               />
             </Item>
-            <Item label='請輸入設備描述' name='description'>
+            <Item label='Please Input Description' name='description'>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.description)}`
                 }
               />
             </Item>
-            <Item label='請選擇主機配置' name='HostId'>
+            <Item label='Please Select Host to deploy' name='HostId'>
               <Select placeholder='Select a Host to deploy' onChange={this.handleSelectHost}
                 defaultValue={this.defaultValue(this.props.whichModal.HostId)}>
                 {this.props.hostTableData.map(c => {
@@ -126,7 +126,7 @@ class DeviceTable extends Component {
                 })}
               </Select>
             </Item>
-            <Item label='請選擇指令' name='Command'>
+            <Item label='Please Select Command' name='Command'>
               <Select placeholder='Please select command to send' onChange={this.handleSelectAskStatus}>
                 <Option value='reset'>reset</Option>
                 <Option value='mode?'>mode?</Option>
@@ -135,10 +135,10 @@ class DeviceTable extends Component {
                 <Option value='current_model?'>current_model?</Option>
               </Select>
             </Item>
-            <Item label='切換運作模式' name='Change_Mode'>
+            <Item label='Change Mode' name='Change_Mode'>
               <Switch onChange={this.handleOperationModeSwitch}></Switch>
             </Item>
-            <Item label='請選擇執行模式' name='modeSelect' disabled={!this.state.isSelectMode} hidden={!this.state.isSelectMode}>
+            <Item label='Please Select Mode to use' name='modeSelect' disabled={!this.state.isSelectMode} hidden={!this.state.isSelectMode}>
               <Select placeholder='Please select mode to change'
                       onChange={this.onChangeSelectMode} disabled={!this.state.isSelectMode} hidden={!this.state.isSelectMode}>
                 <Option value='CNN'>CNN</Option>
@@ -150,7 +150,7 @@ class DeviceTable extends Component {
                 <Option value='UPDATE_MODEL'>UPDATE_MODEL</Option>
               </Select>
             </Item>
-            <Item label='請選擇可用模型' name='selectModel' disabled={!this.state.modelVisible} hidden={!this.state.modelVisible}>
+            <Item label='Please Select Available Model' name='selectModel' disabled={!this.state.modelVisible} hidden={!this.state.modelVisible}>
               <Select placeholder='Please select model to update' defaultValue={this.state.selectModel}
                       onChange={this.handleSelectModel} disabled={!this.state.modelVisible} hidden={!this.state.modelVisible}>
                 {this.props.modelListData.map(c => {
@@ -158,7 +158,7 @@ class DeviceTable extends Component {
                 })}
               </Select>
             </Item>
-            <Item label='相關參數配置' name='related_params' hidden={!this.state.relatedParamsVisible}>
+            <Item label='Parameter Configuration' name='related_params' hidden={!this.state.relatedParamsVisible}>
               <Switch
                 disabled={!this.state.relatedParamsVisible}
                 hidden={!this.state.relatedParamsVisible}
@@ -167,7 +167,7 @@ class DeviceTable extends Component {
                 value={this.state.related_params_switch}
               />
             </Item>
-            <Item label='CNN 事件觸發後是否開始錄影' name='rec_after_event' hidden={!this.state.recAfterEventVisible}>
+            <Item label='Whether to start recording after a CNN event triggers' name='rec_after_event' hidden={!this.state.recAfterEventVisible}>
               <Switch
                 disabled={!this.state.recAfterEventVisible}
                 hidden={!this.state.recAfterEventVisible}
@@ -176,7 +176,7 @@ class DeviceTable extends Component {
                 value={this.state.rec_after_event_switch}
               />
             </Item>
-            <Item label='錄影時間(秒)' name='rec_time' hidden={!this.state.recTimeVisible}>
+            <Item label='Recording Time (s)' name='rec_time' hidden={!this.state.recTimeVisible}>
             <Row>
                 <Col span={12}>
                   <Slider
@@ -195,7 +195,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='錄影時每秒幀數(fps)' name='rec_fps' hidden={!this.state.recFpsVisible}>
+            <Item label='Recording fps' name='rec_fps' hidden={!this.state.recFpsVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
@@ -214,7 +214,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='CNN 事件觸發後錄影循環次數' name='rec_after_event_cycle' hidden={!this.state.cnnEventTriggerVisible}>
+            <Item label='Number of recording loops after a CNN event is triggered' name='rec_after_event_cycle' hidden={!this.state.cnnEventTriggerVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
@@ -233,7 +233,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='CNN 事件觸發後每次循環時間長度' name='rec_after_event_duration' hidden={!this.state.cnnEventTriggerVisible}>
+            <Item label='The duration of each loop after the CNN event is triggered' name='rec_after_event_duration' hidden={!this.state.cnnEventTriggerVisible}>
               <Row>
                 <Col span={12}>
                   <Slider
@@ -252,7 +252,7 @@ class DeviceTable extends Component {
                 </Col>
               </Row>
             </Item>
-            <Item label='是否將所有圖片上傳' name='upload_all_pictures' hidden={!this.state.uploadPicturesVisible}>
+            <Item label='Upload All Pictures' name='upload_all_pictures' hidden={!this.state.uploadPicturesVisible}>
               <Switch
                 defaultChecked={true}
                 hidden={!this.state.uploadPicturesVisible}
@@ -260,7 +260,7 @@ class DeviceTable extends Component {
                 onChange={this.uploadAllPics2ServerChange}>
               </Switch>
             </Item>
-            <Item label='是否將採集資料上傳至雲端' name='upload_all_files' hidden={!this.state.uploadServerVisible}>
+            <Item label='Upload Collected Data to the Cloud' name='upload_all_files' hidden={!this.state.uploadServerVisible}>
               <Switch
                 defaultChecked={true}
                 hidden={!this.state.uploadServerVisible}
@@ -482,7 +482,7 @@ class DeviceTable extends Component {
           }
         } else {
           Modal.error({
-            title: '此FPS無效, 請重新輸入!',
+            title: 'This FPS is invalid. Please try again!',
             onOk: () => {
               message.destroy()
             }

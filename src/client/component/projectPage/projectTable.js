@@ -48,12 +48,12 @@ class ProjectTable extends Component {
           style={{ whiteSpace: 'pre'}}
           scroll={{ x: 1000, y: 750 }}
         >
-          <Column title='操作' render={this.buttonGroup} align='center' width='10%' />
-          <Column title='專案代號' dataIndex='project' align='center' width='15%' />
-          <Column title='專案名稱' dataIndex='displayName' align='center' width='15%' />
-          <Column title='已配置的主機' dataIndex='Hosts' key="Hosts" align='center'
+          <Column title='Action' render={this.buttonGroup} align='center' width='10%' />
+          <Column title='Project ID' dataIndex='project' align='center' width='15%' />
+          <Column title='Display Name' dataIndex='displayName' align='center' width='15%' />
+          <Column title='Builded Host' dataIndex='Hosts' key="Hosts" align='center'
             render={(Hosts) => Hosts.map(c => c.serialNumber+' ('+c.hostName+')'+'\n').join('')} />
-          <Column title='已配置的設備' dataIndex='Hosts' key='Hosts' align='center'
+          <Column title='Builded Device' dataIndex='Hosts' key='Hosts' align='center'
             render={(Hosts) => Hosts.map( c => c.Devices.map(d => d.deviceId+' ('+d.deviceName+')'+'\n').join(''))}
           />
         </Table>
@@ -64,14 +64,14 @@ class ProjectTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='請輸入專案代號' name='project' rules={[this.rule('專案代號')]}>
+            <Item label='Please Input Project ID' name='project' rules={[this.rule('專案代號')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.project)}`
                 }
               />
             </Item>
-            <Item label='請輸入專案名稱' name='displayName' rules={[this.rule('專案名稱')]}>
+            <Item label='Please Input Project Name' name='displayName' rules={[this.rule('專案名稱')]}>
               <Input
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.displayName)}`
@@ -80,7 +80,7 @@ class ProjectTable extends Component {
             </Item>
             <Item>
               <Button htmlType='submit'>
-                確認
+                submit
               </Button>
             </Item>
           </Form>

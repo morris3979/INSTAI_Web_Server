@@ -499,7 +499,7 @@ const LabelStudioWrapper = (props) => {
               width='10%'
             />
             <Column
-              title='操作'
+              title='Action'
               align="center"
               render={actionBtn}
               width='15%'

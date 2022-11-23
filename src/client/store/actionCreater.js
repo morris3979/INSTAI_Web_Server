@@ -70,7 +70,7 @@ export const WhichDevice = (text) => {
 export const LoginFormData = (data) => {
   return (
     async (dispatch) => {
-      message.loading('登入中，請稍後...', 0)
+      message.loading('Loading...', 0)
       const convertedData = {}
       Object.keys(data).forEach((key) => {
         convertedData[String(key).slice(5)] = data[key]
@@ -119,7 +119,7 @@ export const LogoutData = () => {
 export const RegisterFormData = (data) => {
   return (
     async () => {
-      message.loading('註冊中，請稍後...', 0)
+      message.loading('Loading...', 0)
       const convertedData = {}
       delete data['registerConfirmPassword']
       Object.keys(data).forEach((key) => {
@@ -129,7 +129,7 @@ export const RegisterFormData = (data) => {
         await axios.post('/api/user/register', convertedData)
         message.destroy()
         Modal.success({
-          title: '註冊成功',
+          title: 'Complete !',
           onOk: () => { location.reload() }
         })
       } catch (error) {
@@ -152,11 +152,11 @@ export const GetAccountTableData = () => {
           const action = DeliverData(response.data, Account_Information)
           dispatch(action)
         } else {
-          throw '尚未建立資料'
+          throw 'No Data'
         }
       } catch (error) {
         Modal.warning({
-          title: '警告',
+          title: 'Warning',
           content: `${error}`
         })
       } finally {
@@ -170,12 +170,12 @@ export const GetAccountTableData = () => {
 export const PatchAccountTableData = (id, data) => {
   return (
     async (dispatch) => {
-      message.loading('修改中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         await axios.patch(`/api/user/${id}`, data)
         message.destroy()
         Modal.success({
-          title: '修改成功',
+          title: 'Complete !',
           onOk: () => {
             const action = GetAccountTableData()
             location.reload()
@@ -195,7 +195,7 @@ export const DeleteAccountTableData = (data) => {
     async (dispatch) => {
       try {
         if (data.admin == false) {
-          message.loading('刪除中，請稍後...', 0)
+          message.loading('Loading...', 0)
           await axios.delete(`/api/user/${data.id}`)
           message.destroy()
           Modal.success({
@@ -320,12 +320,12 @@ export const GetProjectTableData = () => {
 export const DeleteProjectTableData = (id) => {
   return (
     async (dispatch) => {
-      message.loading('刪除中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         await axios.delete(`/api/project/${id}`)
         message.destroy()
         Modal.success({
-          title: '刪除成功',
+          title: 'Complete !',
           onOk: () => {
             const action = GetProjectTableData()
             dispatch(action)
@@ -342,12 +342,12 @@ export const DeleteProjectTableData = (id) => {
 export const PatchProjectTableData = (id, data) => {
   return (
     async (dispatch) => {
-      message.loading('修改中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         await axios.patch(`/api/project/${id}`, data)
         message.destroy()
         Modal.success({
-          title: '修改成功',
+          title: 'Complete !',
           onOk: () => {
             const action = GetProjectTableData()
             location.reload()
@@ -365,17 +365,17 @@ export const PatchProjectTableData = (id, data) => {
 export const PostProjectTableData = (data) => {
   return (
     async (dispatch) => {
-      message.loading('新增中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         const response = await axios.post('/api/project', data)
         message.destroy()
         if (response.data == 'Already Exist') {
           Modal.warning({
-            title: '資料已存在'
+            title: 'Data existed'
           })
         } else {
           Modal.success({
-            title: '新增成功',
+            title: 'Complete !',
             onOk: () => {
               const action = GetProjectTableData()
               location.reload()
@@ -403,11 +403,11 @@ export const GetHostTableData = () => {
           const action = DeliverData(response.data, Get_Host_Table)
           dispatch(action)
         } else {
-          throw '尚未建立資料'
+          throw 'No Data'
         }
       } catch (error) {
         Modal.warning({
-          title: '警告',
+          title: 'Warning',
           content: `${error}`
         })
       } finally {
@@ -421,12 +421,12 @@ export const GetHostTableData = () => {
 export const DeleteHostTableData = (id) => {
   return (
     async (dispatch) => {
-      message.loading('刪除中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         await axios.delete(`/api/host/${id}`)
         message.destroy()
         Modal.success({
-          title: '刪除成功',
+          title: 'Complete !',
           onOk: () => {
             const action = GetHostTableData()
             dispatch(action)
@@ -443,7 +443,7 @@ export const DeleteHostTableData = (id) => {
 export const PatchHostTableData = (id, data) => {
   return (
     async (dispatch) => {
-      message.loading('修改中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         await axios.patch(`/api/host/${id}`, data)
         message.destroy()
@@ -466,17 +466,17 @@ export const PatchHostTableData = (id, data) => {
 export const PostHostTableData = (data) => {
   return (
     async (dispatch) => {
-      message.loading('新增中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         const response = await axios.post('/api/host', data)
         message.destroy()
         if (response.data == 'Already Exist') {
           Modal.warning({
-            title: '資料已存在'
+            title: 'Data existed'
           })
         } else {
           Modal.success({
-            title: '新增成功',
+            title: 'Complete !',
             onOk: () => {
               const action = GetDeviceTableData()
               location.reload()
@@ -508,8 +508,8 @@ export const PostHostMQTT = (data) => {
         })
         Modal.success(
           {
-            title: `封包已傳送至 (${data.serialNumber} - ${data.hostName})`,
-            content: `傳送內容: ${data.command}`,
+            title: `Packet sent to (${data.serialNumber} - ${data.hostName})`,
+            content: `Content: ${data.command}`,
             onOk: () => {
               return new Promise((resolve, reject) => {
                 setTimeout(Math.random() > 0.5 ? resolve : reject, 3600);
@@ -544,11 +544,11 @@ export const GetDeviceTableData = () => {
           const action = DeliverData(response.data, Get_Device_Table)
           dispatch(action)
         } else {
-          throw '尚未建立資料'
+          throw 'No Data'
         }
       } catch (error) {
         Modal.warning({
-          title: '警告',
+          title: 'Warning',
           content: `${error}`
         })
       } finally {
@@ -562,12 +562,12 @@ export const GetDeviceTableData = () => {
 export const DeleteDeviceTableData = (id) => {
   return (
     async (dispatch) => {
-      message.loading('刪除中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         await axios.delete(`/api/device/${id}`)
         message.destroy()
         Modal.success({
-          title: '刪除成功',
+          title: 'Complete !',
           onOk: () => {
             const action = GetDeviceTableData()
             dispatch(action)
@@ -584,12 +584,12 @@ export const DeleteDeviceTableData = (id) => {
 export const PatchDeviceTableData = (id, data) => {
   return (
     async (dispatch) => {
-      message.loading('修改中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         await axios.patch(`/api/device/${id}`, data)
         message.destroy()
         Modal.success({
-          title: '修改成功',
+          title: 'Complete !',
           onOk: () => {
             const action = GetDeviceTableData()
             location.reload()
@@ -607,17 +607,17 @@ export const PatchDeviceTableData = (id, data) => {
 export const PostDeviceTableData = (data) => {
   return (
     async (dispatch) => {
-      message.loading('新增中，請稍後...', 0)
+      message.loading('Loading...', 0)
       try {
         const response = await axios.post('/api/device', data)
         message.destroy()
         if (response.data == 'Already Exist') {
           Modal.warning({
-            title: '資料已存在'
+            title: 'Data existed'
           })
         } else {
           Modal.success({
-            title: '新增成功',
+            title: 'Complete !',
             onOk: () => {
               const action = GetDeviceTableData()
               location.reload()
@@ -651,8 +651,8 @@ export const PostDeviceMQTT = (data) => {
         })
         Modal.success(
           {
-            title: `封包已傳送至 (${data.deviceId} - ${data.deviceName})`,
-            content: `傳送內容: ${data.command}`,
+            title: `Packet sent to (${data.deviceId} - ${data.deviceName})`,
+            content: `Content: ${data.command}`,
             onOk: () => {
               return new Promise((resolve, reject) => {
                 setTimeout(Math.random() > 0.5 ? resolve : reject, 3600);
@@ -684,8 +684,8 @@ export const PostAIServerMQTT = (data) => {
         await axios.post('/api/aws/iot/publish/AIServer', sendData)
         Modal.success(
           {
-            title: '封包已傳送至 AIServer',
-            content: `傳送內容: ${data}`
+            title: 'Packet sent to AIServer',
+            content: `Content: ${data}`
           }
         )
       } catch (error) {
@@ -823,11 +823,11 @@ export const GetModelListFromS3 = () => {
           const action = DeliverData(response.data, Get_Model_List)
           dispatch(action)
         } else {
-          throw '尚未建立資料'
+          throw 'No Data'
         }
       } catch (error) {
         Modal.warning({
-          title: '警告',
+          title: 'Warning',
           content: `${error}`
         })
       } finally {

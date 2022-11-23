@@ -214,7 +214,7 @@ const OverviewCard = (props) => {
     <Fragment>
         <div className="site-card-wrapper" style={{ margin: 6 }}>
             <span>
-                <Title level={2} style={{ margin: 6 }}>共 {checkValueFilter.length} 筆資料，{time}</Title>
+                <Title level={2} style={{ margin: 6 }}>Total {checkValueFilter.length} Records，{time}</Title>
             </span>
             <span>
                 <Select

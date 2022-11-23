@@ -75,13 +75,13 @@ class AccountManageTable extends Component {
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
         >
-          <Column title='操作' render={this.buttonGroup} align='center' width={150} />
-          <Column title='帳號' dataIndex='username' align='center' />
-          <ColumnGroup title='權限' align='center'>
+          <Column title='Action' render={this.buttonGroup} align='center' width={150} />
+          <Column title='Username' dataIndex='username' align='center' />
+          <ColumnGroup title='Authority' align='center'>
             <Column title='admin' render={adminStatus} align='center' />
             <Column title='user' render={userStatus} align='center' />
           </ColumnGroup>
-          <Column title='所屬專案' dataIndex={['Project', 'displayName']} align='center' />
+          <Column title='Project' dataIndex={['Project', 'displayName']} align='center' />
         </Table >
         <Modal
           visible={this.state.isChangeModalVisible}
@@ -100,7 +100,7 @@ class AccountManageTable extends Component {
                 defaultChecked={convertedBoolean(this.props.whichModal.user)}
               />
             </Item>
-            <Item label='請選擇專案配置' name='ProjectId' hidden={this.props.whichModal.admin == true}>
+            <Item label='Please Select Project' name='ProjectId' hidden={this.props.whichModal.admin == true}>
               <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
                 defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
                 {this.props.projectTableData.map(c => {
@@ -110,7 +110,7 @@ class AccountManageTable extends Component {
             </Item>
             <Item>
               <Button htmlType='submit' onClick={this.handleCancel}>
-                確認
+                submit
               </Button>
             </Item>
           </Form>

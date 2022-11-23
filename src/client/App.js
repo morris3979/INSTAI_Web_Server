@@ -106,10 +106,10 @@ const App = (props) => {
               icon={<TableOutlined />}
             >
               <Link to='/overview'>
-                資料總覽
+                Overview
               </Link>
             </Item>
-            <SubMenu key='subreport' title='報表查詢'
+            <SubMenu key='subreport' title='Project'
               hidden={
                 !(loginInformation.developer ||
                   loginInformation.admin ||
@@ -159,7 +159,7 @@ const App = (props) => {
               icon={<FormOutlined />}
             >
               <Link to='/label'>
-                資料標記
+                Labeling
               </Link>
             </Item>
             <Item key='/training'
@@ -172,7 +172,7 @@ const App = (props) => {
               icon={<CoffeeOutlined />}
             >
               <Link to='/training'>
-                資料訓練
+                Training
               </Link>
             </Item>
             <Item key='/TrendChart'
@@ -185,10 +185,10 @@ const App = (props) => {
               icon={<LineChartOutlined />}
             >
               <Link to='/TrendChart'>
-                統計圖表
+                TrendChart
               </Link>
             </Item>
-            <SubMenu key='subset' title='配置設定'
+            <SubMenu key='subset' title='Setting'
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<SettingOutlined />}
             >
@@ -200,7 +200,7 @@ const App = (props) => {
                 }
               >
                 <Link to='/project'>
-                  專案管理
+                  Project
                 </Link>
               </Item>
               <Item key='/host'
@@ -211,7 +211,7 @@ const App = (props) => {
                 }
               >
                 <Link to='/host'>
-                  主機配置
+                  Host
                 </Link>
               </Item>
               <Item key='/device'
@@ -222,7 +222,7 @@ const App = (props) => {
                 }
               >
                 <Link to='/device'>
-                  設備配置
+                  Device
                 </Link>
               </Item>
               <Item key='/account'
@@ -231,7 +231,7 @@ const App = (props) => {
                 }
               >
                 <Link to='/account'>
-                  帳號權限配置
+                  Account
                 </Link>
               </Item>
             </SubMenu>
@@ -240,7 +240,7 @@ const App = (props) => {
               icon={<ToolOutlined />}
             >
               <Link to='/test'>
-                測試
+                Test
               </Link>
             </Item>
             {/* <Item key='/resource'
@@ -265,7 +265,7 @@ const App = (props) => {
               icon={<LogoutOutlined />}
             >
               <Link to='/'>
-                登出
+                Logout
               </Link>
             </Item>
           </Menu>

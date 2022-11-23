@@ -31,21 +31,21 @@ const RegisterForm = (props) => {
   return (
     <Fragment>
       <Title>
-        帳號註冊
+        Register
       </Title>
       <Divider />
       <Form size='large' layout='vertical' onFinish={onFinish}>
         <Item
           label='Username'
           name='registerusername'
-          rules={[{ required: true, message: '請輸入帳號' }]}
+          rules={[{ required: true, message: 'Please Input Username' }]}
         >
           <Input />
         </Item>
         <Item
           label='Password'
           name='registerpassword'
-          rules={[{ required: true, message: '請輸入密碼' }]}
+          rules={[{ required: true, message: 'Please Input Password' }]}
         >
           <Password />
         </Item>
@@ -54,7 +54,7 @@ const RegisterForm = (props) => {
           name='registerConfirmPassword'
           dependencies={['registerpassword']}
           rules={[
-            { required: true, message: '請再次輸入密碼' },
+            { required: true, message: 'Please Input Username Again' },
             passwordConfirm
           ]}
         >
@@ -62,7 +62,7 @@ const RegisterForm = (props) => {
         </Item>
         <Item>
           <Button htmlType='submit'>
-            註冊
+            submit
           </Button>
         </Item>
       </Form>
