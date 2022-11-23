@@ -254,14 +254,18 @@ const LabelStudioWrapper = (props) => {
     const fileName = previewTitle;
     const extIndex = fileName.lastIndexOf('.');
     const newFileName = extIndex != -1? fileName.substring(0, extIndex): fileName;
-    Modal.info({
-      title: newFileName+'.json',
-      content:(
-        <div>
-          <p>{!json4Training? 'No Data': json4Training}</p>
-        </div>
-      )
-    });
+    if (!json4Training) {
+      message.warning('Please label the image first !')
+    } else {
+      Modal.info({
+        title: newFileName+'.json',
+        content:(
+          <div>
+            <p>{json4Training}</p>
+          </div>
+        )
+      });
+    }
   }
 
   const onAddLabel = () => {
