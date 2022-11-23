@@ -376,7 +376,7 @@ const AIServer = (props) => {
                     onClick={() => {
                         if (!sendToAI) {
                             message.warning('Please Select Command !')
-                        } else if (sendToAI == 'download') {
+                        } else if (sendToAI == 'Download') {
                             selectLabeledData.length == '0'?
                             message.warning('Please Select Data to Data Waiting Area !'):
                             props.postAIServerMQTT(sendToAI+`;[${selectLabeledData}]`)
