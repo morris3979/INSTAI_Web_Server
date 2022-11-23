@@ -22,7 +22,8 @@ import {
     CheckOutlined,
     CloseOutlined,
     MessageOutlined,
-    PlusOutlined
+    PlusOutlined,
+    ReloadOutlined
 } from '@ant-design/icons'
 import { io } from 'socket.io-client'
 
@@ -115,6 +116,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
       };
       return (
         <Fragment>
+            <Button style={{ margin: 5 }} icon={<ReloadOutlined />} onClick={() => location.reload()} />
             <Table
                 style={{
                     pointerEvents: listDisabled ? 'none' : undefined,
@@ -168,8 +170,6 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
     </Transfer>
 )
 
-let index = 0;
-
 const AIServer = (props) => {
     const {
         loginInformation,
@@ -183,7 +183,7 @@ const AIServer = (props) => {
     const [filterData, setFilterData] = useState([])
     const [targetKeys, setTargetKeys] = useState(originTargetKeys);
     const [selectLabeledData, setSelectLabeledData] = useState([])
-    const [items, setItems] = useState(['Hi AIServer', 'download']);
+    const [items, setItems] = useState(['Hi AIServer', 'Download']);
     const [name, setName] = useState('');
     const inputRef = useRef(null);
 
@@ -217,18 +217,9 @@ const AIServer = (props) => {
         })
     }, []);
 
-
     const originTargetKeys = filterData
         .filter((item) => Number(item.key) % 3 > 1)
         .map((item) => item.key)
-
-    const onChangeInput = (e) => {
-        if (!selectLabeledData) {
-            setSendToAI(e.target.value)
-        } else {
-            setSendToAI(e.target.value+';['+[selectLabeledData]+']')
-        }
-    }
 
     const onNameChange = (event) => {
         setName(event.target.value);
@@ -398,7 +389,7 @@ const AIServer = (props) => {
             <Title level={4} style={{ margin: 12 }}><MessageOutlined /> {messageFromAIServer}</Title>
             <TableTransfer
                 titles={['Labeled Data Area', 'Data Waiting Area (To AI Server)']}
-                showSearch
+                // showSearch
                 targetKeys={targetKeys}
                 dataSource={filterData}
                 onChange={onChange}
@@ -413,12 +404,13 @@ const mapStateToProps = (state) => {
     return {
         loginInformation: state.loginInformation,
         projectTableData: state.projectTableData,
-        eventList: state.eventList
+        eventList: state.eventList,
+        tableStatus: state.tableStatus,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-//dispatch指store.dispatch這個方法
+    //dispatch指store.dispatch這個方法
     return {
         getProjectTableData() {
           const action = GetProjectTableData()
