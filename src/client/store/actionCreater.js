@@ -800,6 +800,7 @@ export const UploadJsonFile = (file) => {
   return (
     async () => {
       let formData = new FormData();
+      formData.append('file',file)
       return axios.post(
         `/api/aws/s3/upload/json`, formData
       ).then(response => {

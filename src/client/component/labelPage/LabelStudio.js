@@ -56,6 +56,7 @@ const LabelStudioWrapper = (props) => {
   const [path, setPath] = useState();
   const [json4Training, setJson4Training] = useState();
   const [additionalLabels, setAdditionalLabels] = useState([]);
+  const [fileList, setFileList] = useState([]);
 
   const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -302,9 +303,27 @@ const LabelStudioWrapper = (props) => {
     return CleanedData
   }
 
-  const handleUploadJson = async (file) => {
-    console.log('file: ', file)
-    // uploadJsonFile(file)
+  const handleUploadJson = {
+    onRemove: (file) => {
+      console.log(file)
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      file.status = 'error'
+      console.log(file)
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
+  };
+
+  const uploadJson = () => {
+    // console.log(fileList[0])
+    uploadJsonFile(fileList[0])
+    setFileList([])
   }
 
   const checkCleaned = (text) => {
@@ -400,7 +419,7 @@ const LabelStudioWrapper = (props) => {
         <div style={{ margin: 18 }}>
           {
             data.json == true?
-            <Upload onChange={handleUploadJson}>
+            <Upload>
               <Button
                 style={{ margin: 2, ...border }}
                 type="primary"
@@ -410,7 +429,7 @@ const LabelStudioWrapper = (props) => {
                 Upload JSON
               </Button>
             </Upload>:
-            <Upload onChange={handleUploadJson}>
+            <Upload {...handleUploadJson}>
               <Button
                 style={{ margin: 2, ...border }}
                 type="primary"
@@ -424,6 +443,7 @@ const LabelStudioWrapper = (props) => {
             type="primary"
             style={{ margin: 2, ...border }}
             icon={<SaveOutlined />}
+            onClick={uploadJson}
           >
             Save Labeled
           </Button>
