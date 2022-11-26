@@ -27,11 +27,12 @@ import {
   UploadOutlined,
   CheckOutlined,
   CloseOutlined,
-  SaveOutlined
+  SaveOutlined,
 } from '@ant-design/icons'
 import {
   GetProjectTableData,
   GetEventList,
+  PatchDetailsTableData,
   UploadJsonFile
 } from '../../store/actionCreater'
 
@@ -57,6 +58,7 @@ const LabelStudioWrapper = (props) => {
   const [json4Training, setJson4Training] = useState();
   const [additionalLabels, setAdditionalLabels] = useState([]);
   const [fileList, setFileList] = useState([]);
+  const [checkValue, setcheckValue] = useState([])
 
   const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -66,7 +68,8 @@ const LabelStudioWrapper = (props) => {
     loginInformation,
     eventList,
     getEventList,
-    uploadJsonFile
+    uploadJsonFile,
+    patchDetailsTableData
   } = props
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
@@ -321,9 +324,34 @@ const LabelStudioWrapper = (props) => {
   };
 
   const uploadJson = () => {
-    // console.log(fileList[0])
-    uploadJsonFile(fileList[0])
-    setFileList([])
+    checkValue.map((element) => {
+      patchDetailsTableData(element.id,value2json(element))
+    })
+    setcheckValue([])
+    if(fileList.length>0){
+      uploadJsonFile(fileList[0])
+      setFileList([])
+    }
+  }
+
+  const value2json = (value) => {
+    if(typeof(value.json) === 'boolean'){
+      if(value.json == true){
+        const json = { json : '1' }
+        return json
+      }else{
+        const json = { json : '0' }
+        return json
+      }
+    }else if(typeof(value.labeled) === 'boolean'){
+      if(value.labeled == true){
+        const labeled = { labeled : '1' }
+        return labeled
+      }else{
+        const labeled = { labeled : '0' }
+        return labeled
+      }
+    }
   }
 
   const checkCleaned = (text) => {
@@ -338,68 +366,38 @@ const LabelStudioWrapper = (props) => {
     }
   }
 
-  const checkLabeled = (text) => {
-    if (text.labeled == true) {
-        return (
-          <Fragment>
-            {/* <Col><CheckOutlined /></Col> */}
-            <Col>
-              <Switch
-                style={{ margin: 3 }}
-                checkedChildren={<CheckOutlined />}
-                unCheckedChildren={<CloseOutlined />}
-                defaultChecked
-                onChange={(click) => {console.log('click T', click)}}
-              />
-            </Col>
-          </Fragment>
-        )
-    } else {
-        return (
-          <Fragment>
-            {/* <Col><CloseOutlined /></Col> */}
-            <Col>
-              <Switch
-                style={{ margin: 3 }}
-                checkedChildren={<CheckOutlined />}
-                unCheckedChildren={<CloseOutlined />}
-                onChange={(click) => {console.log('click F', click)}}
-              />
-            </Col>
-          </Fragment>
-        )
-    }
+  const checkLabeled = (text,record) => {
+    return(
+      <Fragment>
+        <Col>
+          <Switch
+            style={{ margin: 3 }}
+            checkedChildren={<CheckOutlined />}
+            unCheckedChildren={<CloseOutlined />}
+            key={record.id}
+            defaultChecked={text}
+            onChange={(click) => {setcheckValue([...checkValue,{id:record.id,labeled:click}])}}
+          />
+        </Col>
+      </Fragment>
+    )
   }
 
-  const checkJson = (text) => {
-    if (text.json == true) {
-      return (
-        <Fragment>
-          {/* <Col><CheckOutlined /></Col> */}
-          <Col>
-            <Switch
-              style={{ margin: 3 }}
-              checkedChildren={<CheckOutlined />}
-              unCheckedChildren={<CloseOutlined />}
-              defaultChecked
-            />
-          </Col>
-        </Fragment>
-      )
-    } else {
-      return (
-        <Fragment>
-          {/* <Col><CloseOutlined /></Col> */}
-          <Col>
-            <Switch
-              style={{ margin: 3 }}
-              checkedChildren={<CheckOutlined />}
-              unCheckedChildren={<CloseOutlined />}
-            />
-          </Col>
-        </Fragment>
-      )
-    }
+  const checkJson = (text,record) => {
+    return(
+      <Fragment>
+      <Col>
+        <Switch
+          style={{ margin: 3 }}
+          checkedChildren={<CheckOutlined />}
+          unCheckedChildren={<CloseOutlined />}
+          key={record.id}
+          defaultChecked={text}
+          onChange={(click) => {setcheckValue([...checkValue,{id:record.id,json:click}])}}
+        />
+      </Col>
+      </Fragment>
+    )
   }
 
   const actionBtn = (data) => {
@@ -509,12 +507,16 @@ const LabelStudioWrapper = (props) => {
             <Column
                 title='labeled'
                 render={checkLabeled}
+                dataIndex='labeled'
+                key='labeled'
                 align='center'
                 width='10%'
             />
             <Column
               title='json'
               render={checkJson}
+              dataIndex='json'
+              key='json'
               align='center'
               width='10%'
             />
@@ -603,6 +605,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getEventList() {
       const action = GetEventList()
+      dispatch(action)
+    },
+    patchDetailsTableData(id,data){
+      const action = PatchDetailsTableData(id,data)
       dispatch(action)
     },
     uploadJsonFile(file) {
