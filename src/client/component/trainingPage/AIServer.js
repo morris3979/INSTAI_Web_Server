@@ -130,7 +130,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                 dataSource={filteredItems}
                 rowSelection={rowSelection}
                 columns={columns}
-                scroll={{ x: 500, y: 600 }}
+                scroll={{ x: 500, y: 800 }}
                 pagination={{ position: ['bottomCenter'], pageSize: 4 }}
             >
                 <Column
