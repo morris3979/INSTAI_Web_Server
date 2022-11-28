@@ -58,7 +58,7 @@ const LabelStudioWrapper = (props) => {
   const [json4Training, setJson4Training] = useState();
   const [additionalLabels, setAdditionalLabels] = useState([]);
   const [fileList, setFileList] = useState([]);
-  const [checkValue, setcheckValue] = useState([])
+  const [checkValue, setCheckValue] = useState([])
 
   const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -285,7 +285,7 @@ const LabelStudioWrapper = (props) => {
     setAdditionalLabels([]);
   }
 
-  const FilterData = (value) => {    
+  const FilterData = (value) => {
     const response = eventList.filter((c) => {
       return c.Details
     })
@@ -308,15 +308,15 @@ const LabelStudioWrapper = (props) => {
 
   const handleUploadJson = {
     onRemove: (file) => {
-      console.log(file)
+      // console.log(file)
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
       setFileList(newFileList);
     },
     beforeUpload: (file) => {
-      file.status = 'error'
-      console.log(file)
+      file.status = 'done'
+      // console.log(file)
       setFileList([...fileList, file]);
       return false;
     },
@@ -325,13 +325,13 @@ const LabelStudioWrapper = (props) => {
 
   const uploadJson = (id) => {
     checkValue.map((element) => {
-      patchDetailsTableData(element.id,value2json(element))
+      patchDetailsTableData(element.id, value2json(element))
     })
-    setcheckValue([])
-    if(fileList.length>0){
+    setCheckValue([])
+    if(fileList.length > 0){
       uploadJsonFile(fileList[0])
       setFileList([])
-      patchDetailsTableData(id,{ json : '1' })
+      patchDetailsTableData(id, { json: '1' })
       window.location.reload(false);
     }
   }
@@ -339,18 +339,18 @@ const LabelStudioWrapper = (props) => {
   const value2json = (value) => {
     if(typeof(value.json) === 'boolean'){
       if(value.json == true){
-        const json = { json : '1' }
+        const json = { json: '1' }
         return json
       }else{
-        const json = { json : '0' }
+        const json = { json: '0' }
         return json
       }
     }else if(typeof(value.labeled) === 'boolean'){
       if(value.labeled == true){
-        const labeled = { labeled : '1' }
+        const labeled = { labeled: '1' }
         return labeled
       }else{
-        const labeled = { labeled : '0' }
+        const labeled = { labeled: '0' }
         return labeled
       }
     }
@@ -368,7 +368,7 @@ const LabelStudioWrapper = (props) => {
     }
   }
 
-  const checkLabeled = (text,record) => {
+  const checkLabeled = (text, record) => {
     return(
       <Fragment>
         <Col>
@@ -378,7 +378,9 @@ const LabelStudioWrapper = (props) => {
             unCheckedChildren={<CloseOutlined />}
             key={record.id}
             defaultChecked={text}
-            onChange={(click) => {setcheckValue([...checkValue,{id:record.id,labeled:click}])}}
+            onChange={(click) => {
+              setCheckValue([...checkValue, { id: record.id, labeled: click }])
+            }}
           />
         </Col>
       </Fragment>
@@ -395,7 +397,9 @@ const LabelStudioWrapper = (props) => {
             unCheckedChildren={<CloseOutlined />}
             key={record.id}
             defaultChecked={text}
-            onChange={(click) => {setcheckValue([...checkValue,{id:record.id,json:click}])}}
+            onChange={(click) => {
+              setCheckValue([...checkValue, { id: record.id, json: click }])
+            }}
           />
         </Col>
       </Fragment>
