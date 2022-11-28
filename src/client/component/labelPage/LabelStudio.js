@@ -387,7 +387,7 @@ const LabelStudioWrapper = (props) => {
     )
   }
 
-  const checkJson = (text,record) => {
+  const checkJson = (text, record) => {
     return(
       <Fragment>
         <Col>
