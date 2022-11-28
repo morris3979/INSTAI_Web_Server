@@ -285,7 +285,7 @@ const LabelStudioWrapper = (props) => {
     setAdditionalLabels([]);
   }
 
-  const FilterData = (value) => {
+  const FilterData = (value) => {    
     const response = eventList.filter((c) => {
       return c.Details
     })
@@ -323,7 +323,7 @@ const LabelStudioWrapper = (props) => {
     fileList,
   };
 
-  const uploadJson = () => {
+  const uploadJson = (id) => {
     checkValue.map((element) => {
       patchDetailsTableData(element.id,value2json(element))
     })
@@ -331,6 +331,8 @@ const LabelStudioWrapper = (props) => {
     if(fileList.length>0){
       uploadJsonFile(fileList[0])
       setFileList([])
+      patchDetailsTableData(id,{ json : '1' })
+      window.location.reload(false);
     }
   }
 
@@ -386,16 +388,16 @@ const LabelStudioWrapper = (props) => {
   const checkJson = (text,record) => {
     return(
       <Fragment>
-      <Col>
-        <Switch
-          style={{ margin: 3 }}
-          checkedChildren={<CheckOutlined />}
-          unCheckedChildren={<CloseOutlined />}
-          key={record.id}
-          defaultChecked={text}
-          onChange={(click) => {setcheckValue([...checkValue,{id:record.id,json:click}])}}
-        />
-      </Col>
+        <Col>
+          <Switch
+            style={{ margin: 3 }}
+            checkedChildren={<CheckOutlined />}
+            unCheckedChildren={<CloseOutlined />}
+            key={record.id}
+            defaultChecked={text}
+            onChange={(click) => {setcheckValue([...checkValue,{id:record.id,json:click}])}}
+          />
+        </Col>
       </Fragment>
     )
   }
@@ -441,7 +443,9 @@ const LabelStudioWrapper = (props) => {
             type="primary"
             style={{ margin: 2, ...border }}
             icon={<SaveOutlined />}
-            onClick={uploadJson}
+            onClick={() => {
+              uploadJson(data.id)
+            }}
           >
             Save Labeled
           </Button>
