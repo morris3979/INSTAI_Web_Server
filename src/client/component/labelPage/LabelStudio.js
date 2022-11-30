@@ -28,6 +28,7 @@ import {
   CheckOutlined,
   CloseOutlined,
   SaveOutlined,
+  FileOutlined,
 } from '@ant-design/icons'
 import {
   GetProjectTableData,
@@ -401,6 +402,14 @@ const LabelStudioWrapper = (props) => {
               setCheckValue([...checkValue, { id: record.id, json: click }])
             }}
           />
+          <Button
+            type="primary"
+            style={{ margin: 2, ...border }}
+            icon={<FileOutlined />}
+            onClick={() => {}}
+          >
+            View JSON File
+          </Button>
         </Col>
       </Fragment>
     )
@@ -504,7 +513,7 @@ const LabelStudioWrapper = (props) => {
               title='filename'
               align="center"
               dataIndex='details'
-              width='35%'
+              width='25%'
             />
             <Column
                 title='cleaned'
@@ -526,7 +535,7 @@ const LabelStudioWrapper = (props) => {
               dataIndex='json'
               key='json'
               align='center'
-              width='10%'
+              width='20%'
             />
             <Column
               title='Action'

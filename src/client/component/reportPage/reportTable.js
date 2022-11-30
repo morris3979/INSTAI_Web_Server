@@ -154,12 +154,12 @@ const reportTable = (props) => {
             size='large'
             icon={<FileOutlined />}
             onClick={() => csv_onClick(data.details)}
-          />:
+          >CSV</Button>:
           <Button
             disabled
             size='large'
             icon={<FileOutlined />}
-          />
+          >CSV</Button>
         }
         </Space>
       </Fragment>
@@ -363,7 +363,7 @@ const reportTable = (props) => {
           <Column
               title='Data'
               render={video}
-              width='40%'
+              width='30%'
               align='center'
           />
           <Column
