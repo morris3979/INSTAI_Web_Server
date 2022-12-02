@@ -37,7 +37,7 @@ import {
   UploadJsonFile
 } from '../../store/actionCreater'
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { Panel } = Collapse;
 const { Column } = Table;
 const border = {
@@ -369,23 +369,16 @@ const LabelStudioWrapper = (props) => {
     }
   }
 
-  const checkLabeled = (text, record) => {
-    return(
-      <Fragment>
-        <Col>
-          <Switch
-            style={{ margin: 3 }}
-            checkedChildren={<CheckOutlined />}
-            unCheckedChildren={<CloseOutlined />}
-            key={record.id}
-            defaultChecked={text}
-            onChange={(click) => {
-              setCheckValue([...checkValue, { id: record.id, labeled: click }])
-            }}
-          />
-        </Col>
-      </Fragment>
-    )
+  const checkLabeled = (text) => {
+    if (text.labeled == true) {
+        return (
+          <CheckOutlined />
+        )
+    } else {
+        return (
+          <CloseOutlined />
+        )
+    }
   }
 
   const checkJson = (text, record) => {
@@ -408,7 +401,7 @@ const LabelStudioWrapper = (props) => {
             icon={<FileOutlined />}
             onClick={() => {}}
           >
-            View JSON File
+            JSON File
           </Button>
         </Col>
       </Fragment>
@@ -471,11 +464,12 @@ const LabelStudioWrapper = (props) => {
     return (
       <Fragment align='center'>
         <Image
-          style={ border }
+          style={{ margin: 2, ...border }}
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
           width='100%'
           height='100%'
         />
+        <Text>{text.details}</Text>
       </Fragment>
     )
   }
@@ -491,8 +485,7 @@ const LabelStudioWrapper = (props) => {
               type="text"
               size="large"
               addonBefore="../S3/Image/"
-              placeholder="Input Image Name ..."
-              addonAfter=".jpg"
+              placeholder="Input Filename ..."
               style={{ height: 30, width: '50%' }}
               onChange={handleInput}
               value={ urlImage? urlImage: ''}
@@ -510,16 +503,10 @@ const LabelStudioWrapper = (props) => {
               width='20%'
             />
             <Column
-              title='filename'
-              align="center"
-              dataIndex='details'
-              width='25%'
-            />
-            <Column
                 title='cleaned'
                 render={checkCleaned}
                 align='center'
-                width='10%'
+                width='20%'
             />
             <Column
                 title='labeled'
@@ -527,7 +514,7 @@ const LabelStudioWrapper = (props) => {
                 dataIndex='labeled'
                 key='labeled'
                 align='center'
-                width='10%'
+                width='20%'
             />
             <Column
               title='json'
@@ -541,7 +528,7 @@ const LabelStudioWrapper = (props) => {
               title='Action'
               align="center"
               render={actionBtn}
-              width='15%'
+              width='20%'
             />
           </Table>
         </Panel>

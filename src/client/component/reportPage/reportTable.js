@@ -36,54 +36,6 @@ const border = {
     borderBottomRightRadius: '12px',
 }
 
-const video = (text) => {
-  if (text.image == true && text.video == true) {
-    return (
-      <Fragment align='center'>
-        <Image
-          style={ border }
-          src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
-          width='100%'
-          height='100%'
-        />
-        <ReactPlayer
-          style={ border }
-          url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
-          controls={true}
-          width='100%'
-          height='100%'
-        />
-        <Text>{text.details}</Text>
-      </Fragment>
-    )
-  } else if (text.image == true) {
-    return (
-      <Fragment align='center'>
-        <Image
-          style={ border }
-          src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
-          width='100%'
-          height='100%'
-        />
-        <Text>{text.details}</Text>
-      </Fragment>
-    )
-  } else if (text.video == true) {
-    return (
-      <Fragment align='center'>
-        <ReactPlayer
-          style={ border }
-          url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
-          controls={true}
-          width='100%'
-          height='100%'
-        />
-        <Text>{text.details}</Text>
-      </Fragment>
-    )
-  }
-}
-
 const checkRawData = (text) => {
   if (text.rawData == true) {
     return (
@@ -120,6 +72,72 @@ const reportTable = (props) => {
   const [csvFilename, setCsvFilename] = useState()
   const [selectedDate, setSelectedDate]= useState();
 
+  const video = (text) => {
+    if (text.image == true && text.video == true) {
+      return (
+        <Fragment align='center'>
+          <Image
+            style={ border }
+            src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
+            width='100%'
+            height='100%'
+          />
+          <ReactPlayer
+            style={ border }
+            url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
+            controls={true}
+            width='100%'
+            height='100%'
+          />
+          {
+            text.csv == true?
+            <Button
+              style={ border }
+              type='primary'
+              icon={<FileOutlined />}
+              onClick={() => csv_onClick(text.details)}
+            >CSV</Button>:''
+          }
+          <Text>{text.details}</Text>
+        </Fragment>
+      )
+    } else if (text.image == true) {
+      return (
+        <Fragment align='center'>
+          <Image
+            style={ border }
+            src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
+            width='100%'
+            height='100%'
+          />
+          {
+            text.csv == true?
+            <Button
+              style={ border }
+              type='primary'
+              icon={<FileOutlined />}
+              onClick={() => csv_onClick(text.details)}
+            >CSV</Button>:''
+          }
+          <Text>{text.details}</Text>
+        </Fragment>
+      )
+    } else if (text.video == true) {
+      return (
+        <Fragment align='center'>
+          <ReactPlayer
+            style={ border }
+            url={`https://d20cmf4o2f77jz.cloudfront.net/video/${text.details}.mp4`}
+            controls={true}
+            width='100%'
+            height='100%'
+          />
+          <Text>{text.details}</Text>
+        </Fragment>
+      )
+    }
+  }
+
   const download = (data) => {
     return (
       <Fragment>
@@ -127,7 +145,6 @@ const reportTable = (props) => {
         {
           data.cleaned == true?
           <Button
-            size='large'
             icon={<DownloadOutlined />}
             onClick={() => {
               if (data.image == true && data.video == true) {
@@ -141,25 +158,11 @@ const reportTable = (props) => {
                 console.log('data: ', data)
               }
             }}
-          />:
+          >Download</Button>:
           <Button
             disabled
-            size='large'
             icon={<DownloadOutlined />}
-          />
-        }
-        {
-          data.csv == true?
-          <Button
-            size='large'
-            icon={<FileOutlined />}
-            onClick={() => csv_onClick(data.details)}
-          >CSV</Button>:
-          <Button
-            disabled
-            size='large'
-            icon={<FileOutlined />}
-          >CSV</Button>
+          >Download</Button>
         }
         </Space>
       </Fragment>
@@ -468,7 +471,7 @@ const reportTable = (props) => {
             icon ={<DownloadOutlined />}
             style={{ marginLeft: "auto" }}
             onClick={downloadCsv}
-          />
+          >Download CSV</Button>
           </div>
         </Modal>
       </Fragment>
@@ -538,14 +541,14 @@ const reportTable = (props) => {
                 setEventID(data.id)
                 return(
                   <Button type="primary" onClick={start} disabled={false} loading={loading}>
-                    save
+                    cleaned
                   </Button>
                 )
               }
               else{
                 return(
                   <Button type="primary" disabled={true} loading={loading}>
-                    save
+                    cleaned
                   </Button>
                 )}
             }}
