@@ -796,6 +796,44 @@ export const DownloadCsvFile = (csvName) => {
   )
 }
 
+export const GetJsonFile = (jsonName) => {
+  return(
+    async () => {
+      try {
+        const response = await axios.get(
+          `/api/aws/s3/getFile/json/${jsonName}.json`, //AWS
+          // { responseType: 'blob' }
+        )
+        if(response.data){
+          const str = []
+          response.data.annotation.forEach((c) => {
+            str.push((c))
+          })
+          Modal.info(
+            {
+              title: `${(response.data.image.file_name).replace('.jpg','.json')}`,
+              content: (
+                `{ "image": { "file_name": "${response.data.image.file_name}",
+                "width": ${response.data.image.width},
+                "height": ${response.data.image.height} },
+                "annotation": ${ JSON.stringify(str) } }`
+              )
+            }
+          )
+        }else{
+          Modal.info(
+            {
+              title: `${(jsonName)+'.json'}`
+            }
+          )
+        }
+      } catch (error){
+        message.error(error)
+      }
+    }
+  )
+} 
+
 export const UploadJsonFile = (file) => {
   return (
     async () => {

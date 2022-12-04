@@ -34,7 +34,8 @@ import {
   GetProjectTableData,
   GetEventList,
   PatchDetailsTableData,
-  UploadJsonFile
+  UploadJsonFile,
+  GetJsonFile
 } from '../../store/actionCreater'
 
 const { Title, Text } = Typography;
@@ -64,13 +65,15 @@ const LabelStudioWrapper = (props) => {
   const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
   const [urlImage, setUrlImage] = useState();
-
+  const [selectDataId, setselectDataId] = useState();
+  const [labeledDataId, setlabeledDataId] = useState();
   const {
     loginInformation,
     eventList,
     getEventList,
     uploadJsonFile,
-    patchDetailsTableData
+    patchDetailsTableData,
+    getJsonFile,
   } = props
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
@@ -251,6 +254,8 @@ const LabelStudioWrapper = (props) => {
       fileName: newFileName+'.json',
       fileType: 'text/json',
     })
+    const labeled = { labeled: '1'}
+    patchDetailsTableData(labeledDataId,labeled)
   }
 
   const crawler_onClick = () => {
@@ -314,11 +319,15 @@ const LabelStudioWrapper = (props) => {
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
       setFileList(newFileList);
+      const labeled = { labeled: '0' } 
+      patchDetailsTableData(selectDataId,labeled)
     },
     beforeUpload: (file) => {
       file.status = 'done'
       // console.log(file)
       setFileList([...fileList, file]);
+      const labeled = { labeled: '1' } 
+      patchDetailsTableData(selectDataId,labeled)
       return false;
     },
     fileList,
@@ -333,7 +342,6 @@ const LabelStudioWrapper = (props) => {
       uploadJsonFile(fileList[0])
       setFileList([])
       patchDetailsTableData(id, { json: '1' })
-      window.location.reload(false);
     }
   }
 
@@ -357,6 +365,10 @@ const LabelStudioWrapper = (props) => {
     }
   }
 
+  const viewJsonFile = (text) => {
+    getJsonFile(text.details)
+  }
+
   const checkCleaned = (text) => {
     if (text.cleaned == true) {
         return (
@@ -370,7 +382,7 @@ const LabelStudioWrapper = (props) => {
   }
 
   const checkLabeled = (text) => {
-    if (text.labeled == true) {
+    if (text == true) {
         return (
           <CheckOutlined />
         )
@@ -385,24 +397,26 @@ const LabelStudioWrapper = (props) => {
     return(
       <Fragment>
         <Col>
-          <Switch
-            style={{ margin: 3 }}
-            checkedChildren={<CheckOutlined />}
-            unCheckedChildren={<CloseOutlined />}
-            key={record.id}
-            defaultChecked={text}
-            onChange={(click) => {
-              setCheckValue([...checkValue, { id: record.id, json: click }])
-            }}
-          />
+        {
+          text == true?
           <Button
             type="primary"
             style={{ margin: 2, ...border }}
             icon={<FileOutlined />}
-            onClick={() => {}}
+            onClick={() => {viewJsonFile(record)}}
           >
             JSON File
-          </Button>
+          </Button>:
+          <Button
+            type="primary"
+            style={{ margin: 2, ...border }}
+            icon={<FileOutlined />}
+            disabled
+          >
+            JSON File
+          </Button>          
+        }
+
         </Col>
       </Fragment>
     )
@@ -417,34 +431,23 @@ const LabelStudioWrapper = (props) => {
             icon={<RocketOutlined />}
             onClick={() => {
               setUrlImage(data.details)
+              setlabeledDataId(data.id)
             }}
           >
             Send to Input
           </Button>
         </div>
         <div style={{ margin: 18 }}>
-          {
-            data.json == true?
-            <Upload>
-              <Button
-                style={{ margin: 2, ...border }}
-                type="primary"
-                icon={<UploadOutlined />}
-                disabled
-              >
-                Upload JSON
-              </Button>
-            </Upload>:
             <Upload {...handleUploadJson}>
               <Button
                 style={{ margin: 2, ...border }}
                 type="primary"
                 icon={<UploadOutlined />}
+                onClick={() => {setselectDataId(data.id)}}
               >
                 Upload JSON
               </Button>
             </Upload>
-          }
           <Button
             type="primary"
             style={{ margin: 2, ...border }}
@@ -596,7 +599,7 @@ const mapStateToProps = (state) => {
   return {
     loginInformation: state.loginInformation,
     projectTableData: state.projectTableData,
-    eventList: state.eventList
+    eventList: state.eventList,
   }
 }
 
@@ -617,6 +620,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     uploadJsonFile(file) {
       const action = UploadJsonFile(file)
+      dispatch(action)
+    },
+    getJsonFile(fileName) {
+      const action = GetJsonFile(fileName)
       dispatch(action)
     }
   }
