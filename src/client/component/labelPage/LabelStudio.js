@@ -65,8 +65,8 @@ const LabelStudioWrapper = (props) => {
   const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png');
   const [previewTitle, setPreviewTitle] = useState('');
   const [urlImage, setUrlImage] = useState();
-  const [selectDataId, setselectDataId] = useState();
-  const [labeledDataId, setlabeledDataId] = useState();
+  const [selectDataId, setSelectDataId] = useState();
+  const [labeledDataId, setLabeledDataId] = useState();
   const {
     loginInformation,
     eventList,
@@ -414,7 +414,7 @@ const LabelStudioWrapper = (props) => {
             disabled
           >
             JSON File
-          </Button>          
+          </Button>
         }
 
         </Col>
@@ -431,7 +431,7 @@ const LabelStudioWrapper = (props) => {
             icon={<RocketOutlined />}
             onClick={() => {
               setUrlImage(data.details)
-              setlabeledDataId(data.id)
+              setLabeledDataId(data.id)
             }}
           >
             Send to Input
@@ -443,7 +443,7 @@ const LabelStudioWrapper = (props) => {
                 style={{ margin: 2, ...border }}
                 type="primary"
                 icon={<UploadOutlined />}
-                onClick={() => {setselectDataId(data.id)}}
+                onClick={() => {setSelectDataId(data.id)}}
               >
                 Upload JSON
               </Button>
@@ -469,8 +469,8 @@ const LabelStudioWrapper = (props) => {
         <Image
           style={{ margin: 2, ...border }}
           src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text.details}.jpg`}
-          width='100%'
-          height='100%'
+          width='40%'
+          height='40%'
         />
         <Text>{text.details}</Text>
       </Fragment>
@@ -498,18 +498,20 @@ const LabelStudioWrapper = (props) => {
           <Table
             style={{ margin: 5 }}
             dataSource={FilterData(loginInformation.project)}
-            pagination={{ position: ['bottomCenter'], pageSize: 1 }}>
+            pagination={{ position: ['bottomCenter'], pageSize: 5 }}
+            scroll={{ y: 250 }}
+          >
             <Column
               title='Data'
               align="center"
               render={findImageByDetail}
-              width='20%'
+              width='30%'
             />
             <Column
                 title='cleaned'
                 render={checkCleaned}
                 align='center'
-                width='20%'
+                width='15%'
             />
             <Column
                 title='labeled'
@@ -517,7 +519,7 @@ const LabelStudioWrapper = (props) => {
                 dataIndex='labeled'
                 key='labeled'
                 align='center'
-                width='20%'
+                width='15%'
             />
             <Column
               title='json'
@@ -525,13 +527,13 @@ const LabelStudioWrapper = (props) => {
               dataIndex='json'
               key='json'
               align='center'
-              width='20%'
+              width='15%'
             />
             <Column
               title='Action'
               align="center"
               render={actionBtn}
-              width='20%'
+              width='15%'
             />
           </Table>
         </Panel>
