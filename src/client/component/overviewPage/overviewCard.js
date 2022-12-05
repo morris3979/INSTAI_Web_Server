@@ -124,7 +124,7 @@ const OverviewCard = (props) => {
                             c.video == true && c.image == true?
                             <Carousel effect='fade' dotPosition='top'>
                                 <ReactPlayer
-                                    style={ border }
+                                    style={{ borderRadius: '12px' }}
                                     url={`https://d20cmf4o2f77jz.cloudfront.net/video/${c.details}.mp4`}
                                     controls={true}
                                     width='100%'
@@ -146,7 +146,7 @@ const OverviewCard = (props) => {
                             />:'' ||
                             c.video == true?
                             <ReactPlayer
-                                style={ border }
+                                style={{ borderRadius: '12px' }}
                                 url={`https://d20cmf4o2f77jz.cloudfront.net/video/${c.details}.mp4`}
                                 controls={true}
                                 width='100%'
@@ -207,6 +207,10 @@ const OverviewCard = (props) => {
         {
           label: 'labeled',
           value: 'labeled',
+        },
+        {
+          label: 'trained',
+          value: 'trained',
         },
     ];
 

@@ -29,6 +29,12 @@ import {
 
 const { Column, ColumnGroup } = Table
 const { Item } = Form
+const border = {
+    borderTopLeftRadius: '8px',
+    borderTopRightRadius: '8px',
+    borderBottomLeftRadius: '8px',
+    borderBottomRightRadius: '8px',
+}
 
 const convertedValues = {}
 
@@ -117,6 +123,7 @@ class AccountManageTable extends Component {
         </Modal>
         <Affix style={{ position: 'fixed', bottom: 10, right: 10 }}>
           <Button
+            type='primary'
             onClick={() => { this.onRegisterClick() }}
             icon={<UserAddOutlined />}
             disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
@@ -175,20 +182,25 @@ class AccountManageTable extends Component {
   buttonGroup = (text) => {
     return (
       <Space size='large'>
-        <Button
-          onClick={() => { this.onChangeClick(text) }}
-          icon={<EditOutlined />}
-          disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
-        />
         <Popconfirm
           title='確定刪除?'
           onConfirm={() => { this.props.deleteAccountTableData(text) }}
         >
           <Button
+            style={ border }
+            type='primary'
+            danger
             icon={<UserDeleteOutlined />}
             disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
           />
         </Popconfirm>
+        <Button
+          style={ border }
+          type='primary'
+          onClick={() => { this.onChangeClick(text) }}
+          icon={<EditOutlined />}
+          disabled={!(this.props.loginInformation.developer || this.props.loginInformation.admin)}
+        />
       </Space>
     )
   }

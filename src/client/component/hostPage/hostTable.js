@@ -31,6 +31,12 @@ import {
 const { Column } = Table
 const { Item } = Form
 const { Option } = Select
+const border = {
+    borderTopLeftRadius: '8px',
+    borderTopRightRadius: '8px',
+    borderBottomLeftRadius: '8px',
+    borderBottomRightRadius: '8px',
+}
 
 const convertedValues = {}
 
@@ -118,6 +124,7 @@ class HostTable extends Component {
         </Modal>
         <Affix style={{ position: 'fixed', bottom: 10, right: 10 }}>
           <Button
+            type='primary'
             onClick={() => { this.onClick({ id: 0 }) }}
             icon={<PlusOutlined />}
             size='large'
@@ -186,20 +193,24 @@ class HostTable extends Component {
   buttonGroup = (text) => {
     return (
       <Space size={10}>
-        <Button
-          onClick={() => { this.props.postHostMQTT(text) }}
-          icon={<DeploymentUnitOutlined />}
-        />
-        <Button
-          onClick={() => { this.onClick(text) }}
-          icon={<EditOutlined />}
-        />
         <Popconfirm
           title='確定刪除?'
           onConfirm={() => { this.props.deleteHostTableData(text.id) }}
         >
-          <Button icon={<DeleteOutlined />} />
+          <Button style={ border } icon={<DeleteOutlined />} type='primary' danger />
         </Popconfirm>
+        <Button
+          style={ border }
+          type='primary'
+          onClick={() => { this.onClick(text) }}
+          icon={<EditOutlined />}
+        />
+        <Button
+          style={ border }
+          type='primary'
+          onClick={() => { this.props.postHostMQTT(text) }}
+          icon={<DeploymentUnitOutlined />}
+        />
       </Space>
     )
   }

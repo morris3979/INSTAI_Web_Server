@@ -319,19 +319,19 @@ const LabelStudioWrapper = (props) => {
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
       setFileList(newFileList);
-      const labeled = { labeled: '0' } 
-      patchDetailsTableData(selectDataId,labeled)
+      const labeled = { labeled: '0' }
+      patchDetailsTableData(selectDataId, labeled)
     },
     beforeUpload: (file) => {
       file.status = 'done'
       // console.log(file)
       setFileList([...fileList, file]);
-      const labeled = { labeled: '1' } 
-      patchDetailsTableData(selectDataId,labeled)
+      const labeled = { labeled: '1' }
+      patchDetailsTableData(selectDataId, labeled)
       return false;
     },
     fileList,
-  };
+  }
 
   const uploadJson = (id) => {
     checkValue.map((element) => {
@@ -405,7 +405,7 @@ const LabelStudioWrapper = (props) => {
             icon={<FileOutlined />}
             onClick={() => {viewJsonFile(record)}}
           >
-            JSON File
+            Check JSON File
           </Button>:
           <Button
             type="primary"
@@ -413,7 +413,7 @@ const LabelStudioWrapper = (props) => {
             icon={<FileOutlined />}
             disabled
           >
-            JSON File
+            Check JSON File
           </Button>
         }
 
@@ -428,6 +428,7 @@ const LabelStudioWrapper = (props) => {
         <div style={{ margin: 18 }}>
           <Button
             style={{ margin: 2, ...border }}
+            type="primary"
             icon={<RocketOutlined />}
             onClick={() => {
               setUrlImage(data.details)
@@ -438,16 +439,18 @@ const LabelStudioWrapper = (props) => {
           </Button>
         </div>
         <div style={{ margin: 18 }}>
-            <Upload {...handleUploadJson}>
-              <Button
-                style={{ margin: 2, ...border }}
-                type="primary"
-                icon={<UploadOutlined />}
-                onClick={() => {setSelectDataId(data.id)}}
-              >
-                Upload JSON
-              </Button>
-            </Upload>
+          <Upload {...handleUploadJson}>
+            <Button
+              style={{ margin: 2, ...border }}
+              type="primary"
+              icon={<UploadOutlined />}
+              onClick={() => {
+                setSelectDataId(data.id)
+              }}
+            >
+              Upload JSON
+            </Button>
+          </Upload>
           <Button
             type="primary"
             style={{ margin: 2, ...border }}
@@ -456,7 +459,7 @@ const LabelStudioWrapper = (props) => {
               uploadJson(data.id)
             }}
           >
-            Save Labeled
+            Save to S3
           </Button>
         </div>
       </Fragment>
@@ -499,7 +502,7 @@ const LabelStudioWrapper = (props) => {
             style={{ margin: 5 }}
             dataSource={FilterData(loginInformation.project)}
             pagination={{ position: ['bottomCenter'], pageSize: 5 }}
-            scroll={{ y: 250 }}
+            scroll={{ y: 220 }}
           >
             <Column
               title='Data'
@@ -548,6 +551,7 @@ const LabelStudioWrapper = (props) => {
           ref={labelRef}
         />
         <Button
+          type='primary'
           onClick={onAddLabel}
           style={{ marginLeft: 5, ...border }}
           icon={<PlusOutlined />}
@@ -555,10 +559,12 @@ const LabelStudioWrapper = (props) => {
           Add Label
         </Button>
         <Popconfirm
-          title='Clear all Labels?'
+          title='Clean all Labels ?'
           onConfirm={onReset}
         >
           <Button
+            type='primary'
+            danger
             style={{ marginLeft: 3, ...border }}
             icon={<DeleteOutlined />}
           >
@@ -566,6 +572,7 @@ const LabelStudioWrapper = (props) => {
           </Button>
         </Popconfirm>
         <Button
+          type='primary'
           onClick={crawler_onClick}
           style={{ marginLeft: 3, ...border }}
           icon={<BugOutlined />}

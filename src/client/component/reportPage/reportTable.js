@@ -145,6 +145,7 @@ const reportTable = (props) => {
         {
           data.cleaned == true?
           <Button
+            style={ border }
             icon={<DownloadOutlined />}
             onClick={() => {
               if (data.image == true && data.video == true) {
@@ -160,6 +161,7 @@ const reportTable = (props) => {
             }}
           >Download</Button>:
           <Button
+            style={ border }
             disabled
             icon={<DownloadOutlined />}
           >Download</Button>
@@ -469,7 +471,7 @@ const reportTable = (props) => {
           <div style={{ display: "flex" }}>
           <Button
             icon ={<DownloadOutlined />}
-            style={{ marginLeft: "auto" }}
+            style={{ marginLeft: "auto", ...border }}
             onClick={downloadCsv}
           >Download CSV</Button>
           </div>
@@ -540,14 +542,25 @@ const reportTable = (props) => {
               if(selectedDataCleaned(DetailsFilter(data.Details))){
                 setEventID(data.id)
                 return(
-                  <Button type="primary" onClick={start} disabled={false} loading={loading}>
+                  <Button
+                    style={ border }
+                    type="primary"
+                    onClick={start}
+                    disabled={false}
+                    loading={loading}
+                  >
                     cleaned
                   </Button>
                 )
               }
               else{
                 return(
-                  <Button type="primary" disabled={true} loading={loading}>
+                  <Button
+                    style={ border }
+                    type="primary"
+                    disabled={true}
+                    loading={loading}
+                  >
                     cleaned
                   </Button>
                 )}
