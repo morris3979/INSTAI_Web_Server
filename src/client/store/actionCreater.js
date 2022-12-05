@@ -83,7 +83,7 @@ export const LoginFormData = (data) => {
         }
       } catch (error) {
         message.destroy()
-        message.error('登入失敗，請確認後再試一次！')
+        message.error('login failed, please check again！')
       }
     }
   )

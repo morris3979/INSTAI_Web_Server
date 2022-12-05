@@ -11,8 +11,8 @@ const LoginPage = () => {
   return (
     <Layout>
       <Header />
-      <Content style={{ padding: '80px' }}>
-        <Row style={{ padding: '20px' }}>
+      <Content style={{ height: '1000px' }}>
+        <Row style={{ padding: '100px' }}>
           <Suspense fallback={<Loading />}>
             <Col span={4} offset={10}>
               <LoginForm />
@@ -20,7 +20,6 @@ const LoginPage = () => {
           </Suspense>
         </Row>
       </Content>
-      <Footer style={{ padding: '160px' }} />
     </Layout>
   )
 }

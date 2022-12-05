@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Form, Input, Button, Divider, Typography } from 'antd'
+import { Form, Input, Button, Divider, Typography, Checkbox } from 'antd'
 import { LoginFormData } from '../../store/actionCreater'
 
 import {
@@ -36,27 +36,32 @@ const LoginForm = (props) => {
         }}
         onFinish={onFinish}
       >
-        <Item
-          label='Username'
-          name='loginusername'
-          rules={[{ required: true, message: 'Please input username' }]}
-        >
+      <Item
+        name='loginusername'
+        rules={[{ required: true, message: 'Please input username' }]}
+      >
           <Input
+            allowClear
             style={ border }
             prefix={<UserOutlined />}
             placeholder='Username'
           />
         </Item>
         <Item
-          label='Password'
           name='loginpassword'
           rules={[{ required: true, message: 'Please input password' }]}
         >
           <Password
+            allowClear
             style={ border }
             prefix={<LockOutlined />}
             placeholder='Password'
           />
+        </Item>
+        <Item>
+          <Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Item>
         </Item>
         <Item>
             <Button
