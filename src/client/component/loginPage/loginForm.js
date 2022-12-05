@@ -3,11 +3,21 @@ import { connect } from 'react-redux'
 import { Form, Input, Button, Divider, Typography } from 'antd'
 import { LoginFormData } from '../../store/actionCreater'
 
-import {LoginOutlined} from '@ant-design/icons'
+import {
+  LoginOutlined,
+  UserOutlined,
+  LockOutlined
+} from '@ant-design/icons'
 
 const { Item } = Form
 const { Password } = Input
 const { Title } = Typography
+const border = {
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    borderBottomLeftRadius: '12px',
+    borderBottomRightRadius: '12px',
+}
 
 const LoginForm = (props) => {
   const { onFinish } = props
@@ -15,27 +25,47 @@ const LoginForm = (props) => {
   return (
     <Fragment>
       <Title>
-        <LoginOutlined /> Login
+        <LoginOutlined /> INSTAI
       </Title>
       <Divider />
-      <Form size='large' layout='vertical' onFinish={onFinish}>
+      <Form
+        layout='vertical'
+        size='large'
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+      >
         <Item
           label='Username'
           name='loginusername'
-          rules={[{ required: true, message: '請輸入帳號' }]}
+          rules={[{ required: true, message: 'Please input username' }]}
         >
-          <Input />
+          <Input
+            style={ border }
+            prefix={<UserOutlined />}
+            placeholder='Username'
+          />
         </Item>
         <Item
           label='Password'
           name='loginpassword'
-          rules={[{ required: true, message: '請輸入密碼' }]}
+          rules={[{ required: true, message: 'Please input password' }]}
         >
-          <Password />
+          <Password
+            style={ border }
+            prefix={<LockOutlined />}
+            placeholder='Password'
+          />
         </Item>
         <Item>
-            <Button htmlType='submit'>
-              submit
+            <Button
+              style={ border }
+              htmlType='submit'
+              type='primary'
+              block
+            >
+              Log in
             </Button>
         </Item>
       </Form>

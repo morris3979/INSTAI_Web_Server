@@ -226,6 +226,7 @@ const OverviewCard = (props) => {
                     placeholder='Please Select project'
                     hidden={!(loginInformation.developer || loginInformation.admin)}
                     onChange={handleSelect}
+                    allowClear
                 >
                     {projectList.map((c) => {
                         return( <Option value={`${c.project}`}>{`${c.displayName}`}</Option> )
