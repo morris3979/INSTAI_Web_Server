@@ -85,7 +85,7 @@ class DeviceTable extends Component {
           <Column title='Description' dataIndex='description' align='center' width={150} render={(data) => {return(<Tag>{data}</Tag>)}} />
           <Column title='Command' dataIndex='command' align='center' />
           <Column title='Message' dataIndex='message' align='center' />
-          <ColumnGroup title="Update Record">
+          <ColumnGroup title="Update Records">
             <Column title='Model' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center'
               render={(HwUpdateLogs) => HwUpdateLogs.map(c => c.modelName+'\n').join('')} />
             <Column title='Time' dataIndex='HwUpdateLogs' key="HwUpdateLogs" align='center' width={180}
