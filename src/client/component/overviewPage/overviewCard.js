@@ -84,6 +84,8 @@ const OverviewCard = (props) => {
 
     const isCleaned = (element) => element == 'cleaned';
     const isLabeled = (element) => element == 'labeled';
+    const isTrained = (element) => element == 'trained';
+
     const DateFilter = filterData.filter((data) => {
         if(selectedDate){
             return data.createdAt.slice(0,10) === selectedDate
@@ -94,15 +96,19 @@ const OverviewCard = (props) => {
             // console.log(data.createdAt.slice(0,10))
         }
     })
+
     const checkValueFilter = DateFilter.filter((data) => {
-        if((checkValues.findIndex(isCleaned)!=-1)&&(checkValues.findIndex(isLabeled)!=-1)){
-            return data.cleaned == true && data.labeled == true
+        if((checkValues.findIndex(isCleaned)!=-1)&&(checkValues.findIndex(isLabeled)!=-1)&&(checkValues.findIndex(isTrained)!=-1)){
+            return data.cleaned == true && data.labeled == true && data.trained == true
         }
         else if(checkValues.findIndex(isCleaned)!=-1){
             return data.cleaned == true
         }
         else if(checkValues.findIndex(isLabeled)!=-1){
             return data.labeled == true
+        }
+        else if(checkValues.findIndex(isTrained)!=-1){
+            return data.trained == true
         }
         else{
             return data

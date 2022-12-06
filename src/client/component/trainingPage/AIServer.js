@@ -254,7 +254,7 @@ const AIServer = (props) => {
           )
         })
         const labeledData = EachDetailsData.filter((data) => {
-          return data.labeled == '1'
+          return data.labeled == '1' && data.trained == '0'
         })
         return labeledData
     }
