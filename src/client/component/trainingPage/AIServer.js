@@ -10,7 +10,8 @@ import {
     Divider,
     Select,
     Space,
-    message
+    message,
+    Drawer
 } from 'antd'
 import {
     GetProjectTableData,
@@ -170,6 +171,62 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
     </Transfer>
 )
 
+const rightTableColumns = [
+    {
+        dataIndex: 'details',
+        title: 'Data',
+        render: (text) =>
+            <Image
+                style={ border }
+                src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text}.jpg`}
+                width='100%'
+                height='100%'
+            />,
+        align: 'center',
+        width: '20%'
+    },
+    {
+        dataIndex: 'details',
+        title: 'filename',
+        align: 'center',
+        width: '50%'
+    },
+    {
+        dataIndex: 'image',
+        title: 'image',
+        render: (text) => {
+            if (text == true) {
+                return (
+                    <CheckOutlined />
+                )
+            } else {
+                return (
+                    <CloseOutlined />
+                )
+            }
+        },
+        align: 'center',
+        width: '15%'
+    },
+    {
+        dataIndex: 'json',
+        title: 'json',
+        render: (text) => {
+            if (text == true) {
+                return (
+                    <CheckOutlined />
+                )
+            } else {
+                return (
+                    <CloseOutlined />
+                )
+            }
+        },
+        align: 'center',
+        width: '15%'
+    },
+]
+
 const AIServer = (props) => {
     const {
         loginInformation,
@@ -177,15 +234,20 @@ const AIServer = (props) => {
         getEventList
     } = props;
 
+    const inputRef = useRef(null);
+
     const [time, setTime] = useState('fetching clock ...');
     const [messageFromAIServer, setMessageFromAIServer] = useState('fetching AI Server message ...');
     const [sendToAI, setSendToAI] = useState();
-    const [filterData, setFilterData] = useState([])
+    const [filterLabeledData, setFilterLabeledData] = useState([])
+    const [filterTrainedData, setFilterTrainedData] = useState([])
     const [targetKeys, setTargetKeys] = useState(originTargetKeys);
     const [selectLabeledData, setSelectLabeledData] = useState([])
     const [items, setItems] = useState(['Hi AIServer', 'Download']);
     const [name, setName] = useState('');
-    const inputRef = useRef(null);
+    const [open, setOpen] = useState(false);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         getEventList()
@@ -206,8 +268,8 @@ const AIServer = (props) => {
             setMessageFromAIServer('AI Server disconnected ...')
         })
 
-        FilterData(loginInformation.project).map((data, i) => {
-            setFilterData((value) => [...value, {
+        FilterLabeledData(loginInformation.project).map((data, i) => {
+            setFilterLabeledData((value) => [...value, {
                 key: i.toString(),
                 details: data.details,
                 labeled: data.labeled,
@@ -215,9 +277,19 @@ const AIServer = (props) => {
                 json: data.json,
             }])
         })
+
+        FilterTrainedData(loginInformation.project).map((data, i) => {
+            setFilterTrainedData((value) => [...value, {
+                key: i.toString(),
+                details: data.details,
+                trained: data.trained,
+                image: data.image,
+                json: data.json,
+            }])
+        })
     }, []);
 
-    const originTargetKeys = filterData
+    const originTargetKeys = filterLabeledData
         .filter((item) => Number(item.key) % 3 > 1)
         .map((item) => item.key)
 
@@ -238,7 +310,7 @@ const AIServer = (props) => {
         setSendToAI(value)
     }
 
-    const FilterData = (value) => {
+    const FilterLabeledData = (value) => {
         const response = eventList.filter((c) => {
           return c.Details
         })
@@ -259,70 +331,63 @@ const AIServer = (props) => {
         return labeledData
     }
 
+    const FilterTrainedData = (value) => {
+        const response = eventList.filter((c) => {
+          return c.Details
+        })
+        const FilterDetails = response.map((d) => {
+          return d.Details
+        })
+        const DataArray = [].concat(...FilterDetails);
+        const EachDetailsData = DataArray.filter((e) => {
+          return (
+            loginInformation.user == true?
+            e.details.slice(0,8) == value:
+            e.details.slice(0,8)
+          )
+        })
+        const trainedData = EachDetailsData.filter((data) => {
+          return data.trained == '1'
+        })
+        return trainedData
+    }
+
     const onChange = (nextTargetKeys) => {
         setSelectLabeledData([])
         setTargetKeys(nextTargetKeys)
         nextTargetKeys.map(value => {
-            const filename = filterData[value].details
+            const filename = filterLabeledData[value].details
             setSelectLabeledData((value) => [...value, filename])
         })
     }
 
-    const rightTableColumns = [
-        {
-            dataIndex: 'details',
-            title: 'Data',
-            render: (text) =>
-                <Image
-                    style={ border }
-                    src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text}.jpg`}
-                    width='100%'
-                    height='100%'
-                />,
-            align: 'center',
-            width: '20%'
-        },
-        {
-            dataIndex: 'details',
-            title: 'filename',
-            align: 'center',
-            width: '50%'
-        },
-        {
-            dataIndex: 'image',
-            title: 'image',
-            render: (text) => {
-                if (text == true) {
-                    return (
-                        <CheckOutlined />
-                    )
-                } else {
-                    return (
-                        <CloseOutlined />
-                    )
-                }
-            },
-            align: 'center',
-            width: '15%'
-        },
-        {
-            dataIndex: 'json',
-            title: 'json',
-            render: (text) => {
-                if (text == true) {
-                    return (
-                        <CheckOutlined />
-                    )
-                } else {
-                    return (
-                        <CloseOutlined />
-                    )
-                }
-            },
-            align: 'center',
-            width: '15%'
-        },
-    ];
+    const showDrawer = () => {
+        setOpen(true);
+    }
+
+    const onClose = () => {
+        setOpen(false);
+    }
+
+    const send = () => {
+        setLoading(true);
+        // ajax request after empty completing
+        setTimeout(() => {
+          setSelectedRowKeys([]);
+          setLoading(false);
+        }, 1000);
+    };
+
+    const onSelectChange = (newSelectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    }
+
+    const trainedRowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange
+    }
+    const hasSelected = selectedRowKeys.length > 0;
 
     return (
         <Fragment>
@@ -391,10 +456,66 @@ const AIServer = (props) => {
                 titles={['Labeled Data Area', 'Data Waiting Area (To AI Server)']}
                 // showSearch
                 targetKeys={targetKeys}
-                dataSource={filterData}
+                dataSource={filterLabeledData}
                 onChange={onChange}
                 rightColumns={rightTableColumns}
             />
+            <Button
+                type="primary"
+                size="large"
+                onClick={showDrawer}
+                style={{ margin: 8, ...border }}
+            >
+                Trained Data
+            </Button>
+            <Drawer
+                title="Trained Data"
+                placement="right"
+                size="large"
+                onClose={onClose}
+                open={open}
+                extra={
+                <Space>
+                    <Button
+                        onClick={onClose}
+                        style={ border }
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        type="primary"
+                        onClick={onClose}
+                        style={ border }
+                    >
+                        OK
+                    </Button>
+                </Space>
+                }
+            >
+                <div
+                    style={{
+                    marginBottom: 16,
+                    }}
+                >
+                    <Button
+                        type="primary"
+                        onClick={send}
+                        disabled={!hasSelected}
+                        loading={loading}
+                        style={ border }
+                    >
+                        Send
+                    </Button>
+                    <span
+                        style={{
+                            marginLeft: 8,
+                        }}
+                    >
+                        {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+                    </span>
+                </div>
+                <Table rowSelection={trainedRowSelection} columns={rightTableColumns} dataSource={filterTrainedData} />
+            </Drawer>
         </Fragment>
     );
 }
