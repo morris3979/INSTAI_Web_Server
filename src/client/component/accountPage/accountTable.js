@@ -9,10 +9,8 @@ import {
   Space,
   Popconfirm,
   Affix,
-  Select,
 } from 'antd'
 import {
-  GetProjectTableData,
   GetAccountTableData,
   SetWhichModal,
   PatchAccountTableData,
@@ -37,10 +35,6 @@ const border = {
 }
 
 const convertedValues = {}
-
-const developerStatus = (text) => {
-  return(text.developer == true? <CheckOutlined />: <CloseOutlined />);
-}
 
 const adminStatus = (text) => {
   return(text.admin == true? <CheckOutlined />: <CloseOutlined />);
@@ -70,7 +64,6 @@ class AccountManageTable extends Component {
 
   componentDidMount() {
     this.props.getAccountTableData()
-    this.props.getProjectTableData()
   }
 
   render() {
@@ -80,6 +73,7 @@ class AccountManageTable extends Component {
           dataSource={this.props.accountData}
           loading={this.props.tableStatus}
           pagination={{ position: ['bottomCenter'] }}
+          style={{ whiteSpace: 'pre'}}
         >
           <Column title='Action' render={this.buttonGroup} align='center' width={150} />
           <Column title='Username' dataIndex='username' align='center' />
@@ -87,7 +81,12 @@ class AccountManageTable extends Component {
             <Column title='admin' render={adminStatus} align='center' />
             <Column title='user' render={userStatus} align='center' />
           </ColumnGroup>
-          <Column title='Project' dataIndex={['Project', 'displayName']} align='center' />
+          <ColumnGroup title='Project' align='center'>
+            <Column title='Project ID' dataIndex='Projects' key="Projects" align='center'
+              render={(Projects) => Projects.map(c => c.project+'\n')} width='15%' />
+            <Column title='Display Name' dataIndex='Projects' key="Projects" align='center'
+              render={(Projects) => Projects.map(c => '('+c.displayName+')'+'\n')} width='15%' />
+          </ColumnGroup>
         </Table >
         <Modal
           visible={this.state.isChangeModalVisible}
@@ -105,14 +104,6 @@ class AccountManageTable extends Component {
               <Switch
                 defaultChecked={convertedBoolean(this.props.whichModal.user)}
               />
-            </Item>
-            <Item label='Please Select Project' name='ProjectId' hidden={this.props.whichModal.admin == true}>
-              <Select placeholder='Select a Project to deploy' onChange={this.handleSelectProject}
-                defaultValue={this.defaultValue(this.props.whichModal.ProjectId)}>
-                {this.props.projectTableData.map(c => {
-                  return ( <Option key={c.id} value={c.id}>{`${c.project} (${c.displayName})`}</Option> )
-                })}
-              </Select>
             </Item>
             <Item>
               <Button htmlType='submit' onClick={this.handleCancel}>
@@ -141,10 +132,6 @@ class AccountManageTable extends Component {
         </Modal>
       </Fragment>
     )
-  }
-
-  handleSelectProject = (value) => {
-    this.setState({ selectProject: value })
   }
 
   defaultValue = (value) => {
@@ -213,7 +200,6 @@ const mapStateToProps = (state) => {
     tableStatus: state.tableStatus,
     whichModal: state.whichModal,
     loginInformation: state.loginInformation,
-    projectTableData: state.projectTableData,
   }
 }
 
@@ -234,10 +220,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteAccountTableData(id) {
       const action = DeleteAccountTableData(id)
-      dispatch(action)
-    },
-    getProjectTableData() {
-      const action = GetProjectTableData()
       dispatch(action)
     },
   }

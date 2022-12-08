@@ -47,7 +47,7 @@ module.exports = (sequelize, Sequelize) => {
         paranoid: true
     });
     User.associate = function (models) {
-        User.belongsTo(models.Project);
+        User.hasMany(models.Project, {foreignKey: 'UserId'});
     };
     return User;
 };

@@ -190,17 +190,6 @@ const App = (props) => {
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<SettingOutlined />}
             >
-              <Item key='/project'
-                hidden={
-                  !(loginInformation.developer ||
-                    loginInformation.admin ||
-                    loginInformation.user)
-                }
-              >
-                <Link to='/project'>
-                  Project
-                </Link>
-              </Item>
               <Item key='/host'
                 hidden={
                   !(loginInformation.developer ||
@@ -221,6 +210,17 @@ const App = (props) => {
               >
                 <Link to='/device'>
                   Device
+                </Link>
+              </Item>
+              <Item key='/project'
+                hidden={
+                  !(loginInformation.developer ||
+                    loginInformation.admin ||
+                    loginInformation.user)
+                }
+              >
+                <Link to='/project'>
+                  Project
                 </Link>
               </Item>
               <Item key='/account'
@@ -270,9 +270,9 @@ const App = (props) => {
                   //console.log(c.project)
                   return (<Route path={`/report/${c.project}`} element={<ReportPage />} />)
                 })}
-                <Route path='/project' element={<ProjectPage />} />
                 <Route path='/host' element={<HostPage />} />
                 <Route path='/device' element={<DevicePage />} />
+                <Route path='/project' element={<ProjectPage />} />
                 <Route path='/account' element={<AccountPage />} />
                 <Route path='/test' element={<Test />} />
               </Routes>

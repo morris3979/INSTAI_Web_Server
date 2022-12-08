@@ -45,6 +45,9 @@ exports.findAll = (req, res) => {
               model: db.Device,
               attributes:['id', 'deviceId', 'deviceName'],
           }],
+      },{
+        model: db.User,
+        attributes: ['id', 'username', 'createdAt'],
       }],
       attributes: {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']

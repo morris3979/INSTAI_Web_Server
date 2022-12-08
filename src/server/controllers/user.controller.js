@@ -4,7 +4,6 @@ const User = db.User;
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { CompassOutlined } = require('@ant-design/icons');
 
 // Create and Save a new User
 exports.register = async (req, res) => {
@@ -139,7 +138,7 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving projects."
       });
     });
-};
+}
 
 // Update a User by the id in the request
 exports.update = async(req, res) => {
@@ -196,4 +195,4 @@ exports.delete = async(req, res) => {
       message: "Forbidden delete admin."
     });
   }
-};
+}

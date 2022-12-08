@@ -32,14 +32,14 @@ db.Event = require("./model/Event.model")(sequelize, Sequelize);
 db.Details = require("./model/Details.model")(sequelize, Sequelize);
 db.User = require("./model/User.model")(sequelize, Sequelize);
 
-db.Project.hasMany(db.User, {foreignKey: 'ProjectId'});
+db.User.hasMany(db.Project, {foreignKey: 'UserId'});
 db.Project.hasMany(db.Host, {foreignKey: 'ProjectId'});
 db.Host.hasMany(db.Device, {foreignKey: 'HostId'});
 db.Device.hasMany(db.Event, {foreignKey: 'DeviceId'});
 db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
 db.Event.hasMany(db.Details, {foreignKey: 'EventId'});
 
-db.User.belongsTo(db.Project, {foreignKey: 'ProjectId'});
+db.Project.belongsTo(db.User, {foreignKey: 'UserId'});
 db.Host.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Device.belongsTo(db.Host, {foreignKey: 'HostId'});
 db.Event.belongsTo(db.Device, {foreignKey: 'DeviceId'});

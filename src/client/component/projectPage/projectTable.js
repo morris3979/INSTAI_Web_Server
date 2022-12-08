@@ -8,7 +8,8 @@ import {
     Modal,
     Form,
     Input,
-    Affix
+    Affix,
+    Select
 } from 'antd'
 import {
     EditOutlined,
@@ -20,7 +21,8 @@ import {
     GetProjectTableData,
     DeleteProjectTableData,
     PatchProjectTableData,
-    PostProjectTableData
+    PostProjectTableData,
+    GetAccountTableData,
 } from '../../store/actionCreater'
 
 const { Column } = Table
@@ -42,6 +44,7 @@ class ProjectTable extends Component {
 
   componentDidMount() {
     this.props.getProjectTableData()
+    this.props.getAccountTableData()
   }
 
   render() {
@@ -62,6 +65,7 @@ class ProjectTable extends Component {
           <Column title='Builded Device' dataIndex='Hosts' key='Hosts' align='center'
             render={(Hosts) => Hosts.map( c => c.Devices.map(d => d.deviceId+' ('+d.deviceName+')'+'\n').join(''))}
           />
+          <Column title='Owner' dataIndex={['User', 'username']} align='center' width='15%' />
         </Table>
         <Modal
           visible={this.state.isModalVisible}
@@ -83,6 +87,14 @@ class ProjectTable extends Component {
                   `${this.defaultValue(this.props.whichModal.displayName)}`
                 }
               />
+            </Item>
+            <Item label='Please Select Project Owner' name='UserId' hidden={this.props.whichModal.admin == true}>
+              <Select placeholder='Select a Project Owner' onChange={this.handleSelectUser}
+                defaultValue={this.defaultValue(this.props.whichModal.UserId)}>
+                {this.props.accountData.map(c => {
+                  return ( <Option key={c.id} value={c.id}>{c.username}</Option> )
+                })}
+              </Select>
             </Item>
             <Item>
               <Button htmlType='submit'>
@@ -111,6 +123,10 @@ class ProjectTable extends Component {
 
   handleCancel = () => {
     this.setState({ isModalVisible: false })
+  }
+
+  handleSelectUser = (value) => {
+    this.setState({ selectUser: value })
   }
 
   rule = (hint) => {
@@ -166,7 +182,8 @@ const mapStateToProps = (state) => {
   return {
     projectTableData: state.projectTableData,
     tableStatus: state.tableStatus,
-    whichModal: state.whichModal
+    whichModal: state.whichModal,
+    accountData: state.accountData,
   }
 }
 
@@ -192,7 +209,11 @@ const mapDispatchToProps = (dispatch) => {
     postProjectTableData(data) {
       const action = PostProjectTableData(data)
       dispatch(action)
-    }
+    },
+    getAccountTableData() {
+      const action = GetAccountTableData()
+      dispatch(action)
+    },
   }
 }
 
