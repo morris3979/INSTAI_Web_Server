@@ -16,7 +16,8 @@ import {
 import {
     GetProjectTableData,
     GetEventList,
-    PostAIServerMQTT
+    PostAIServerMQTT,
+    PatchDetailsTableData
 } from '../../store/actionCreater'
 import {
     SendOutlined,
@@ -29,6 +30,7 @@ import {
 import { io } from 'socket.io-client'
 
 const { Title } = Typography
+const { Text } = Typography
 const { Column } = Table
 const border = {
     borderTopLeftRadius: '12px',
@@ -73,6 +75,18 @@ const checkJson = (text) => {
     }
 }
 
+const checkTrained = (text) => {
+    if (text.trained == true) {
+        return (
+            <CheckOutlined />
+        )
+    } else {
+        return (
+            <CloseOutlined />
+        )
+    }
+}
+
 const findImageByDetail = (text) => {
     return (
         <Fragment align='center'>
@@ -82,6 +96,7 @@ const findImageByDetail = (text) => {
                 width='100%'
                 height='100%'
             />
+            <Text>{text.details}</Text>
         </Fragment>
     )
 }
@@ -126,6 +141,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                     onClick: () => {
                         if (itemDisabled || listDisabled) return;
                         onItemSelect(key, !listSelectedKeys.includes(key));
+                        console.log(key)
                     },
                 })}
                 dataSource={filteredItems}
@@ -139,12 +155,6 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                     align="center"
                     render={findImageByDetail}
                     width='20%'
-                />
-                <Column
-                    title='filename'
-                    dataIndex='details'
-                    align='center'
-                    width='30%'
                 />
                 <Column
                     title='labeled'
@@ -164,6 +174,12 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                     align='center'
                     width='15%'
                 />
+                <Column
+                    title='trained'
+                    render={checkTrained}
+                    align='center'
+                    width='15%'
+                />
             </Table>
         </Fragment>
       );
@@ -175,21 +191,36 @@ const rightTableColumns = [
     {
         dataIndex: 'details',
         title: 'Data',
-        render: (text) =>
-            <Image
-                style={ border }
-                src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text}.jpg`}
-                width='100%'
-                height='100%'
-            />,
+        render: (text) => {
+            return(<Fragment>
+                <Image
+                    style={ border }
+                    src={`https://d20cmf4o2f77jz.cloudfront.net/image/${text}.jpg`}
+                    width='100%'
+                    height='100%'
+                />
+                <Text>{text}</Text>
+            </Fragment>
+            )},
         align: 'center',
         width: '20%'
-    },
+    },    
     {
-        dataIndex: 'details',
-        title: 'filename',
+        dataIndex: 'labeled',
+        title: 'labeled',
+        render: (text) => {
+            if (text == true) {
+                return (
+                    <CheckOutlined />
+                )
+            } else {
+                return (
+                    <CloseOutlined />
+                )
+            }
+        },
         align: 'center',
-        width: '50%'
+        width: '15%'
     },
     {
         dataIndex: 'image',
@@ -225,13 +256,26 @@ const rightTableColumns = [
         align: 'center',
         width: '15%'
     },
+    {
+        dataIndex: 'trained',
+        title: 'trained',
+        render: (text) => {
+            return (
+                <CheckOutlined />
+            )
+
+        },
+        align: 'center',
+        width: '15%'
+    },
 ]
 
 const AIServer = (props) => {
     const {
         loginInformation,
         eventList,
-        getEventList
+        getEventList,
+        patchDetailsTableData
     } = props;
 
     const inputRef = useRef(null);
@@ -243,6 +287,7 @@ const AIServer = (props) => {
     const [filterTrainedData, setFilterTrainedData] = useState([])
     const [targetKeys, setTargetKeys] = useState(originTargetKeys);
     const [selectLabeledData, setSelectLabeledData] = useState([])
+    const [selectLabeledId, setSelectLabeledId] = useState([])
     const [items, setItems] = useState(['Hi AIServer', 'Download']);
     const [name, setName] = useState('');
     const [open, setOpen] = useState(false);
@@ -275,6 +320,7 @@ const AIServer = (props) => {
                 labeled: data.labeled,
                 image: data.image,
                 json: data.json,
+                id: data.id
             }])
         })
 
@@ -352,12 +398,22 @@ const AIServer = (props) => {
         return trainedData
     }
 
-    const onChange = (nextTargetKeys) => {
+    const onChange = (nextTargetKeys,direction,moveKeys) => {
         setSelectLabeledData([])
+        setSelectLabeledId([])
         setTargetKeys(nextTargetKeys)
         nextTargetKeys.map(value => {
             const filename = filterLabeledData[value].details
             setSelectLabeledData((value) => [...value, filename])
+        })
+        moveKeys.forEach((c) => {
+            if(direction == 'right'){
+                console.log(filterLabeledData[c].id,{trained:'1'})
+                patchDetailsTableData(filterLabeledData[c].id,{trained:'1'})
+            }else{
+                console.log(filterLabeledData[c].id,{trained:'0'})
+                patchDetailsTableData(filterLabeledData[c].id,{trained:'0'})
+            }
         })
     }
 
@@ -543,6 +599,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         postAIServerMQTT(data) {
             const action = PostAIServerMQTT(data)
+            dispatch(action)
+        },
+        patchDetailsTableData(id,data) {
+            const action = PatchDetailsTableData(id,data)
             dispatch(action)
         }
     }
