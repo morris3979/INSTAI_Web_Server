@@ -180,6 +180,7 @@ const OverviewCard = (props) => {
                                 `rawData: ${c.rawData}\n`+
                                 `cleaned: ${c.cleaned}\n`+
                                 `labeled: ${c.labeled}\n`+
+                                `trained: ${c.trained}\n`+
                                 `createdAt: ${c.createdAt.replace('T',' ').replace('.000Z','')}`
                             }
                         />
