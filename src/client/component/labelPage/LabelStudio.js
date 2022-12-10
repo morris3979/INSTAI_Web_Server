@@ -330,7 +330,7 @@ const LabelStudioWrapper = (props) => {
       patchDetailsTableData(selectDataId, labeled)
       return false;
     },
-    fileList,
+    // fileList,
   }
 
   const uploadJson = (id) => {
@@ -439,12 +439,13 @@ const LabelStudioWrapper = (props) => {
           </Button>
         </div>
         <div style={{ margin: 18 }}>
-          <Upload {...handleUploadJson}>
+          <Upload {...handleUploadJson} showUploadList={fileList.length} maxCount={1}>
             <Button
               style={{ margin: 2, ...border }}
               type="primary"
               icon={<UploadOutlined />}
               onClick={() => {
+                setFileList([])
                 setSelectDataId(data.id)
               }}
             >
