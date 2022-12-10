@@ -5,6 +5,7 @@ import "@tensorflow/tfjs-backend-cpu";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 
 const ObjectDetectorContainer = styled.div`
+  margin: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;

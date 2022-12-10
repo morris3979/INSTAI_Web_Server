@@ -123,8 +123,7 @@ const OverviewCard = (props) => {
                         style={{
                             width: 270,
                             margin: 6,
-                            borderBottomLeftRadius: '12px',
-                            borderBottomRightRadius: '12px',
+                            ...border,
                         }}
                         cover={
                             c.video == true && c.image == true?

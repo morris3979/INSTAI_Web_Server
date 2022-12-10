@@ -13,8 +13,8 @@ const DetectingPage = () => {
                 backgroundColor: '#1c2127',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
+                // alignItems: 'center',
+                // justifyContent: 'center',
                 color: '#fff'
             }}
         >

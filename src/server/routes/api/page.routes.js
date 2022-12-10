@@ -18,11 +18,11 @@ pageRouter.get("/coffee", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/tensorflow", async (req, res) => {
+pageRouter.get("/InstantDetector", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/objectDetector", async (req, res) => {
+pageRouter.get("/ObjectDetector", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 

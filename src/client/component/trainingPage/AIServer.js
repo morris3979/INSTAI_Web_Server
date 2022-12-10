@@ -448,7 +448,7 @@ const AIServer = (props) => {
     return (
         <Fragment>
             <span>
-                <Title level={2} style={{ margin: 8 }}>{time}</Title>
+                <Title level={2} style={{ margin: 8, color: 'white' }}>{time}</Title>
             </span>
             <div style={{ margin: 8 }}>
                 <Select
@@ -507,7 +507,7 @@ const AIServer = (props) => {
                     }}
                 />
             </div>
-            <Title level={4} style={{ margin: 12 }}><MessageOutlined /> {messageFromAIServer}</Title>
+            <Title level={4} style={{ margin: 12, color: 'white' }}><MessageOutlined /> {messageFromAIServer}</Title>
             <TableTransfer
                 titles={['Labeled Data Area', 'Data Waiting Area (To AI Server)']}
                 // showSearch

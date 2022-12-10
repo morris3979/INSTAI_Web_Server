@@ -2,10 +2,32 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import Webcam from "react-webcam";
 import { drawRect } from "./utilities";
+import styled from "styled-components";
 
 require('@tensorflow/tfjs-backend-cpu');
 require('@tensorflow/tfjs-backend-webgl');
 const cocoSsd = require('@tensorflow-models/coco-ssd');
+
+const SelectButton = styled.button`
+  padding: 7px 10px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background-color: #68a0cf;
+  color: #0a0f22;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+  margin-top: 2em;
+  cursor: pointer;
+  transition: all 260ms ease-in-out;
+
+  &:hover {
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #fff;
+  }
+`;
 
 function Tensorflow() {
   const webcamRef = useRef(null);
@@ -73,57 +95,70 @@ function Tensorflow() {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <header
-        style={{
-            backgroundColor: '#282c34',
-            minHeight: '60vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 'calc(10px + 2vmin)',
-            color: 'white'
-        }}
-      >
-        <Webcam
-          ref={webcamRef}
-          muted={true}
+      {capturedImg === null?
+      <div>
+        <header
           style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
+              minHeight: '70vh',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white'
           }}
-        />
-
-        <canvas
-          ref={canvasRef}
+        >
+          <Webcam
+            ref={webcamRef}
+            muted={true}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 200,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480
+            }}
+          />
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 200,
+              right: 0,
+              textAlign: "center",
+              zindex: 8,
+              width: 640,
+              height: 480
+            }}
+          />
+        </header>
+        <div style={{ margin: 6 }}>
+          <SelectButton onClick={capture}>Capture photo</SelectButton>
+        </div>
+      </div>:
+      <div>
+        <header
           style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
+              minHeight: '70vh',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white'
           }}
-        />
-      </header>
-
-      <div style={{ marginTop: 6, marginBottom: 6 }}>
-        <button onClick={capture}>Capture photo</button>
-        <button style={{ marginLeft: 6 }} onClick={() => setCapturedImg(null)}>Clear</button>
+        >
+          {capturedImg && <img src={capturedImg} />}
+        </header>
+        <div style={{ margin: 6 }}>
+          <SelectButton onClick={() => setCapturedImg(null)}>Retake photo</SelectButton>
+        </div>
       </div>
-
-      {capturedImg && <img src={capturedImg} width="50%" />}
-
+      }
     </div>
   );
 }

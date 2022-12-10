@@ -20,7 +20,7 @@ import {
   CoffeeOutlined,
   LineChartOutlined,
   ExperimentOutlined,
-  RobotOutlined,
+  VideoCameraOutlined,
   ProjectOutlined,
   ScanOutlined
 } from '@ant-design/icons'
@@ -43,7 +43,7 @@ const ReportPage = lazy(() => import('./page/reportPage'))
 import InstAI from './icon image/instai.png'
 
 const { Content, Sider } = Layout
-const { Item, SubMenu } = Menu
+const { Item, SubMenu, ItemGroup } = Menu
 
 const App = (props) => {
   const {
@@ -79,7 +79,8 @@ const App = (props) => {
             theme='dark'
             selectedKeys={[]}
             mode='inline'
-            defaultOpenKeys={['subreport', 'subset', 'subTrain']}>
+            defaultOpenKeys={['subreport', 'subTrain', 'subset']}
+          >
             <Item
               icon={<UserOutlined />}
               style={{ color: "yellow", pointerEvents: 'none' }}
@@ -170,45 +171,49 @@ const App = (props) => {
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<ExperimentOutlined />}
             >
-              <Item key='/coffee'
-                hidden={
-                  !(loginInformation.developer
-                    || loginInformation.admin
-                    || loginInformation.user
-                  )
-                }
-                icon={<CoffeeOutlined />}
-              >
-                <Link to='/coffee'>
-                  Coffee
-                </Link>
-              </Item>
-              <Item key='/tensorflow'
-                hidden={
-                  !(loginInformation.developer
-                    // || loginInformation.admin
-                    // || loginInformation.user
-                  )
-                }
-                icon={<RobotOutlined />}
-              >
-                <Link to='/tensorflow'>
-                  Tensorflow
-                </Link>
-              </Item>
-              <Item key='/objectDetector'
-                hidden={
-                  !(loginInformation.developer
-                    // || loginInformation.admin
-                    // || loginInformation.user
-                  )
-                }
-                icon={<ScanOutlined />}
-              >
-                <Link to='/objectDetector'>
-                  ObjectDetector
-                </Link>
-              </Item>
+              <ItemGroup key='Coffee' title='Coffee'>
+                <Item key='/coffee'
+                  hidden={
+                    !(loginInformation.developer
+                      || loginInformation.admin
+                      || loginInformation.user
+                    )
+                  }
+                  icon={<CoffeeOutlined />}
+                >
+                  <Link to='/coffee'>
+                    AIServer
+                  </Link>
+                </Item>
+              </ItemGroup>
+              <ItemGroup key='Tensorflow' title='Tensorflow'>
+                <Item key='/InstantDetector'
+                  hidden={
+                    !(loginInformation.developer
+                      // || loginInformation.admin
+                      // || loginInformation.user
+                    )
+                  }
+                  icon={<VideoCameraOutlined />}
+                >
+                  <Link to='/InstantDetector'>
+                    Instant
+                  </Link>
+                </Item>
+                <Item key='/ObjectDetector'
+                  hidden={
+                    !(loginInformation.developer
+                      // || loginInformation.admin
+                      // || loginInformation.user
+                    )
+                  }
+                  icon={<ScanOutlined />}
+                >
+                  <Link to='/ObjectDetector'>
+                    Object
+                  </Link>
+                </Item>
+              </ItemGroup>
             </SubMenu>
             <Item key='/TrendChart'
               hidden={
@@ -298,8 +303,8 @@ const App = (props) => {
                 <Route path='/overview' element={<OverviewPage />} />
                 <Route path='/label' element={<LabelsPage />} />
                 <Route path='/coffee' element={<TrainingPage />} />
-                <Route path='/tensorflow' element={<TensorflowPage />} />
-                <Route path='/objectDetector' element={<DetectingPage />} />
+                <Route path='/InstantDetector' element={<TensorflowPage />} />
+                <Route path='/ObjectDetector' element={<DetectingPage />} />
                 <Route path='/TrendChart' element={<TrendPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)

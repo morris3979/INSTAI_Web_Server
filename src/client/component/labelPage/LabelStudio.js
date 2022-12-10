@@ -424,7 +424,7 @@ const LabelStudioWrapper = (props) => {
 
   const actionBtn = (data) => {
     return(
-      <Fragment>
+      <div>
         <div style={{ margin: 18 }}>
           <Button
             style={{ margin: 2, ...border }}
@@ -463,7 +463,7 @@ const LabelStudioWrapper = (props) => {
             Save to S3
           </Button>
         </div>
-      </Fragment>
+      </div>
     )
   }
 
@@ -484,7 +484,7 @@ const LabelStudioWrapper = (props) => {
   // just a wrapper node to place LSF into
   return (
     <Fragment>
-      <Collapse accordion style={{ margin: 5 }} defaultActiveKey={['1']}>
+      <Collapse accordion style={{ margin: 5, backgroundColor: 'lightgray' }}>
         <Panel header='Data Store' key={'1'}>
           <span style={{ margin: 5 }}>
             <Input
@@ -543,7 +543,7 @@ const LabelStudioWrapper = (props) => {
         </Panel>
       </Collapse>
       <div style={{ margin: 5 }}>
-        <Title level={3}>Label Workspace</Title>
+        <Title level={3} style={{ color: 'white' }}>Label Workspace</Title>
         <Input
           allowClear
           type="text"
