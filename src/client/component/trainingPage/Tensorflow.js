@@ -52,12 +52,17 @@ function Tensorflow() {
     }
   };
 
-  useEffect(async() => {
-    try{
-      alert("Ask to access your webcam.");
-      runCoco()
-    } catch(e) {
-      console.error(e);
+  useEffect(() => {
+    alert("Ask to access your webcam.");
+    runCoco()
+    return () => {
+        navigator.mediaDevices.getUserMedia({video: true, audio: false})
+        .then(mediaStream => {
+            const stream = mediaStream;
+            const tracks = stream.getTracks();
+
+            tracks.forEach(track => track.stop());
+        })
     }
   },[]);
 
