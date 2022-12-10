@@ -11,7 +11,6 @@ import {
 } from './store/actionCreater'
 import {
   AppstoreOutlined,
-  EnvironmentOutlined,
   TableOutlined,
   SettingOutlined,
   LogoutOutlined,
@@ -19,7 +18,10 @@ import {
   FormOutlined,
   UserOutlined,
   CoffeeOutlined,
-  LineChartOutlined
+  LineChartOutlined,
+  ExperimentOutlined,
+  RobotOutlined,
+  ProjectOutlined,
 } from '@ant-design/icons'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
@@ -27,6 +29,7 @@ const OverviewPage = lazy(() => import('./page/overviewPage'))
 // const MapPage = lazy(() => import('./page/mapPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
 const TrainingPage = lazy(() => import('./page/trainingPage'))
+const TensorflowPage = lazy(() => import('./page/tensorflowPage'))
 const TrendPage = lazy(() => import('./page/trendPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
@@ -75,7 +78,7 @@ const App = (props) => {
             theme='dark'
             selectedKeys={[]}
             mode='inline'
-            defaultOpenKeys={['subreport', 'subset']}>
+            defaultOpenKeys={['subreport', 'subset', 'subTrain']}>
             <Item
               icon={<UserOutlined />}
               style={{ color: "yellow", pointerEvents: 'none' }}
@@ -127,6 +130,7 @@ const App = (props) => {
                         loginInformation.admin ||
                         loginInformation.user)
                     }
+                    icon={<ProjectOutlined />}
                   >
                     <Link to={`/report/${c.project}`}>
                       {c.displayName}
@@ -140,6 +144,7 @@ const App = (props) => {
                         loginInformation.user) ||
                         loginInformation.project != c.project
                     }
+                    icon={<ProjectOutlined />}
                   >
                     <Link to={`/report/${c.project}`}>
                       {c.displayName}
@@ -160,19 +165,37 @@ const App = (props) => {
                 Labeling
               </Link>
             </Item>
-            <Item key='/training'
-              hidden={
-                !(loginInformation.developer
-                  || loginInformation.admin
-                  || loginInformation.user
-                )
-              }
-              icon={<CoffeeOutlined />}
+            <SubMenu key='subTrain' title='Training'
+              hidden={!(loginInformation.developer || loginInformation.admin)}
+              icon={<ExperimentOutlined />}
             >
-              <Link to='/training'>
-                Training
-              </Link>
-            </Item>
+              <Item key='/coffee'
+                hidden={
+                  !(loginInformation.developer
+                    || loginInformation.admin
+                    || loginInformation.user
+                  )
+                }
+                icon={<CoffeeOutlined />}
+              >
+                <Link to='/coffee'>
+                  Coffee
+                </Link>
+              </Item>
+              <Item key='/tensorflow'
+                hidden={
+                  !(loginInformation.developer
+                    || loginInformation.admin
+                    || loginInformation.user
+                  )
+                }
+                icon={<RobotOutlined />}
+              >
+                <Link to='/tensorflow'>
+                  Tensorflow
+                </Link>
+              </Item>
+            </SubMenu>
             <Item key='/TrendChart'
               hidden={
                 !(loginInformation.developer
@@ -190,12 +213,21 @@ const App = (props) => {
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<SettingOutlined />}
             >
+              <Item key='/test'
+                hidden={!loginInformation.developer}
+                icon={<ToolOutlined />}
+              >
+                <Link to='/test'>
+                  Test
+                </Link>
+              </Item>
               <Item key='/host'
                 hidden={
                   !(loginInformation.developer ||
                     loginInformation.admin ||
                     loginInformation.user)
                 }
+                icon={<ToolOutlined />}
               >
                 <Link to='/host'>
                   Host
@@ -207,6 +239,7 @@ const App = (props) => {
                     loginInformation.admin ||
                     loginInformation.user)
                 }
+                icon={<ToolOutlined />}
               >
                 <Link to='/device'>
                   Device
@@ -218,6 +251,7 @@ const App = (props) => {
                     loginInformation.admin ||
                     loginInformation.user)
                 }
+                icon={<ToolOutlined />}
               >
                 <Link to='/project'>
                   Project
@@ -227,20 +261,13 @@ const App = (props) => {
                 hidden={
                   !(loginInformation.developer || loginInformation.admin)
                 }
+                icon={<ToolOutlined />}
               >
                 <Link to='/account'>
                   Account
                 </Link>
               </Item>
             </SubMenu>
-            <Item key='/test'
-              hidden={!loginInformation.developer}
-              icon={<ToolOutlined />}
-            >
-              <Link to='/test'>
-                Test
-              </Link>
-            </Item>
             <Item key='/logout'
               hidden={
                 !(loginInformation.developer ||
@@ -264,7 +291,8 @@ const App = (props) => {
                 {/* <Route path='/map' element={<MapPage />} /> */}
                 <Route path='/overview' element={<OverviewPage />} />
                 <Route path='/label' element={<LabelsPage />} />
-                <Route path='/training' element={<TrainingPage />} />
+                <Route path='/coffee' element={<TrainingPage />} />
+                <Route path='/tensorflow' element={<TensorflowPage />} />
                 <Route path='/TrendChart' element={<TrendPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)
