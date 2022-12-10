@@ -117,7 +117,7 @@ function Tensorflow() {
         />
       </header>
 
-      <div style={{ marginTop: 6 }}>
+      <div style={{ marginTop: 6, marginBottom: 6 }}>
         <button onClick={capture}>Capture photo</button>
         <button style={{ marginLeft: 6 }} onClick={() => setCapturedImg(null)}>Clear</button>
       </div>
