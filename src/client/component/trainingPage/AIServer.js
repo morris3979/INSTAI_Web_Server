@@ -141,7 +141,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                     onClick: () => {
                         if (itemDisabled || listDisabled) return;
                         onItemSelect(key, !listSelectedKeys.includes(key));
-                        console.log(key)
+                        // console.log(key)
                     },
                 })}
                 dataSource={filteredItems}
@@ -316,11 +316,11 @@ const AIServer = (props) => {
         FilterLabeledData(loginInformation.project).map((data, i) => {
             setFilterLabeledData((value) => [...value, {
                 key: i.toString(),
+                id: data.id,
                 details: data.details,
                 labeled: data.labeled,
                 image: data.image,
-                json: data.json,
-                id: data.id
+                json: data.json
             }])
         })
 
