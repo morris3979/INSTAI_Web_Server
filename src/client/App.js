@@ -186,8 +186,8 @@ const App = (props) => {
               <Item key='/tensorflow'
                 hidden={
                   !(loginInformation.developer
-                    || loginInformation.admin
-                    || loginInformation.user
+                    // || loginInformation.admin
+                    // || loginInformation.user
                   )
                 }
                 icon={<RobotOutlined />}
@@ -199,8 +199,8 @@ const App = (props) => {
               <Item key='/objectDetector'
                 hidden={
                   !(loginInformation.developer
-                    || loginInformation.admin
-                    || loginInformation.user
+                    // || loginInformation.admin
+                    // || loginInformation.user
                   )
                 }
                 icon={<ScanOutlined />}
