@@ -22,6 +22,7 @@ import {
   ExperimentOutlined,
   RobotOutlined,
   ProjectOutlined,
+  ScanOutlined
 } from '@ant-design/icons'
 
 const InitialPage = lazy(() => import('./page/initialPage'))
@@ -30,6 +31,7 @@ const OverviewPage = lazy(() => import('./page/overviewPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
 const TrainingPage = lazy(() => import('./page/trainingPage'))
 const TensorflowPage = lazy(() => import('./page/tensorflowPage'))
+const DetectingPage = lazy(() => import('./page/detectingPage'))
 const TrendPage = lazy(() => import('./page/trendPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
@@ -194,6 +196,19 @@ const App = (props) => {
                   Tensorflow
                 </Link>
               </Item>
+              <Item key='/objectDetector'
+                hidden={
+                  !(loginInformation.developer
+                    || loginInformation.admin
+                    || loginInformation.user
+                  )
+                }
+                icon={<ScanOutlined />}
+              >
+                <Link to='/objectDetector'>
+                  ObjectDetector
+                </Link>
+              </Item>
             </SubMenu>
             <Item key='/TrendChart'
               hidden={
@@ -284,6 +299,7 @@ const App = (props) => {
                 <Route path='/label' element={<LabelsPage />} />
                 <Route path='/coffee' element={<TrainingPage />} />
                 <Route path='/tensorflow' element={<TensorflowPage />} />
+                <Route path='/objectDetector' element={<DetectingPage />} />
                 <Route path='/TrendChart' element={<TrendPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)
