@@ -55,7 +55,7 @@ const OverviewCard = (props) => {
         //     location.reload()
         // }, 30*1000)
         // return () => window.clearInterval(interval);
-        const SERVER = ":8080";
+        const SERVER = ":8443";
         const socket = io(SERVER)
         socket.on('connect', () => console.log(socket.id))
         socket.on('connect_error', () => {
