@@ -204,7 +204,7 @@ const rightTableColumns = [
             )},
         align: 'center',
         width: '20%'
-    },    
+    },
     {
         dataIndex: 'labeled',
         title: 'labeled',
@@ -298,7 +298,7 @@ const AIServer = (props) => {
         getEventList()
         const SERVER = ":8080";
         const socket = io(SERVER)
-        socket.on('connect', () => console.log(socket.id))
+        socket.on('connect', () => { console.log(socket.id) })
         socket.on('connect_error', () => {
             setTimeout(() => socket.connect(), 5000)
         })
@@ -398,7 +398,7 @@ const AIServer = (props) => {
         return trainedData
     }
 
-    const onChange = (nextTargetKeys,direction,moveKeys) => {
+    const onChange = (nextTargetKeys, direction, moveKeys) => {
         setSelectLabeledData([])
         setSelectLabeledId([])
         setTargetKeys(nextTargetKeys)
@@ -408,10 +408,10 @@ const AIServer = (props) => {
         })
         moveKeys.forEach((c) => {
             if(direction == 'right'){
-                console.log(filterLabeledData[c].id,{trained:'1'})
+                // console.log(filterLabeledData[c].id,{trained:'1'})
                 patchDetailsTableData(filterLabeledData[c].id,{trained:'1'})
             }else{
-                console.log(filterLabeledData[c].id,{trained:'0'})
+                // console.log(filterLabeledData[c].id,{trained:'0'})
                 patchDetailsTableData(filterLabeledData[c].id,{trained:'0'})
             }
         })
@@ -435,7 +435,7 @@ const AIServer = (props) => {
     };
 
     const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     }
 

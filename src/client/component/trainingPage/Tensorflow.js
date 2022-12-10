@@ -15,7 +15,7 @@ function Tensorflow() {
   // Main function
   const runCoco = async () => {
     const net = await cocoSsd.load();
-    console.log("Hand pose model loaded.");
+    // console.log("Hand pose model loaded.");
     //  Loop and detect hands
     setInterval(() => {
       detect(net);

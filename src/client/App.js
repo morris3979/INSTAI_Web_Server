@@ -36,7 +36,6 @@ const HostPage = lazy(() => import('./page/hostPage'))
 const DevicePage = lazy(() => import('./page/devicePage'))
 const LoginPage = lazy(() => import('./page/loginPage'))
 const AccountPage = lazy(() => import('./page/accountPage'))
-const Test = lazy(() => import('./component/test'))
 const ReportPage = lazy(() => import('./page/reportPage'))
 
 import InstAI from './icon image/instai.png'
@@ -213,14 +212,6 @@ const App = (props) => {
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<SettingOutlined />}
             >
-              <Item key='/test'
-                hidden={!loginInformation.developer}
-                icon={<ToolOutlined />}
-              >
-                <Link to='/test'>
-                  Test
-                </Link>
-              </Item>
               <Item key='/host'
                 hidden={
                   !(loginInformation.developer ||
@@ -302,7 +293,6 @@ const App = (props) => {
                 <Route path='/device' element={<DevicePage />} />
                 <Route path='/project' element={<ProjectPage />} />
                 <Route path='/account' element={<AccountPage />} />
-                <Route path='/test' element={<Test />} />
               </Routes>
             </Suspense>
           </Content>
