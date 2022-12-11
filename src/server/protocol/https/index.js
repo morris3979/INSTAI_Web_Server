@@ -11,5 +11,26 @@ exports.connect = (app) => {
     };
     const httpsServer = https.createServer(credentials, app);
 
+    const socketIo = require('socket.io')
+    const io = socketIo(httpsServer, {
+        cors: {
+            origin: "*",
+            methods: ["GET", "POST"],
+            credentials: true
+        }
+    })
+
+    io.on('connection', (socket) => {
+        console.log('client connected: ', socket.id)
+        socket.join('room')
+        socket.on('disconnect', (reason) => {
+          console.log(reason)
+        })
+    })
+
+    setInterval(() => {
+        io.to('room').emit('time', new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Taipei'}))
+    }, 1000)
+
     httpsServer.listen(httpsPort, () => console.log(`=> https server listening on port ${httpsPort}!`));
 }

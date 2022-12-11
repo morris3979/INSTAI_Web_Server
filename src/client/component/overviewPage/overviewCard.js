@@ -55,16 +55,28 @@ const OverviewCard = (props) => {
         //     location.reload()
         // }, 30*1000)
         // return () => window.clearInterval(interval);
-        const SERVER = ":8443";
-        const socket = io(SERVER)
-        socket.on('connect', () => console.log(socket.id))
-        socket.on('connect_error', () => {
-            setTimeout(() => socket.connect(), 5000)
+        const HTTP = ":8080";
+        const HTTPS = ":8443";
+        const httpSocket = io(HTTP)
+        const httpsSocket = io(HTTPS)
+        httpSocket.on('connect', () => console.log(httpSocket.id))
+        httpSocket.on('connect_error', () => {
+            setTimeout(() => httpSocket.connect(), 5000)
         })
-        socket.on('time', (data) => {
+        httpSocket.on('time', (data) => {
             setTime(data)
         })
-        socket.on('disconnect', () => {
+        httpSocket.on('disconnect', () => {
+            setTime('Clock disconnected ...')
+        })
+        httpsSocket.on('connect', () => console.log(httpsSocket.id))
+        httpsSocket.on('connect_error', () => {
+            setTimeout(() => httpsSocket.connect(), 5000)
+        })
+        httpsSocket.on('time', (data) => {
+            setTime(data)
+        })
+        httpsSocket.on('disconnect', () => {
             setTime('Clock disconnected ...')
         })
     }, []);

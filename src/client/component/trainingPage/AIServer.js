@@ -296,19 +296,35 @@ const AIServer = (props) => {
 
     useEffect(() => {
         getEventList()
-        const SERVER = ":8443";
-        const socket = io(SERVER)
-        socket.on('connect', () => { console.log(socket.id) })
-        socket.on('connect_error', () => {
-            setTimeout(() => socket.connect(), 5000)
+        const HTTP = ":8080";
+        const HTTPS = ":8443";
+        const httpSocket = io(HTTP)
+        const httpsSocket = io(HTTPS)
+        httpSocket.on('connect', () => { console.log(httpSocket.id) })
+        httpSocket.on('connect_error', () => {
+            setTimeout(() => httpSocket.connect(), 5000)
         })
-        socket.on('time', (data) => {
+        httpSocket.on('time', (data) => {
             setTime(data)
         })
-        socket.on('message', (data) => {
+        httpSocket.on('message', (data) => {
             setMessageFromAIServer(data)
         })
-        socket.on('disconnect', () => {
+        httpSocket.on('disconnect', () => {
+            setTime('Clock disconnected ...')
+            setMessageFromAIServer('AI Server disconnected ...')
+        })
+        httpsSocket.on('connect', () => { console.log(httpsSocket.id) })
+        httpsSocket.on('connect_error', () => {
+            setTimeout(() => httpsSocket.connect(), 5000)
+        })
+        httpsSocket.on('time', (data) => {
+            setTime(data)
+        })
+        httpsSocket.on('message', (data) => {
+            setMessageFromAIServer(data)
+        })
+        httpsSocket.on('disconnect', () => {
             setTime('Clock disconnected ...')
             setMessageFromAIServer('AI Server disconnected ...')
         })
@@ -488,8 +504,8 @@ const AIServer = (props) => {
                 />
                 <Button
                     style={{
-                        borderTopRightRadius: '12px',
-                        borderBottomRightRadius: '12px',
+                        marginLeft: 6,
+                        ...border
                     }}
                     size="large"
                     type="primary"
@@ -505,7 +521,7 @@ const AIServer = (props) => {
                             props.postAIServerMQTT(sendToAI)
                         }
                     }}
-                />
+                >Send to AIServer</Button>
             </div>
             <Title level={4} style={{ margin: 12, color: 'white' }}><MessageOutlined /> {messageFromAIServer}</Title>
             <TableTransfer
