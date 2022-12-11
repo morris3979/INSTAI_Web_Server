@@ -171,8 +171,8 @@ const App = (props) => {
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<ExperimentOutlined />}
             >
-              <ItemGroup key='Coffee' title='Coffee'>
-                <Item key='/coffee'
+              <ItemGroup key='Caffe' title='Coffee'>
+                <Item key='/caffe'
                   hidden={
                     !(loginInformation.developer
                       || loginInformation.admin
@@ -181,7 +181,7 @@ const App = (props) => {
                   }
                   icon={<CoffeeOutlined />}
                 >
-                  <Link to='/coffee'>
+                  <Link to='/caffe'>
                     AIServer
                   </Link>
                 </Item>
@@ -302,7 +302,7 @@ const App = (props) => {
                 {/* <Route path='/map' element={<MapPage />} /> */}
                 <Route path='/overview' element={<OverviewPage />} />
                 <Route path='/label' element={<LabelsPage />} />
-                <Route path='/coffee' element={<TrainingPage />} />
+                <Route path='/caffe' element={<TrainingPage />} />
                 <Route path='/InstantDetector' element={<TensorflowPage />} />
                 <Route path='/ObjectDetector' element={<DetectingPage />} />
                 <Route path='/TrendChart' element={<TrendPage />} />

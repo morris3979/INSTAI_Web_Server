@@ -14,7 +14,7 @@ pageRouter.get("/label", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/coffee", async (req, res) => {
+pageRouter.get("/caffe", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
