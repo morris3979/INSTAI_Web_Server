@@ -154,13 +154,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                     title='Data'
                     align="center"
                     render={findImageByDetail}
-                    width='20%'
-                />
-                <Column
-                    title='labeled'
-                    render={checkLabeled}
-                    align='center'
-                    width='15%'
+                    width='30%'
                 />
                 <Column
                     title='image'
@@ -175,10 +169,16 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                     width='15%'
                 />
                 <Column
+                    title='labeled'
+                    render={checkLabeled}
+                    align='center'
+                    width='20%'
+                />
+                <Column
                     title='trained'
                     render={checkTrained}
                     align='center'
-                    width='15%'
+                    width='20%'
                 />
             </Table>
         </Fragment>
@@ -203,24 +203,7 @@ const rightTableColumns = [
             </Fragment>
             )},
         align: 'center',
-        width: '20%'
-    },
-    {
-        dataIndex: 'labeled',
-        title: 'labeled',
-        render: (text) => {
-            if (text == true) {
-                return (
-                    <CheckOutlined />
-                )
-            } else {
-                return (
-                    <CloseOutlined />
-                )
-            }
-        },
-        align: 'center',
-        width: '15%'
+        width: '30%'
     },
     {
         dataIndex: 'image',
@@ -257,6 +240,23 @@ const rightTableColumns = [
         width: '15%'
     },
     {
+        dataIndex: 'labeled',
+        title: 'labeled',
+        render: (text) => {
+            if (text == true) {
+                return (
+                    <CheckOutlined />
+                )
+            } else {
+                return (
+                    <CloseOutlined />
+                )
+            }
+        },
+        align: 'center',
+        width: '20%'
+    },
+    {
         dataIndex: 'trained',
         title: 'trained',
         render: (text) => {
@@ -266,7 +266,7 @@ const rightTableColumns = [
 
         },
         align: 'center',
-        width: '15%'
+        width: '20%'
     },
 ]
 
@@ -586,7 +586,12 @@ const AIServer = (props) => {
                         {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                     </span>
                 </div>
-                <Table rowSelection={trainedRowSelection} columns={rightTableColumns} dataSource={filterTrainedData} />
+                <Table
+                    rowSelection={trainedRowSelection}
+                    columns={rightTableColumns}
+                    dataSource={filterTrainedData}
+                    scroll={{ x: 500, y: 800 }}
+                />
             </Drawer>
         </Fragment>
     );

@@ -171,7 +171,7 @@ const App = (props) => {
               hidden={!(loginInformation.developer || loginInformation.admin)}
               icon={<ExperimentOutlined />}
             >
-              <ItemGroup key='Caffe' title='Coffee'>
+              <ItemGroup key='Caffe' title='Caffe'>
                 <Item key='/caffe'
                   hidden={
                     !(loginInformation.developer
