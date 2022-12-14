@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const AIServer = lazy(() => import('../component/trainingPage/AIServer'))
+const AIServer = lazy(() => import('../component/caffePage/AIServer'))
 
 const TrainingPage = () => {
   return (

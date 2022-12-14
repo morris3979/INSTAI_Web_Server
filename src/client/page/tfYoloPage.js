@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const TFYolo = lazy(() => import('../component/tfYoloPage/index'))
+const TFYolo = lazy(() => import('../component/tensorflowPage/tfYoloPage/index'))
 
 const TFYoloPage = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const TFSsdInstant = lazy(() => import('../component/trainingPage/tfSsdInstant'))
+const TFSsdInstant = lazy(() => import('../component/tensorflowPage/tfSsdPage/tfSsdInstant'))
 
 const TFSsdInstantPage = () => {
   return (
