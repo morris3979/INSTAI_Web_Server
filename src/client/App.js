@@ -30,8 +30,9 @@ const OverviewPage = lazy(() => import('./page/overviewPage'))
 // const MapPage = lazy(() => import('./page/mapPage'))
 const LabelsPage = lazy(() => import('./page/labelPage'))
 const TrainingPage = lazy(() => import('./page/trainingPage'))
-const TensorflowPage = lazy(() => import('./page/tensorflowPage'))
-const DetectingPage = lazy(() => import('./page/detectingPage'))
+const TensorflowPage = lazy(() => import('./page/tfSsdInstantPage'))
+const TFSsdDetectorPage = lazy(() => import('./page/tfSsdDetectorPage'))
+const TFYoloPage = lazy(() => import('./page/tfYoloPage'))
 const TrendPage = lazy(() => import('./page/trendPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
 const HostPage = lazy(() => import('./page/hostPage'))
@@ -187,7 +188,7 @@ const App = (props) => {
                 </Item>
               </ItemGroup>
               <ItemGroup key='Tensorflow' title='Tensorflow'>
-                <Item key='/InstantDetector'
+                <Item key='/SsdInstant'
                   hidden={
                     !(loginInformation.developer
                       // || loginInformation.admin
@@ -196,11 +197,11 @@ const App = (props) => {
                   }
                   icon={<VideoCameraOutlined />}
                 >
-                  <Link to='/InstantDetector'>
-                    Instant
+                  <Link to='/SsdInstant'>
+                    Instant (SSD)
                   </Link>
                 </Item>
-                <Item key='/ObjectDetector'
+                <Item key='/SsdDetector'
                   hidden={
                     !(loginInformation.developer
                       // || loginInformation.admin
@@ -209,8 +210,21 @@ const App = (props) => {
                   }
                   icon={<ScanOutlined />}
                 >
-                  <Link to='/ObjectDetector'>
-                    Object
+                  <Link to='/SsdDetector'>
+                    Object (SSD)
+                  </Link>
+                </Item>
+                <Item key='/YoloDetector'
+                  hidden={
+                    !(loginInformation.developer
+                      // || loginInformation.admin
+                      // || loginInformation.user
+                    )
+                  }
+                  icon={<ScanOutlined />}
+                >
+                  <Link to='/YoloDetector'>
+                    Detect (Yolo)
                   </Link>
                 </Item>
               </ItemGroup>
@@ -303,8 +317,9 @@ const App = (props) => {
                 <Route path='/overview' element={<OverviewPage />} />
                 <Route path='/label' element={<LabelsPage />} />
                 <Route path='/caffe' element={<TrainingPage />} />
-                <Route path='/InstantDetector' element={<TensorflowPage />} />
-                <Route path='/ObjectDetector' element={<DetectingPage />} />
+                <Route path='/SsdInstant' element={<TensorflowPage />} />
+                <Route path='/SsdDetector' element={<TFSsdDetectorPage />} />
+                <Route path='/YoloDetector' element={<TFYoloPage />} />
                 <Route path='/TrendChart' element={<TrendPage />} />
                 {projectList.map((c) => {
                   //console.log(c.project)

@@ -5,8 +5,8 @@ export const drawRect = (detections, ctx) =>{
       // Extract boxes and classes
       const [x, y, width, height] = prediction['bbox'];
       const detectObj = prediction['class'];
-      const score = Math.round(prediction['score'] * 100) / 100;
-      const text = ' '+detectObj+'  '+score;
+      const accuracy = Math.round(prediction['score'] * 100) / 100;
+      const text = ' '+detectObj+'  '+accuracy;
 
       // Set styling
       ctx.strokeStyle = '#00FF00';
