@@ -24,8 +24,8 @@ const LoginForm = (props) => {
 
   return (
     <Fragment>
-      <Title>
-        <LoginOutlined /> INSTAI
+      <Title style={{ color: 'white '}}>
+        <LoginOutlined /> InstAI
       </Title>
       <Divider />
       <Form
@@ -60,7 +60,7 @@ const LoginForm = (props) => {
         </Item>
         <Item>
           <Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox style={{ color: 'white' }}>Remember me</Checkbox>
           </Item>
         </Item>
         <Item>
@@ -70,7 +70,7 @@ const LoginForm = (props) => {
               type='primary'
               block
             >
-              Log in
+              Login
             </Button>
         </Item>
       </Form>

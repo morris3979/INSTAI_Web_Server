@@ -1,10 +1,24 @@
 import React, { Fragment } from 'react'
-import { Result } from 'antd'
+import { Result, Typography } from 'antd'
+
+const { Title } = Typography
 
 const InitialPage = () => {
   return (
     <Fragment>
-      <Result status='success' title='登入成功，歡迎使用' />
+      <div style={{ backgroundColor: '#1c2127', width: '100%', height: '100%' }}>
+        <Result status='success'/>
+        <Title
+          style={{
+            color: 'yellow',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >Login Successful !
+        </Title>
+      </div>
     </Fragment>
   )
 }
