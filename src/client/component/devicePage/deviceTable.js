@@ -94,7 +94,7 @@ class DeviceTable extends Component {
           <Column title='Host' dataIndex={['Host', 'hostName']} align='center' width={180} />
         </Table>
         <Modal
-          visible={this.state.isModalVisible}
+          open={this.state.isModalVisible}
           onCancel={this.handleCancel}
           footer={null}
           destroyOnClose={true}

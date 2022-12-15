@@ -6,15 +6,21 @@ const { Title } = Typography
 const InitialPage = () => {
   return (
     <Fragment>
-      <div style={{ backgroundColor: '#1c2127', width: '100%', height: '100%' }}>
-        <Result status='success'/>
+      <div
+        style={{
+          backgroundColor: '#1c2127',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          // justifyContent: 'center',
+        }}
+      >
+        <Result status='success' style={{ marginTop: 120 }}/>
         <Title
           style={{
             color: 'yellow',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
           }}
         >Login Successful !
         </Title>

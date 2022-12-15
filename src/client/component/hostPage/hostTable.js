@@ -80,22 +80,25 @@ class HostTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='Please Input SerialNumber' name='serialNumber' rules={[this.rule('主機代號')]}>
+            <Item label='SerialNumber' name='serialNumber' rules={[this.rule('主機代號')]}>
               <Input
+                placeholder='Please Input SerialNumber'
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.serialNumber)}`
                 }
               />
             </Item>
-            <Item label='Please Input Host Name' name='hostName' rules={[this.rule('主機名稱')]}>
+            <Item label='Host Name' name='hostName' rules={[this.rule('主機名稱')]}>
               <Input
+                placeholder='Please Input Host Name'
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.hostName)}`
                 }
               />
             </Item>
-            <Item label='Please Input Type' name='type'>
+            <Item label='Host Type' name='type'>
               <Input
+                placeholder='Please Input Host Type'
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.type)}`
                 }

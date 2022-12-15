@@ -89,7 +89,7 @@ class AccountManageTable extends Component {
           </ColumnGroup>
         </Table >
         <Modal
-          visible={this.state.isChangeModalVisible}
+          open={this.state.isChangeModalVisible}
           onCancel={this.handleCancel}
           footer={null}
           destroyOnClose={true}
@@ -123,7 +123,7 @@ class AccountManageTable extends Component {
           />
         </Affix>
         <Modal
-          visible={this.state.isRegisterModalVisible}
+          open={this.state.isRegisterModalVisible}
           onCancel={this.handleCancel}
           footer={null}
           destroyOnClose={true}

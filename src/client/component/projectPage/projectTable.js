@@ -58,7 +58,7 @@ class ProjectTable extends Component {
           scroll={{ x: 1000, y: 750 }}
         >
           <Column title='Action' render={this.buttonGroup} align='center' width='10%' />
-          <Column title='Project ID' dataIndex='UserId' align='center' width='15%' />
+          <Column title='Project ID' dataIndex='project' align='center' width='15%' />
           <Column title='Display Name' dataIndex='displayName' align='center' width='15%' />
           <Column title='Builded Host' dataIndex='Hosts' key="Hosts" align='center'
             render={(Hosts) => Hosts.map(c => c.serialNumber+' ('+c.hostName+')'+'\n').join('')} />
@@ -68,29 +68,32 @@ class ProjectTable extends Component {
           <Column title='Owner' dataIndex={['User', 'username']} align='center' width='15%' />
         </Table>
         <Modal
-          visible={this.state.isModalVisible}
+          open={this.state.isModalVisible}
           onCancel={this.handleCancel}
           footer={null}
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='Please Input Project ID' name='UserId' rules={[this.rule('專案代號')]}>
+            <Item label='Project ID' name='project' rules={[this.rule('專案代號')]}>
               <Input
+                placeholder='Please Input Project ID'
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.UserId)}`
+                  `${this.defaultValue(this.props.whichModal.project)}`
                 }
               />
             </Item>
-            <Item label='Please Input Project Name' name='displayName' rules={[this.rule('專案名稱')]}>
+            <Item label='Project Name' name='displayName' rules={[this.rule('專案名稱')]}>
               <Input
+                placeholder='Please Input Project Name'
                 defaultValue={
                   `${this.defaultValue(this.props.whichModal.displayName)}`
                 }
               />
             </Item>
-            <Item label='Please Select Project Owner' name='UserId' hidden={this.props.whichModal.admin == true}>
+            <Item label='Project Owner' name='UserId' hidden={this.props.whichModal.admin == true}>
               <Select placeholder='Select a Project Owner' onChange={this.handleSelectUser}
-                defaultValue={this.defaultValue(this.props.whichModal.UserId)}>
+                defaultValue={this.defaultValue(this.props.whichModal.UserId)}
+              >
                 {this.props.accountData.map(c => {
                   return ( <Option key={c.id} value={c.id}>{c.username}</Option> )
                 })}
