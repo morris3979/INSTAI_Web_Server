@@ -4,6 +4,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import Loading from './loading'
 import {
+  GetAccountTableData,
   LogoutData,
   GetProjectList,
   GetHostList,
@@ -48,6 +49,8 @@ const { Item, SubMenu, ItemGroup } = Menu
 
 const App = (props) => {
   const {
+    getAccountTableData,
+    accountData,
     loginInformation,
     onClick,
     getProjectList,
@@ -62,10 +65,15 @@ const App = (props) => {
 
   useEffect(() => {
     /* 下面是 componentDidMount和componentDidUpdate */
+    getAccountTableData()
     getProjectList()
     getHostList()
     /* 上面是 componentDidMount和componentDidUpdate */
   }, []); /* 加入監控的props */
+
+  const WhichUser = accountData.filter((c) => {
+    return c.username == loginInformation.username
+  })
 
   if (loginInformation.developer == true ||
       loginInformation.admin == true ||
@@ -145,7 +153,7 @@ const App = (props) => {
                       !(loginInformation.developer ||
                         loginInformation.admin ||
                         loginInformation.user) ||
-                        loginInformation.project != c.project
+                        WhichUser[0].id != c.UserId
                     }
                     icon={<ProjectOutlined />}
                   >
@@ -345,6 +353,7 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
+    accountData: state.accountData,
     loginInformation: state.loginInformation,
     projectList: state.projectList,
   }
@@ -353,6 +362,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
+    getAccountTableData() {
+      const action = GetAccountTableData()
+      dispatch(action)
+    },
     onClick() {
       const action = LogoutData()
       dispatch(action)

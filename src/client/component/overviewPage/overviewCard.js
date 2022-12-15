@@ -14,6 +14,7 @@ import {
     DatePicker
 } from 'antd'
 import {
+    GetAccountTableData,
     GetDetailsData,
     GetProjectList
 } from '../../store/actionCreater'
@@ -36,6 +37,8 @@ const border = {
 
 const OverviewCard = (props) => {
     const {
+        getAccountTableData,
+        accountData,
         detailsData,
         getDetailsData,
         loginInformation,
@@ -49,6 +52,7 @@ const OverviewCard = (props) => {
     const [time, setTime]= useState('fetching clock ...');
 
     useEffect(() => {
+        getAccountTableData()
         getDetailsData()
         getProjectList()
         // const interval = window.setInterval(() => {
@@ -81,9 +85,13 @@ const OverviewCard = (props) => {
         })
     }, []);
 
+    const WhichUser = accountData.filter((c) => {
+        return c.username == loginInformation.username
+    })
+
     const filterData = detailsData.filter((data) => {
         if (loginInformation.user == true) {
-            return data.Event.Device.Host.Project.project === loginInformation.project
+            return data.Event.Device.Host.Project.UserId === WhichUser[0].id
         }
         else{
             if (selectedProject) {
@@ -272,6 +280,7 @@ const OverviewCard = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
+      accountData: state.accountData,
       loginInformation: state.loginInformation,
       detailsData: state.detailsData,
       projectList: state.projectList,
@@ -281,6 +290,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 //dispatch指store.dispatch這個方法
     return {
+        getAccountTableData() {
+            const action = GetAccountTableData()
+            dispatch(action)
+        },
         getDetailsData(){
             const action = GetDetailsData()
             dispatch(action)

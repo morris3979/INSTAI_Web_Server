@@ -58,7 +58,7 @@ class ProjectTable extends Component {
           scroll={{ x: 1000, y: 750 }}
         >
           <Column title='Action' render={this.buttonGroup} align='center' width='10%' />
-          <Column title='Project ID' dataIndex='project' align='center' width='15%' />
+          <Column title='Project ID' dataIndex='UserId' align='center' width='15%' />
           <Column title='Display Name' dataIndex='displayName' align='center' width='15%' />
           <Column title='Builded Host' dataIndex='Hosts' key="Hosts" align='center'
             render={(Hosts) => Hosts.map(c => c.serialNumber+' ('+c.hostName+')'+'\n').join('')} />
@@ -74,10 +74,10 @@ class ProjectTable extends Component {
           destroyOnClose={true}
         >
           <Form size='large' layout='vertical' onFinish={this.onFinish}>
-            <Item label='Please Input Project ID' name='project' rules={[this.rule('專案代號')]}>
+            <Item label='Please Input Project ID' name='UserId' rules={[this.rule('專案代號')]}>
               <Input
                 defaultValue={
-                  `${this.defaultValue(this.props.whichModal.project)}`
+                  `${this.defaultValue(this.props.whichModal.UserId)}`
                 }
               />
             </Item>
