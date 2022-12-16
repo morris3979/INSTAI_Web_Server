@@ -5,9 +5,17 @@ require('dotenv').config();
 async function app() {
     const app = express();
     const corsOptions = {
-        origin: [ 'http://localhost:8080', ],
+        origin: [
+            'http://localhost:8080',
+            'https://localhost:8443',
+        ],
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        allowedHeaders: [
+            'Content-Type',
+            'Authorization',
+            'Access-Control-Allow-Origin',
+            'Access-Control-Allow-Methods'
+        ],
     };
     const bodyParser = require('body-parser');
     const compression = require('compression');

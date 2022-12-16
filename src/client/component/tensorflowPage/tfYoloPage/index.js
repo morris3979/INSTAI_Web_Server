@@ -22,16 +22,15 @@ const TFYolo = () => {
   // model configs
   const modelName = "yolov5n";
   const classThreshold = 0.25;
+  const MODEL_URL = `https://raw.githubusercontent.com/morris3979/my_training_model/main/MODEL/${modelName}/model.json`;
 
   useEffect(() => {
     tf.ready().then(async () => {
       const yolov5 = await tf.loadGraphModel(
-        '`${window.location.origin}/${modelName}_web_model/model.json`',
-        {
+        MODEL_URL, {
           onProgress: (fractions) => {
             setLoading({ loading: true, progress: fractions }); // set loading fractions
-          },
-        }
+          },}
       ); // load model
 
       // warming up model
@@ -52,8 +51,8 @@ const TFYolo = () => {
     <div className="App">
       {loading.loading && <Loader>Loading model... {(loading.progress * 100).toFixed(2)}%</Loader>}
       <div className="header">
-        <h1>
-          Model Serving : <code className="code">{modelName}</code>
+        <h1 style={{ color: 'white' }}>
+          Model Serving :  <code className="code">{modelName}</code>
         </h1>
       </div>
       <p />
