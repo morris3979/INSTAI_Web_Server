@@ -123,9 +123,10 @@ const App = (props) => {
             </Item>
             <SubMenu key='subreport' title='Project'
               hidden={
-                !(loginInformation.developer ||
-                  loginInformation.admin ||
-                  loginInformation.user)
+                !(loginInformation.developer
+                  || loginInformation.admin
+                  || loginInformation.user
+                )
               }
               icon={<AppstoreOutlined />}
             >
@@ -137,9 +138,10 @@ const App = (props) => {
                   <Item key={c.project}
                     onClick={onClickProject}
                     hidden={
-                      !(loginInformation.developer ||
-                        loginInformation.admin ||
-                        loginInformation.user)
+                      !(loginInformation.developer
+                        || loginInformation.admin
+                        || loginInformation.user
+                      )
                     }
                     icon={<ProjectOutlined />}
                   >
@@ -166,9 +168,10 @@ const App = (props) => {
             </SubMenu>
             <Item key='/label'
               hidden={
-                !(loginInformation.developer ||
-                  loginInformation.admin ||
-                  loginInformation.user)
+                !(loginInformation.developer
+                  || loginInformation.admin
+                  || loginInformation.user
+                )
               }
               icon={<FormOutlined />}
             >
@@ -177,7 +180,12 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subTrain' title='Training'
-              hidden={!(loginInformation.developer || loginInformation.admin)}
+              hidden={
+                !(loginInformation.developer
+                  || loginInformation.admin
+                  || loginInformation.user
+                )
+              }
               icon={<ExperimentOutlined />}
             >
               <ItemGroup key='Caffe' title='Caffe'>
@@ -199,8 +207,8 @@ const App = (props) => {
                 <Item key='/SsdInstant'
                   hidden={
                     !(loginInformation.developer
-                      // || loginInformation.admin
-                      // || loginInformation.user
+                      || loginInformation.admin
+                      || loginInformation.user
                     )
                   }
                   icon={<VideoCameraOutlined />}
@@ -212,8 +220,8 @@ const App = (props) => {
                 <Item key='/SsdDetector'
                   hidden={
                     !(loginInformation.developer
-                      // || loginInformation.admin
-                      // || loginInformation.user
+                      || loginInformation.admin
+                      || loginInformation.user
                     )
                   }
                   icon={<ScanOutlined />}
@@ -225,8 +233,8 @@ const App = (props) => {
                 <Item key='/YoloDetector'
                   hidden={
                     !(loginInformation.developer
-                      // || loginInformation.admin
-                      // || loginInformation.user
+                      || loginInformation.admin
+                      || loginInformation.user
                     )
                   }
                   icon={<ScanOutlined />}
@@ -251,14 +259,20 @@ const App = (props) => {
               </Link>
             </Item>
             <SubMenu key='subset' title='Setting'
-              hidden={!(loginInformation.developer || loginInformation.admin)}
+              hidden={
+                !(loginInformation.developer
+                  || loginInformation.admin
+                  // || loginInformation.user
+                  )
+              }
               icon={<SettingOutlined />}
             >
               <Item key='/host'
                 hidden={
-                  !(loginInformation.developer ||
-                    loginInformation.admin ||
-                    loginInformation.user)
+                  !(loginInformation.developer
+                    || loginInformation.admin
+                    // || loginInformation.user
+                    )
                 }
                 icon={<ToolOutlined />}
               >
@@ -268,9 +282,10 @@ const App = (props) => {
               </Item>
               <Item key='/device'
                 hidden={
-                  !(loginInformation.developer ||
-                    loginInformation.admin ||
-                    loginInformation.user)
+                  !(loginInformation.developer
+                    || loginInformation.admin
+                    // || loginInformation.user
+                    )
                 }
                 icon={<ToolOutlined />}
               >
@@ -280,9 +295,10 @@ const App = (props) => {
               </Item>
               <Item key='/project'
                 hidden={
-                  !(loginInformation.developer ||
-                    loginInformation.admin ||
-                    loginInformation.user)
+                  !(loginInformation.developer
+                    || loginInformation.admin
+                    // || loginInformation.user
+                    )
                 }
                 icon={<ToolOutlined />}
               >
