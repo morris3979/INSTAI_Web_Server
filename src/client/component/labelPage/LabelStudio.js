@@ -31,8 +31,9 @@ import {
   FileOutlined,
 } from '@ant-design/icons'
 import {
+  GetAccountTableData,
   GetProjectTableData,
-  GetEventList,
+  GetDetailsData,
   PatchDetailsTableData,
   UploadJsonFile,
   GetJsonFile
@@ -68,9 +69,11 @@ const LabelStudioWrapper = (props) => {
   const [selectDataId, setSelectDataId] = useState();
   const [labeledDataId, setLabeledDataId] = useState();
   const {
+    getAccountTableData,
+    accountData,
     loginInformation,
-    eventList,
-    getEventList,
+    detailsData,
+    getDetailsData,
     uploadJsonFile,
     patchDetailsTableData,
     getJsonFile,
@@ -78,7 +81,8 @@ const LabelStudioWrapper = (props) => {
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
-    getEventList()
+    getAccountTableData()
+    getDetailsData()
     if (rootRef.current) {
       lsfRef.current = new LabelStudio(rootRef.current, {
         /* all the options according to the docs */
@@ -213,6 +217,10 @@ const LabelStudioWrapper = (props) => {
     }
   }, [ path, previewImage, previewTitle, additionalLabels ]);
 
+  const WhichUser = accountData.filter((c) => {
+    return c.username == loginInformation.username
+})
+
   const handleInput = (e) => {
     setUrlImage(e.target.value);
   }
@@ -292,17 +300,10 @@ const LabelStudioWrapper = (props) => {
   }
 
   const FilterData = (value) => {
-    const response = eventList.filter((c) => {
-      return c.Details
-    })
-    const FilterDetails = response.map((d) => {
-      return d.Details
-    })
-    const DataArray = [].concat(...FilterDetails);
-    const EachDetailData = DataArray.filter((e) => {
+    const EachDetailData = detailsData.filter((e) => {
       return (
         loginInformation.user == true?
-        e.details.slice(0,8) == value:
+        e.Event.Device.Host.Project.User.id == value:
         e.details.slice(0,8)
       )
     })
@@ -501,7 +502,7 @@ const LabelStudioWrapper = (props) => {
           </span>
           <Table
             style={{ margin: 5 }}
-            dataSource={FilterData(loginInformation.project)}
+            dataSource={FilterData(WhichUser[0].id)}
             pagination={{ position: ['bottomCenter'], pageSize: 5 }}
             scroll={{ y: 220 }}
           >
@@ -607,21 +608,26 @@ const LabelStudioWrapper = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
+    accountData: state.accountData,
     loginInformation: state.loginInformation,
     projectTableData: state.projectTableData,
-    eventList: state.eventList,
+    detailsData: state.detailsData,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
+    getAccountTableData() {
+      const action = GetAccountTableData()
+      dispatch(action)
+    },
     getProjectTableData() {
       const action = GetProjectTableData()
       dispatch(action)
     },
-    getEventList() {
-      const action = GetEventList()
+    getDetailsData() {
+      const action = GetDetailsData()
       dispatch(action)
     },
     patchDetailsTableData(id,data){
