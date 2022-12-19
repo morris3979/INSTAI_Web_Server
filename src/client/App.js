@@ -33,6 +33,7 @@ const LabelsPage = lazy(() => import('./page/labelPage'))
 const TrainingPage = lazy(() => import('./page/caffeServerPage'))
 const TensorflowPage = lazy(() => import('./page/tfSsdInstantPage'))
 const TFSsdDetectorPage = lazy(() => import('./page/tfSsdDetectorPage'))
+const SsdDetectPage = lazy(() => import('./page/SsdDetectPage'))
 const TFYoloPage = lazy(() => import('./page/tfYoloPage'))
 const TrendPage = lazy(() => import('./page/trendPage'))
 const ProjectPage = lazy(() => import('./page/projectPage'))
@@ -230,6 +231,19 @@ const App = (props) => {
                     Object (SSD)
                   </Link>
                 </Item>
+                <Item key='/SsdDetect'
+                  hidden={
+                    !(loginInformation.developer
+                      || loginInformation.admin
+                      || loginInformation.user
+                    )
+                  }
+                  icon={<ScanOutlined />}
+                >
+                  <Link to='/SsdDetect'>
+                    TFDetect (SSD)
+                  </Link>
+                </Item>
                 <Item key='/YoloDetector'
                   hidden={
                     !(loginInformation.developer
@@ -343,6 +357,7 @@ const App = (props) => {
                 <Route path='/caffe' element={<TrainingPage />} />
                 <Route path='/SsdInstant' element={<TensorflowPage />} />
                 <Route path='/SsdDetector' element={<TFSsdDetectorPage />} />
+                <Route path='/SsdDetect' element={<SsdDetectPage />} />
                 <Route path='/YoloDetector' element={<TFYoloPage />} />
                 <Route path='/TrendChart' element={<TrendPage />} />
                 {projectList.map((c) => {
