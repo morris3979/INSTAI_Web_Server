@@ -234,7 +234,7 @@ const App = (props) => {
                 <Item key='/SsdDetect'
                   hidden={
                     !(loginInformation.developer
-                      // || loginInformation.admin
+                      || loginInformation.admin
                       // || loginInformation.user
                     )
                   }
@@ -247,7 +247,7 @@ const App = (props) => {
                 <Item key='/YoloDetector'
                   hidden={
                     !(loginInformation.developer
-                      // || loginInformation.admin
+                      || loginInformation.admin
                       // || loginInformation.user
                     )
                   }
