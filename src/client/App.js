@@ -234,27 +234,27 @@ const App = (props) => {
                 <Item key='/SsdDetect'
                   hidden={
                     !(loginInformation.developer
-                      || loginInformation.admin
-                      || loginInformation.user
+                      // || loginInformation.admin
+                      // || loginInformation.user
                     )
                   }
                   icon={<ScanOutlined />}
                 >
                   <Link to='/SsdDetect'>
-                    TFDetect (SSD)
+                    Detect (SSD)
                   </Link>
                 </Item>
                 <Item key='/YoloDetector'
                   hidden={
                     !(loginInformation.developer
-                      || loginInformation.admin
-                      || loginInformation.user
+                      // || loginInformation.admin
+                      // || loginInformation.user
                     )
                   }
                   icon={<ScanOutlined />}
                 >
                   <Link to='/YoloDetector'>
-                    Detect (Yolo)
+                    Detect (YOLO)
                   </Link>
                 </Item>
               </ItemGroup>
