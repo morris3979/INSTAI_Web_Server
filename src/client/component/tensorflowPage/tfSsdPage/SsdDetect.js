@@ -27,13 +27,18 @@ const SsdDetect = () => {
 
     const [instantState, setInstantState] = useState(0)
     const [objectState, setObjectState] = useState(0)
-    
+    const [instantText, setInstantText] = useState('Open Webcam')
+    const [ObjectText, setObjectText] = useState('Open Image')
+
     const InstantClick = () => {
         if(instantState == 0){
             setInstantState(1)
             setObjectState(0)
+            setInstantText('Close Webcam')
+            setObjectText('Open Image')
         }else{
             setInstantState(0)
+            setInstantText('Open Webcam')
         }
     }
 
@@ -41,8 +46,11 @@ const SsdDetect = () => {
         if(objectState == 0){
             setInstantState(0)
             setObjectState(1)
+            setInstantText('Open Webcam')
+            setObjectText('Close Image')
         }else{
             setObjectState(0)
+            setObjectText('Open Image')
         }
     }
 
@@ -67,12 +75,12 @@ const SsdDetect = () => {
                                 <Button
                                 onClick={InstantClick}
                                 style={btnstyle}>
-                                    Instant(SSD)
+                                    {instantText}
                                 </Button>
                                 <Button
                                 onClick={ObjectClick}
                                 style={btnstyle}>
-                                    Object(SSD)
+                                    {ObjectText}
                                 </Button>
                             </Space>
                         </span>
@@ -82,7 +90,7 @@ const SsdDetect = () => {
                 <div>
                     <div>
                         <TfSsdDetector/>
-                    </div>:
+                    </div>
                     <div
                     style={{
                         display: 'flex',
@@ -96,12 +104,12 @@ const SsdDetect = () => {
                                 <Button
                                 onClick={InstantClick}
                                 style={btnstyle}>
-                                    Instant(SSD)
+                                    {instantText}
                                 </Button>
                                 <Button
                                 onClick={ObjectClick}
                                 style={btnstyle}>
-                                    Object(SSD)
+                                    {ObjectText}
                                 </Button>
                             </Space>
                         </span>
@@ -115,12 +123,12 @@ const SsdDetect = () => {
                            <Button
                            onClick={InstantClick}
                            style={btnstyle}>
-                               Instant(SSD)
+                               {instantText}
                            </Button>
                            <Button
                            onClick={ObjectClick}
                            style={btnstyle}>
-                               Object(SSD)
+                              {ObjectText}
                            </Button>
                        </Space>
                    </span>
