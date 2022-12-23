@@ -218,7 +218,11 @@ const LabelStudioWrapper = (props) => {
   }, [ path, previewImage, previewTitle, additionalLabels ]);
 
   const WhichUser = accountData.filter((c) => {
-    return c.username == loginInformation.username
+    if(loginInformation.user || loginInformation.admin) {
+      return c.username == loginInformation.username
+    }else{
+      return c
+    }
 })
 
   const handleInput = (e) => {
