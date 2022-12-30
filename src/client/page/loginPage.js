@@ -10,10 +10,10 @@ const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
 const LoginPage = () => {
   return (
     <Layout>
-      <Header style={{ backgroundColor: '#1c2127' }} />
-      <Content style={{ height: '1000px', backgroundColor: '#1c2127' }}>
+      <Header style={{ backgroundColor: '#ffffff' }} />
+      <Content style={{ height: '1000px', backgroundColor: '#ffffff' }}>
         {/* <div style={{ backgroundColor: '#1c2127' }}> */}
-          <Row style={{ padding: '100px' }}>
+          <Row style={{ padding: '20px' }}>
             <Suspense fallback={<Loading />}>
               <Col span={4} offset={10}>
                 <LoginForm />
