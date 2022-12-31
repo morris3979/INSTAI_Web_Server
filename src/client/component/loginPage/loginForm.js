@@ -1,45 +1,31 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { Form, Input, Checkbox } from 'antd'
-import { LoginFormData } from '../../store/actionCreater'
-import IconButton from '@mui/material/IconButton';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import Typography from '@mui/material/Typography';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import Visibility from '@mui/icons-material/Visibility';
-import {
-  LoginOutlined,
-  UserOutlined,
-  LockOutlined
-} from '@ant-design/icons'
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-const { Item } = Form
-const { Password } = Input
-const border = {
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
-    borderBottomLeftRadius: '12px',
-    borderBottomRightRadius: '12px',
-}
+import { LoginFormData, LoginState } from '../../store/actionCreater'
 
 const LoginForm = (props) => {
-  const { onFinish } = props
+
+  const { loginState } = props;
 
   return (
     <Typography align='center' sx={{ width : 400 }}>
       <div>
         <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
       </div>
-      <Typography fontFamily='Lucida Console' fontSize='50px' color='DodgerBlue' align='center'>
+      <Typography fontFamily='Microsoft JhengHei UI' fontSize='30px' align='center'>
         Sign In
       </Typography>
       <div style={{marginBottom:'5px'}}>
@@ -50,7 +36,8 @@ const LoginForm = (props) => {
                 width: 400, 
                 marginBottom: 2, 
                 color: 'black', 
-                border: "2px black solid" }} 
+                borderColor: 'black'
+              }} 
           align='center'>
           Continue with Google
         </Button>
@@ -61,13 +48,18 @@ const LoginForm = (props) => {
                 width: 400, 
                 marginBottom: 5, 
                 color: 'black', 
-                border: "2px black solid"  }} 
+                borderColor: 'black' 
+              }} 
           align='center'>
           Continue with Enterprise SSO
         </Button>
       </div>
-      <Divider style={{ marginBottom: 5 }}>or</Divider>
-      <Typography align='left'>Email</Typography>
+      <Divider style={{ marginBottom: 5 }}>
+        or
+      </Divider>
+      <Typography align='left'>
+        Email
+      </Typography>
       <TextField
         id="input-with-icon-textfield"
         placeholder="yourname@email.com"
@@ -117,7 +109,8 @@ const LoginForm = (props) => {
       </Button>
       <Typography sx={{ marginBottom: 5 }}>
         Don’t have an account?
-          <Link>Sign Up</Link>
+          <Link
+           onClick={() => {loginState(false)}}>Sign Up</Link>
       </Typography>
       <Link>
         Switch to Legacy Sign In
@@ -131,6 +124,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onFinish(value) {
       const action = LoginFormData(value)
+      dispatch(action)
+    },
+    loginState(text) {
+      const action = LoginState(text)
       dispatch(action)
     }
   }

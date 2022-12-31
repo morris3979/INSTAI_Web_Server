@@ -1,30 +1,17 @@
 import {
-  Login_Information, Account_Information, Logout_Information, Modal_File, Which_Modal,
-  Table_Status, Get_Project_Table, Get_Host_Table, Get_Device_Table, Map_Position,
-  Get_Project_Data, Which_Project, Get_Host_Data, Which_Host, Which_Device,
-  Get_Model_List, Get_Event_Data, Get_Event_Data_Id, Get_Details_Data
+  Modal_File, Which_Modal, Table_Status, Map_Position,
+  Which_Project, Which_Host, Which_Device, Login_State
 } from './actionType'
 
 const defaultState = {
-  loginInformation: { admin: false },
   tableStatus: false,
   whichModal: {},
   mapPositionData: [],
-  reportTableData: [],
-  projectTableData: [],
-  hostTableData: [],
-  deviceTableData: [],
   modalFile: [],
-  accountData: [],
-  projectList:[],
-  hostList:[],
   whichProjectName:[],
   whichHostName:[],
   whichDeviceName:[],
-  modelListData: [],
-  eventList:[],
-  eventListID:[],
-  detailsData:[],
+  loginState: true
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -32,50 +19,6 @@ const Reducer = (state = defaultState, action) => {
   switch (action.type) {
     case Table_Status: {
       newState.tableStatus = action.value
-      return newState
-    }
-    case Login_Information: {
-      newState.loginInformation = action.value
-      return newState
-    }
-    case Logout_Information: {
-      newState.loginInformation = action.value
-      return newState
-    }
-    case Account_Information: {
-      newState.accountData = action.value
-      return newState
-    }
-    case Get_Model_List: {
-      newState.modelListData = action.value
-      return newState
-    }
-    case Get_Project_Table: {
-      newState.projectTableData = action.value
-      return newState
-    }
-    case Get_Project_Data:{
-      newState.projectList=action.value
-      return newState
-    }
-    case Get_Host_Table: {
-      newState.hostTableData = action.value
-      return newState
-    }
-    case Get_Host_Data:{
-      newState.hostList = action.value
-      return newState
-    }
-    case Get_Device_Table: {
-      newState.deviceTableData = action.value
-      return newState
-    }
-    case Get_Event_Data:{
-      newState.eventList = action.value
-      return newState
-    }
-    case Get_Event_Data_Id:{
-      newState.eventListID = action.value
       return newState
     }
     case Map_Position: {
@@ -102,8 +45,8 @@ const Reducer = (state = defaultState, action) => {
       newState.whichDeviceName = action.value
       return newState
     }
-    case Get_Details_Data:{
-      newState.detailsData = action.value
+    case Login_State:  {
+      newState.loginState = action.value
       return newState
     }
     default: {
