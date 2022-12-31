@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { RegisterFormData, LoginState } from '../../store/actionCreater'
+import { LoginState } from '../../store/actionCreater'
 
 const RegisterForm = (props) => {
 
@@ -46,6 +46,7 @@ const RegisterForm = (props) => {
       <TextField
         id="input-with-icon-textfield"
         placeholder="yourname@email.com"
+        margin='normal'
         sx={{ width: 400, marginBottom: 5 }}
         InputProps={{
           startAdornment: (
@@ -78,10 +79,6 @@ const RegisterForm = (props) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    onFinish(value) {
-      const action = RegisterFormData(value)
-      dispatch(action)
-    },
     loginState(text) {
       const action = LoginState(text)
       dispatch(action)

@@ -2,10 +2,9 @@ import React, { lazy, Suspense } from 'react'
 import { Row, Col, Layout } from 'antd'
 import Loading from '../loading'
 
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 
 const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
-//const RegisterForm = lazy(() => import('../component/loginPage/registerForm'))
 
 const LoginPage = () => {
   return (

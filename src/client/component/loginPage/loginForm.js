@@ -14,7 +14,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { LoginFormData, LoginState } from '../../store/actionCreater'
+import { LoginState } from '../../store/actionCreater'
 
 const LoginForm = (props) => {
 
@@ -63,6 +63,7 @@ const LoginForm = (props) => {
       <TextField
         id="input-with-icon-textfield"
         placeholder="yourname@email.com"
+        margin='normal'
         sx={{ width: 400, marginBottom: 5 }}
         InputProps={{
           startAdornment: (
@@ -80,8 +81,10 @@ const LoginForm = (props) => {
       </div>
       <FormControl 
         sx={{ width: 400, 
-              marginBottom: 5 }} 
-        variant="outlined">
+              marginBottom: 5,
+           }} 
+        variant="outlined"
+        margin='normal'>
         <OutlinedInput
           id="outlined-adornment-password"
           endAdornment={
@@ -122,10 +125,6 @@ const LoginForm = (props) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    onFinish(value) {
-      const action = LoginFormData(value)
-      dispatch(action)
-    },
     loginState(text) {
       const action = LoginState(text)
       dispatch(action)
