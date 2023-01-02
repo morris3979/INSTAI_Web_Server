@@ -35,7 +35,7 @@ const LoginForm = (props) => {
       </Typography>
       <div style={{marginBottom:'5px'}}>
         <Button
-          tartIcon={<GoogleIcon/>}
+          startIcon={<GoogleIcon/>}
           variant="outlined"
           sx={{
                 width: 400,
