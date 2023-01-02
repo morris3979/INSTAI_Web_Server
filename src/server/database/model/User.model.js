@@ -6,15 +6,15 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        username: {
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        email: {
             type: Sequelize.STRING,
             allowNull: false,
         },
         password: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        mail: {
             type: Sequelize.STRING,
             allowNull: false,
         },

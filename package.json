@@ -59,6 +59,7 @@
         "readline-sync": "^1.4.10",
         "redux-persist": "^6.0.0",
         "reflect-metadata": "^0.1.13",
+        "request": "^2.88.2",
         "sequelize": "^6.25.5",
         "socket.io": "^4.5.3",
         "socket.io-client": "^4.5.3",

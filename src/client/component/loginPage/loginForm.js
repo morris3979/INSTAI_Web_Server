@@ -25,39 +25,44 @@ const LoginForm = (props) => {
       <div>
         <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
       </div>
-      <Typography fontFamily='Microsoft JhengHei UI' fontSize='30px' align='center'>
+      <Typography
+        fontFamily='Microsoft JhengHei UI'
+        fontSize='30px'
+        align='center'
+        color='lightblue'
+      >
         Sign In
       </Typography>
       <div style={{marginBottom:'5px'}}>
-        <Button 
-          tartIcon={<GoogleIcon/>} 
-          variant="outlined" 
-          sx={{ 
-                width: 400, 
-                marginBottom: 2, 
-                color: 'black', 
-                borderColor: 'black'
-              }} 
+        <Button
+          tartIcon={<GoogleIcon/>}
+          variant="outlined"
+          sx={{
+                width: 400,
+                marginBottom: 2,
+                color: 'white',
+                borderColor: 'white'
+              }}
           align='center'>
           Continue with Google
         </Button>
-        <Button 
-          startIcon={<VpnKeyIcon/>} 
-          variant="outlined" 
-          sx={{ 
-                width: 400, 
-                marginBottom: 5, 
-                color: 'black', 
-                borderColor: 'black' 
-              }} 
+        <Button
+          startIcon={<VpnKeyIcon/>}
+          variant="outlined"
+          sx={{
+                width: 400,
+                marginBottom: 5,
+                color: 'white',
+                borderColor: 'white'
+              }}
           align='center'>
           Continue with Enterprise SSO
         </Button>
       </div>
-      <Divider style={{ marginBottom: 5 }}>
+      <Divider style={{ marginBottom: 5, color: 'white' }}>
         or
       </Divider>
-      <Typography align='left'>
+      <Typography align='left' color='white'>
         Email
       </Typography>
       <TextField
@@ -66,30 +71,36 @@ const LoginForm = (props) => {
         margin='normal'
         sx={{ width: 400, marginBottom: 5 }}
         InputProps={{
+          style: {
+            color: 'white'
+          },
           startAdornment: (
             <InputAdornment position="start">
-              <AccountCircle />
+              <AccountCircle style={{ color: 'white' }} />
             </InputAdornment>
           ),
         }}
       />
       <div>
-        <Typography align='left'>
+        <Typography align='left' color='white'>
           Password
           <Link> (Forget Password?)</Link>
         </Typography>
       </div>
-      <FormControl 
-        sx={{ width: 400, 
+      <FormControl
+        sx={{
+              width: 400,
               marginBottom: 5,
-           }} 
+            }}
         variant="outlined"
         margin='normal'>
         <OutlinedInput
           id="outlined-adornment-password"
+          style={{ color: 'white' }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
+                style={{ color: 'white' }}
                 aria-label="toggle password visibility"
                 // onClick={handleClickShowPassword}
                 // onMouseDown={handleMouseDownPassword}
@@ -101,19 +112,21 @@ const LoginForm = (props) => {
           }
         />
       </FormControl>
-      <Button 
-        variant="contained" 
-        sx={{ 
-              width: 400, 
-              marginBottom: 5, 
-            }} 
-        align='center'>
+      <Button
+        variant="contained"
+        sx={{
+              width: 400,
+              marginBottom: 5,
+            }}
+        align='center'
+      >
         Sign In
       </Button>
-      <Typography sx={{ marginBottom: 5 }}>
+      <Typography sx={{ marginBottom: 5, color: 'white' }}>
         Don’t have an account?
-          <Link
-           onClick={() => {loginState(false)}}>Sign Up</Link>
+        <Link
+          onClick={() => {loginState(false)}}
+        > Sign Up </Link>
       </Typography>
       <Link>
         Switch to Legacy Sign In

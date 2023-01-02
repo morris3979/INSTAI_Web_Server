@@ -20,27 +20,33 @@ const RegisterForm = (props) => {
       <div>
         <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
       </div>
-      <Typography fontFamily='Microsoft JhengHei UI' fontSize='30px' align='center'>
+      <Typography
+        fontFamily='Microsoft JhengHei UI'
+        fontSize='30px'
+        align='center'
+        color='lightblue'
+      >
         Create Your Account
       </Typography>
       <div style={{marginBottom:'5px'}}>
-        <Button 
-          tartIcon={<GoogleIcon/>} 
-          variant="outlined" 
-          sx={{ 
-                width: 400, 
-                marginBottom: 2, 
-                color: 'black',
-                borderColor: 'black'
-              }} 
-          align='center'>
+        <Button
+          tartIcon={<GoogleIcon/>}
+          variant="outlined"
+          sx={{
+                width: 400,
+                marginBottom: 2,
+                color: 'white',
+                borderColor: 'white'
+              }}
+          align='center'
+        >
           Continue with Google
         </Button>
       </div>
-      <Divider style={{ marginBottom: 5 }}>
+      <Divider style={{ marginBottom: 5, color: 'white' }}>
         or
       </Divider>
-      <Typography align='left'>
+      <Typography align='left' style={{ color: 'white' }}>
         Email
       </Typography>
       <TextField
@@ -49,28 +55,30 @@ const RegisterForm = (props) => {
         margin='normal'
         sx={{ width: 400, marginBottom: 5 }}
         InputProps={{
+          style: {
+            color: 'white'
+          },
           startAdornment: (
             <InputAdornment position="start">
-              <AccountCircle />
+              <AccountCircle style={{ color: 'white' }} />
             </InputAdornment>
           ),
         }}
       />
-      <Button 
-        variant="contained" 
-        sx={{ 
-              width: 400, 
-              marginBottom: 5, 
-            }} 
+      <Button
+        variant="contained"
+        sx={{
+              width: 400,
+              marginBottom: 5,
+            }}
         align='center'>
         Create Your Account
       </Button>
-      <Typography sx={{ marginBottom: 5 }}>
-      Already have an account?
+      <Typography sx={{ marginBottom: 5, color: 'white' }}>
+        Already have an account?
           <Link
-           onClick={() => {loginState(true)}}>
-            Sign In
-          </Link>
+            onClick={() => {loginState(true)}}
+          > Sign in </Link>
       </Typography>
     </Typography>
   )
