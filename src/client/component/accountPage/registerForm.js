@@ -29,7 +29,6 @@ const RegisterForm = (props) => {
         Create Your Account
       </Typography>
       <div style={{marginBottom:'5px'}}>
-<<<<<<< HEAD
         <Button
           tartIcon={<GoogleIcon/>}
           variant="outlined"
@@ -41,18 +40,6 @@ const RegisterForm = (props) => {
               }}
           align='center'
         >
-=======
-        <Button 
-          startIcon={<GoogleIcon/>} 
-          variant="outlined" 
-          sx={{ 
-                width: 400, 
-                marginBottom: 2, 
-                color: 'black',
-                borderColor: 'black'
-              }} 
-          align='center'>
->>>>>>> f13d64db474c4ddc30ad5e83331d8e3bfe39cc49
           Continue with Google
         </Button>
       </div>
