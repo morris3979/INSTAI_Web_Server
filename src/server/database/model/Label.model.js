@@ -1,17 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
-    const Project = sequelize.define('Project', {
+    const Label = sequelize.define('Label', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true
         },
-        project: {
+        labelName: {
           type: Sequelize.STRING,
           allowNull: false,
-        },
-        displayName: {
-          type: Sequelize.STRING,
         },
         createdAt: {
             field: 'created_at',
@@ -33,10 +30,5 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
-    Project.associate = function (models) {
-        Project.belongsTo(models.Organization);
-        Project.hasMany(models.Host, {foreignKey: 'ProjectId'});
-        Project.hasMany(models.LabelGroup, {foreignKey: 'ProjectId'});
-    };
-    return Project;
+    return Label;
 };

@@ -1,30 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
-    const Details = sequelize.define('Details', {
+    const Data = sequelize.define('Data', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true
         },
-        details: {
+        data: {
             type: Sequelize.STRING,
             allowNull: false,
-        },
-        rawData: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: true,
-        },
-        cleaned: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
-        },
-        labeled: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
-        },
-        trained: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
         },
         image: {
             type: Sequelize.BOOLEAN,
@@ -34,11 +18,15 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
+        csv: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
         json: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
-        csv: {
+        tag: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
@@ -57,8 +45,9 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         timestamps: true,
     });
-    Details.associate = function (models) {
-        Details.belongsTo(models.Event);
+    Data.associate = function (models) {
+        Data.belongsTo(models.Device);
+        Data.belongsTo(models.LabelGroup);
     };
-    return Details;
+    return Data;
 };

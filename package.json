@@ -15,7 +15,11 @@
     "license": "ISC",
     "dependencies": {
         "@ant-design/charts": "^1.4.2",
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
         "@heartexlabs/label-studio": "^1.4.0",
+        "@mui/icons-material": "^5.11.0",
+        "@mui/material": "^5.11.2",
         "@reduxjs/toolkit": "^1.9.0",
         "@tensorflow-models/coco-ssd": "^2.2.2",
         "@tensorflow/tfjs": "^4.1.0",

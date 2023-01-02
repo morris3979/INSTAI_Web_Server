@@ -14,11 +14,19 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
+        mail: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
         admin: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
-        user: {
+        owner: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        member: {
             type: Sequelize.BOOLEAN,
             defaultValue: true,
         },
@@ -47,7 +55,7 @@ module.exports = (sequelize, Sequelize) => {
         paranoid: true
     });
     User.associate = function (models) {
-        User.hasMany(models.Project, {foreignKey: 'UserId'});
+        User.hasMany(models.Organization, {foreignKey: 'UserId'});
     };
     return User;
 };
