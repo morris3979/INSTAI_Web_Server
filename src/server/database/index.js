@@ -24,29 +24,31 @@ const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.Organization = require("./model/Organization.model")(sequelize, Sequelize);
+db.User = require("./model/User.model")(sequelize, Sequelize);
 db.Project = require("./model/Project.model")(sequelize, Sequelize);
 db.Host = require("./model/Host.model")(sequelize, Sequelize);
 db.HwUpdateLog = require("./model/HwUpdateLog.model")(sequelize, Sequelize);
 db.Device = require("./model/Device.model")(sequelize, Sequelize);
-db.Event = require("./model/Event.model")(sequelize, Sequelize);
-db.Details = require("./model/Details.model")(sequelize, Sequelize);
-db.User = require("./model/User.model")(sequelize, Sequelize);
+db.Data = require("./model/Data.model")(sequelize, Sequelize);
+db.Label = require("./model/Label.model")(sequelize, Sequelize);
+db.LabelGroup = require("./model/LabelGroup.model")(sequelize, Sequelize);
 
-db.User.hasMany(db.Project, {foreignKey: 'UserId'});
+db.Organization.hasMany(db.User, {foreignKey: 'OrganizationId'});
+db.Organization.hasMany(db.Project, {foreignKey: 'OrganizationId'});
 db.Project.hasMany(db.Host, {foreignKey: 'ProjectId'});
 db.Host.hasMany(db.Device, {foreignKey: 'HostId'});
-db.Device.hasMany(db.Event, {foreignKey: 'DeviceId'});
+db.Device.hasMany(db.Data, {foreignKey: 'DeviceId'});
 db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
-db.Event.hasMany(db.Details, {foreignKey: 'EventId'});
 
-db.Project.belongsTo(db.User, {foreignKey: 'UserId'});
+db.User.belongsTo(db.Organization, {foreignKey: 'OrganizationId'});
+db.Project.belongsTo(db.Organization, {foreignKey: 'OrganizationId'});
 db.Host.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Device.belongsTo(db.Host, {foreignKey: 'HostId'});
-db.Event.belongsTo(db.Device, {foreignKey: 'DeviceId'});
+db.Data.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 db.HwUpdateLog.belongsTo(db.Device, {foreignKey: 'DeviceId'});
-db.Details.belongsTo(db.Event, {foreignKey: 'EventId'});
 
-// db.Device.belongsToMany(db.Model, { through: db.HwUpdateLog });
-// db.Model.belongsToMany(db.Device, { through: db.HwUpdateLog });
+db.Label.belongsToMany(db.Project, { through: db.LabelGroup });
+db.Project.belongsToMany(db.Label, { through: db.LabelGroup });
 
 module.exports = db;

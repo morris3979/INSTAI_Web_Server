@@ -20,10 +20,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             defaultValue: 'Data collection'
         },
-        mentorship: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false
-        },
         command: {
             type: Sequelize.STRING,
             allowNull: true,
@@ -55,7 +51,7 @@ module.exports = (sequelize, Sequelize) => {
     Device.associate = function (models) {
         Device.belongsTo(models.Host);
         Device.belongsTo(models.HwUpdateLog);
-        Device.hasMany(models.Event, {foreignKey: 'DeviceId'});
+        Device.hasMany(models.Data, {foreignKey: 'DeviceId'});
     };
     return Device;
 };

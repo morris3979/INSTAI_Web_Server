@@ -1,18 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const Event = sequelize.define('Event', {
+    const LabelGroup = sequelize.define('LabelGroup', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true
-        },
-        eventTime: {
-          type: "TIMESTAMP",
-          allowNull: false,
-        },
-        trigger: {
-          type: Sequelize.BOOLEAN,
-          defaultValue: false,
         },
         createdAt: {
             field: 'created_at',
@@ -26,12 +18,13 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             defaultValue: Sequelize.NOW
         },
+        deletedAt: {
+            field: 'deleted_at',
+            type: Sequelize.DATE,
+        },
     }, {
         timestamps: true,
+        paranoid: true
     });
-    Event.associate = function (models) {
-        Event.belongsTo(models.Device);
-        Event.hasMany(models.Details, {foreignKey: 'EventId'});
-    };
-    return Event;
+    return LabelGroup;
 };
