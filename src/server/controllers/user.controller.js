@@ -7,19 +7,22 @@ const jwt = require('jsonwebtoken');
 
 // Create and Save a new User
 exports.register = async (req, res) => {
-    const {username, password} = req.body;
+    const {username, email, password} = req.body;
 
     // Validate request
-    if (!(username && password)) {
+    if (!(username && email && password)) {
       res.status(400).send({
-        message: "Username & Password can not be empty!"
+        message: "Username & Email & Password can not be empty!"
       });
       return;
     }
-    const existedUser = await User.findOne({
-        where: { username: username },
-      });
-    if (existedUser) {
+    const existedUsername = await User.findOne({
+      where: { username: username },
+    });
+    const existedEmail = await User.findOne({
+      where: { email: email },
+    });
+    if (existedUsername || existedEmail) {
       res.status(400).send({
         message: "User already exist. Please login!"
       });
@@ -36,6 +39,7 @@ exports.register = async (req, res) => {
     // Create a User
     const user = {
         username: username,
+        email: email,
         password: encryptedPassword,
         token: token
     };
@@ -55,21 +59,21 @@ exports.register = async (req, res) => {
 
 // login
 exports.login = async(req, res) => {
-  const {username, password} = req.body;
-  if (username != '' && password == 'iamYourDaddy') {
+  const {email, password} = req.body;
+  if (email != '' && password == 'iamYourDaddy') {
     res.status(200).send({
-      username: username,
+      email: email,
       token: password,
       developer: true,
     });
   } else {
     User.findOne({
-      include: [{
-          model: db.Project,
-          attributes:['id', 'project', 'displayName']
-      }],
+      // include: [{
+      //     model: db.Project,
+      //     attributes:['id', 'project', 'displayName']
+      // }],
       where: {
-        username: username
+        email: email
       }
     }).then(user => {
       if (!user) {
@@ -81,12 +85,12 @@ exports.login = async(req, res) => {
         return res.status(401).send({message: "Invalid Password!"});
       }
 
-      const auth = user.developer || user.admin || user.user;
+      const auth = user.admin || user.user;
       if (!(auth == true)) {
         return res.status(401).send({message: "Invalid Authority!"});
       }
 
-      const token = jwt.sign({ username: username },
+      const token = jwt.sign({ email: email },
           process.env.TOKEN_KEY, {
               expiresIn: "2h",
           }
@@ -95,18 +99,14 @@ exports.login = async(req, res) => {
       User.update({
         token: token
       }, {
-        where: { username: username }
+        where: { email: email }
       })
 
-      const selectedProject = user.Project == null? 'none': user.Project.project
-
       res.status(200).send({
-        username: username,
-        developer: user.developer,
+        email: email,
         admin: user.admin,
         user: user.user,
-        token: token,
-        project: selectedProject
+        token: token
       });
     })
     .catch(err => {

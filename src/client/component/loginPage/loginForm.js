@@ -30,6 +30,7 @@ const LoginForm = (props) => {
         fontSize='30px'
         align='center'
         color='lightblue'
+        style={{marginBottom:'5px'}}
       >
         Sign In
       </Typography>
@@ -40,8 +41,8 @@ const LoginForm = (props) => {
           sx={{
                 width: 400,
                 marginBottom: 2,
-                color: 'white',
-                borderColor: 'white'
+                color: 'lightblue',
+                borderColor: 'lightblue'
               }}
           align='center'>
           Continue with Google
@@ -52,14 +53,26 @@ const LoginForm = (props) => {
           sx={{
                 width: 400,
                 marginBottom: 5,
-                color: 'white',
-                borderColor: 'white'
+                color: 'lightblue',
+                borderColor: 'lightblue'
               }}
           align='center'>
           Continue with Enterprise SSO
         </Button>
       </div>
-      <Divider style={{ marginBottom: 5, color: 'white' }}>
+      <Divider
+        sx={{
+          '&.MuiDivider-root': {
+            "&::before": {
+              borderTop: "thin solid green"
+            },
+            "&::after": {
+              borderTop: "thin solid blue"
+            }
+          }
+        }}
+        style={{ marginBottom: 5, color: 'white' }}
+      >
         or
       </Divider>
       <Typography align='left' color='white'>
@@ -67,9 +80,9 @@ const LoginForm = (props) => {
       </Typography>
       <TextField
         id="input-with-icon-textfield"
-        placeholder="yourname@email.com"
+        placeholder="account@email.com"
         margin='normal'
-        sx={{ width: 400, marginBottom: 5 }}
+        sx={{ width: 400, marginBottom: 5, border:'2px solid white' }}
         InputProps={{
           style: {
             color: 'white'
@@ -96,7 +109,7 @@ const LoginForm = (props) => {
         margin='normal'>
         <OutlinedInput
           id="outlined-adornment-password"
-          style={{ color: 'white' }}
+          style={{ color: 'white', border:'2px solid white' }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -128,9 +141,6 @@ const LoginForm = (props) => {
           onClick={() => {loginState(false)}}
         > Sign Up </Link>
       </Typography>
-      <Link>
-        Switch to Legacy Sign In
-      </Link>
     </Typography>
   )
 }

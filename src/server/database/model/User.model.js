@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        name: {
+        username: {
             type: Sequelize.STRING,
             allowNull: false,
         },
@@ -22,13 +22,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
-        owner: {
+        user: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
-        },
-        member: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: true,
         },
         token: {
             type: Sequelize.STRING,
@@ -54,8 +50,5 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
-    User.associate = function (models) {
-        User.hasMany(models.Organization, {foreignKey: 'UserId'});
-    };
     return User;
 };

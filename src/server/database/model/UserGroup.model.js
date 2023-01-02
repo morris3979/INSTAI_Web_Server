@@ -1,14 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const Organization = sequelize.define('Organization', {
+    const UserGroup = sequelize.define('UserGroup', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true
-        },
-        organization: {
-          type: Sequelize.STRING,
-          allowNull: false,
         },
         createdAt: {
             field: 'created_at',
@@ -30,8 +26,5 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
-    Organization.associate = function (models) {
-        Organization.hasMany(models.Project, {foreignKey: 'OrganizationId'});
-    };
-    return Organization;
+    return UserGroup;
 };
