@@ -363,7 +363,7 @@ const reportTable = (props) => {
         <Table
           dataSource={EventFilter(Time)}
           rowSelection={rowSelection}
-          pagination={{ position: ['bottomCenter'], pageSize: 1 }}
+          pagination={{ position: ['bottomCenter'], defaultCurrent: 1, defaultPageSize: 5 }}
         >
           <Column
               title='Data'

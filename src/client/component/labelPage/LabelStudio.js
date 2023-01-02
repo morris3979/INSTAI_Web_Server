@@ -507,7 +507,7 @@ const LabelStudioWrapper = (props) => {
           <Table
             style={{ margin: 5 }}
             dataSource={FilterData(WhichUser[0].id)}
-            pagination={{ position: ['bottomCenter'], pageSize: 5 }}
+            pagination={{ position: ['bottomCenter'], defaultCurrent: 1, defaultPageSize: 5 }}
             scroll={{ y: 220 }}
           >
             <Column

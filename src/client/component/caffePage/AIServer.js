@@ -148,7 +148,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
                 rowSelection={rowSelection}
                 columns={columns}
                 scroll={{ x: 500, y: 800 }}
-                pagination={{ position: ['bottomCenter'], pageSize: 4 }}
+                pagination={{ position: ['bottomCenter'], defaultCurrent: 1, defaultPageSize: 5 }}
             >
                 <Column
                     title='Data'
