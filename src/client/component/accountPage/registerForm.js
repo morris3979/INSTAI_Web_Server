@@ -1,80 +1,86 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import {
-  Form,
-  Input,
-  Button,
-  Divider,
-  Typography
-} from 'antd'
-import { RegisterFormData } from '../../store/actionCreater'
-
-const { Item } = Form
-const { Password } = Input
-const { Title } = Typography
-
-const passwordConfirm = ({ getFieldValue }) => {
-  return ({
-    validator(_, value) {
-      if (!value || getFieldValue('registerpassword') === value) {
-        return Promise.resolve()
-      } else {
-        return Promise.reject('與您設置的密碼尚未符合')
-      }
-    }
-  })
-}
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import InputAdornment from '@mui/material/InputAdornment';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import GoogleIcon from '@mui/icons-material/Google';
+import InstAI from '../../icon image/instai.png'
+import { LoginState } from '../../store/actionCreater'
 
 const RegisterForm = (props) => {
-  const { onFinish } = props
+
+  const { loginState } = props;
 
   return (
-    <Fragment>
-      <Title>
-        Register
-      </Title>
-      <Divider />
-      <Form size='large' layout='vertical' onFinish={onFinish}>
-        <Item
-          label='Username'
-          name='registerusername'
-          rules={[{ required: true, message: 'Please Input Username' }]}
-        >
-          <Input />
-        </Item>
-        <Item
-          label='Password'
-          name='registerpassword'
-          rules={[{ required: true, message: 'Please Input Password' }]}
-        >
-          <Password />
-        </Item>
-        <Item
-          label='Confirm Password'
-          name='registerConfirmPassword'
-          dependencies={['registerpassword']}
-          rules={[
-            { required: true, message: 'Please Input Username Again' },
-            passwordConfirm
-          ]}
-        >
-          <Password />
-        </Item>
-        <Item>
-          <Button htmlType='submit'>
-            submit
-          </Button>
-        </Item>
-      </Form>
-    </Fragment>
+    <Typography align='center' sx={{ width : 400 }}>
+      <div>
+        <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
+      </div>
+      <Typography fontFamily='Microsoft JhengHei UI' fontSize='30px' align='center'>
+        Create Your Account
+      </Typography>
+      <div style={{marginBottom:'5px'}}>
+        <Button 
+          tartIcon={<GoogleIcon/>} 
+          variant="outlined" 
+          sx={{ 
+                width: 400, 
+                marginBottom: 2, 
+                color: 'black',
+                borderColor: 'black'
+              }} 
+          align='center'>
+          Continue with Google
+        </Button>
+      </div>
+      <Divider style={{ marginBottom: 5 }}>
+        or
+      </Divider>
+      <Typography align='left'>
+        Email
+      </Typography>
+      <TextField
+        id="input-with-icon-textfield"
+        placeholder="yourname@email.com"
+        margin='normal'
+        sx={{ width: 400, marginBottom: 5 }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <Button 
+        variant="contained" 
+        sx={{ 
+              width: 400, 
+              marginBottom: 5, 
+            }} 
+        align='center'>
+        Create Your Account
+      </Button>
+      <Typography sx={{ marginBottom: 5 }}>
+      Already have an account?
+          <Link
+           onClick={() => {loginState(true)}}>
+            Sign In
+          </Link>
+      </Typography>
+    </Typography>
   )
 }
 
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    onFinish(value) {
-      const action = RegisterFormData(value)
+    loginState(text) {
+      const action = LoginState(text)
       dispatch(action)
     }
   }
