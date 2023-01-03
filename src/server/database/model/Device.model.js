@@ -51,7 +51,6 @@ module.exports = (sequelize, Sequelize) => {
     Device.associate = function (models) {
         Device.belongsTo(models.Host);
         Device.belongsTo(models.HwUpdateLog);
-        Device.hasMany(models.Data, {foreignKey: 'DeviceId'});
     };
     return Device;
 };

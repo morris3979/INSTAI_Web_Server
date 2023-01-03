@@ -97,7 +97,7 @@ const LoginForm = (props) => {
       <div>
         <Typography align='left' color='white'>
           Password
-          <Link>(Forget Password?)</Link>
+          <Link> (Forget Password?) </Link>
         </Typography>
       </div>
       <FormControl

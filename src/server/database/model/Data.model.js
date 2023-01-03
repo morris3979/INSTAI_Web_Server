@@ -46,7 +46,7 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
     });
     Data.associate = function (models) {
-        Data.belongsTo(models.Device);
+        Data.belongsTo(models.Project);
         Data.belongsTo(models.LabelGroup);
     };
     return Data;
