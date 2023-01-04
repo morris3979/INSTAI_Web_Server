@@ -18,15 +18,12 @@ exports.register = async (req, res) => {
       });
       return;
     }
-    const existedUsername = await User.findOne({
-      where: { username: username },
-    });
     const existedEmail = await User.findOne({
       where: { email: email },
     });
-    if (existedUsername || existedEmail) {
+    if (existedEmail) {
       res.status(400).send({
-        message: "User already exist. Please login!"
+        message: "Email already exist. Please login!"
       });
       return;
     }
@@ -66,7 +63,7 @@ exports.createOrganization = async (req, res) => {
   // Validate request
   if (!req.body.organization) {
     res.status(400).send({
-      message: "Please create a new organization!"
+      message: "Organization can not be empty!"
     });
     return;
   }
