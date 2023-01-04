@@ -47,7 +47,7 @@ module.exports = (sequelize, Sequelize) => {
     });
     Data.associate = function (models) {
         Data.belongsTo(models.Project);
-        Data.belongsTo(models.LabelGroup);
+        Data.belongsTo(models.User);
     };
     return Data;
 };

@@ -21,13 +21,4 @@ userRouter.post("/welcome", auth, (req, res) => {
     return;
 });
 
-// Retrieve all User
-userRouter.get("/", User.findAll);
-
-// Update a User with id
-userRouter.patch("/:id", User.update)
-
-// Delete a User with id
-userRouter.delete("/:id", User.delete)
-
 module.exports = [userRouter];
