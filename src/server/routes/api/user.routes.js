@@ -6,6 +6,12 @@ const User = require('../../controllers/user.controller');
 // Register a new User
 userRouter.post("/register", User.register);
 
+// Register a new User
+userRouter.post("/organization", User.createOrganization);
+
+// Register a new User
+userRouter.post("/group", User.bindUserGroup);
+
 // Login
 userRouter.post("/login", User.login);
 

@@ -1,6 +1,8 @@
 require('dotenv').config();
 const db = require('../database');
 const User = db.User;
+const UserGroup = db.UserGroup;
+const Organization = db.Organization;
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -41,6 +43,7 @@ exports.register = async (req, res) => {
         username: username,
         email: email,
         password: encryptedPassword,
+        user: '1',
         token: token
     };
 
@@ -57,62 +60,140 @@ exports.register = async (req, res) => {
     });
 }
 
+// Create and Save a new Organization
+exports.createOrganization = async (req, res) => {
+
+  // Validate request
+  if (!req.body.organization) {
+    res.status(400).send({
+      message: "Please create a new organization!"
+    });
+    return;
+  }
+
+  // Create a Organization
+  const organization = {
+    organization: req.body.organization,
+  };
+
+  // Save Organization in the database
+  Organization.create(organization)
+  .then(data => {
+      res.send(data);
+  })
+  .catch(err => {
+      res.status(500).send({
+          message:
+          err.message || "Some error occurred while creating the Organization."
+      });
+  });
+}
+
+// Bind Users and Organization
+exports.bindUserGroup = async (req, res) => {
+  const {userId, organizationId} = req.body;
+
+  // Validate request
+  if (!(userId && organizationId)) {
+    res.status(400).send({
+      message: "userId & organizationId can not be empty!"
+    });
+    return;
+  }
+  const findUser = await User.findOne({
+    where: { id: userId },
+  });
+  if (!findUser) {
+    res.status(400).send({
+      message: "No User existed, Please create a new User!"
+    });
+    return;
+  }
+  const findOrganization = await Organization.findOne({
+    where: { id: organizationId },
+  });
+  if (!findOrganization) {
+    res.status(400).send({
+      message: "No Organization existed, Please create a new Organization!"
+    });
+    return;
+  }
+
+  // Create a UserGroup
+  const userGroup = {
+    UserId: userId,
+    OrganizationId: organizationId
+  };
+
+  // Save Bind Users ID and Organization ID
+  UserGroup.create(userGroup)
+  .then(data => {
+      res.send(data);
+  })
+  .catch(err => {
+      res.status(500).send({
+          message:
+          err.message || "Some error occurred while creating the UserGroup."
+      });
+  });
+}
+
 // login
 exports.login = async(req, res) => {
   const {email, password} = req.body;
-  if (email != '' && password == 'iamYourDaddy') {
-    res.status(200).send({
-      email: email,
-      token: password,
-      developer: true,
-    });
-  } else {
-    User.findOne({
-      // include: [{
-      //     model: db.Project,
-      //     attributes:['id', 'project', 'displayName']
-      // }],
-      where: {
-        email: email
+
+  User.findOne({
+    where: {
+      email: email
+    },
+    include: [{
+      model: db.Organization
+    }],
+    attributes: {
+        exclude: ['createdAt', 'updatedAt', 'deletedAt']
+    }
+  }).then(user => {
+    if (!user) {
+      return res.status(404).send({ message: "User Not found." });
+    }
+
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
+    if (!passwordIsValid) {
+      return res.status(401).send({message: "Invalid Password!"});
+    }
+
+    const auth = user.admin || user.user;
+    if (!(auth == true)) {
+      return res.status(401).send({message: "Invalid Authority!"});
+    }
+
+    const token = jwt.sign({ email: email },
+      process.env.TOKEN_KEY, {
+        expiresIn: "2h",
       }
-    }).then(user => {
-      if (!user) {
-        return res.status(404).send({ message: "User Not found." });
-      }
+    );
 
-      const passwordIsValid = bcrypt.compareSync(password, user.password);
-      if (!passwordIsValid) {
-        return res.status(401).send({message: "Invalid Password!"});
-      }
-
-      const auth = user.admin || user.user;
-      if (!(auth == true)) {
-        return res.status(401).send({message: "Invalid Authority!"});
-      }
-
-      const token = jwt.sign({ email: email },
-          process.env.TOKEN_KEY, {
-              expiresIn: "2h",
-          }
-      );
-
-      User.update({
-        token: token
-      }, {
-        where: { email: email }
-      })
-
-      res.status(200).send({
-        email: email,
-        admin: user.admin,
-        user: user.user,
-        token: token
-      });
+    User.update({
+      token: token
+    }, {
+      where: { email: email }
     })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
-    });
-  }
+
+    const replacer = (key, value) => {
+      if (key == 'password') return undefined
+      else if (key == 'token') return undefined
+      else if (key == 'createdAt') return undefined
+      else if (key == 'updatedAt') return undefined
+      else if (key == 'deletedAt') return undefined
+      else if (key == 'UserGroup') return undefined
+      else return value
+    }
+
+    res.send(JSON.parse(JSON.stringify(user, replacer)));
+  })
+  .catch(err => {
+    res.status(500).send({ message: err.message });
+  });
 }
 
 // Retrieve all User from the database.
