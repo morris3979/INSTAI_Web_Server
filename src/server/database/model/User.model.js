@@ -50,5 +50,8 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
+    User.associate = function (models) {
+        User.hasMany(models.Data, {foreignKey: 'UserId'});
+    };
     return User;
 };

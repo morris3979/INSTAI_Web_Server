@@ -9,6 +9,7 @@ const deviceRouter = require('./api/device.routes');
 const eventRouter = require('./api/event.routes');
 const detailsRouter = require('./api/details.routes');
 const userRouter = require('./api/user.routes');
+const organizationRouter = require('./api/organization.routes');
 
 // cloud
 apiRouter.use("/aws", awsRouter);
@@ -20,5 +21,6 @@ apiRouter.use('/device', deviceRouter);
 apiRouter.use('/event', eventRouter);
 apiRouter.use('/details', detailsRouter);
 apiRouter.use('/user', userRouter);
+apiRouter.use('/organization', organizationRouter);
 
 module.exports = apiRouter;
