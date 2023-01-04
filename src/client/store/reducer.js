@@ -1,6 +1,7 @@
 import {
   Modal_File, Which_Modal, Table_Status, Map_Position,
-  Which_Project, Which_Host, Which_Device, Login_State
+  Which_Project, Which_Host, Which_Device, Login_State,
+  Login_Information, Account_Information
 } from './actionType'
 
 const defaultState = {
@@ -11,7 +12,9 @@ const defaultState = {
   whichProjectName:[],
   whichHostName:[],
   whichDeviceName:[],
-  loginState: true
+  loginState: true,
+  loginInformation: { admin: false },
+  accountData: [],
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -47,6 +50,14 @@ const Reducer = (state = defaultState, action) => {
     }
     case Login_State:  {
       newState.loginState = action.value
+      return newState
+    }
+    case Login_Information: {
+      newState.loginInformation = action.value
+      return newState
+    }
+    case Account_Information: {
+      newState.accountData = action.value
       return newState
     }
     default: {
