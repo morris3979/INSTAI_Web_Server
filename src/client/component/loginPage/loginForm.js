@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -11,14 +11,39 @@ import Typography from '@mui/material/Typography';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { LoginState } from '../../store/actionCreater'
+import { LoginState, LoginFormData } from '../../store/actionCreater'
 
 const LoginForm = (props) => {
 
-  const { loginState } = props;
+  const { loginState, loginFormData } = props;
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [ input, setInput ] = useState({
+    email: "",
+    password: ""
+  })
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleChange = (e) => {
+    setInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    loginFormData(input)
+    console.log(input)
+  };
 
   return (
     <Typography align='center' sx={{ width : 400 }}>
@@ -75,66 +100,77 @@ const LoginForm = (props) => {
       >
         or
       </Divider>
-      <Typography align='left' color='white'>
-        Email
-      </Typography>
-      <TextField
-        id="input-with-icon-textfield"
-        placeholder="account@email.com"
-        margin='normal'
-        sx={{ width: 400, marginBottom: 5, border:'2px solid white' }}
-        InputProps={{
-          style: {
-            color: 'white'
-          },
-          startAdornment: (
-            <InputAdornment position="start">
-              <AccountCircle style={{ color: 'white' }} />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <div>
+      <form onSubmit={onSubmit}>
         <Typography align='left' color='white'>
-          Password
-          <Link> (Forget Password?) </Link>
+          Email
         </Typography>
-      </div>
-      <FormControl
-        sx={{
-              width: 400,
-              marginBottom: 5,
-            }}
-        variant="outlined"
-        margin='normal'>
-        <OutlinedInput
-          id="outlined-adornment-password"
-          style={{ color: 'white', border:'2px solid white' }}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                style={{ color: 'white' }}
-                aria-label="toggle password visibility"
-                // onClick={handleClickShowPassword}
-                // onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-              {<Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
+        <TextField
+          id="email"
+          name="email"
+          placeholder="account@email.com"
+          required='True'
+          margin='normal'
+          type={"email"}
+          onChange={handleChange}
+          sx={{ width: 400, marginBottom: 5, border:'2px solid white' }}
+          InputProps={{
+            style: {
+              color: 'white'
+            },
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle style={{ color: 'white' }} />
+              </InputAdornment>
+            ),
+          }}
         />
-      </FormControl>
-      <Button
-        variant="contained"
-        sx={{
-              width: 400,
-              marginBottom: 5,
-            }}
-        align='center'
-      >
-        Sign In
-      </Button>
+        <div>
+          <Typography align='left' color='white'>
+            Password
+            <Link> (Forget Password?) </Link>
+          </Typography>
+        </div>
+        <FormControl
+          sx={{
+                width: 400,
+                marginBottom: 5,
+              }}
+          variant="outlined"
+          margin='normal'>
+          <OutlinedInput
+            id="password"
+            name="password"
+            required='True'
+            type={showPassword ? 'text' : 'password'}
+            onChange={handleChange}
+            style={{ color: 'white', border:'2px solid white' }}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  style={{ color: 'white' }}
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{
+                width: 400,
+                marginBottom: 5,
+              }}
+          align='center'
+        >
+          Sign In
+        </Button>
+      </form>
       <Typography sx={{ marginBottom: 5, color: 'white' }}>
         Don’t have an account?
         <Link
@@ -150,6 +186,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loginState(text) {
       const action = LoginState(text)
+      dispatch(action)
+    },
+    loginFormData(value) {
+      const action = LoginFormData(value)
       dispatch(action)
     }
   }

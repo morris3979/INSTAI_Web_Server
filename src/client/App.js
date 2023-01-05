@@ -8,18 +8,28 @@ import {
 
 const LoginPage = lazy(() => import('./page/loginPage'))
 const RegisterPage = lazy(() => import('./page/registerPage'))
+const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
-  const { loginState } = props
+  const { loginState, loginInformation } = props
 
-  if(loginState){
-    return(
-      <LoginPage />
-    )
+  console.log(loginInformation)
+  if(loginInformation.developer == true ||
+      loginInformation.admin == true ||
+      loginInformation.user == true){
+      return(
+        <InitialPage/>
+      )
   }else{
-    return (
-      <RegisterPage />
-    )
+    if(loginState){
+      return(
+        <LoginPage />
+      )
+    }else{
+      return (
+        <RegisterPage />
+      )
+    }
   }
 }
 
@@ -27,7 +37,8 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    loginState: state.loginState
+    loginState: state.loginState,
+    loginInformation: state.loginInformation
   }
 }
 
