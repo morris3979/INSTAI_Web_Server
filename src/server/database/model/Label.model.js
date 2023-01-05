@@ -27,7 +27,6 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
-
     Label.bulkCreate([
         { labelName: "person" },
         { labelName: "bicycle" },
@@ -110,6 +109,5 @@ module.exports = (sequelize, Sequelize) => {
         { labelName: "hair drier" },
         { labelName: "toothbrush" },
     ], { ignoreDuplicates: true });
-
     return Label;
 };

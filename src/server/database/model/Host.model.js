@@ -9,6 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         serialNumber: {
           type: Sequelize.STRING,
           allowNull: false,
+          unique: true
         },
         hostName: {
           type: Sequelize.STRING,

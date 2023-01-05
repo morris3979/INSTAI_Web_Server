@@ -33,7 +33,6 @@ module.exports = (sequelize, Sequelize) => {
     Project.associate = function (models) {
         Project.belongsTo(models.Organization);
         Project.hasMany(models.Host, {foreignKey: 'ProjectId'});
-        Project.hasMany(models.LabelGroup, {foreignKey: 'ProjectId'});
         Project.hasMany(models.Data, {foreignKey: 'ProjectId'});
     };
     return Project;
