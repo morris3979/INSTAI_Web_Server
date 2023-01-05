@@ -10,18 +10,18 @@ const LoginPage = lazy(() => import('./page/loginPage'))
 const RegisterPage = lazy(() => import('./page/registerPage'))
 
 const App = (props) => {
+  const { loginState } = props
 
-    const { loginState } = props
-    if(loginState){
-      return(
-        <LoginPage />
-      )
-    }else{
-      return (
-        <RegisterPage />
-      )
-    }
+  if(loginState){
+    return(
+      <LoginPage />
+    )
+  }else{
+    return (
+      <RegisterPage />
+    )
   }
+}
 
 
 const mapStateToProps = (state) => {

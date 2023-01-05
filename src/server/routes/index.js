@@ -6,8 +6,6 @@ const awsRouter = require("./api/aws.routes");
 const projectRouter = require('./api/project.routes');
 const hostRouter = require('./api/host.routes');
 const deviceRouter = require('./api/device.routes');
-const eventRouter = require('./api/event.routes');
-const detailsRouter = require('./api/details.routes');
 const userRouter = require('./api/user.routes');
 const organizationRouter = require('./api/organization.routes');
 
@@ -18,8 +16,6 @@ apiRouter.use("/aws", awsRouter);
 apiRouter.use('/project', projectRouter);
 apiRouter.use('/host', hostRouter);
 apiRouter.use('/device', deviceRouter);
-apiRouter.use('/event', eventRouter);
-apiRouter.use('/details', detailsRouter);
 apiRouter.use('/user', userRouter);
 apiRouter.use('/organization', organizationRouter);
 
