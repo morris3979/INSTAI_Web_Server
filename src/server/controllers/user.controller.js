@@ -178,7 +178,6 @@ exports.login = async(req, res) => {
 
     const replacer = (key, value) => {
       if (key == 'password') return undefined
-      else if (key == 'token') return undefined
       else if (key == 'createdAt') return undefined
       else if (key == 'updatedAt') return undefined
       else if (key == 'deletedAt') return undefined

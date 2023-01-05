@@ -8,22 +8,16 @@ const InitialPage = () => {
     <Fragment>
       <div
         style={{
-          backgroundColor: '#1c2127',
-          width: '100%',
-          height: '100%',
+          height: '100vh',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          // justifyContent: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#1c2127',
         }}
       >
-        <Result status='success' style={{ marginTop: 120 }}/>
-        <Title
-          style={{
-            color: 'yellow',
-          }}
-        >Login Successful !
-        </Title>
+        <Result status='success' />
+        <Title style={{ color: 'yellow' }}>Login Successful !</Title>
       </div>
     </Fragment>
   )

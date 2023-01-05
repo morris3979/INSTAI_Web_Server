@@ -1,5 +1,7 @@
-import React, { lazy } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
+import { Link, Route, Routes } from 'react-router-dom'
+import Loading from './loading'
 import {
   GetAccountTableData,
   LogoutData,
@@ -18,16 +20,20 @@ const App = (props) => {
       loginInformation.admin == true ||
       loginInformation.user == true){
       return(
-        <InitialPage/>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path='/' element={<InitialPage/>} />
+          </Routes>
+        </Suspense>
       )
   }else{
     if(loginState){
       return(
-        <LoginPage />
+        <LoginPage/>
       )
     }else{
       return (
-        <RegisterPage />
+        <RegisterPage/>
       )
     }
   }
