@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { message, Modal } from 'antd'
 import {
-  Table_Status, Map_Position, Modal_File, Which_Modal,
-  Which_Project, Which_Host, Which_Device, Login_State,
-  Login_Information, Account_Information
+  Table_Status, Modal_File, Which_Modal,
+  Which_Project, Which_Host, Which_Device,
+  Login_State, Login_Information, Account_Information
 } from './actionType'
 
 //共用Function <<<
@@ -23,13 +23,6 @@ export const DeliverData = (data, actionType) => {
 // >>>
 
 //獨立Function <<<
-export const MapPosition = (data) => {
-  return ({
-    type: Map_Position,
-    value: data
-  })
-}
-
 export const GetModalFile = (data) => {
   return ({
     type: Modal_File,
@@ -72,7 +65,6 @@ export const LoginState = (text) => {
 // >>>
 
 //API <<<
-
 export const LoginFormData = (data) => {
   return (
     async (dispatch) => {
