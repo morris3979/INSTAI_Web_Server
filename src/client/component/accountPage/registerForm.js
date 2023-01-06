@@ -157,7 +157,7 @@ const RegisterForm = (props) => {
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               }
@@ -169,7 +169,7 @@ const RegisterForm = (props) => {
           <TextField
             id="name"
             name="username"
-            placeholder="your name"
+            placeholder="YOUR NAME"
             required='True'
             margin='normal'
             onChange={handleChangeUserData}

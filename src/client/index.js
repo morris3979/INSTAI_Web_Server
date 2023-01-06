@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistor } from './store/store'
 import Loading from './loading'
-import 'antd/dist/antd.css'
 
 const App = lazy(() => import('./App'))
 

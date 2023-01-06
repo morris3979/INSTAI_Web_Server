@@ -38,18 +38,20 @@ db.LabelGroup = require("./model/LabelGroup.model")(sequelize, Sequelize);
 // One to Many
 db.Organization.hasMany(db.Project, {foreignKey: 'OrganizationId'});
 db.Project.hasMany(db.Host, {foreignKey: 'ProjectId'});
-db.Project.hasMany(db.Data, {foreignKey: 'ProjectId'});
 db.Host.hasMany(db.Device, {foreignKey: 'HostId'});
-db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
+db.Project.hasMany(db.Data, {foreignKey: 'ProjectId'});
+db.Device.hasMany(db.Data, {foreignKey: 'DeviceId'});
 db.User.hasMany(db.Data, {foreignKey: 'UserId'});
+db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
 
 // Many to One
 db.Project.belongsTo(db.Organization, {foreignKey: 'OrganizationId'});
 db.Host.belongsTo(db.Project, {foreignKey: 'ProjectId'});
-db.Data.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Device.belongsTo(db.Host, {foreignKey: 'HostId'});
-db.HwUpdateLog.belongsTo(db.Device, {foreignKey: 'DeviceId'});
+db.Data.belongsTo(db.Project, {foreignKey: 'ProjectId'});
+db.Data.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 db.Data.belongsTo(db.User, {foreignKey: 'UserId'});
+db.HwUpdateLog.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 
 // Many to Many
 db.Label.belongsToMany(db.Project, { through: db.LabelGroup });

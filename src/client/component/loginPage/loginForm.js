@@ -153,7 +153,7 @@ const LoginForm = (props) => {
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             }
@@ -175,7 +175,7 @@ const LoginForm = (props) => {
         Don’t have an account?
         <Link
           onClick={() => {loginState(false)}}
-        > Sign Up </Link>
+        > Register </Link>
       </Typography>
     </Typography>
   )

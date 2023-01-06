@@ -23,7 +23,7 @@ exports.register = async (req, res) => {
     })
     if (existedEmail) {
       res.status(400).send({
-        message: "Email already exist. Please login!"
+        message: "Account already exist. Please login!"
       })
       return
     }
@@ -151,12 +151,12 @@ exports.login = async(req, res) => {
     }
   }).then(user => {
     if (!user) {
-      return res.status(404).send({ message: "User Not found." });
+      return res.status(404).send({ message: "Don't have this account. Please register!" });
     }
 
     const passwordIsValid = bcrypt.compareSync(password, user.password);
     if (!passwordIsValid) {
-      return res.status(401).send({message: "Invalid Password!"});
+      return res.status(401).send({message: "Wrong Password. Please try again!"});
     }
 
     const auth = user.admin || user.user;

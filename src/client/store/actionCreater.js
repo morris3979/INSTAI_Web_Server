@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { message, Modal } from 'antd'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
@@ -68,16 +67,15 @@ export const LoginState = (text) => {
 export const LoginFormData = (data) => {
   return (
     async (dispatch) => {
-      message.loading('Loading...', 0)
       try {
         const response = await axios.post('/api/user/login', data)
         if (response.data.token) {
           const action = LoginToken(response.data)
           dispatch(action)
         }
-      } catch (error) {
-        message.destroy()
-        message.error('login failed, please check again！')
+      } catch (e) {
+        console.log('err: ', e)
+        alert(e.response.data.message)
       }
     }
   )
@@ -91,10 +89,9 @@ export const LoginToken = (data) => {
         await axios.post('/api/user/welcome', null, { headers: headers })
         const action = DeliverData(data, Login_Information)
         dispatch(action)
-        message.destroy()
-      } catch (error) {
-        message.destroy()
-        message.error(`${error}`)
+      } catch (e) {
+        console.log('err: ', e)
+        alert(e.response.data.message)
       }
     }
   )
@@ -103,21 +100,16 @@ export const LoginToken = (data) => {
 export const RegisterFormData = (data) => {
   return (
     async (dispatch) => {
-      message.loading('Loading...', 0)
       try {
         const response = await axios.post('/api/user/register', data)
         if(response.data){
           const action = DeliverData(response.data, User_Information)
           dispatch(action)
         }
-        message.destroy()
-      } catch (error) {
-        message.destroy()
-        message.error(`${error}`)
-        Modal.error({
-          title: 'Account Already Exist !',
-          onOk: () => { location.reload() }
-        })
+      } catch (e) {
+        console.log('err: ', e)
+        alert(e.response.data.message)
+        return
       }
     }
   )
@@ -126,24 +118,19 @@ export const RegisterFormData = (data) => {
 export const OrganizationFormData = (data, id) => {
   return (
     async (dispatch) => {
-      message.loading('Loading...', 0)
       try {
         const converted = {}
         const response = await axios.post('/api/user/organization', data)
-        converted.userId = `${id}`
+        converted.userId = id
         converted.organizationId = `${response.data.id}`
         if(converted) {
           const action = UserGroupInformation(converted)
           dispatch(action)
         }
-        message.destroy()
-        Modal.success({
-          title: 'Complete !',
-          onOk: () => { location.reload() }
-        })
-      } catch (error) {
-        message.destroy()
-        message.error(`${error}`)
+        alert('Complete !').then(location.reload())
+      } catch (e) {
+        console.log('err: ', e)
+        alert(e.response.data.message)
       }
     }
   )
@@ -152,13 +139,11 @@ export const OrganizationFormData = (data, id) => {
 export const UserGroupInformation = (data) => {
   return(
     async () => {
-      message.loading('Loading...',0)
       try {
         await axios.post('/api/user/group', data)
-        message.destroy()
-      }catch (error) {
-        message.destroy()
-        message.error(`${error}`)
+      }catch (e) {
+        console.log('err: ', e)
+        alert(e.response.data.message)
       }
     }
   )

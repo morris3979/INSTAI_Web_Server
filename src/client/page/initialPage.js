@@ -1,7 +1,4 @@
 import React, { Fragment } from 'react'
-import { Result, Typography } from 'antd'
-
-const { Title } = Typography
 
 const InitialPage = () => {
   return (
@@ -16,8 +13,7 @@ const InitialPage = () => {
           backgroundColor: '#1c2127',
         }}
       >
-        <Result status='success' />
-        <Title style={{ color: 'yellow' }}>Login Successful !</Title>
+        <h1 style={{ color: 'yellow' }}>Login Successful !</h1>
       </div>
     </Fragment>
   )
