@@ -1,19 +1,29 @@
-import React from 'react'
-import { Dna } from 'react-loader-spinner'
+import React, { Fragment } from 'react'
+import { ThreeDots } from 'react-loader-spinner'
 
 const Loading = () => {
   return (
-    <center>
-      {/* <div>Loading...</div> */}
-      <Dna
-        visible={true}
-        height="100"
-        width="100"
-        ariaLabel="dna-loading"
-        wrapperStyle={{}}
-        wrapperClass="dna-wrapper"
-      />
-    </center>
+    <Fragment>
+      <div
+        style={{
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          // justifyContent: 'center',
+          backgroundColor: '#1c2127',
+        }}
+      >
+        <ThreeDots
+          height="80"
+          width="80"
+          radius="9"
+          color="lightblue"
+          visible={true}
+          ariaLabel="three-dots-loading"
+        />
+      </div>
+    </Fragment>
   )
 }
 
