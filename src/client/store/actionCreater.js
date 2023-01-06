@@ -3,7 +3,7 @@ import { message, Modal } from 'antd'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  Login_State, Login_Information, Account_Information
+  Login_State, Login_Information, User_Information
 } from './actionType'
 
 //共用Function <<<
@@ -102,10 +102,14 @@ export const LoginToken = (data) => {
 
 export const RegisterFormData = (data) => {
   return (
-    async () => {
+    async (dispatch) => {
       message.loading('Loading...', 0)
       try {
-        await axios.post('/api/user/register', data)
+        const response = await axios.post('/api/user/register', data)
+        if(response.data){
+          const action = DeliverData(response.data, User_Information)
+          dispatch(action)
+        }
         message.destroy()
       } catch (error) {
         message.destroy()
@@ -119,12 +123,19 @@ export const RegisterFormData = (data) => {
   )
 }
 
-export const OrganizationFormData = (data) => {
+export const OrganizationFormData = (data, id) => {
   return (
-    async () => {
+    async (dispatch) => {
       message.loading('Loading...', 0)
       try {
-        await axios.post('/api/user/organization', data)
+        const converted = {}
+        const response = await axios.post('/api/user/organization', data)
+        converted.userId = `${id}`
+        converted.organizationId = `${response.data.id}`
+        if(converted) {
+          const action = UserGroupInformation(converted)
+          dispatch(action)
+        }
         message.destroy()
         Modal.success({
           title: 'Complete !',
@@ -138,28 +149,16 @@ export const OrganizationFormData = (data) => {
   )
 }
 
-export const GetAccountTableData = () => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
+export const UserGroupInformation = (data) => {
+  return(
+    async () => {
+      message.loading('Loading...',0)
       try {
-        const response = await axios.get('/api/user/register')
-        // console.log(response.data)
-        if (Object.keys(response.data).length > 0) {
-          const action = DeliverData(response.data, Account_Information)
-          dispatch(action)
-        } else {
-          throw 'No Data'
-        }
-      } catch (error) {
-        Modal.warning({
-          title: 'Warning',
-          content: `${error}`
-        })
-      } finally {
-        const action = TableStatus(false)
-        dispatch(action)
+        await axios.post('/api/user/group', data)
+        message.destroy()
+      }catch (error) {
+        message.destroy()
+        message.error(`${error}`)
       }
     }
   )

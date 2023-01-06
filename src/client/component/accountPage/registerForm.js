@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -14,11 +14,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { LoginState, RegisterFormData, OrganizationFormData, GetAccountTableData } from '../../store/actionCreater'
+import { LoginState, RegisterFormData, OrganizationFormData } from '../../store/actionCreater'
 
 const RegisterForm = (props) => {
 
-  const { loginState, registerFormData, organizationFormData, getAccountTableData, accountData, } = props;
+  const { loginState, registerFormData, organizationFormData, userInformation } = props;
 
   const [ showPassword, setShowPassword ] = useState(false);
   const [ organizationVisible, setOrganizationVisible ] = useState(false)
@@ -28,12 +28,6 @@ const RegisterForm = (props) => {
     email: "",
     password: ""
   })
-  
-  // useEffect(() => {
-  //   /* 下面是 componentDidMount和componentDidUpdate */
-  //   getAccountTableData()
-  //   /* 上面是 componentDidMount和componentDidUpdate */
-  // }, []); /* 加入監控的props */
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -59,18 +53,16 @@ const RegisterForm = (props) => {
     e.preventDefault()
     registerFormData(input)
     setOrganizationVisible(true)
-    getAccountTableData()
   };
 
   const onSubmitOrganization = (e) => {
     e.preventDefault()
-    organizationFormData(organizationName)
+    organizationFormData(organizationName, userInformation.id)
   }
-
+  
   if(!organizationVisible){
     return (
       <Typography align='center' sx={{ width : 400 }}>
-        {console.log(accountData)}
         <div>
           <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
         </div>
@@ -254,7 +246,7 @@ const RegisterForm = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    accountData: state.accountData,
+    userInformation: state.userInformation,
   }
 }
 
@@ -269,12 +261,8 @@ const mapDispatchToProps = (dispatch) => {
       const action = RegisterFormData(data)
       dispatch(action)
     },
-    organizationFormData(data) {
-      const action = OrganizationFormData(data)
-      dispatch(action)
-    },
-    getAccountTableData() {
-      const action = GetAccountTableData()
+    organizationFormData(data, id) {
+      const action = OrganizationFormData(data, id)
       dispatch(action)
     },
   }
