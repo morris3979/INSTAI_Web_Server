@@ -26,7 +26,7 @@ const InitialPage = () => {
           barColor="red"
           ariaLabel='circles-with-bar-loading'
         />
-        <h1 style={{ color: 'yellow' }}>Login Successful !</h1>
+        <h1 style={{ color: 'yellow' }}>SITE UNDER CONSTRUCTION ...</h1>
       </div>
     </Fragment>
   )
