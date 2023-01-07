@@ -109,6 +109,7 @@ export const RegisterFormData = (data) => {
       } catch (e) {
         console.log('err: ', e)
         alert(e.response.data.message)
+        location.reload()
         return
       }
     }
@@ -127,7 +128,14 @@ export const OrganizationFormData = (data, id) => {
           const action = UserGroupInformation(converted)
           dispatch(action)
         }
-        alert('Complete !').then(location.reload())
+        const promise = new Promise ((resolve,reject) => {
+          alert('Complete !')
+          const action = DeliverData({}, User_Information)
+          dispatch(action)
+        })
+        promise.then(() => {
+          location.reload()
+        })
       } catch (e) {
         console.log('err: ', e)
         alert(e.response.data.message)

@@ -21,7 +21,6 @@ const RegisterForm = (props) => {
   const { loginState, registerFormData, organizationFormData, userInformation } = props;
 
   const [ showPassword, setShowPassword ] = useState(false);
-  const [ organizationVisible, setOrganizationVisible ] = useState(false)
   const [ organizationName, setOrganizationName ] = useState('')
   const [ input, setInput ] = useState({
     username: "",
@@ -52,15 +51,14 @@ const RegisterForm = (props) => {
   const onSubmitUserData = (e) => {
     e.preventDefault()
     registerFormData(input)
-    setOrganizationVisible(true)
   };
 
   const onSubmitOrganization = (e) => {
     e.preventDefault()
     organizationFormData(organizationName, userInformation.id)
   }
-  
-  if(!organizationVisible){
+
+  if(!Object.keys(userInformation).length){
     return (
       <Typography align='center' sx={{ width : 400 }}>
         <div>
