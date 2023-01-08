@@ -12,38 +12,37 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { LoginState, LoginFormData } from '../../store/actionCreater'
+import { LoginState, RegisterFormData } from '../../store/actionCreater'
 
-const UserLoginForm = (props) => {
-
-  const { loginState, loginFormData } = props;
-
-  const [showPassword, setShowPassword] = useState(false);
+const RegisterForm = (props) => {
+  const [ showPassword, setShowPassword ] = useState(false);
   const [ input, setInput ] = useState({
+    username: "",
     email: "",
     password: ""
   })
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const { loginState, registerFormData } = props
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
-  const handleChange = (e) => {
+  const handleChangeUserData = (e) => {
     setInput((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
-  };
+  }
 
-  const onSubmit = (e) => {
+  const onSubmitUserData = (e) => {
     e.preventDefault()
-    loginFormData(input)
-    console.log(input)
-  };
+    registerFormData(input)
+  }
 
   return(
     <Typography align='center' sx={{ width : 400 }}>
@@ -57,7 +56,7 @@ const UserLoginForm = (props) => {
         color='lightblue'
         style={{marginBottom:'5px'}}
       >
-        Sign In
+        Create Your Account
       </Typography>
       <div style={{marginBottom:'5px'}}>
         <Button
@@ -69,20 +68,9 @@ const UserLoginForm = (props) => {
                 color: 'lightblue',
                 borderColor: 'lightblue'
               }}
-          align='center'>
+          align='center'
+        >
           Continue with Google
-        </Button>
-        <Button
-          startIcon={<VpnKeyIcon/>}
-          variant="outlined"
-          sx={{
-                width: 400,
-                marginBottom: 5,
-                color: 'lightblue',
-                borderColor: 'lightblue'
-              }}
-          align='center'>
-          Continue with Enterprise SSO
         </Button>
       </div>
       <Divider
@@ -100,8 +88,8 @@ const UserLoginForm = (props) => {
       >
         or
       </Divider>
-      <form onSubmit={onSubmit}>
-        <Typography align='left' color='white'>
+      <form>
+        <Typography align='left' style={{ color: 'white' }}>
           Email
         </Typography>
         <TextField
@@ -111,7 +99,7 @@ const UserLoginForm = (props) => {
           required='True'
           margin='normal'
           type={"email"}
-          onChange={handleChange}
+          onChange={handleChangeUserData}
           sx={{ width: 400, marginBottom: 5, border:'2px solid white' }}
           InputProps={{
             style: {
@@ -127,7 +115,6 @@ const UserLoginForm = (props) => {
         <div>
           <Typography align='left' color='white'>
             Password
-            <Link> (Forget Password?) </Link>
           </Typography>
         </div>
         <FormControl
@@ -142,7 +129,7 @@ const UserLoginForm = (props) => {
             name="password"
             required='True'
             type={showPassword ? 'text' : 'password'}
-            onChange={handleChange}
+            onChange={handleChangeUserData}
             style={{ color: 'white', border:'2px solid white' }}
             endAdornment={
               <InputAdornment position="end">
@@ -159,28 +146,44 @@ const UserLoginForm = (props) => {
             }
           />
         </FormControl>
+        <Typography align='left' style={{ color: 'white' }}>
+          Username
+        </Typography>
+        <TextField
+          id="name"
+          name="username"
+          placeholder="YOUR NAME"
+          required='True'
+          margin='normal'
+          onChange={handleChangeUserData}
+          sx={{ width: 400, marginBottom: 5, border:'2px solid white' }}
+          InputProps={{
+            style: {
+              color: 'white'
+            },
+          }}
+        />
         <Button
           variant="contained"
-          type="submit"
+          onClick={onSubmitUserData}
           sx={{
                 width: 400,
                 marginBottom: 5,
               }}
-          align='center'
-        >
-          Sign In
+          align='center'>
+          Create Your Account
         </Button>
       </form>
       <Typography sx={{ marginBottom: 5, color: 'white' }}>
-        Don’t have an account?
-        <Link
-          onClick={() => {loginState(false)}}
-        > Register </Link>
+        Already have an account?
+          <Link
+            onClick={() => { loginState(true) }}
+          > Sign in </Link>
       </Typography>
     </Typography>
   )
 }
-  
+
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
@@ -188,11 +191,11 @@ const mapDispatchToProps = (dispatch) => {
       const action = LoginState(text)
       dispatch(action)
     },
-    loginFormData(value) {
-      const action = LoginFormData(value)
+    registerFormData(data) {
+      const action = RegisterFormData(data)
       dispatch(action)
-    }
+    },
   }
 }
 
-export default connect(null, mapDispatchToProps)(UserLoginForm)
+export default connect(null, mapDispatchToProps)(RegisterForm)

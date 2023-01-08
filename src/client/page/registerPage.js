@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const RegisterForm = lazy(() => import('../component/accountPage/registerForm'))
+const Register = lazy(() => import('../component/registerPage'))
 
 const RegisterPage = () => {
   return (
@@ -16,7 +16,7 @@ const RegisterPage = () => {
           backgroundColor: '#1c2127',
         }}
       >
-        <RegisterForm />
+        <Register />
       </div>
     </Suspense>
   )

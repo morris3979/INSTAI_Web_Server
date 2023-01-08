@@ -3,7 +3,7 @@ import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
   Login_State, Login_Information, User_Information,
-  HasSelected_Org, Login_Authorize
+  Selected_Organization, Login_Authorize
 } from './actionType'
 
 //共用Function <<<
@@ -50,24 +50,28 @@ export const WhichHost = (text) => {
     value: text
   })
 }
+
 export const WhichDevice = (text) => {
   return({
     type: Which_Device,
     value: text
   })
 }
+
 export const LoginState = (text) => {
   return({
     type: Login_State,
     value: text
   })
 }
-export const HasSelectedOrg = (text) => {
+
+export const SelectedOrganization = (text) => {
   return({
-    type: HasSelected_Org,
+    type: Selected_Organization,
     value: text
   })
 }
+
 export const LoginAuthorize = (text) => {
   return({
     type: Login_Authorize,

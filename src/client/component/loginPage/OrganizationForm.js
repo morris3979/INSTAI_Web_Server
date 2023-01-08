@@ -4,12 +4,11 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { LoginState, HasSelectedOrg, LoginAuthorize } from '../../store/actionCreater'
+import { LoginState, SelectedOrganization, LoginAuthorize } from '../../store/actionCreater'
 
-const OrganizationSelectForm = (props) => {
+const OrganizationForm = (props) => {
+  const { loginState, hasSelectedOrg, loginAuthorize, loginInformation } = props
 
-  const { loginState, hasSelectedOrg, selectorg, loginAuthorize, loginInformation } = props;
-  
   return(
     <Typography align='center' sx={{ width : 400 }}>
       <div>
@@ -37,7 +36,7 @@ const OrganizationSelectForm = (props) => {
                     borderColor: 'lightblue'
                   }}
               align='center'
-              onClick={() => { 
+              onClick={() => {
                 hasSelectedOrg(true)
                 }}>
               {c.organization}
@@ -67,10 +66,11 @@ const OrganizationSelectForm = (props) => {
                 marginBottom: 2,
               }}
           align='center'
-          onClick={() => { 
+          onClick={() => {
             loginState(false)
             loginAuthorize(true)
-             }}>
+          }}
+        >
           Create Organization
         </Button>
     </Typography>
@@ -81,9 +81,9 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     loginInformation: state.loginInformation,
-    selectorg: state.selectorg
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action)
     },
     hasSelectedOrg(text) {
-      const action = HasSelectedOrg(text)
+      const action = SelectedOrganization(text)
       dispatch(action)
     },
     loginAuthorize(text) {
@@ -101,5 +101,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(OrganizationSelectForm)
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrganizationForm)

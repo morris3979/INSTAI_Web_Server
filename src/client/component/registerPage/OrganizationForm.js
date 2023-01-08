@@ -4,13 +4,12 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { HasSelectedOrg, OrganizationFormData } from '../../store/actionCreater'
+import { SelectedOrganization, OrganizationFormData } from '../../store/actionCreater'
 
 const OrganizationCreateForm = (props) => {
-
-  const { hasSelectedOrg, organizationFormData, userInformation, loginInformation } = props;
-
   const [ organizationName, setOrganizationName ] = useState('')
+
+  const { hasSelectedOrg, organizationFormData, userInformation, loginInformation } = props
 
   const handleChangeOrganization = (e) => {
     setOrganizationName((prevState) => ({
@@ -20,7 +19,6 @@ const OrganizationCreateForm = (props) => {
   }
 
   const onSubmitOrganization = (e) => {
-
     if(Object.keys(userInformation).length){
       e.preventDefault()
       organizationFormData(organizationName, userInformation.id)
@@ -30,6 +28,7 @@ const OrganizationCreateForm = (props) => {
     }
     hasSelectedOrg(true)
   }
+
   return(
     <Typography align='center' sx={{ width : 400 }}>
       <div>
@@ -84,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
     hasSelectedOrg(text) {
-      const action = HasSelectedOrg(text)
+      const action = SelectedOrganization(text)
       dispatch(action)
     },
     organizationFormData(data, id) {

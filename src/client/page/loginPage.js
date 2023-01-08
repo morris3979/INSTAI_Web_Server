@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
+const Login = lazy(() => import('../component/loginPage'))
 
 const LoginPage = () => {
   return (
@@ -16,7 +16,7 @@ const LoginPage = () => {
           backgroundColor: '#1c2127',
         }}
       >
-        <LoginForm />
+        <Login />
       </div>
     </Suspense>
   )
