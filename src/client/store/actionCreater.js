@@ -2,7 +2,8 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  Login_State, Login_Information, User_Information
+  Login_State, Login_Information, User_Information,
+  HasSelected_Org, Login_Authorize
 } from './actionType'
 
 //共用Function <<<
@@ -58,6 +59,18 @@ export const WhichDevice = (text) => {
 export const LoginState = (text) => {
   return({
     type: Login_State,
+    value: text
+  })
+}
+export const HasSelectedOrg = (text) => {
+  return({
+    type: HasSelected_Org,
+    value: text
+  })
+}
+export const LoginAuthorize = (text) => {
+  return({
+    type: Login_Authorize,
     value: text
   })
 }
@@ -128,14 +141,9 @@ export const OrganizationFormData = (data, id) => {
           const action = UserGroupInformation(converted)
           dispatch(action)
         }
-        const promise = new Promise ((resolve,reject) => {
-          alert('Complete !')
-          const action = DeliverData({}, User_Information)
-          dispatch(action)
-        })
-        promise.then(() => {
-          location.reload()
-        })
+        const action = DeliverData({}, User_Information)
+        dispatch(action)
+        alert('Complete !')
       } catch (e) {
         console.log('err: ', e)
         alert(e.response.data.message)
