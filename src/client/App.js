@@ -8,35 +8,20 @@ const RegisterPage = lazy(() => import('./page/registerPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
-  const { loginState, selectedOrganization } = props
-
-  if(selectedOrganization){
-      return(
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path='/' element={<InitialPage/>} />
-          </Routes>
-        </Suspense>
-      )
-  }else{
-    if(loginState){
-      return(
-        <LoginPage/>
-      )
-    }else{
-      return (
-        <RegisterPage/>
-      )
-    }
-  }
+  return(
+    <Suspense fallback={<Loading />}>
+      <Routes>
+        <Route path='/' element={<LoginPage/>} />
+        <Route path='/Register' element={<RegisterPage/>} />
+        <Route path='/Home' element={<InitialPage/>} />
+      </Routes>
+    </Suspense>
+  )
 }
 
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
-  return {
-    loginState: state.loginState,
-    selectedOrganization: state.selectedOrganization
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, null)(App)

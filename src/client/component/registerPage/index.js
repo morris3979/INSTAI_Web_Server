@@ -5,7 +5,7 @@ const RegisterForm = lazy(() => import('./RegisterForm'))
 const OrganizationForm = lazy(() => import('./OrganizationForm'))
 
 const Register = (props) => {
-  const { loginAuthorize, userInformation  } = props
+  const { loginAuthorize, userInformation } = props
 
   if((!Object.keys(userInformation).length)&&(!loginAuthorize)){
     return (

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { LoginState, SelectedOrganization, LoginAuthorize } from '../../store/actionCreater'
+import { LoginAuthorize } from '../../store/actionCreater'
 
 const OrganizationForm = (props) => {
-  const { loginState, hasSelectedOrg, loginAuthorize, loginInformation } = props
+  const { loginAuthorize, loginInformation } = props
 
   return(
     <Typography align='center' sx={{ width : 400 }}>
@@ -36,9 +37,10 @@ const OrganizationForm = (props) => {
                     borderColor: 'lightblue'
                   }}
               align='center'
-              onClick={() => {
-                hasSelectedOrg(true)
-                }}>
+              onClick={() => {}}
+              component={Link}
+              to='/Home'
+            >
               {c.organization}
             </Button>
           )
@@ -67,7 +69,6 @@ const OrganizationForm = (props) => {
               }}
           align='center'
           onClick={() => {
-            loginState(false)
             loginAuthorize(true)
           }}
         >
@@ -87,14 +88,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    loginState(text) {
-      const action = LoginState(text)
-      dispatch(action)
-    },
-    hasSelectedOrg(text) {
-      const action = SelectedOrganization(text)
-      dispatch(action)
-    },
     loginAuthorize(text) {
       const action = LoginAuthorize(text)
       dispatch(action)

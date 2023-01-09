@@ -7,9 +7,9 @@ const OrganizationForm = lazy(() => import('./OrganizationForm'))
 const Login = (props) => {
   const { loginInformation } = props
 
-  if(loginInformation.developer == true ||
-    loginInformation.admin == true ||
-    loginInformation.user == true){
+  const auth = loginInformation.admin == true || loginInformation.user == true
+
+  if(auth){
       return(
         <OrganizationForm />
       )

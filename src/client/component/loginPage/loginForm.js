@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -15,11 +15,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { LoginState, LoginFormData } from '../../store/actionCreater'
+import { LoginFormData } from '../../store/actionCreater'
 
 const LoginForm = (props) => {
-
-  const { loginState, loginFormData } = props
+  const { loginFormData } = props
 
   const [showPassword, setShowPassword] = useState(false);
   const [ input, setInput ] = useState({
@@ -43,7 +42,6 @@ const LoginForm = (props) => {
   const onSubmit = (e) => {
     e.preventDefault()
     loginFormData(input)
-    console.log(input)
   }
 
   return(
@@ -174,9 +172,7 @@ const LoginForm = (props) => {
       </form>
       <Typography sx={{ marginBottom: 5, color: 'white' }}>
         Don’t have an account?
-        <Link
-          onClick={() => {loginState(false)}}
-        > Register </Link>
+        <Link to='/Register'> Register </Link>
       </Typography>
     </Typography>
   )
@@ -185,10 +181,6 @@ const LoginForm = (props) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    loginState(text) {
-      const action = LoginState(text)
-      dispatch(action)
-    },
     loginFormData(value) {
       const action = LoginFormData(value)
       dispatch(action)

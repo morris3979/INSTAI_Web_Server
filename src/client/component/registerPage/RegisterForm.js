@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -14,17 +14,17 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { LoginState, RegisterFormData } from '../../store/actionCreater'
+import { RegisterFormData } from '../../store/actionCreater'
 
 const RegisterForm = (props) => {
+  const { registerFormData } = props
+
   const [ showPassword, setShowPassword ] = useState(false);
   const [ input, setInput ] = useState({
     username: "",
     email: "",
     password: ""
   })
-
-  const { loginState, registerFormData } = props
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -176,9 +176,7 @@ const RegisterForm = (props) => {
       </form>
       <Typography sx={{ marginBottom: 5, color: 'white' }}>
         Already have an account?
-          <Link
-            onClick={() => { loginState(true) }}
-          > Sign in </Link>
+        <Link to='/'> Sign in </Link>
       </Typography>
     </Typography>
   )
@@ -187,10 +185,6 @@ const RegisterForm = (props) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    loginState(text) {
-      const action = LoginState(text)
-      dispatch(action)
-    },
     registerFormData(data) {
       const action = RegisterFormData(data)
       dispatch(action)

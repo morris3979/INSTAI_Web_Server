@@ -2,8 +2,7 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  Login_State, Login_Information, User_Information,
-  Selected_Organization, Login_Authorize
+  Login_Information, User_Information, Login_Authorize
 } from './actionType'
 
 //共用Function <<<
@@ -54,20 +53,6 @@ export const WhichHost = (text) => {
 export const WhichDevice = (text) => {
   return({
     type: Which_Device,
-    value: text
-  })
-}
-
-export const LoginState = (text) => {
-  return({
-    type: Login_State,
-    value: text
-  })
-}
-
-export const SelectedOrganization = (text) => {
-  return({
-    type: Selected_Organization,
     value: text
   })
 }
