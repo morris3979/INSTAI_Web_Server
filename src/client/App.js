@@ -5,6 +5,7 @@ import Loading from './loading'
 
 const LoginPage = lazy(() => import('./page/loginPage'))
 const RegisterPage = lazy(() => import('./page/registerPage'))
+const AddOrganizationPage = lazy(() => import('./page/addOrganizationPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
@@ -13,6 +14,7 @@ const App = (props) => {
       <Routes>
         <Route path='/' element={<LoginPage/>} />
         <Route path='/Register' element={<RegisterPage/>} />
+        <Route path='/AddOrganization' element={<AddOrganizationPage/>} />
         <Route path='/Home' element={<InitialPage/>} />
       </Routes>
     </Suspense>

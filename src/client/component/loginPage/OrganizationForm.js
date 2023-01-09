@@ -71,8 +71,10 @@ const OrganizationForm = (props) => {
           onClick={() => {
             loginAuthorize(true)
           }}
+          component={Link}
+          to='/AddOrganization'
         >
-          Create Organization
+          ADD ORGANIZATION
         </Button>
     </Typography>
     )

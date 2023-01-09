@@ -170,7 +170,10 @@ const RegisterForm = (props) => {
                 width: 400,
                 marginBottom: 5,
               }}
-          align='center'>
+          align='center'
+          component={Link}
+          to='/AddOrganization'
+        >
           Create Your Account
         </Button>
       </form>

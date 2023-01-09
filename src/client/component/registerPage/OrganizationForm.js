@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -64,8 +65,10 @@ const OrganizationCreateForm = (props) => {
               marginBottom: 5,
             }}
         align='center'
+        component={Link}
+        to='/Home'
       >
-        Create Organization
+        CREATE ORGANIZATION
       </Button>
     </Typography>
   )
