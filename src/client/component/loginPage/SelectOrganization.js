@@ -52,7 +52,7 @@ const SelectOrganization = (props) => {
               align='center'
               onClick={() => selectOrganization(c.id)}
               component={Link}
-              to='/Initial'
+              to='/Home'
             >
               {c.organization}
             </Button>

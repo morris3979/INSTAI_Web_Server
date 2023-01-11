@@ -18,6 +18,13 @@ exports.register = async (req, res) => {
       })
       return
     }
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(!regex.test(email)) {
+      res.status(400).send({
+        message: "Email format error, please try again!"
+      })
+      return
+    }
     const existedEmail = await User.findOne({
       where: { email: email },
     })
