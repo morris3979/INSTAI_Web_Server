@@ -21,4 +21,6 @@ userRouter.post("/welcome", auth, (req, res) => {
     return;
 });
 
+userRouter.get("/:id", User.findOne);
+
 module.exports = [userRouter];

@@ -192,6 +192,39 @@ exports.login = async(req, res) => {
   })
 }
 
+// Retrieve a User from the database.
+exports.findOne = (req, res) => {
+  User.findOne({
+      where: {
+          id: req.params.id
+      },
+      include: [{
+          model: Organization
+      }],
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      }
+      }).then(data => {
+      if (!data) {
+          return res.status(404).send({ message: "Organization Not found." });
+      }
+
+      const replacer = (key, value) => {
+        if (key == 'password') return undefined
+        else if (key == 'createdAt') return undefined
+        else if (key == 'updatedAt') return undefined
+        else if (key == 'deletedAt') return undefined
+        else if (key == 'UserGroup') return undefined
+          else return value
+      }
+
+      res.send(JSON.parse(JSON.stringify(data, replacer)))
+      })
+      .catch(err => {
+      res.status(500).send({ message: err.message })
+      })
+}
+
 // Retrieve all User from the database.
 // exports.findAll = (req, res) => {
 //   User.findAll({

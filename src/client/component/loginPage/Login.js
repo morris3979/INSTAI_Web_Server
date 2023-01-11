@@ -172,7 +172,7 @@ const LoginForm = (props) => {
       </form>
       <Typography sx={{ marginBottom: 5, color: 'white' }}>
         Don’t have an account?
-        <Link to='/Register'> Register </Link>
+        <Link to='/Register' style={{ color: 'yellow' }}> Register </Link>
       </Typography>
     </Typography>
   )

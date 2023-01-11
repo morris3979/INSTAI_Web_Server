@@ -179,7 +179,7 @@ const RegisterForm = (props) => {
       </form>
       <Typography sx={{ marginBottom: 5, color: 'white' }}>
         Already have an account?
-        <Link to='/'> Sign in </Link>
+        <Link to='/' style={{ color: 'yellow' }}> Sign in </Link>
       </Typography>
     </Typography>
   )

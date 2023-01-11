@@ -102,7 +102,7 @@ exports.update = (req, res) => {
         message: "Error updating Project with id=" + id
       });
     });
-};
+}
 
 // Delete a Project with the specified id in the request
 // exports.delete = (req, res) => {

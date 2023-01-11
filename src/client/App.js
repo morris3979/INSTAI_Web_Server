@@ -17,7 +17,7 @@ const App = (props) => {
         <Route path='/Register' element={<RegisterPage/>} />
         <Route path='/CreateOrganization' element={<CreateOrganizationPage/>} />
         <Route path='/SelectOrganization' element={<SelectOrganizationPage/>} />
-        <Route path='/Home' element={<InitialPage/>} />
+        <Route path='/Initial' element={<InitialPage/>} />
       </Routes>
     </Suspense>
   )

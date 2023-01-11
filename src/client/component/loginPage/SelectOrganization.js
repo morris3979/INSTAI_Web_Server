@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { LoginAuthorize } from '../../store/actionCreater'
+import { LoginAuthorize, GetLoginUser } from '../../store/actionCreater'
 
 const SelectOrganization = (props) => {
-  const { loginAuthorize, loginInformation } = props
+  const {
+    loginAuthorize,
+    loginInformation,
+    getLoginUser
+  } = props
+
+  useEffect(() => {
+    return getLoginUser(loginInformation.id)
+  },[])
 
   return(
     <Typography align='center' sx={{ width : 400 }}>
@@ -37,9 +45,9 @@ const SelectOrganization = (props) => {
                     borderColor: 'lightblue'
                   }}
               align='center'
-              onClick={() => {}}
+              onClick={() => {console.log(c.id)}}
               component={Link}
-              to='/Home'
+              to='/Initial'
             >
               {c.organization}
             </Button>
@@ -92,6 +100,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loginAuthorize(text) {
       const action = LoginAuthorize(text)
+      dispatch(action)
+    },
+    getLoginUser(id, text) {
+      const action = GetLoginUser(id)
       dispatch(action)
     }
   }

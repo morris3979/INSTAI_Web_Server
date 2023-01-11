@@ -99,6 +99,29 @@ export const LoginToken = (data) => {
   )
 }
 
+export const GetLoginUser = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/user/${id}`)
+        console.log(response.data)
+        const action = DeliverData(response.data, Login_Information)
+        dispatch(action)
+      } catch (e) {
+        console.log('err: ', e)
+        alert(e.response.data.message)
+        location.reload()
+        return
+      } finally {
+        const action = TableStatus(false)
+        dispatch(action)
+      }
+    }
+  )
+}
+
 export const RegisterFormData = (data) => {
   return (
     async (dispatch) => {
