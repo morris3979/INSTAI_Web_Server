@@ -19,6 +19,10 @@ const SelectOrganization = (props) => {
     return getLoginUser(loginInformation.id)
   },[])
 
+  const selectOrganization = (id) => {
+    console.log('organizationId', id)
+  }
+
   return(
     <Typography align='center' sx={{ width : 400 }}>
       <div>
@@ -46,7 +50,7 @@ const SelectOrganization = (props) => {
                     borderColor: 'lightblue'
                   }}
               align='center'
-              onClick={() => {console.log(c.id)}}
+              onClick={() => selectOrganization(c.id)}
               component={Link}
               to='/Initial'
             >
