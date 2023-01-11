@@ -11,7 +11,7 @@ const LoginEndpoint = (props) => {
 
   if(auth){
       return(
-        <SelectOrganization key={'SelectOrganization'} />
+        <SelectOrganization key={'/SelectOrganization'} />
       )
     }else{
       return (
