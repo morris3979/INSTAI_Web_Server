@@ -10,11 +10,11 @@ pageRouter.get("/Register", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/AddOrganization", async (req, res) => {
+pageRouter.get("/CreateOrganization", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/Organization", async (req, res) => {
+pageRouter.get("/SelectOrganization", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 

@@ -1,9 +1,9 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const OrganizationForm = lazy(() => import('../component/registerPage/OrganizationForm'))
+const SelectOrganization = lazy(() => import('../component/loginPage/SelectOrganization'))
 
-const AddOrganizationPage = () => {
+const SelectOrganizationPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -16,10 +16,10 @@ const AddOrganizationPage = () => {
           backgroundColor: '#1c2127',
         }}
       >
-        <OrganizationForm />
+        <SelectOrganization />
       </div>
     </Suspense>
   )
 }
 
-export default AddOrganizationPage
+export default SelectOrganizationPage

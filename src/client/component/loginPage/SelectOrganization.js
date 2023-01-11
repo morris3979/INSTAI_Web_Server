@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
 import { LoginAuthorize } from '../../store/actionCreater'
 
-const OrganizationForm = (props) => {
+const SelectOrganization = (props) => {
   const { loginAuthorize, loginInformation } = props
 
   return(
@@ -72,7 +72,7 @@ const OrganizationForm = (props) => {
             loginAuthorize(true)
           }}
           component={Link}
-          to='/AddOrganization'
+          to='/CreateOrganization'
         >
           ADD ORGANIZATION
         </Button>
@@ -97,4 +97,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrganizationForm)
+export default connect(mapStateToProps, mapDispatchToProps)(SelectOrganization)

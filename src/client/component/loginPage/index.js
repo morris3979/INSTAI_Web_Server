@@ -1,21 +1,21 @@
 import React, { lazy } from 'react'
 import { connect } from 'react-redux'
 
-const LoginForm = lazy(() => import('./LoginForm'))
-const OrganizationForm = lazy(() => import('./OrganizationForm'))
+const Login = lazy(() => import('./Login'))
+const SelectOrganization = lazy(() => import('./SelectOrganization'))
 
-const Login = (props) => {
+const LoginEndpoint = (props) => {
   const { loginInformation } = props
 
   const auth = loginInformation.admin == true || loginInformation.user == true
 
   if(auth){
       return(
-        <OrganizationForm />
+        <SelectOrganization />
       )
     }else{
       return (
-        <LoginForm />
+        <Login />
       )
     }
 }
@@ -27,4 +27,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Login)
+export default connect(mapStateToProps, null)(LoginEndpoint)

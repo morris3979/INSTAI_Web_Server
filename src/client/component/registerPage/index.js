@@ -1,19 +1,19 @@
 import React, { lazy } from 'react'
 import { connect } from 'react-redux'
 
-const RegisterForm = lazy(() => import('./RegisterForm'))
-const OrganizationForm = lazy(() => import('./OrganizationForm'))
+const Register = lazy(() => import('./Register'))
+const CreateOrganization = lazy(() => import('./CreateOrganization'))
 
-const Register = (props) => {
-  const { loginAuthorize, userInformation } = props
+const RegisterEndpoint = (props) => {
+  const { loginAuthorize, registerInformation } = props
 
-  if((!Object.keys(userInformation).length)&&(!loginAuthorize)){
+  if((!Object.keys(registerInformation).length)&&(!loginAuthorize)){
     return (
-      <RegisterForm />
+      <Register />
     )
   }else{
     return(
-      <OrganizationForm />
+      <CreateOrganization />
     )
   }
 }
@@ -21,9 +21,9 @@ const Register = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    userInformation: state.userInformation,
+    registerInformation: state.registerInformation,
     loginAuthorize: state.loginAuthorize
   }
 }
 
-export default connect(mapStateToProps, null)(Register)
+export default connect(mapStateToProps, null)(RegisterEndpoint)

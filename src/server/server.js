@@ -35,8 +35,8 @@ async function app() {
     });
     // creates the table if it doesn't exist.
     db.sequelize.sync(
-        // { alter: true } // performs the necessary changes in the table to make it match the model.
-        { force: true } // creates the table, dropping it first if it already existed.
+        { alter: true } // performs the necessary changes in the table to make it match the model.
+        // { force: true } // creates the table, dropping it first if it already existed.
     );
 
     app.use(cors(corsOptions));

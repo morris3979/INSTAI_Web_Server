@@ -2,7 +2,7 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  Login_Information, User_Information, Login_Authorize
+  Login_Information, Register_Information, Login_Authorize
 } from './actionType'
 
 //共用Function <<<
@@ -105,7 +105,7 @@ export const RegisterFormData = (data) => {
       try {
         const response = await axios.post('/api/user/register', data)
         if(response.data){
-          const action = DeliverData(response.data, User_Information)
+          const action = DeliverData(response.data, Register_Information)
           dispatch(action)
         }
       } catch (e) {
@@ -130,7 +130,7 @@ export const OrganizationFormData = (data, id) => {
           const action = UserGroupInformation(converted)
           dispatch(action)
         }
-        const action = DeliverData({}, User_Information)
+        const action = DeliverData({}, Register_Information)
         dispatch(action)
         alert('Complete !')
       } catch (e) {

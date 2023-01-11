@@ -1,7 +1,7 @@
 import {
   Modal_File, Which_Modal, Table_Status, Map_Position,
   Which_Project, Which_Host, Which_Device,
-  Login_Information, User_Information, Login_Authorize
+  Login_Information, Register_Information, Login_Authorize
 } from './actionType'
 
 const defaultState = {
@@ -13,7 +13,7 @@ const defaultState = {
   whichHostName:[],
   whichDeviceName:[],
   loginInformation: { admin: false },
-  userInformation: {},
+  registerInformation: {},
   loginAuthorize: false
 }
 
@@ -52,8 +52,8 @@ const Reducer = (state = defaultState, action) => {
       newState.loginInformation = action.value
       return newState
     }
-    case User_Information: {
-      newState.userInformation = action.value
+    case Register_Information: {
+      newState.registerInformation = action.value
       return newState
     }
     case Login_Authorize: {

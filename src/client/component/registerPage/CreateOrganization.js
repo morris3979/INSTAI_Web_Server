@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
 import { OrganizationFormData } from '../../store/actionCreater'
 
-const OrganizationCreateForm = (props) => {
-  const { organizationFormData, userInformation, loginInformation } = props
+const CreateOrganization = (props) => {
+  const { organizationFormData, registerInformation, loginInformation } = props
 
   const [ organizationName, setOrganizationName ] = useState('')
 
@@ -20,9 +20,9 @@ const OrganizationCreateForm = (props) => {
   }
 
   const onSubmitOrganization = (e) => {
-    if(Object.keys(userInformation).length){
+    if(Object.keys(registerInformation).length){
       e.preventDefault()
-      organizationFormData(organizationName, userInformation.id)
+      organizationFormData(organizationName, registerInformation.id)
     }else{
       e.preventDefault()
       organizationFormData(organizationName, loginInformation.id)
@@ -77,7 +77,7 @@ const OrganizationCreateForm = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    userInformation: state.userInformation,
+    registerInformation: state.registerInformation,
     loginInformation: state.loginInformation
   }
 }
@@ -92,4 +92,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrganizationCreateForm)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateOrganization)

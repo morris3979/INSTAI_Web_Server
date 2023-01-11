@@ -172,7 +172,7 @@ const RegisterForm = (props) => {
               }}
           align='center'
           component={Link}
-          to='/AddOrganization'
+          to='/CreateOrganization'
         >
           Create Your Account
         </Button>

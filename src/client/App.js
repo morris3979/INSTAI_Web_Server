@@ -1,11 +1,12 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import Loading from './loading'
 
 const LoginPage = lazy(() => import('./page/loginPage'))
 const RegisterPage = lazy(() => import('./page/registerPage'))
-const AddOrganizationPage = lazy(() => import('./page/addOrganizationPage'))
+const CreateOrganizationPage = lazy(() => import('./page/CreateOrganizationPage'))
+const SelectOrganizationPage = lazy(() => import('./page/SelectOrganizationPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
@@ -14,7 +15,8 @@ const App = (props) => {
       <Routes>
         <Route path='/' element={<LoginPage/>} />
         <Route path='/Register' element={<RegisterPage/>} />
-        <Route path='/AddOrganization' element={<AddOrganizationPage/>} />
+        <Route path='/CreateOrganization' element={<CreateOrganizationPage/>} />
+        <Route path='/SelectOrganization' element={<SelectOrganizationPage/>} />
         <Route path='/Home' element={<InitialPage/>} />
       </Routes>
     </Suspense>
