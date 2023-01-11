@@ -157,11 +157,11 @@ export const OrganizationFormData = (data, id) => {
     async (dispatch) => {
       try {
         const converted = {}
-        const response = await axios.post('/api/user/organization', data)
+        const response = await axios.post('/api/organization', data)
         converted.userId = id
         converted.organizationId = `${response.data.id}`
         if(converted) {
-          const action = UserGroupInformation(converted)
+          const action = UserBindOrganization(converted)
           dispatch(action)
         }
         const action = DeliverData({}, Register_Information)
@@ -175,7 +175,7 @@ export const OrganizationFormData = (data, id) => {
   )
 }
 
-export const UserGroupInformation = (data) => {
+export const UserBindOrganization = (data) => {
   return(
     async () => {
       try {

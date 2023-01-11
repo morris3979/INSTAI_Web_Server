@@ -8,4 +8,7 @@ projectRouter.post("/", Project.create);
 // Update a Project with id
 projectRouter.patch("/:id", Project.update);
 
+// Find all Data From a Project
+projectRouter.get("/:id", Project.findData);
+
 module.exports = [ projectRouter ];
