@@ -5,13 +5,14 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { LoginAuthorize, GetLoginUser } from '../../store/actionCreater'
+import { LoginAuthorize, GetLoginUser, LogoutData } from '../../store/actionCreater'
 
 const SelectOrganization = (props) => {
   const {
     loginAuthorize,
     loginInformation,
-    getLoginUser
+    getLoginUser,
+    onClick,
   } = props
 
   useEffect(() => {
@@ -69,21 +70,35 @@ const SelectOrganization = (props) => {
       >
         or
       </Divider>
-        <Button
-          variant="contained"
-          sx={{
-                width: 400,
-                marginBottom: 2,
-              }}
-          align='center'
-          onClick={() => {
-            loginAuthorize(true)
-          }}
-          component={Link}
-          to='/CreateOrganization'
-        >
-          ADD ORGANIZATION
-        </Button>
+      <Button
+        variant="contained"
+        style={{ backgroundColor: 'darkorange' }}
+        sx={{
+              width: 400,
+              marginBottom: 2,
+            }}
+        align='center'
+        onClick={() => {
+          loginAuthorize(true)
+        }}
+        component={Link}
+        to='/CreateOrganization'
+      >
+        ADD ORGANIZATION
+      </Button>
+      <Button
+        variant="contained"
+        sx={{
+              width: 400,
+              marginBottom: 2,
+            }}
+        align='center'
+        onClick={onClick}
+        component={Link}
+        to='/'
+      >
+        SIGN OUT
+      </Button>
     </Typography>
     )
 }
@@ -105,7 +120,11 @@ const mapDispatchToProps = (dispatch) => {
     getLoginUser(id, text) {
       const action = GetLoginUser(id)
       dispatch(action)
-    }
+    },
+    onClick() {
+      const action = LogoutData()
+      dispatch(action)
+    },
   }
 }
 

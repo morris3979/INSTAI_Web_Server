@@ -11,11 +11,11 @@ const LoginEndpoint = (props) => {
 
   if(auth){
       return(
-        <SelectOrganization />
+        <SelectOrganization key={'SelectOrganization'} />
       )
     }else{
       return (
-        <Login />
+        <Login key={'/'}/>
       )
     }
 }

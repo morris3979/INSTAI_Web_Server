@@ -2,7 +2,8 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  Login_Information, Register_Information, Login_Authorize
+  Login_Information,  Logout_Information,
+  Register_Information, Login_Authorize
 } from './actionType'
 
 //共用Function <<<
@@ -97,6 +98,16 @@ export const LoginToken = (data) => {
       }
     }
   )
+}
+
+export const LogoutData = () => {
+  return ({
+    type: Logout_Information,
+    value: {
+      developer: false,
+      admin: false
+    }
+  })
 }
 
 export const GetLoginUser = (id, data) => {

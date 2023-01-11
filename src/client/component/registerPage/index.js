@@ -9,11 +9,11 @@ const RegisterEndpoint = (props) => {
 
   if((!Object.keys(registerInformation).length)&&(!loginAuthorize)){
     return (
-      <Register />
+      <Register key={'/Register'} />
     )
   }else{
     return(
-      <CreateOrganization />
+      <CreateOrganization key={'/CreateOrganization'} />
     )
   }
 }
