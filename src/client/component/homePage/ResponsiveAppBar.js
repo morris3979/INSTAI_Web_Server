@@ -65,12 +65,12 @@ const ResponsiveAppBar = (props) => {
   }
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#0A1929' }}>
+    <AppBar position="static" style={{ backgroundColor: '#0A1929', height: '6vh' }}>
       <Container maxWidth="100vh">
         <Toolbar disableGutters>
           <Grid container justifyContent='flex-start'>
             <Typography href="/Home" component={'a'}>
-              <img src={InstAI} alt='Logo' style={{ width: '18vh', height: '9vh' }} />
+              <img src={InstAI} alt='Logo' style={{ width: '12vh', height: '6vh' }} />
             </Typography>
           </Grid>
 

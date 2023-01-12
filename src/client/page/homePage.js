@@ -1,9 +1,10 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const ResponsiveAppBar = lazy(() => import('../component/projectPage/ResponsiveAppBar'))
+const ResponsiveAppBar = lazy(() => import('../component/homePage/ResponsiveAppBar'))
+const ActionAreaCard = lazy(() => import('../component/homePage/ActionAreaCard'))
 
-const ProjectPage = () => {
+const HomePage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -17,9 +18,10 @@ const ProjectPage = () => {
         }}
       >
         <ResponsiveAppBar />
+        <ActionAreaCard />
       </div>
     </Suspense>
   )
 }
 
-export default ProjectPage
+export default HomePage

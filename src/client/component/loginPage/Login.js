@@ -206,7 +206,7 @@ const LoginForm = (props) => {
           {`Hi ${userInformation.username}`}
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
-          <Button autoFocus component={Link} to={'/SelectOrganization'}>
+          <Button autoFocus variant="contained" component={Link} to={'/SelectOrganization'}>
             OK
           </Button>
         </DialogActions>

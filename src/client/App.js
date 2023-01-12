@@ -7,7 +7,7 @@ const LoginPage = lazy(() => import('./page/loginPage'))
 const RegisterPage = lazy(() => import('./page/registerPage'))
 const CreateOrganizationPage = lazy(() => import('./page/CreateOrganizationPage'))
 const SelectOrganizationPage = lazy(() => import('./page/SelectOrganizationPage'))
-const ProjectPage = lazy(() => import('./page/ProjectPage'))
+const HomePage = lazy(() => import('./page/homePage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
@@ -18,7 +18,7 @@ const App = (props) => {
         <Route path='/Register' element={<RegisterPage/>} />
         <Route path='/CreateOrganization' element={<CreateOrganizationPage/>} />
         <Route path='/SelectOrganization' element={<SelectOrganizationPage/>} />
-        <Route path='/Home' element={<ProjectPage/>} />
+        <Route path='/Home' element={<HomePage/>} />
         <Route path='/Initial' element={<InitialPage/>} />
       </Routes>
     </Suspense>

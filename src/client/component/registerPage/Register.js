@@ -208,7 +208,7 @@ const RegisterForm = (props) => {
           {`Hi ${userInformation.username}`}
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
-          <Button autoFocus component={Link} to={'/CreateOrganization'}>
+          <Button autoFocus variant="contained" component={Link} to={'/CreateOrganization'}>
             OK
           </Button>
         </DialogActions>
