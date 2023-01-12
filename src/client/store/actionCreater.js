@@ -2,8 +2,7 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  Login_Information,  Logout_Information,
-  Register_Information, Login_Authorize
+  User_Information, Logout_Information
 } from './actionType'
 
 //共用Function <<<
@@ -57,13 +56,6 @@ export const WhichDevice = (text) => {
     value: text
   })
 }
-
-export const LoginAuthorize = (text) => {
-  return({
-    type: Login_Authorize,
-    value: text
-  })
-}
 // >>>
 
 //API <<<
@@ -78,7 +70,7 @@ export const LoginFormData = (data) => {
         }
       } catch (e) {
         console.log('err: ', e)
-        alert(e.response.data.message)
+        // alert(e.response.data.message)
       }
     }
   )
@@ -90,7 +82,7 @@ export const LoginToken = (data) => {
       const headers = { 'x-access-token': data.token }
       try {
         await axios.post('/api/user/welcome', null, { headers: headers })
-        const action = DeliverData(data, Login_Information)
+        const action = DeliverData(data, User_Information)
         dispatch(action)
       } catch (e) {
         console.log('err: ', e)
@@ -118,7 +110,7 @@ export const GetLoginUser = (id, data) => {
       try {
         const response = await axios.get(`/api/user/${id}`)
         console.log(response.data)
-        const action = DeliverData(response.data, Login_Information)
+        const action = DeliverData(response.data, User_Information)
         dispatch(action)
       } catch (e) {
         console.log('err: ', e)
@@ -139,13 +131,13 @@ export const RegisterFormData = (data) => {
       try {
         const response = await axios.post('/api/user/register', data)
         if(response.data){
-          const action = DeliverData(response.data, Register_Information)
+          const action = DeliverData(response.data, User_Information)
           dispatch(action)
         }
       } catch (e) {
         console.log('err: ', e)
         alert(e.response.data.message)
-        location.reload()
+        // location.reload()
         return
       }
     }
@@ -164,8 +156,6 @@ export const OrganizationFormData = (data, id) => {
           const action = UserBindOrganization(converted)
           dispatch(action)
         }
-        const action = DeliverData({}, Register_Information)
-        dispatch(action)
         alert('Complete !')
       } catch (e) {
         console.log('err: ', e)

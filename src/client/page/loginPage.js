@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const Login = lazy(() => import('../component/loginPage'))
+const Login = lazy(() => import('../component/loginPage/Login'))
 
 const LoginPage = () => {
   return (

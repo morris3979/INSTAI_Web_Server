@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const Register = lazy(() => import('../component/registerPage'))
+const Register = lazy(() => import('../component/registerPage/Register'))
 
 const RegisterPage = () => {
   return (

@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Alert } from '@mui/material';
 import Button from '@mui/material/Button';
+import CheckIcon from '@mui/icons-material/Check';
+import Collapse from '@mui/material/Collapse';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
@@ -14,10 +18,16 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { RegisterFormData } from '../../store/actionCreater'
+import { RegisterFormData, LogoutData } from '../../store/actionCreater'
 
 const RegisterForm = (props) => {
-  const { registerFormData } = props
+
+  const { registerFormData, logoutData, userInformation } = props
+
+  useEffect(() => {
+    logoutData()
+  },[])/*clear userinformation when componentDidMount*/
+
 
   const [ showPassword, setShowPassword ] = useState(false);
   const [ input, setInput ] = useState({
@@ -41,11 +51,34 @@ const RegisterForm = (props) => {
 
   const onSubmitUserData = (e) => {
     e.preventDefault()
-    registerFormData(input)
+    if((input.username!='')&&(input.email!='')&&(input.password!='')){
+      registerFormData(input)
+    }else{
+      alert('Register can not be empty !')
+    }
   }
 
   return(
     <Typography align='center' sx={{ width : 400 }}>
+      <Collapse in={typeof(userInformation.id)=='number'}>
+        <Alert
+          severity="success"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              component={Link}
+              to='/CreateOrganization'
+            >
+              <CheckIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          Register Success!
+        </Alert>
+      </Collapse>
       <div>
         <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
       </div>
@@ -171,8 +204,6 @@ const RegisterForm = (props) => {
                 marginBottom: 5,
               }}
           align='center'
-          component={Link}
-          to='/CreateOrganization'
         >
           Create Your Account
         </Button>
@@ -185,6 +216,13 @@ const RegisterForm = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  //state指的是store裡的數據
+  return {
+    userInformation: state.userInformation
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
@@ -192,7 +230,11 @@ const mapDispatchToProps = (dispatch) => {
       const action = RegisterFormData(data)
       dispatch(action)
     },
+    logoutData() {
+      const action = LogoutData()
+      dispatch(action)
+    },
   }
 }
 
-export default connect(null, mapDispatchToProps)(RegisterForm)
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)

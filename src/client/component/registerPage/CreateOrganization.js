@@ -8,7 +8,7 @@ import InstAI from '../../icon image/instai.png'
 import { OrganizationFormData } from '../../store/actionCreater'
 
 const CreateOrganization = (props) => {
-  const { organizationFormData, registerInformation, loginInformation } = props
+  const { organizationFormData, userInformation } = props
 
   const [ organizationName, setOrganizationName ] = useState('')
 
@@ -20,13 +20,7 @@ const CreateOrganization = (props) => {
   }
 
   const onSubmitOrganization = (e) => {
-    if(Object.keys(registerInformation).length){
-      e.preventDefault()
-      organizationFormData(organizationName, registerInformation.id)
-    }else{
-      e.preventDefault()
-      organizationFormData(organizationName, loginInformation.id)
-    }
+    organizationFormData(organizationName, userInformation.id)
   }
 
   return(
@@ -60,13 +54,13 @@ const CreateOrganization = (props) => {
       <Button
         variant="contained"
         onClick={onSubmitOrganization}
+        component={Link}
+        to='/Home'
         sx={{
               width: 400,
               marginBottom: 5,
             }}
         align='center'
-        component={Link}
-        to='/SelectOrganization'
       >
         CREATE ORGANIZATION
       </Button>
@@ -77,8 +71,7 @@ const CreateOrganization = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    registerInformation: state.registerInformation,
-    loginInformation: state.loginInformation
+    userInformation: state.userInformation
   }
 }
 

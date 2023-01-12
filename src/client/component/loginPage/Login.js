@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import Collapse from '@mui/material/Collapse';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
@@ -15,17 +19,23 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
-import { LoginFormData } from '../../store/actionCreater'
+import { LoginFormData, LogoutData } from '../../store/actionCreater'
 
 const LoginForm = (props) => {
-  const { loginFormData } = props
+  
+  const { loginFormData, logoutData, userInformation } = props
+
+  useEffect(() => {
+    logoutData()
+  },[])/*clear userInformation when componentDidMount*/
 
   const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false);
   const [ input, setInput ] = useState({
     email: "",
     password: ""
   })
-
+  
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const handleMouseDownPassword = (event) => {
@@ -41,11 +51,59 @@ const LoginForm = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    loginFormData(input)
+    setOpen(true)
+    if((input.email!='')&&(input.password!='')){
+      loginFormData(input)
+    }else{
+      alert('Invaild Email or Password !')
+    }
   }
 
   return(
     <Typography align='center' sx={{ width : 400 }}>
+      <Collapse in={open}>
+        { (open)&&(typeof(userInformation.id)=='number') ?
+        <Alert
+          severity="success"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              component={Link}
+              to='/SelectOrganization'
+              
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <CheckIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          Login Success!
+        </Alert>:
+        <Alert
+        severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="error"
+              size="small"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+        Login Fail!
+      </Alert>
+        }
+      </Collapse>
       <div>
         <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
       </div>
@@ -99,7 +157,7 @@ const LoginForm = (props) => {
       >
         or
       </Divider>
-      <form onSubmit={onSubmit}>
+      <form>
         <Typography align='left' color='white'>
           Email
         </Typography>
@@ -161,6 +219,7 @@ const LoginForm = (props) => {
         <Button
           variant="contained"
           type="submit"
+          onClick={onSubmit}
           sx={{
                 width: 400,
                 marginBottom: 5,
@@ -178,14 +237,25 @@ const LoginForm = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  //state指的是store裡的數據
+  return {
+    userInformation: state.userInformation
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
     loginFormData(value) {
       const action = LoginFormData(value)
       dispatch(action)
-    }
+    },
+    logoutData() {
+      const action = LogoutData()
+      dispatch(action)
+    },
   }
 }
 
-export default connect(null, mapDispatchToProps)(LoginForm)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

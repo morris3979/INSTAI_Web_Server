@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { LoginAuthorize, GetLoginUser, LogoutData } from '../../store/actionCreater'
+import { GetLoginUser, LogoutData } from '../../store/actionCreater'
 
 const SelectOrganization = (props) => {
   const {
-    loginAuthorize,
-    loginInformation,
     getLoginUser,
     onClick,
+    userInformation,
   } = props
 
   useEffect(() => {
-    return getLoginUser(loginInformation.id)
+    if(userInformation.id){
+      return getLoginUser(userInformation.id)
+    }
   },[])
+
+  const Logout = () => {
+    onClick()
+    setTimeout(() => {
+      location.reload()
+    },100)
+  }
 
   const selectOrganization = (id) => {
     console.log('organizationId', id)
@@ -38,26 +46,29 @@ const SelectOrganization = (props) => {
         Select Your Organization
       </Typography>
       <div style={{marginBottom:'5px'}}>
-        {loginInformation.Organizations.map((c) => {
-          return (
-            <Button
-              variant="outlined"
-              sx={{
-                    width: 400,
-                    height: 50,
-                    marginBottom: 2,
-                    color: 'lightblue',
-                    borderColor: 'lightblue'
-                  }}
-              align='center'
-              onClick={() => selectOrganization(c.id)}
-              component={Link}
-              to='/Home'
-            >
-              {c.organization}
-            </Button>
-          )
-        })}
+      {
+        (userInformation.Organizations) != undefined ?
+          userInformation.Organizations.map((c) => {
+            return (
+              <Button
+                variant="outlined"
+                sx={{
+                      width: 400,
+                      height: 50,
+                      marginBottom: 2,
+                      color: 'lightblue',
+                      borderColor: 'lightblue'
+                    }}
+                align='center'
+                onClick={() => selectOrganization(c.id)}
+                component={Link}
+                to='/Home'
+              >
+                {c.organization}
+              </Button>
+            )
+            }):''
+        }
       </div>
       <Divider
         sx={{
@@ -82,9 +93,6 @@ const SelectOrganization = (props) => {
               marginBottom: 2,
             }}
         align='center'
-        onClick={() => {
-          loginAuthorize(true)
-        }}
         component={Link}
         to='/CreateOrganization'
       >
@@ -97,7 +105,7 @@ const SelectOrganization = (props) => {
               marginBottom: 2,
             }}
         align='center'
-        onClick={onClick}
+        onClick={Logout}
         component={Link}
         to='/'
       >
@@ -110,17 +118,13 @@ const SelectOrganization = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    loginInformation: state.loginInformation,
+    userInformation: state.userInformation
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    loginAuthorize(text) {
-      const action = LoginAuthorize(text)
-      dispatch(action)
-    },
     getLoginUser(id, text) {
       const action = GetLoginUser(id)
       dispatch(action)
