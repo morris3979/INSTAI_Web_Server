@@ -72,7 +72,6 @@ const LoginForm = (props) => {
               size="small"
               component={Link}
               to='/SelectOrganization'
-              
               onClick={() => {
                 setOpen(false);
               }}
