@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import InstAI from '../../icon image/instai.png'
+import { LogoutData } from '../../store/actionCreater'
 
 const settings = ['Profile', 'Account', 'Logout'];
 
@@ -45,15 +47,24 @@ const stringAvatar = (name) => {
 }
 
 const ResponsiveAppBar = (props) => {
+  const { onClick } = props
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const navigate = useNavigate();
+  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
     setAnchorElUser(null);
+    if(e.target.innerText == 'Logout'){
+      onClick()
+      navigate('/')
+    }else{
+      return
+    }
   };
 
   return (
@@ -103,7 +114,12 @@ const ResponsiveAppBar = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
-  return {}
+  return {
+    onClick() {
+      const action = LogoutData()
+      dispatch(action)
+    },
+  }
 }
 
 export default connect(null, mapDispatchToProps)(ResponsiveAppBar)
