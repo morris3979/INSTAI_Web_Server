@@ -32,7 +32,6 @@ const stringToColor = (string) => {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.slice(-2);
   }
-  /* eslint-enable no-bitwise */
 
   return color;
 }
@@ -48,32 +47,32 @@ const stringAvatar = (name) => {
 
 const ResponsiveAppBar = (props) => {
   const { onClick } = props
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const navigate = useNavigate();
-  
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
+  }
 
   const handleCloseUserMenu = (e) => {
     setAnchorElUser(null);
     if(e.target.innerText == 'Logout'){
       onClick()
       navigate('/')
-    }else{
-      return
     }
-  };
+  }
 
   return (
     <AppBar position="static" style={{ backgroundColor: '#0A1929' }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="100vh">
         <Toolbar disableGutters>
-          <Typography href="/Home" component={'a'}>
-            <img src={InstAI} alt='Logo' style={{ width: '18vh', height: '9vh' }} />
-          </Typography>
+          <Grid container justifyContent='flex-start'>
+            <Typography href="/Home" component={'a'}>
+              <img src={InstAI} alt='Logo' style={{ width: '18vh', height: '9vh' }} />
+            </Typography>
+          </Grid>
 
           <Grid container justifyContent='flex-end'>
             <Box sx={{ flexGrow: 0 }}>

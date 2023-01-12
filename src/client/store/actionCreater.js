@@ -69,8 +69,7 @@ export const LoginFormData = (data) => {
           dispatch(action)
         }
       } catch (e) {
-        console.log('err: ', e)
-        // alert(e.response.data.message)
+        alert(e.response.data.message)
       }
     }
   )
@@ -85,7 +84,6 @@ export const LoginToken = (data) => {
         const action = DeliverData(data, User_Information)
         dispatch(action)
       } catch (e) {
-        console.log('err: ', e)
         alert(e.response.data.message)
       }
     }
@@ -95,10 +93,7 @@ export const LoginToken = (data) => {
 export const LogoutData = () => {
   return ({
     type: Logout_Information,
-    value: {
-      developer: false,
-      admin: false
-    }
+    value: {}
   })
 }
 
@@ -113,7 +108,6 @@ export const GetLoginUser = (id, data) => {
         const action = DeliverData(response.data, User_Information)
         dispatch(action)
       } catch (e) {
-        console.log('err: ', e)
         alert(e.response.data.message)
         location.reload()
         return
@@ -133,11 +127,10 @@ export const RegisterFormData = (data) => {
         if(response.data){
           const action = DeliverData(response.data, User_Information)
           dispatch(action)
+          return
         }
       } catch (e) {
-        console.log('err: ', e)
         alert(e.response.data.message)
-        // location.reload()
         return
       }
     }
@@ -158,7 +151,6 @@ export const OrganizationFormData = (data, id) => {
         }
         alert('Complete !')
       } catch (e) {
-        console.log('err: ', e)
         alert(e.response.data.message)
       }
     }
@@ -170,8 +162,7 @@ export const UserBindOrganization = (data) => {
     async () => {
       try {
         await axios.post('/api/user/group', data)
-      }catch (e) {
-        console.log('err: ', e)
+      } catch (e) {
         alert(e.response.data.message)
       }
     }

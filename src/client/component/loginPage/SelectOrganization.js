@@ -20,13 +20,6 @@ const SelectOrganization = (props) => {
     }
   },[])
 
-  const Logout = () => {
-    onClick()
-    setTimeout(() => {
-      location.reload()
-    },100)
-  }
-
   const selectOrganization = (id) => {
     console.log('organizationId', id)
   }
@@ -105,7 +98,7 @@ const SelectOrganization = (props) => {
               marginBottom: 2,
             }}
         align='center'
-        onClick={Logout}
+        onClick={onClick}
         component={Link}
         to='/'
       >
