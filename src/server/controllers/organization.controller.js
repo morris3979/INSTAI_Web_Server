@@ -43,6 +43,9 @@ exports.findProjects = (req, res) => {
                 model: User
             }]
         }],
+        order: [
+          [Project, 'id', 'DESC']
+        ],
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt']
         }
@@ -53,7 +56,6 @@ exports.findProjects = (req, res) => {
 
         const replacer = (key, value) => {
             if (key == 'createdAt') return undefined
-            else if (key == 'updatedAt') return undefined
             else if (key == 'deletedAt') return undefined
             else if (key == 'password') return undefined
             else if (key == 'admin') return undefined

@@ -11,7 +11,7 @@ exports.create = async (req, res) => {
   // Validate request
   if (!(project && OrganizationId && UserId)) {
     res.status(400).send({
-      message: "Project and OrganizationId can not be empty!"
+      message: "Project Name can not be empty!"
     })
     return
   }

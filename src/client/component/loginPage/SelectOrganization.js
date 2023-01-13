@@ -5,13 +5,14 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { GetLoginUser, LogoutData } from '../../store/actionCreater'
+import { GetLoginUser, LogoutData, GetProjectList } from '../../store/actionCreater'
 
 const SelectOrganization = (props) => {
   const {
     getLoginUser,
     onClick,
     userInformation,
+    getProjectList
   } = props
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const SelectOrganization = (props) => {
   },[])
 
   const selectOrganization = (id) => {
-    console.log('organizationId', id)
+    return getProjectList(id)
   }
 
   return(
@@ -124,6 +125,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     onClick() {
       const action = LogoutData()
+      dispatch(action)
+    },
+    getProjectList(id, text) {
+      const action = GetProjectList(id)
       dispatch(action)
     },
   }

@@ -182,7 +182,7 @@ const LoginForm = (props) => {
           sx={{ width: 400, marginBottom: 5 }}
           align='center'
           component={Link}
-          to={console.log('userInformation', userInformation)}
+          to={userInformation}
         >
           Sign In
         </Button>

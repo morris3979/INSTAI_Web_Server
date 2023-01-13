@@ -2,7 +2,8 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  User_Information, Logout_Information
+  User_Information, Logout_Information,
+  Project_List
 } from './actionType'
 
 //共用Function <<<
@@ -104,7 +105,7 @@ export const GetLoginUser = (id, data) => {
       dispatch(action)
       try {
         const response = await axios.get(`/api/user/${id}`)
-        console.log(response.data)
+        // console.log(response.data)
         const action = DeliverData(response.data, User_Information)
         dispatch(action)
       } catch (e) {
@@ -148,8 +149,10 @@ export const OrganizationFormData = (data, id) => {
         if(converted) {
           const action = UserBindOrganization(converted)
           dispatch(action)
+          const second = GetProjectList(response.data.id)
+          dispatch(second)
+          return
         }
-        alert('Complete !')
       } catch (e) {
         alert(e.response.data.message)
       }
@@ -162,6 +165,41 @@ export const UserBindOrganization = (data) => {
     async () => {
       try {
         await axios.post('/api/user/group', data)
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
+export const GetProjectList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/organization/${id}`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Project_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const CreateProject = (data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.post('/api/project', data)
+        if (response.data) {
+          location.reload()
+          return
+        }
       } catch (e) {
         alert(e.response.data.message)
       }
