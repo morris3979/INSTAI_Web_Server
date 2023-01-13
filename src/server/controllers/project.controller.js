@@ -1,14 +1,15 @@
 const db = require('../database');
 const Project = db.Project;
 const Organization = db.Organization;
+const User = db.User;
 const Data = db.Data;
 
 // Create and Save a new Project
 exports.create = async (req, res) => {
-  const {project, OrganizationId} = req.body;
+  const {project, OrganizationId, UserId} = req.body;
 
   // Validate request
-  if (!(project && OrganizationId)) {
+  if (!(project && OrganizationId && UserId)) {
     res.status(400).send({
       message: "Project and OrganizationId can not be empty!"
     })
@@ -23,11 +24,21 @@ exports.create = async (req, res) => {
     })
     return
   }
+  const findUser = await User.findOne({
+    where: { id: UserId },
+  })
+  if (!findUser) {
+    res.status(400).send({
+      message: "User not existed, please create a new User!"
+    })
+    return
+  }
 
   // Create a Project
   const newProject = {
     project: project,
-    OrganizationId: OrganizationId
+    OrganizationId: OrganizationId,
+    UserId: UserId
   }
 
   // Save Project in the database

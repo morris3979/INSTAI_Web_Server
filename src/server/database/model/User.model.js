@@ -52,6 +52,7 @@ module.exports = (sequelize, Sequelize) => {
         paranoid: true
     });
     User.associate = function (models) {
+        User.hasMany(models.Project, {foreignKey: 'UserId'});
         User.hasMany(models.Data, {foreignKey: 'UserId'});
     };
     return User;

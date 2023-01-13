@@ -43,6 +43,7 @@ db.Project.hasMany(db.Host, {foreignKey: 'ProjectId'});
 db.Host.hasMany(db.Device, {foreignKey: 'HostId'});
 db.Project.hasMany(db.Data, {foreignKey: 'ProjectId'});
 db.Device.hasMany(db.Data, {foreignKey: 'DeviceId'});
+db.User.hasMany(db.Project, {foreignKey: 'UserId'});
 db.User.hasMany(db.Data, {foreignKey: 'UserId'});
 db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
 
@@ -52,6 +53,7 @@ db.Host.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Device.belongsTo(db.Host, {foreignKey: 'HostId'});
 db.Data.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Data.belongsTo(db.Device, {foreignKey: 'DeviceId'});
+db.Project.belongsTo(db.User, {foreignKey: 'UserId'});
 db.Data.belongsTo(db.User, {foreignKey: 'UserId'});
 db.HwUpdateLog.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 

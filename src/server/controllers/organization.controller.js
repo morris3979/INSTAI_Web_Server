@@ -1,5 +1,7 @@
 const db = require('../database');
 const Organization = db.Organization;
+const Project = db.Project;
+const User = db.User;
 
 // Create and Save a new Organization
 exports.create = async (req, res) => {
@@ -36,7 +38,10 @@ exports.findProjects = (req, res) => {
             id: req.params.id
         },
         include: [{
-            model: Project
+            model: Project,
+            include: [{
+                model: User
+            }]
         }],
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt']
@@ -50,6 +55,10 @@ exports.findProjects = (req, res) => {
             if (key == 'createdAt') return undefined
             else if (key == 'updatedAt') return undefined
             else if (key == 'deletedAt') return undefined
+            else if (key == 'password') return undefined
+            else if (key == 'admin') return undefined
+            else if (key == 'user') return undefined
+            else if (key == 'token') return undefined
             else return value
         }
 

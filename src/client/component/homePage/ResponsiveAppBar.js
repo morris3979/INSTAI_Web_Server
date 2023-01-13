@@ -41,12 +41,12 @@ const stringAvatar = (name) => {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: `${name.split(' ')[0][0]}`,
   };
 }
 
 const ResponsiveAppBar = (props) => {
-  const { onClick } = props
+  const { onClick, userInformation } = props
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -78,7 +78,7 @@ const ResponsiveAppBar = (props) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar {...stringAvatar('Morris Chang')} />
+                  <Avatar {...stringAvatar(userInformation.username)} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -111,6 +111,13 @@ const ResponsiveAppBar = (props) => {
   );
 }
 
+const mapStateToProps = (state) => {
+  //state指的是store裡的數據
+  return {
+    userInformation: state.userInformation
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
@@ -121,4 +128,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ResponsiveAppBar)
+export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveAppBar)

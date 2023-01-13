@@ -14,7 +14,7 @@ exports.register = async (req, res) => {
     // Validate request
     if (!(username && email && password)) {
       res.status(400).send({
-        message: "Username & Email & Password can not be empty!"
+        message: "Email & Password & Username can not be empty!"
       })
       return
     }

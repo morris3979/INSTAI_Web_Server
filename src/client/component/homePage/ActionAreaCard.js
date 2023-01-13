@@ -16,7 +16,7 @@ const ActionAreaCard = (props) => {
       <div style={{ marginBottom: 30, display: 'flex', justifyContent:'space-between', alignItems: 'center', width: '90vw' }}>
         <div style={{ float: 'left' }}>
           <Typography variant="h5" gutterBottom color={'white'}>
-            {`Hi ${userInformation.username}`}
+            {`Welcome, ${userInformation.username}`}
           </Typography>
         </div>
         <div style={{ float: 'right' }}>
