@@ -9,11 +9,12 @@ const HomePage = () => {
     <Suspense fallback={<Loading />}>
       <div
         style={{
-          height: '100vh',
+          minHeight: '100vh',
+          height: 'auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        //   justifyContent: 'center',
+          // justifyContent: 'center',
           backgroundColor: '#1c2127',
         }}
       >
