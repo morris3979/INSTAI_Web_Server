@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
+import { Helmet } from "react-helmet"
 
 const ResponsiveAppBar = lazy(() => import('../component/homePage/ResponsiveAppBar'))
 const ActionAreaCard = lazy(() => import('../component/homePage/ActionAreaCard'))
@@ -18,6 +19,9 @@ const HomePage = () => {
           backgroundColor: '#1c2127',
         }}
       >
+        <Helmet>
+          <title>Home - InstAI</title>
+        </Helmet>
         <ResponsiveAppBar />
         <ActionAreaCard />
       </div>

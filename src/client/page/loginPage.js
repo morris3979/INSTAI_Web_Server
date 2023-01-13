@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
+import { Helmet } from "react-helmet"
 
 const Login = lazy(() => import('../component/loginPage/Login'))
 
@@ -16,6 +17,9 @@ const LoginPage = () => {
           backgroundColor: '#1c2127',
         }}
       >
+        <Helmet>
+          <title>Sign in - InstAI</title>
+        </Helmet>
         <Login />
       </div>
     </Suspense>

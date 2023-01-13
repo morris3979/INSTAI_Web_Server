@@ -24,7 +24,6 @@ import InstAI from '../../icon image/instai.png'
 import { LoginFormData, LogoutData } from '../../store/actionCreater'
 
 const LoginForm = (props) => {
-
   const { loginFormData, userInformation } = props
 
   const [ open, setOpen ] = useState(false)
@@ -59,8 +58,6 @@ const LoginForm = (props) => {
 
   return(
     <Typography align='center' sx={{ width : 400 }}>
-        {/* { (open)&&(typeof(userInformation.id)=='number')
-        ? <Link to={'/SelectOrganization'} /> : <Link to={'/'} /> } */}
       <div>
         <img src={InstAI} alt='Logo' style={{ width: '70%', height: '70%' }} />
       </div>
@@ -83,7 +80,8 @@ const LoginForm = (props) => {
                 color: 'lightblue',
                 borderColor: 'lightblue'
               }}
-          align='center'>
+          align='center'
+        >
           Continue with Google
         </Button>
         <Button
@@ -95,7 +93,8 @@ const LoginForm = (props) => {
                 color: 'lightblue',
                 borderColor: 'lightblue'
               }}
-          align='center'>
+          align='center'
+        >
           Continue with Enterprise SSO
         </Button>
       </div>
@@ -141,7 +140,6 @@ const LoginForm = (props) => {
         <div>
           <Typography align='left' color='white'>
             Password
-            <Link> (Forget Password?) </Link>
           </Typography>
         </div>
         <FormControl
@@ -199,14 +197,14 @@ const LoginForm = (props) => {
       >
         <DialogContent style={{ backgroundColor: '#444950', width: '30vh' }}>
           <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
-            Welcome to InstAI
+            From InstAI
           </DialogContentText>
         </DialogContent>
         <DialogTitle id="alert-dialog-title" textAlign={'center'} style={{ backgroundColor: '#444950', color: 'white', width: '30vh' }}>
-          {`Hi ${userInformation.username}`}
+          {`Welcome, ${userInformation.username}`}
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
-          <Button autoFocus variant="contained" component={Link} to={'/SelectOrganization'}>
+          <Button autoFocus size='small' variant="contained" component={Link} to={'/SelectOrganization'}>
             next
           </Button>
         </DialogActions>

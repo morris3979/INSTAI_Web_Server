@@ -14,12 +14,11 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import PersonIcon from '@mui/icons-material/Person';
 import GroupsIcon from '@mui/icons-material/Groups';
 import Logout from '@mui/icons-material/Logout';
 import InstAI from '../../icon image/instai.png'
 import { LogoutData } from '../../store/actionCreater'
-
-const settings = [ 'Profile', 'Account' ];
 
 const stringToColor = (string) => {
   let hash = 0;
@@ -50,7 +49,7 @@ const stringAvatar = (name) => {
 }
 
 const ResponsiveAppBar = (props) => {
-  const { onClick, userInformation } = props
+  const { onClick, userInformation, projectList } = props
 
   const [ anchorElUser, setAnchorElUser ] = useState(null);
 
@@ -91,7 +90,6 @@ const ResponsiveAppBar = (props) => {
               <img src={InstAI} alt='Logo' style={{ width: '12vh', height: '6vh' }} />
             </Typography>
           </Grid>
-
           <Grid container justifyContent='flex-end'>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
@@ -115,20 +113,24 @@ const ResponsiveAppBar = (props) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon fontSize="small" />
+                  </ListItemIcon>
+                  Account
+                </MenuItem>
                 <Divider />
-                <MenuItem onClick={onSwitchOrganization}>
+                <Typography sx={{ fontWeight: 'bold', marginLeft: 2, color: 'grey' }}>
+                  {projectList.organization.toUpperCase()}
+                </Typography>
+                <MenuItem onClick={onSwitchOrganization} sx={{ fontWeight: 'bold' }}>
                   <ListItemIcon>
                     <GroupsIcon fontSize="small" />
                   </ListItemIcon>
                   Switch Organization
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={onSignOut}>
+                <MenuItem onClick={onSignOut} sx={{ color: 'red' }}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>
@@ -146,7 +148,8 @@ const ResponsiveAppBar = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    userInformation: state.userInformation
+    userInformation: state.userInformation,
+    projectList: state.projectList
   }
 }
 
