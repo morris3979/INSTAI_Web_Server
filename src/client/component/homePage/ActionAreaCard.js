@@ -18,7 +18,7 @@ import { GetProjectList, CreateProject } from '../../store/actionCreater'
 const ActionAreaCard = (props) => {
   const { userInformation, projectList, getProjectList, createProject } = props
 
-  const [ open, setOpen ] = React.useState(false)
+  const [ open, setOpen ] = useState(false)
   const [ input, setInput ] = useState({
     project: "",
     OrganizationId: projectList.id,

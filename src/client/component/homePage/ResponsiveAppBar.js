@@ -11,11 +11,15 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import GroupsIcon from '@mui/icons-material/Groups';
+import Logout from '@mui/icons-material/Logout';
 import InstAI from '../../icon image/instai.png'
 import { LogoutData } from '../../store/actionCreater'
 
-const settings = ['Profile', 'Account', 'Logout'];
+const settings = [ 'Profile', 'Account' ];
 
 const stringToColor = (string) => {
   let hash = 0;
@@ -48,7 +52,7 @@ const stringAvatar = (name) => {
 const ResponsiveAppBar = (props) => {
   const { onClick, userInformation } = props
 
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [ anchorElUser, setAnchorElUser ] = useState(null);
 
   const navigate = useNavigate();
 
@@ -58,10 +62,24 @@ const ResponsiveAppBar = (props) => {
 
   const handleCloseUserMenu = (e) => {
     setAnchorElUser(null);
-    if(e.target.innerText == 'Logout'){
+    if(e.target.innerText == 'Switch Organization'){
+      navigate('/SelectOrganization')
+      location.reload()
+    }
+    if(e.target.innerText == 'Sign Out'){
       onClick()
       navigate('/')
     }
+  }
+
+  const onSwitchOrganization = () => {
+    navigate('/SelectOrganization')
+    location.reload()
+  }
+
+  const onSignOut = () => {
+    onClick()
+    navigate('/')
   }
 
   return (
@@ -102,6 +120,20 @@ const ResponsiveAppBar = (props) => {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+                <Divider />
+                <MenuItem onClick={onSwitchOrganization}>
+                  <ListItemIcon>
+                    <GroupsIcon fontSize="small" />
+                  </ListItemIcon>
+                  Switch Organization
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={onSignOut}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Sign Out
+                </MenuItem>
               </Menu>
             </Box>
           </Grid>

@@ -21,7 +21,7 @@ const SelectOrganization = (props) => {
     }
   },[])
 
-  const selectOrganization = (id) => {
+  const selectOrganization = async (id) => {
     return getProjectList(id)
   }
 
@@ -41,28 +41,28 @@ const SelectOrganization = (props) => {
       </Typography>
       <div style={{marginBottom:'5px'}}>
       {
-        (userInformation.Organizations) != undefined ?
-          userInformation.Organizations.map((c) => {
-            return (
-              <Button
-                variant="outlined"
-                sx={{
-                      width: 400,
-                      height: 50,
-                      marginBottom: 2,
-                      color: 'lightblue',
-                      borderColor: 'lightblue'
-                    }}
-                align='center'
-                onClick={() => selectOrganization(c.id)}
-                component={Link}
-                to='/Home'
-              >
-                {c.organization}
-              </Button>
-            )
-            }):''
-        }
+        (userInformation.Organizations) != undefined
+        ?userInformation.Organizations.map((c) => {
+          return (
+            <Button
+              variant="outlined"
+              sx={{
+                    width: 400,
+                    height: 50,
+                    marginBottom: 2,
+                    color: 'lightblue',
+                    borderColor: 'lightblue'
+                  }}
+              align='center'
+              onClick={() => selectOrganization(c.id)}
+              component={Link}
+              to='/Home'
+            >
+              {c.organization}
+            </Button>
+          )
+        }): ''
+      }
       </div>
       <Divider
         sx={{
@@ -112,7 +112,8 @@ const SelectOrganization = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    userInformation: state.userInformation
+    userInformation: state.userInformation,
+    projectList: state.projectList
   }
 }
 
