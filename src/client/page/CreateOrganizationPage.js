@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const CreateOrganization = lazy(() => import('../component/registerPage/CreateOrganization'))
+const CreateOrganization = lazy(() => import('../component/RegisterPage/CreateOrganization'))
 
 const CreateOrganizationPage = () => {
   return (

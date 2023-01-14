@@ -2,8 +2,8 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/homePage/ResponsiveAppBar'))
-const ActionAreaCard = lazy(() => import('../component/homePage/ActionAreaCard'))
+const ResponsiveAppBar = lazy(() => import('../component/HomePage/ResponsiveAppBar'))
+const ActionAreaCard = lazy(() => import('../component/HomePage/ActionAreaCard'))
 
 const HomePage = () => {
   return (

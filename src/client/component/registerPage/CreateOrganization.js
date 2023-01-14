@@ -19,10 +19,6 @@ const CreateOrganization = (props) => {
     }))
   }
 
-  const onSubmitOrganization = (e) => {
-    organizationFormData(organizationName, userInformation.id)
-  }
-
   return(
     <Typography align='center' sx={{ width : 400 }}>
       <div>
@@ -53,7 +49,7 @@ const CreateOrganization = (props) => {
       />
       <Button
         variant="contained"
-        onClick={onSubmitOrganization}
+        onClick={()=> organizationFormData(organizationName, userInformation.id)}
         component={Link}
         to='/Home'
         sx={{

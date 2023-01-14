@@ -14,10 +14,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { GetProjectList, CreateProject } from '../../store/actionCreater'
+import { GetProjectList, CreateProject, GetDataList } from '../../store/actionCreater'
 
 const ActionAreaCard = (props) => {
-  const { userInformation, projectList, getProjectList, createProject } = props
+  const { userInformation, projectList, getProjectList, createProject, getDataList } = props
 
   const [ open, setOpen ] = useState(false)
   const [ input, setInput ] = useState({
@@ -25,6 +25,7 @@ const ActionAreaCard = (props) => {
     OrganizationId: projectList.id,
     UserId: userInformation.id
   })
+  const [ projectId, setProjectId ] = useState(false)
 
   const navigate = useNavigate();
 
@@ -114,9 +115,9 @@ const ActionAreaCard = (props) => {
                   <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
                     <CardActionArea
                       key={key}
-                      onClick={(e) => {
-                        navigate('/Initial')
-                        console.log('key', key)
+                      onClick={() => {
+                        getDataList(value.id)
+                        navigate('/Data')
                       }}
                     >
                       <CardContent>
@@ -184,6 +185,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     createProject(value) {
       const action = CreateProject(value)
+      dispatch(action)
+    },
+    getDataList(id, text) {
+      const action = GetDataList(id)
       dispatch(action)
     },
   }

@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const Register = lazy(() => import('../component/registerPage/Register'))
+const Register = lazy(() => import('../component/RegisterPage/Register'))
 
 const RegisterPage = () => {
   return (

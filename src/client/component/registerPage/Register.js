@@ -201,14 +201,19 @@ const RegisterForm = (props) => {
       >
         <DialogContent style={{ backgroundColor: '#444950', width: '30vh' }}>
           <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
-            Complete
+            From InstAI
           </DialogContentText>
         </DialogContent>
         <DialogTitle id="alert-dialog-title" textAlign={'center'} style={{ backgroundColor: '#444950', color: 'white', width: '30vh' }}>
-          {`Hi ${userInformation.username}`}
+          {`Welcome, ${userInformation.username}`}
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
-          <Button autoFocus variant="contained" component={Link} to={'/CreateOrganization'}>
+          <Button autoFocus size='small'
+            variant="contained"
+            component={Link}
+            to={'/CreateOrganization'}
+            sx={{ margin: 1 }}
+          >
             next
           </Button>
         </DialogActions>

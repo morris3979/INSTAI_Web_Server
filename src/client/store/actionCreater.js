@@ -3,7 +3,7 @@ import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
   User_Information, Logout_Information,
-  Project_List
+  Project_List, Data_List
 } from './actionType'
 
 //共用Function <<<
@@ -202,6 +202,25 @@ export const CreateProject = (data) => {
         }
       } catch (e) {
         alert(e.response.data.message)
+      }
+    }
+  )
+}
+
+export const GetDataList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Data_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
       }
     }
   )
