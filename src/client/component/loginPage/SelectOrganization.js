@@ -106,7 +106,7 @@ const SelectOrganization = (props) => {
         SIGN OUT
       </Button>
     </Typography>
-    )
+  )
 }
 
 const mapStateToProps = (state) => {

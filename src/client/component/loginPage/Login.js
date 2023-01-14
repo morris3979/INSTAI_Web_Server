@@ -27,7 +27,7 @@ const LoginForm = (props) => {
   const { loginFormData, userInformation } = props
 
   const [ open, setOpen ] = useState(false)
-  const [ showPassword, setShowPassword ] = useState(false);
+  const [ showPassword, setShowPassword ] = useState(false)
   const [ input, setInput ] = useState({
     email: "",
     password: ""
@@ -204,7 +204,12 @@ const LoginForm = (props) => {
           {`Welcome, ${userInformation.username}`}
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
-          <Button autoFocus size='small' variant="contained" component={Link} to={'/SelectOrganization'}>
+          <Button autoFocus size='small'
+            variant="contained"
+            component={Link}
+            to={'/SelectOrganization'}
+            sx={{ margin: 1 }}
+          >
             next
           </Button>
         </DialogActions>

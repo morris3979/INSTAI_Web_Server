@@ -21,22 +21,21 @@ import InstAI from '../../icon image/instai.png'
 import { LogoutData } from '../../store/actionCreater'
 
 const stringToColor = (string) => {
-  let hash = 0;
-  let i;
+  let hash = 0
+  let i
+  let color = '#55688'
 
   /* eslint-disable no-bitwise */
   for (i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = '#55688';
-
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.slice(-2);
   }
 
-  return color;
+  return color
 }
 
 const stringAvatar = (name) => {
@@ -56,19 +55,11 @@ const ResponsiveAppBar = (props) => {
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event.currentTarget)
   }
 
-  const handleCloseUserMenu = (e) => {
-    setAnchorElUser(null);
-    if(e.target.innerText == 'Switch Organization'){
-      navigate('/SelectOrganization')
-      location.reload()
-    }
-    if(e.target.innerText == 'Sign Out'){
-      onClick()
-      navigate('/')
-    }
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
   }
 
   const onSwitchOrganization = () => {

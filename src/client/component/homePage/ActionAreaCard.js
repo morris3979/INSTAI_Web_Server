@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -24,6 +25,8 @@ const ActionAreaCard = (props) => {
     OrganizationId: projectList.id,
     UserId: userInformation.id
   })
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     projectList
@@ -70,7 +73,7 @@ const ActionAreaCard = (props) => {
           size='small'
           color='info'
           sx={{ width: 400 }}
-          placeholder='Search by project name, creator...'
+          placeholder='Project name, Project type, Creator...'
           InputProps={{
             style: { color: 'white' },
             endAdornment: <SearchIcon style={{ color: 'white' }} />,
@@ -112,6 +115,7 @@ const ActionAreaCard = (props) => {
                     <CardActionArea
                       key={key}
                       onClick={(e) => {
+                        navigate('/Initial')
                         console.log('key', key)
                       }}
                     >
