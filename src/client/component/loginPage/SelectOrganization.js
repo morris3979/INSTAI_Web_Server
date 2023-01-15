@@ -19,7 +19,7 @@ const SelectOrganization = (props) => {
     if(userInformation.id){
       return getLoginUser(userInformation.id)
     }
-  },[])
+  },[userInformation])
 
   const selectOrganization = async (id) => {
     return getProjectList(id)

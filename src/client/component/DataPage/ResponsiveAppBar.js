@@ -86,7 +86,10 @@ const ResponsiveAppBar = (props) => {
   }
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#0A1929', height: '6vh' }}>
+    <AppBar position="fixed"
+      style={{ backgroundColor: '#0A1929', height: '6vh' }}
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Container maxWidth="100vh">
         <Toolbar disableGutters>
           <Grid container justifyContent='flex-start'>

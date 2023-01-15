@@ -19,6 +19,10 @@ const CreateOrganization = (props) => {
     }))
   }
 
+  const onCreate = () => {
+    createNewOrganization(organizationName, userInformation.id)
+  }
+
   return(
     <Typography align='center' sx={{ width : 400 }}>
       <div>
@@ -54,9 +58,9 @@ const CreateOrganization = (props) => {
               marginBottom: 5,
             }}
         align='center'
-        onClick={()=> createNewOrganization(organizationName, userInformation.id)}
+        onClick={onCreate}
         component={Link}
-        to='/Home'
+        to='/SelectOrganization'
       >
         CREATE ORGANIZATION
       </Button>

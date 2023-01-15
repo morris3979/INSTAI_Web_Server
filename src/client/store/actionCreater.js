@@ -151,6 +151,8 @@ export const CreateNewOrganization = (data, id) => {
           dispatch(action)
           const second = GetProjectList(response.data.id)
           dispatch(second)
+          const third = GetLoginUser(id)
+          dispatch(third)
           return
         }
       } catch (e) {
