@@ -95,6 +95,9 @@ exports.findData = (req, res) => {
       include: [{
           model: Data
       }],
+      order: [
+        [Data, 'id', 'DESC']
+      ],
       attributes: {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']
       }

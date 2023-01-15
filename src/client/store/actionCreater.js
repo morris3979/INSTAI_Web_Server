@@ -138,7 +138,7 @@ export const RegisterFormData = (data) => {
   )
 }
 
-export const OrganizationFormData = (data, id) => {
+export const CreateNewOrganization = (data, id) => {
   return (
     async (dispatch) => {
       try {

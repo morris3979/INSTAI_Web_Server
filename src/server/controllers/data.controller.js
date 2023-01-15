@@ -2,6 +2,20 @@ const db = require('../database');
 const Project = db.Project;
 const Data = db.Data;
 
+require('dotenv').config();
+const aws = require('aws-sdk');
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+
+//configure the aws environment
+aws.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
+//initialize s3
+const s3 = new aws.S3();
+
 // Create and Save a new Data
 exports.upload = async (req, res) => {
   const {data, image, ProjectId} = req.body;
@@ -40,5 +54,30 @@ exports.upload = async (req, res) => {
         message:
           err.message || "Some error occurred while creating the Data."
       })
+    })
+}
+
+// upload image to s3
+exports.uploadToS3 = async(req, res, key, callback) => {
+    const upload = multer({
+        storage: multerS3({
+            s3: s3,
+            // acl: 'public-read',
+            bucket: process.env.AWS_BUCKET_NAME,
+            metadata: (req, file, cb) => {
+                cb(null, {fieldName: file.fieldname})
+            },
+            key: (req, file, cb) => {
+                cb(null, 'image' + '/' + file.originalname) // file.originalname
+            }
+        })
+    })
+    const singleUpload = upload.single(key);
+    singleUpload(req, res, (err) => {
+        if (err) {
+            callback({error: {title: 'File Upload Error', detail: err.message}})
+        } else {
+            callback(null, {url: req.file.location, key: req.file.key, filename: req.file.originalname})
+        }
     })
 }

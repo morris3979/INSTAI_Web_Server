@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import Loading from './loading'
+import Box from '@mui/material/Box';
 
 const LoginPage = lazy(() => import('./page/LoginPage'))
 const RegisterPage = lazy(() => import('./page/RegisterPage'))
@@ -14,15 +15,25 @@ const InitialPage = lazy(() => import('./page/initialPage'))
 const App = (props) => {
   return(
     <Suspense fallback={<Loading />}>
-      <Routes>
-        <Route path='/' element={<LoginPage/>} />
-        <Route path='/Register' element={<RegisterPage/>} />
-        <Route path='/CreateOrganization' element={<CreateOrganizationPage/>} />
-        <Route path='/SelectOrganization' element={<SelectOrganizationPage/>} />
-        <Route path='/Home' element={<HomePage/>} />
-        <Route path='/Data' element={<DataPage/>} />
-        <Route path='/Initial' element={<InitialPage/>} />
-      </Routes>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          minWidth: '100vw',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          backgroundColor: '#1c2127',
+        }}>
+        <Routes>
+          <Route path='/' element={<LoginPage/>} />
+          <Route path='/Register' element={<RegisterPage/>} />
+          <Route path='/CreateOrganization' element={<CreateOrganizationPage/>} />
+          <Route path='/SelectOrganization' element={<SelectOrganizationPage/>} />
+          <Route path='/Home' element={<HomePage/>} />
+          <Route path='/Data' element={<DataPage/>} />
+          <Route path='/Initial' element={<InitialPage/>} />
+        </Routes>
+      </Box>
     </Suspense>
   )
 }

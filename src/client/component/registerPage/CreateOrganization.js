@@ -5,10 +5,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { OrganizationFormData } from '../../store/actionCreater'
+import { CreateNewOrganization } from '../../store/actionCreater'
 
 const CreateOrganization = (props) => {
-  const { organizationFormData, userInformation } = props
+  const { createNewOrganization, userInformation } = props
 
   const [ organizationName, setOrganizationName ] = useState('')
 
@@ -49,14 +49,14 @@ const CreateOrganization = (props) => {
       />
       <Button
         variant="contained"
-        onClick={()=> organizationFormData(organizationName, userInformation.id)}
-        component={Link}
-        to='/Home'
         sx={{
               width: 400,
               marginBottom: 5,
             }}
         align='center'
+        onClick={()=> createNewOrganization(organizationName, userInformation.id)}
+        component={Link}
+        to='/Home'
       >
         CREATE ORGANIZATION
       </Button>
@@ -74,8 +74,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    organizationFormData(data, id) {
-      const action = OrganizationFormData(data, id)
+    createNewOrganization(data, id) {
+      const action = CreateNewOrganization(data, id)
       dispatch(action)
     },
   }

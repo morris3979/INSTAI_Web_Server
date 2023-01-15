@@ -1,4 +1,3 @@
-const fs = require('fs');
 require('dotenv').config();
 const aws = require('aws-sdk');
 const multer = require("multer");
