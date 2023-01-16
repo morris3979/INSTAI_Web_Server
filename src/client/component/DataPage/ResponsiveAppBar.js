@@ -86,7 +86,7 @@ const ResponsiveAppBar = (props) => {
   }
 
   return (
-    <AppBar position="fixed"
+    <AppBar position="fixed" elevation={0}
       style={{ backgroundColor: '#0A1929', height: '6vh' }}
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >

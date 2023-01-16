@@ -5,18 +5,15 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import { CirclesWithBar } from 'react-loader-spinner';
 
-const drawerWidth = 100;
+const drawerWidth = 90;
 
 const ClippedDrawer = (props) => {
 
@@ -26,19 +23,21 @@ const ClippedDrawer = (props) => {
             <Drawer
                 variant="permanent"
                 sx={{
-                width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: {
                     width: drawerWidth,
-                    boxSizing: 'border-box',
-                    backgroundColor: '#0A1929'
-                },
+                    flexShrink: 0,
+                    [`& .MuiDrawer-paper`]: {
+                        width: drawerWidth,
+                        boxSizing: 'border-box',
+                        backgroundColor: '#1c2127',
+                        borderWidth: 0
+                    },
                 }}
             >
                 <Toolbar />
+                <Toolbar />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
-                        <ListItem key={'Data'} disablePadding style={{marginTop: 15, marginBottom: 15}}>
+                        <ListItem key={'Data'} disablePadding style={{ marginTop: 10, marginBottom: 15 }}>
                             <ListItemButton>
                                 <Grid
                                     container
@@ -67,28 +66,25 @@ const ClippedDrawer = (props) => {
                     </List>
                 </Box>
             </Drawer>
-            <div
-                style={{
-                    marginTop: 200,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                }}
-            >
-                <CirclesWithBar
-                height="100"
-                width="100"
-                color="#4fa94d"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-                outerCircleColor=""
-                innerCircleColor="lightblue"
-                barColor="red"
-                ariaLabel='circles-with-bar-loading'
-                />
-                <h1 style={{ color: 'yellow' }}>SITE UNDER CONSTRUCTION ...</h1>
-            </div>
+            <Box style={{ backgroundColor: '#0A1929', borderRadius: 20, marginTop: '13vh', alignContent: 'flex-start' }}>
+                <div style={{ minHeight: '90vh', height: 'auto', width: '95vw', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ marginTop: 200 }}>
+                        <CirclesWithBar
+                            height="100"
+                            width="100"
+                            color="#4fa94d"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                            outerCircleColor=""
+                            innerCircleColor="lightblue"
+                            barColor="red"
+                            ariaLabel='circles-with-bar-loading'
+                        />
+                    </div>
+                    <h1 style={{ color: 'yellow' }}>SITE UNDER CONSTRUCTION ...</h1>
+                </div>
+            </Box>
         </Box>
     )
 }

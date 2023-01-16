@@ -1,9 +1,10 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
-import { CirclesWithBar } from 'react-loader-spinner'
+import Grid from '@mui/material/Grid';
 
 const ResponsiveAppBar = lazy(() => import('../component/DataPage/ResponsiveAppBar'))
+const ProjectAppBar = lazy(() => import('../component/DataPage/ProjectAppBar'))
 const ClippedDrawer = lazy(() => import('../component/DataPage/ClippedDrawer'))
 
 const HomePage = () => {
@@ -24,6 +25,7 @@ const HomePage = () => {
           <title>Data - InstAI</title>
         </Helmet>
         <ResponsiveAppBar />
+        <ProjectAppBar />
         <ClippedDrawer />
       </div>
     </Suspense>
