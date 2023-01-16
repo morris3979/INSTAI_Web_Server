@@ -21,11 +21,11 @@ const ActionAreaCard = (props) => {
 
   const [ open, setOpen ] = useState(false)
   const [ input, setInput ] = useState({
-    project: "",
+    project: '',
+    type: 'Object Detection',
     OrganizationId: projectList.id,
     UserId: userInformation.id
   })
-  const [ projectId, setProjectId ] = useState(false)
 
   const navigate = useNavigate();
 
@@ -92,9 +92,13 @@ const ActionAreaCard = (props) => {
       ? <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
           <CardActionArea>
             <CardContent>
-              <Typography variant="body2" textAlign={'center'} color="white" borderRadius={2} style={{backgroundColor: 'grey'}} maxWidth='8vw'>
-                object detection
-              </Typography>
+              <div style={{ display: 'flex' }}>
+                <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
+                  <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
+                    Object Detection
+                  </Typography>
+                </Box>
+              </div>
               <Typography gutterBottom variant="h5" component="div">
                 Sample Project
               </Typography>
@@ -121,9 +125,13 @@ const ActionAreaCard = (props) => {
                       }}
                     >
                       <CardContent>
-                        <Typography variant="body2" textAlign={'center'} color="white" borderRadius={2} style={{backgroundColor: 'grey'}} maxWidth='8vw'>
-                          object detection
-                        </Typography>
+                        <div style={{ display: 'flex' }}>
+                          <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
+                            <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
+                              {value.type}
+                            </Typography>
+                          </Box>
+                        </div>
                         <Typography gutterBottom variant="h5" component="div">
                           {value.project}
                         </Typography>
@@ -144,10 +152,16 @@ const ActionAreaCard = (props) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>New Project</DialogContent>
         <DialogTitle style={{ backgroundColor: '#444950' }}>
+        <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+        >
           <TextField
             focused
             id="outlined-start-adornment"
-            label="Create"
+            label="Project"
             name='project'
             size='small'
             color='info'
@@ -158,10 +172,26 @@ const ActionAreaCard = (props) => {
             }}
             onChange={onChangeProject}
           />
+          <TextField
+            focused
+            id="outlined-start-adornment"
+            label="Type"
+            name='type'
+            size='small'
+            color='info'
+            sx={{ width: 300 }}
+            defaultValue='Object Detection'
+            InputProps={{
+              style: { color: 'white' }
+            }}
+            style={{ marginTop: 20 }}
+            onChange={onChangeProject}
+          />
+        </Grid>
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
-          <Button variant="contained" size='small' onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={onCreate}>Create</Button>
+          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>Create</Button>
         </DialogActions>
       </Dialog>
     </div>

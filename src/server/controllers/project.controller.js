@@ -6,12 +6,12 @@ const Data = db.Data;
 
 // Create and Save a new Project
 exports.create = async (req, res) => {
-  const {project, OrganizationId, UserId} = req.body;
+  const {project, type, OrganizationId, UserId} = req.body;
 
   // Validate request
-  if (!(project && OrganizationId && UserId)) {
+  if (!(project && type && OrganizationId && UserId)) {
     res.status(400).send({
-      message: "Project Name can not be empty!"
+      message: "Project Name & Type can not be empty!"
     })
     return
   }
@@ -37,6 +37,7 @@ exports.create = async (req, res) => {
   // Create a Project
   const newProject = {
     project: project,
+    type: type,
     OrganizationId: OrganizationId,
     UserId: UserId
   }
