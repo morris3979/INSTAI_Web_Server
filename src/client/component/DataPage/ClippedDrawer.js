@@ -10,7 +10,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote';
 import { CirclesWithBar } from 'react-loader-spinner';
 
 const drawerWidth = 90;
@@ -50,7 +50,7 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Deploy'} disablePadding style={{marginTop: 15, marginBottom: 15}}>
+                        <ListItem key={'Remote Setting'} disablePadding style={{marginTop: 15, marginBottom: 15}}>
                             <ListItemButton>
                                 <Grid
                                     container
@@ -58,8 +58,17 @@ const ClippedDrawer = (props) => {
                                     justifyContent="center"
                                     alignItems="center"
                                 >
-                                    <RocketLaunchIcon style={{color: 'white'}} />
-                                    <ListItemText primary={'Deploy'} style={{color: 'white'}} />
+                                    <SettingsRemoteIcon style={{color: 'white'}} />
+                                    <ListItemText
+                                        primary={'Remote Setting'}
+                                        style={{
+                                            color: 'white',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            flexDirection: 'column',
+                                            textAlign: 'center'
+                                        }}
+                                    />
                                 </Grid>
                             </ListItemButton>
                         </ListItem>

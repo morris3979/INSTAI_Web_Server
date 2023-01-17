@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
 import EditIcon from '@mui/icons-material/Edit';
 import { LogoutData, GetProjectList } from '../../store/actionCreater'
@@ -39,14 +40,15 @@ const ProjectAppBar = (props) => {
                 mr: 2,
                 fontWeight: 'bold',
                 color: 'inherit',
-                marginLeft: 4
+                marginLeft: 4,
+                marginTop: 0.5
               }}
             >
               {dataList.project}
             </Typography>
-            <Typography>
-                <EditIcon style={{ color: 'white', marginLeft: 3, marginTop: 5 }} />
-            </Typography>
+            <Button>
+                <EditIcon style={{ color: 'white' }} />
+            </Button>
           </Grid>
         </Toolbar>
       </Container>
