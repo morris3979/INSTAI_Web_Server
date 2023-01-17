@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 
-const DataStore = (props) => {
+const DeviceSetting = (props) => {
   const {
     dataList,
   } = props
@@ -29,44 +29,21 @@ const DataStore = (props) => {
             width: 'auto',
           }}
         >
-          {dataList.Data.length === 0?
-          <Typography noWrap variant="h5" sx={{ color: 'white', fontWeight: 'bold' }}>
-            UPLOAD
-          </Typography>:
-          <div>
-            <Grid
+          <Grid
               minWidth='90vw'
               container
               direction="row"
               sx={{ marginTop: 2, justifyContent: 'space-between' }}
-            >
-              <Typography
+          >
+            <Typography
                 noWrap
                 variant="h5"
                 sx={{ color: 'white', fontWeight: 'bold', marginLeft: 5 }}
-              >
-                Warehouse
-              </Typography>
-              <Button variant="contained" sx={{ marginRight: 5 }}>Upload</Button>
-            </Grid>
-            <span>
-              <Typography
-                noWrap
-                variant="h5"
-                sx={{
-                  color: 'white',
-                  fontWeight: 'bold',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  marginTop: 2,
-                }}
-              >
-                IMAGE
-              </Typography>
-            </span>
-          </div>
-          }
+            >
+              Setting
+            </Typography>
+            <Button variant="contained" sx={{ marginRight: 5 }}>ADD</Button>
+          </Grid>
         </div>
       </Box>
   )
@@ -84,4 +61,4 @@ const mapStateToProps = (state) => {
     return {}
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataStore)
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceSetting)

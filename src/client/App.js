@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Loading from './loading'
 import Box from '@mui/material/Box';
 
@@ -10,6 +10,7 @@ const CreateOrganizationPage = lazy(() => import('./page/CreateOrganizationPage'
 const SelectOrganizationPage = lazy(() => import('./page/SelectOrganizationPage'))
 const HomePage = lazy(() => import('./page/HomePage'))
 const DataPage = lazy(() => import('./page/DataPage'))
+const DeviceSettingPage = lazy(() => import('./page/DeviceSettingPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
@@ -31,6 +32,7 @@ const App = (props) => {
           <Route path='/SelectOrganization' element={<SelectOrganizationPage/>} />
           <Route path='/Home' element={<HomePage/>} />
           <Route path='/Data' element={<DataPage/>} />
+          <Route path='/Device' element={<DeviceSettingPage/>} />
           <Route path='/Initial' element={<InitialPage/>} />
         </Routes>
       </Box>

@@ -5,9 +5,9 @@ import { Helmet } from "react-helmet"
 const ResponsiveAppBar = lazy(() => import('../component/DataPage/ResponsiveAppBar'))
 const ProjectAppBar = lazy(() => import('../component/DataPage/ProjectAppBar'))
 const ClippedDrawer = lazy(() => import('../component/DataPage/ClippedDrawer'))
-const DataWarehouse = lazy(() => import('../component/DataPage/DataWarehouse'))
+const DeviceSetting = lazy(() => import('../component/DataPage/DeviceSetting'))
 
-const DataPage = () => {
+const DeviceSettingPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -22,15 +22,15 @@ const DataPage = () => {
         }}
       >
         <Helmet>
-          <title>Data - InstAI</title>
+          <title>Device - InstAI</title>
         </Helmet>
         <ResponsiveAppBar />
         <ProjectAppBar />
         <ClippedDrawer />
-        <DataWarehouse />
+        <DeviceSetting />
       </div>
     </Suspense>
   )
 }
 
-export default DataPage
+export default DeviceSettingPage

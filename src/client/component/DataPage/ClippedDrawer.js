@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,10 +12,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const drawerWidth = '5.5vw';
 
 const ClippedDrawer = (props) => {
+
+    const navigate = useNavigate()
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -37,7 +41,7 @@ const ClippedDrawer = (props) => {
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
                         <ListItem key={'Data'} disablePadding style={{ marginTop: 10, marginBottom: 15 }}>
-                            <ListItemButton>
+                            <ListItemButton onClick={() => navigate('/Data')}>
                                 <Grid
                                     container
                                     direction="column"
@@ -49,8 +53,8 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Remote Setting'} disablePadding style={{marginTop: 15, marginBottom: 15}}>
-                            <ListItemButton>
+                        <ListItem key={'Device'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
+                            <ListItemButton onClick={() => navigate('/Device')}>
                                 <Grid
                                     container
                                     direction="column"
@@ -59,7 +63,29 @@ const ClippedDrawer = (props) => {
                                 >
                                     <SettingsRemoteIcon style={{color: 'white'}} />
                                     <ListItemText
-                                        primary={'Remote Setting'}
+                                        primary={'Device'}
+                                        style={{
+                                            color: 'white',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            flexDirection: 'column',
+                                            textAlign: 'center'
+                                        }}
+                                    />
+                                </Grid>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key={'Settings'} disablePadding style={{ position: 'fixed', bottom: 15, maxWidth: '5.5vw' }}>
+                            <ListItemButton>
+                                <Grid
+                                    container
+                                    direction="column"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
+                                    <SettingsIcon style={{color: 'white'}} />
+                                    <ListItemText
+                                        primary={'Settings'}
                                         style={{
                                             color: 'white',
                                             display: 'flex',

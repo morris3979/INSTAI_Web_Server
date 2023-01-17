@@ -30,4 +30,8 @@ pageRouter.get("/Data", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
+pageRouter.get("/Device", async (req, res) => {
+    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+});
+
 module.exports = pageRouter;
