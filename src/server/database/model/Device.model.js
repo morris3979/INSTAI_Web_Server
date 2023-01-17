@@ -8,17 +8,14 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        deviceId: {
-            type: Sequelize.STRING,
-            allowNull: false,
+        serialNumber: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          unique: true
         },
         deviceName: {
             type: Sequelize.STRING,
             allowNull: false,
-        },
-        description: {
-            type: Sequelize.STRING,
-            defaultValue: 'Data collection'
         },
         command: {
             type: Sequelize.STRING,
@@ -27,6 +24,16 @@ module.exports = (sequelize, Sequelize) => {
         message: {
             type: Sequelize.STRING,
             allowNull: true,
+        },
+        accessKey: {
+            type: Sequelize.STRING,
+            defaultValue: process.env.AWS_ACCESS_KEY_ID,
+            // defaultValue: process.env.ALIYUN_ACCESS_KEY_ID,
+        },
+        secretKey: {
+            type: Sequelize.STRING,
+            defaultValue: process.env.AWS_SECRET_ACCESS_KEY,
+            // defaultValue: process.env.ALIYUN_SECRET_ACCESS_KEY,
         },
         createdAt: {
             field: 'created_at',
@@ -49,7 +56,7 @@ module.exports = (sequelize, Sequelize) => {
         paranoid: true
     });
     Device.associate = function (models) {
-        Device.belongsTo(models.Host);
+        Device.belongsTo(models.Project);
         Device.hasMany(models.Data, {foreignKey: 'DeviceId'});
         Device.hasMany(models.HwUpdateLog, {foreignKey: 'DeviceId'});
     };

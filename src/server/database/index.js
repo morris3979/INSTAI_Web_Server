@@ -28,7 +28,6 @@ db.Organization = require("./model/Organization.model")(sequelize, Sequelize);
 db.User = require("./model/User.model")(sequelize, Sequelize);
 db.UserGroup = require("./model/UserGroup.model")(sequelize, Sequelize);
 db.Project = require("./model/Project.model")(sequelize, Sequelize);
-db.Host = require("./model/Host.model")(sequelize, Sequelize);
 db.HwUpdateLog = require("./model/HwUpdateLog.model")(sequelize, Sequelize);
 db.Device = require("./model/Device.model")(sequelize, Sequelize);
 db.Data = require("./model/Data.model")(sequelize, Sequelize);
@@ -39,8 +38,7 @@ db.ModelGroup = require("./model/ModelGroup.model")(sequelize, Sequelize);
 
 // One to Many
 db.Organization.hasMany(db.Project, {foreignKey: 'OrganizationId'});
-db.Project.hasMany(db.Host, {foreignKey: 'ProjectId'});
-db.Host.hasMany(db.Device, {foreignKey: 'HostId'});
+db.Project.hasMany(db.Device, {foreignKey: 'ProjectId'});
 db.Project.hasMany(db.Data, {foreignKey: 'ProjectId'});
 db.Device.hasMany(db.Data, {foreignKey: 'DeviceId'});
 db.User.hasMany(db.Project, {foreignKey: 'UserId'});
@@ -49,8 +47,7 @@ db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
 
 // Many to One
 db.Project.belongsTo(db.Organization, {foreignKey: 'OrganizationId'});
-db.Host.belongsTo(db.Project, {foreignKey: 'ProjectId'});
-db.Device.belongsTo(db.Host, {foreignKey: 'HostId'});
+db.Device.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Data.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Data.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 db.Project.belongsTo(db.User, {foreignKey: 'UserId'});
