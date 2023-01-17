@@ -59,10 +59,10 @@ const ResponsiveAppBar = (props) => {
   const [ anchorElUser, setAnchorElUser ] = useState(null)
 
   useEffect(() => {
-    // dataList
-    // projectList
-    console.log('dataList', dataList)
-    console.log('projectList', projectList)
+    dataList
+    projectList
+    // console.log('dataList', dataList)
+    // console.log('projectList', projectList)
   },[])
 
   const navigate = useNavigate();
@@ -96,7 +96,8 @@ const ResponsiveAppBar = (props) => {
             <Typography href="/Home" component={'a'}>
               <img src={InstAI} alt='Logo' style={{ width: '4vh', height: '4vh' }} />
             </Typography>
-            <Typography noWrap
+            <Typography
+              noWrap
               variant="h5"
               sx={{
                 mr: 2,

@@ -11,9 +11,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote';
-import { CirclesWithBar } from 'react-loader-spinner';
 
-const drawerWidth = 90;
+const drawerWidth = '5.5vw';
 
 const ClippedDrawer = (props) => {
 
@@ -75,25 +74,6 @@ const ClippedDrawer = (props) => {
                     </List>
                 </Box>
             </Drawer>
-            <Box style={{ backgroundColor: '#0A1929', borderRadius: 20, marginTop: '13vh', alignContent: 'flex-start' }}>
-                <div style={{ minHeight: '90vh', height: 'auto', width: '95vw', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ marginTop: 200 }}>
-                        <CirclesWithBar
-                            height="100"
-                            width="100"
-                            color="#4fa94d"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                            visible={true}
-                            outerCircleColor=""
-                            innerCircleColor="lightblue"
-                            barColor="red"
-                            ariaLabel='circles-with-bar-loading'
-                        />
-                    </div>
-                    <h1 style={{ color: 'yellow' }}>SITE UNDER CONSTRUCTION ...</h1>
-                </div>
-            </Box>
         </Box>
     )
 }

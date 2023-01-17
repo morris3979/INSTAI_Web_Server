@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 const ResponsiveAppBar = lazy(() => import('../component/DataPage/ResponsiveAppBar'))
 const ProjectAppBar = lazy(() => import('../component/DataPage/ProjectAppBar'))
 const ClippedDrawer = lazy(() => import('../component/DataPage/ClippedDrawer'))
+const DataStore = lazy(() => import('../component/DataPage/DataStore'))
 
 const HomePage = () => {
   return (
@@ -27,6 +28,7 @@ const HomePage = () => {
         <ResponsiveAppBar />
         <ProjectAppBar />
         <ClippedDrawer />
+        <DataStore />
       </div>
     </Suspense>
   )

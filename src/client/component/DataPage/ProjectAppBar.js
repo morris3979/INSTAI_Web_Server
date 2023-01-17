@@ -17,10 +17,10 @@ const ProjectAppBar = (props) => {
   } = props
 
   useEffect(() => {
-    // dataList
-    // projectList
-    console.log('dataList', dataList)
-    console.log('projectList', projectList)
+    dataList
+    projectList
+    // console.log('dataList', dataList)
+    // console.log('projectList', projectList)
   },[])
 
   return (
@@ -34,7 +34,8 @@ const ProjectAppBar = (props) => {
             <Typography>
                 <FilterCenterFocusIcon style={{ color: 'white', marginLeft: 9, marginTop: 8 }} />
             </Typography>
-            <Typography noWrap
+            <Typography
+              noWrap
               variant="h6"
               sx={{
                 mr: 2,
