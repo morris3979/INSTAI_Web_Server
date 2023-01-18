@@ -9,6 +9,9 @@ userRouter.post("/register", User.register);
 // User Bind Organization
 userRouter.post("/group", User.bindOrganization);
 
+// User Bind Organization
+userRouter.post("/invite", User.inviteMember);
+
 // Login
 userRouter.post("/login", User.login);
 

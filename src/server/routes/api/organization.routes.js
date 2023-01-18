@@ -6,6 +6,9 @@ const Organization = require('../../controllers/organization.controller');
 organizationRouter.post("/", Organization.create);
 
 // Find User Owned Projects
-organizationRouter.get("/:id", Organization.findProjects);
+organizationRouter.get("/:id/projects", Organization.findProjects);
+
+// Get Organization Users
+organizationRouter.get("/:id/users", Organization.findUsers);
 
 module.exports = [ organizationRouter ];

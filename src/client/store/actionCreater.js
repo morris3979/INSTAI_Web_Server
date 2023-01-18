@@ -180,7 +180,7 @@ export const GetProjectList = (id, data) => {
       const action = TableStatus(true)
       dispatch(action)
       try {
-        const response = await axios.get(`/api/organization/${id}`)
+        const response = await axios.get(`/api/organization/${id}/projects`)
         // console.log(response.data)
         const action = DeliverData(response.data, Project_List)
         dispatch(action)

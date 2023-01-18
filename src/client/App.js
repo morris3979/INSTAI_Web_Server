@@ -11,6 +11,7 @@ const SelectOrganizationPage = lazy(() => import('./page/SelectOrganizationPage'
 const HomePage = lazy(() => import('./page/HomePage'))
 const DataPage = lazy(() => import('./page/DataPage'))
 const DeviceSettingPage = lazy(() => import('./page/DeviceSettingPage'))
+const InvitePeoplePage = lazy(() => import('./page/InvitePeoplePage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
@@ -33,6 +34,7 @@ const App = (props) => {
           <Route path='/Home' element={<HomePage/>} />
           <Route path='/Data' element={<DataPage/>} />
           <Route path='/Device' element={<DeviceSettingPage/>} />
+          <Route path='/Organization' element={<InvitePeoplePage/>} />
           <Route path='/Initial' element={<InitialPage/>} />
         </Routes>
       </Box>

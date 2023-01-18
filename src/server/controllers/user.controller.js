@@ -113,6 +113,55 @@ exports.bindOrganization = async (req, res) => {
   })
 }
 
+// Bind Users and Organization
+exports.inviteMember = async (req, res) => {
+  const {email, organizationId} = req.body
+
+  // Validate request
+  if (!(email && organizationId)) {
+    res.status(400).send({
+      message: "email & organizationId can not be empty!"
+    })
+    return
+  }
+  const findUser = await User.findOne({
+    where: { email: email },
+  });
+  if (!findUser) {
+    res.status(400).send({
+      message: "No User existed, Please create a new User!"
+    })
+    return
+  }
+  const findOrganization = await Organization.findOne({
+    where: { id: organizationId },
+  })
+  if (!findOrganization) {
+    res.status(400).send({
+      message: "No Organization existed, Please create a new Organization!"
+    })
+    return
+  }
+
+  // Create a UserGroup
+  const userGroup = {
+    UserId: findUser.dataValues.id,
+    OrganizationId: organizationId
+  }
+
+  // Save Bind Users ID and Organization ID
+  UserGroup.create(userGroup)
+  .then(data => {
+      res.send(data);
+  })
+  .catch(err => {
+      res.status(500).send({
+          message:
+          err.message || "Some error occurred while creating the UserGroup."
+      })
+  })
+}
+
 // login
 exports.login = async(req, res) => {
   const {email, password} = req.body
@@ -170,7 +219,7 @@ exports.login = async(req, res) => {
   })
 }
 
-// Get UserBelongs Organization
+// Get User Belongs Organization
 exports.findOrganizations = (req, res) => {
   User.findOne({
     where: {

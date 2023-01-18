@@ -16,6 +16,7 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import PersonIcon from '@mui/icons-material/Person';
 import GroupsIcon from '@mui/icons-material/Groups';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Logout from '@mui/icons-material/Logout';
 import InstAI from '../../icon image/instai_icon.png'
 import { LogoutData, GetProjectList } from '../../store/actionCreater'
@@ -77,6 +78,11 @@ const ResponsiveAppBar = (props) => {
 
   const onSwitchOrganization = () => {
     navigate('/SelectOrganization')
+    location.reload()
+  }
+
+  const onInvitePeople = () => {
+    navigate('/Organization')
     location.reload()
   }
 
@@ -144,6 +150,13 @@ const ResponsiveAppBar = (props) => {
                 <Typography sx={{ fontWeight: 'bold', marginLeft: 2, color: 'grey' }}>
                   {projectList.organization.toUpperCase()}
                 </Typography>
+                <MenuItem onClick={onInvitePeople}>
+                  <ListItemIcon>
+                    <PersonAddIcon fontSize="small" />
+                  </ListItemIcon>
+                  Invite People
+                </MenuItem>
+                <Divider />
                 <MenuItem onClick={onSwitchOrganization} sx={{ fontWeight: 'bold' }}>
                   <ListItemIcon>
                     <GroupsIcon fontSize="small" />
