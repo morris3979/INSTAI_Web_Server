@@ -20,8 +20,8 @@ import { Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const columns = [
-  { id: 'action', label: 'Action', minWidth: '12vw' },
-  { id: 'serialNumber', label: 'SerialNumber', minWidth: '20vw' },
+  { id: 'action', label: 'Action', minWidth: '14vw' },
+  { id: 'serialNumber', label: 'SerialNumber', minWidth: '18vw' },
   { id: 'deviceName', label: 'Device Name', minWidth: '18vw' },
   { id: 'command', label: 'Command', minWidth: '20vw' },
   { id: 'message', label: 'Message', minWidth: '20vw' }
@@ -179,7 +179,7 @@ const DeviceTable = (props) => {
                                 align={column.align}
                                 style={{
                                     minWidth: column.minWidth,
-                                    fontSize: '16pt'
+                                    fontSize: '14pt'
                                 }}
                             >
                             {column.label}
@@ -196,7 +196,7 @@ const DeviceTable = (props) => {
                                 {columns.map((column) => {
                                 const value = row[column.id];
                                 return (
-                                    <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '14pt' }}>
+                                    <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
                                     {column.format && typeof value === 'number'
                                         ? column.format(value)
                                         : value}
