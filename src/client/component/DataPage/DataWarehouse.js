@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-
 const DataWarehouse = (props) => {
   const {
     dataList,
@@ -40,7 +39,7 @@ const DataWarehouse = (props) => {
           >
             <Button
               variant="contained"
-              sx={{ marginTop: 5, fontWeight: 'bold', width: 300, height: 80, borderRadius: 10 }}
+              sx={{ marginTop: 5, fontWeight: 'bold', width: 300, height: 70, borderRadius: 10 }}
             >
               <CloudUploadIcon fontSize='large' />
               <Typography

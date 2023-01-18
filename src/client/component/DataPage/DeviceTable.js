@@ -11,11 +11,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 import { Container } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 const columns = [
   { id: 'action', label: 'Action', minWidth: '12vw' },
-  { id: 'serialNumber', label: 'Serial Number', minWidth: '20vw' },
+  { id: 'serialNumber', label: 'SerialNumber', minWidth: '20vw' },
   { id: 'deviceName', label: 'Device Name', minWidth: '18vw' },
   { id: 'command', label: 'Command', minWidth: '20vw' },
   { id: 'message', label: 'Message', minWidth: '20vw' }
@@ -47,8 +53,13 @@ const DeviceTable = (props) => {
     dataList
   },[])
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [ open, setOpen ] = useState(false)
+  const [ input, setInput ] = useState({
+    serialNumber: '',
+    deviceName: '',
+  })
+  const [ page, setPage ] = useState(0)
+  const [ rowsPerPage, setRowsPerPage ] = useState(5)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -57,6 +68,26 @@ const DeviceTable = (props) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  }
+
+  const onCreate = async () => {
+    createProject(input)
+    setOpen(false)
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const onChangeDevice = (e) => {
+    setInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
   }
 
   return (
@@ -76,7 +107,7 @@ const DeviceTable = (props) => {
             container
             minWidth='90vw'
             direction="row"
-            sx={{ marginTop: 5, justifyContent: 'space-between' }}
+            sx={{ marginTop: 3, marginBottom: 3, justifyContent: 'space-between' }}
           >
             <Typography
               noWrap
@@ -85,9 +116,41 @@ const DeviceTable = (props) => {
             >
               Setting
             </Typography>
-            <Button variant="contained" sx={{ marginRight: 5 }}>ADD DEVICE</Button>
           </Grid>
-          {/* <Grid container minWidth='90vw' sx={{ marginTop: 2 }}> */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent:'space-between',
+              alignItems: 'center',
+              width: '90vw',
+              marginLeft: 35
+            }}
+          >
+            <div style={{ float: 'left' }}>
+              <Button
+                variant="contained"
+                sx={{ marginRight: 5 }}
+                onClick={handleClickOpen}
+              >
+                ADD DEVICE
+              </Button>
+            </div>
+            <div style={{ float:'right' }}>
+                <TextField
+                    focused
+                    id="outlined-start-adornment"
+                    label="Search"
+                    size='small'
+                    color='info'
+                    sx={{ width: 400 }}
+                    placeholder='SerialNumber, Device Name...'
+                    InputProps={{
+                        style: { color: 'white' },
+                        endAdornment: <SearchIcon style={{ color: 'white' }} />,
+                    }}
+                />
+            </div>
+          </div>
           <div>
             <Container
                 style={{
@@ -157,8 +220,52 @@ const DeviceTable = (props) => {
                 />
             </Container>
           </div>
-          {/* </Grid> */}
         </div>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Add Device</DialogContent>
+          <DialogTitle style={{ backgroundColor: '#444950' }}>
+          <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+          >
+            <TextField
+              focused
+              id="outlined-start-adornment"
+              label="SerialNumber"
+              name='serialNumber'
+              size='small'
+              color='info'
+              sx={{ width: 300 }}
+              placeholder='Host SerialNumber'
+              InputProps={{
+                style: { color: 'white' }
+              }}
+              onChange={onChangeDevice}
+            />
+            <TextField
+              focused
+              id="outlined-start-adornment"
+              label="Device Name"
+              name='deviceName'
+              size='small'
+              color='info'
+              sx={{ width: 300 }}
+              style={{ marginTop: 20 }}
+              placeholder='Collection Device Name'
+              InputProps={{
+                style: { color: 'white' }
+              }}
+              onChange={onChangeDevice}
+            />
+          </Grid>
+          </DialogTitle>
+          <DialogActions style={{ backgroundColor: '#444950' }}>
+            <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
+            <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>ADD</Button>
+          </DialogActions>
+        </Dialog>
       </Box>
   )
 }

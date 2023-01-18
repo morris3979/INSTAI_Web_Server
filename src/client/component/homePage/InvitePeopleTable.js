@@ -62,8 +62,8 @@ const InvitePeopleTable = (props) => {
     email: '',
     OrganizationId: projectList.id
   })
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [ page, setPage ] = useState(0);
+  const [ rowsPerPage, setRowsPerPage ] = useState(10);
 
   useEffect(() => {
     projectList
@@ -228,7 +228,7 @@ const InvitePeopleTable = (props) => {
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
           <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Create</Button>
+          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>ADD</Button>
         </DialogActions>
       </Dialog>
     </div>
