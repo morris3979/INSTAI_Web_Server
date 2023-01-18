@@ -113,55 +113,6 @@ exports.bindOrganization = async (req, res) => {
   })
 }
 
-// Bind Users and Organization
-exports.inviteMember = async (req, res) => {
-  const {email, organizationId} = req.body
-
-  // Validate request
-  if (!(email && organizationId)) {
-    res.status(400).send({
-      message: "email & organizationId can not be empty!"
-    })
-    return
-  }
-  const findUser = await User.findOne({
-    where: { email: email },
-  });
-  if (!findUser) {
-    res.status(400).send({
-      message: "No User existed, Please create a new User!"
-    })
-    return
-  }
-  const findOrganization = await Organization.findOne({
-    where: { id: organizationId },
-  })
-  if (!findOrganization) {
-    res.status(400).send({
-      message: "No Organization existed, Please create a new Organization!"
-    })
-    return
-  }
-
-  // Create a UserGroup
-  const userGroup = {
-    UserId: findUser.dataValues.id,
-    OrganizationId: organizationId
-  }
-
-  // Save Bind Users ID and Organization ID
-  UserGroup.create(userGroup)
-  .then(data => {
-      res.send(data);
-  })
-  .catch(err => {
-      res.status(500).send({
-          message:
-          err.message || "Some error occurred while creating the UserGroup."
-      })
-  })
-}
-
 // login
 exports.login = async(req, res) => {
   const {email, password} = req.body
@@ -248,5 +199,66 @@ exports.findOrganizations = (req, res) => {
     res.send(JSON.parse(JSON.stringify(data, replacer)))
   }).catch(err => {
     res.status(500).send({ message: err.message })
+  })
+}
+
+// Bind Users and Organization
+exports.inviteMember = async (req, res) => {
+  const {email, organizationId} = req.body
+
+  // Validate request
+  if (!(email && organizationId)) {
+    res.status(400).send({
+      message: "email & organizationId can not be empty!"
+    })
+    return
+  }
+  const findUser = await User.findOne({
+    where: { email: email },
+  })
+  if (!findUser) {
+    res.status(400).send({
+      message: "No User existed, Please create a new User!"
+    })
+    return
+  }
+  const findOrganization = await Organization.findOne({
+    where: { id: organizationId },
+  })
+  if (!findOrganization) {
+    res.status(400).send({
+      message: "No Organization existed, Please create a new Organization!"
+    })
+    return
+  }
+  const findBindUser = await UserGroup.findOne({
+    where: { UserId: findUser.dataValues.id }
+  })
+  const findBindOrganization = await UserGroup.findOne({
+    where: { OrganizationId: organizationId }
+  })
+  if (findBindUser && findBindOrganization) {
+    res.status(400).send({
+      message: "This user is already a member!"
+    })
+    return
+  }
+
+  // Create a UserGroup
+  const userGroup = {
+    UserId: findUser.dataValues.id,
+    OrganizationId: organizationId
+  }
+
+  // Save Bind Users ID and Organization ID
+  UserGroup.create(userGroup)
+  .then(data => {
+      res.send(data);
+  })
+  .catch(err => {
+      res.status(500).send({
+          message:
+          err.message || "Some error occurred while creating the UserGroup."
+      })
   })
 }
