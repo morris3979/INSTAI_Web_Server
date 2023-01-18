@@ -3,8 +3,9 @@ import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
 const ResponsiveAppBar = lazy(() => import('../component/HomePage/ResponsiveAppBar'))
+const InvitePeopleTable = lazy(() => import('../component/HomePage/InvitePeopleTable'))
 
-const InvitePeoplePage = () => {
+const OrganizationPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -22,9 +23,10 @@ const InvitePeoplePage = () => {
           <title>Organization Management - InstAI</title>
         </Helmet>
         <ResponsiveAppBar />
+        <InvitePeopleTable />
       </div>
     </Suspense>
   )
 }
 
-export default InvitePeoplePage
+export default OrganizationPage
