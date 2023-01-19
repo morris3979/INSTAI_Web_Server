@@ -44,7 +44,7 @@ const stringAvatar = (name) => {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}`,
+    children: `${name.split(' ')[0][0].toUpperCase()}`,
   };
 }
 
@@ -144,7 +144,17 @@ const ResponsiveAppBar = (props) => {
                   <ListItemIcon>
                     <PersonIcon fontSize="small" />
                   </ListItemIcon>
-                  Account
+                  <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'left',
+                        justifyContent: 'left',
+                    }}
+                  >
+                    <Typography style={{ fontWeight: 'bold' }}>{userInformation.username}</Typography>
+                    <Typography>{userInformation.email}</Typography>
+                  </div>
                 </MenuItem>
                 <Divider />
                 <Typography sx={{ fontWeight: 'bold', marginLeft: 2, color: 'grey' }}>
