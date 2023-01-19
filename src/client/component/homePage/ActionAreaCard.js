@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
+import PublicIcon from '@mui/icons-material/Public';
+import LockIcon from '@mui/icons-material/Lock';
 import { CardActionArea } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -105,9 +107,18 @@ const ActionAreaCard = (props) => {
               <Typography variant="body2" color="text.secondary">
                 Created by {userInformation.username}
               </Typography>
-              <Typography variant="body2" color="text.secondary" style={{ marginTop: 60 }}>
-                Last opened Jan 01, 2023
-              </Typography>
+              <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                style={{ marginTop: 60, justifyContent: 'space-between' }}
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Last opened Jan 01, 2023
+                </Typography>
+                <PublicIcon />
+              </Grid>
             </CardContent>
           </CardActionArea>
         </Card>
@@ -138,9 +149,18 @@ const ActionAreaCard = (props) => {
                         <Typography variant="body2" color="text.secondary">
                           Created by {value.User.username}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" style={{ marginTop: 60 }}>
-                          Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
-                        </Typography>
+                        <Grid
+                          container
+                          direction="row"
+                          justifyContent="center"
+                          alignItems="center"
+                          style={{ marginTop: 60, justifyContent: 'space-between' }}
+                        >
+                          <Typography variant="body2" color="text.secondary">
+                            Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
+                          </Typography>
+                          {value.accessAuth ? <PublicIcon style={{ color: 'grey' }} /> : <LockIcon style={{ color: 'grey' }} />}
+                        </Grid>
                       </CardContent>
                     </CardActionArea>
                   </Card>

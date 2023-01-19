@@ -17,50 +17,28 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Container } from '@mui/material';
-import { GetProjectList, CreateProject, GetDataList } from '../../store/actionCreater'
+import { GetProjectList, GetOrganizationMembers, InviteMember } from '../../store/actionCreater'
 
 const columns = [
-    { id: 'name', label: 'Name', minWidth: '20vw' },
-    { id: 'email', label: 'Email', minWidth: '30vw' },
-    { id: 'authorize', label: 'Authorize', minWidth: '20vw' },
-    { id: 'status', label: 'Status', minWidth: '20vw' }
-];
-
-function createData(name, email, authorize, status) {
-  return { name, email, authorize, status };
-}
-
-const rows = [
-    createData('AAA', 'AAA@email.com', 'admin', 'Active'),
-    createData('BBB', 'BBB@email.com', 'user', 'Active'),
-    createData('CCC', 'CCC@email.com', 'user', 'Active'),
-    createData('DDD', 'DDD@email.com', 'user', 'Active'),
-    createData('EEE', 'EEE@email.com', 'user', 'Active'),
-    createData('FFF', 'FFF@email.com', 'user', 'Active'),
-    createData('GGG', 'GGG@email.com', 'user', 'Active'),
-    createData('HHH', 'HHH@email.com', 'user', 'Active'),
-    createData('III', 'III@email.com', 'user', 'Active'),
-    createData('JJJ', 'JJJ@email.com', 'user', 'Active'),
-    createData('KKK', 'KKK@email.com', 'user', 'Active'),
-    createData('LLL', 'LLL@email.com', 'user', 'Active'),
-    createData('MMM', 'MMM@email.com', 'user', 'Active'),
-    createData('NNN', 'NNN@email.com', 'user', 'Active'),
-    createData('OOO', 'OOO@email.com', 'user', 'Active'),
-];
+    { id: 'username', label: 'User Name', minWidth: '15vw' },
+    { id: 'email', label: 'Email', minWidth: '20vw' },
+    { id: 'authorize', label: 'Authorize', minWidth: '15vw' },
+    { id: 'status', label: 'Status', minWidth: '15vw' }
+]
 
 const InvitePeopleTable = (props) => {
   const {
-    userInformation,
     projectList,
     getProjectList,
-    createProject,
-    getDataList
+    getOrganizationMembers,
+    membersList,
+    inviteMember
 } = props
 
   const [ open, setOpen ] = useState(false)
   const [ input, setInput ] = useState({
     email: '',
-    OrganizationId: projectList.id
+    organizationId: projectList.id
   })
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
@@ -68,10 +46,11 @@ const InvitePeopleTable = (props) => {
   useEffect(() => {
     projectList
     getProjectList(projectList.id)
+    getOrganizationMembers(projectList.id)
   },[input])
 
   const onCreate = async () => {
-    createProject(input)
+    inviteMember(input)
     setOpen(false)
   }
 
@@ -148,7 +127,7 @@ const InvitePeopleTable = (props) => {
                     sx={{
                         [`& .MuiTableCell-head`]: {
                             backgroundColor: '#0A1929',
-                            color: 'white'
+                            color: 'white',
                         },
                     }}
                 >
@@ -168,13 +147,13 @@ const InvitePeopleTable = (props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows
+                    {membersList.Users
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                        return (
+                      return (
                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                             {columns.map((column) => {
-                            const value = row[column.id];
+                            const value = row[column.id] || row.UserGroup[column.id]
                             return (
                                 <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
                                 {column.format && typeof value === 'number'
@@ -192,7 +171,7 @@ const InvitePeopleTable = (props) => {
             <TablePagination
                 rowsPerPageOptions={[10, 20, 50]}
                 component="div"
-                count={rows.length}
+                count={membersList.Users.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -228,7 +207,7 @@ const InvitePeopleTable = (props) => {
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
           <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>ADD</Button>
+          <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>ADD</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -239,23 +218,24 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     userInformation: state.userInformation,
-    projectList: state.projectList
+    projectList: state.projectList,
+    membersList: state.membersList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    getProjectList(id, text) {
+    getProjectList(id) {
       const action = GetProjectList(id)
       dispatch(action)
     },
-    createProject(value) {
-      const action = CreateProject(value)
+    getOrganizationMembers(id) {
+      const action = GetOrganizationMembers(id)
       dispatch(action)
     },
-    getDataList(id, text) {
-      const action = GetDataList(id)
+    inviteMember(data, id) {
+      const action = InviteMember(data, id)
       dispatch(action)
     },
   }

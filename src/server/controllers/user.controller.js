@@ -96,6 +96,7 @@ exports.bindOrganization = async (req, res) => {
 
   // Create a UserGroup
   const userGroup = {
+    authorize: 'admin',
     UserId: userId,
     OrganizationId: organizationId
   }
@@ -246,6 +247,7 @@ exports.inviteMember = async (req, res) => {
 
   // Create a UserGroup
   const userGroup = {
+    authorize: 'user',
     UserId: findUser.dataValues.id,
     OrganizationId: organizationId
   }

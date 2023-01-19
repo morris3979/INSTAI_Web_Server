@@ -6,6 +6,14 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
+        authorize: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        status: {
+            type: Sequelize.STRING,
+            defaultValue: 'Active'
+        },
         createdAt: {
             field: 'created_at',
             type: Sequelize.DATE,

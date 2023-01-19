@@ -14,6 +14,10 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        accessAuth: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: true,
+        },
         createdAt: {
             field: 'created_at',
             type: Sequelize.DATE,

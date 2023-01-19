@@ -87,6 +87,19 @@ exports.findUsers = (req, res) => {
         return res.status(404).send({ message: "Organization Not found." });
       }
 
+      // const newUsers = {
+      //   id: data.id,
+      //   organization: data.organization,
+      //   Users: [
+      //     {
+      //       id: data.Users.id,
+      //       username: data.Users.username,
+      //       authorize: data.Users.UserGroup.authorize,
+      //       status: data.Users.UserGroup.status
+      //     }
+      //   ]
+      // }
+
       const replacer = (key, value) => {
         if (key == 'password') return undefined
         else if (key == 'admin') return undefined
@@ -95,11 +108,11 @@ exports.findUsers = (req, res) => {
         else if (key == 'createdAt') return undefined
         else if (key == 'updatedAt') return undefined
         else if (key == 'deletedAt') return undefined
-        else if (key == 'UserGroup') return undefined
         else return value
       }
 
       res.send(JSON.parse(JSON.stringify(data, replacer)))
+      // res.send(newUsers)
     }).catch(err => {
       res.status(500).send({ message: err.message })
     })
