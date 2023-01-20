@@ -22,6 +22,7 @@ const ActionAreaCard = (props) => {
   const { userInformation, projectList, getProjectList, createProject, getDataList } = props
 
   const [ open, setOpen ] = useState(false)
+  const [ searchName, setSearchName] = useState('')
   const [ input, setInput ] = useState({
     project: '',
     type: 'Object Detection',
@@ -49,12 +50,20 @@ const ActionAreaCard = (props) => {
     setOpen(false)
   }
 
+  const handleChange = (e) => {
+    setSearchName(e.target.value)
+  }
+
   const onChangeProject = (e) => {
     setInput((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
   }
+
+  const filterProjectList = projectList.Projects.filter((e) => {
+    return e.type.includes(searchName) || e.project.includes(searchName) || e.User.username.includes(searchName)
+  })
 
   return (
     <div style={{ marginTop: 20, marginBottom: 40 }}>
@@ -75,6 +84,7 @@ const ActionAreaCard = (props) => {
           label="Search"
           size='small'
           color='info'
+          onChange={handleChange}
           sx={{ width: 400 }}
           placeholder='Project name, Project type, Creator...'
           InputProps={{
@@ -124,7 +134,8 @@ const ActionAreaCard = (props) => {
         </Card>
       : <Box sx={{ flexGrow: 1 }}>
           <Grid container maxWidth='90vw' spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 6, md: 16 }}>
-            {projectList.Projects.map((value, key) => {
+            {searchName.length == 0
+            ? projectList.Projects.map((value, key) => {
               return(
                 <Grid item xs={2} sm={6} md={4} key={key}>
                   <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
@@ -156,16 +167,59 @@ const ActionAreaCard = (props) => {
                           alignItems="center"
                           style={{ marginTop: 60, justifyContent: 'space-between' }}
                         >
-                          <Typography variant="body2" color="text.secondary">
-                            Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
-                          </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
+                        </Typography>
                           {value.accessAuth ? <PublicIcon style={{ color: 'grey' }} /> : <LockIcon style={{ color: 'grey' }} />}
                         </Grid>
                       </CardContent>
                     </CardActionArea>
                   </Card>
                 </Grid>
-              )})}
+              )})
+            : filterProjectList.map((value, key) => {
+              return(
+                <Grid item xs={2} sm={6} md={4} key={key}>
+                  <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
+                    <CardActionArea
+                      key={key}
+                      onClick={() => {
+                        getDataList(value.id)
+                        navigate('/Data')
+                      }}
+                    >
+                      <CardContent>
+                        <div style={{ display: 'flex' }}>
+                          <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
+                            <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
+                              {value.type}
+                            </Typography>
+                          </Box>
+                        </div>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {value.project}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Created by {value.User.username}
+                        </Typography>
+                        <Grid
+                          container
+                          direction="row"
+                          justifyContent="center"
+                          alignItems="center"
+                          style={{ marginTop: 60, justifyContent: 'space-between' }}
+                        >
+                        <Typography variant="body2" color="text.secondary">
+                          Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
+                        </Typography>
+                          {value.accessAuth ? <PublicIcon style={{ color: 'grey' }} /> : <LockIcon style={{ color: 'grey' }} />}
+                        </Grid>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              )})
+            }
           </Grid>
         </Box>
       }
