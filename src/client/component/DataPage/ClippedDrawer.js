@@ -76,7 +76,7 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Settings'} disablePadding style={{ position: 'fixed', bottom: 15, maxWidth: '5.5vw' }}>
-                            <ListItemButton>
+                            <ListItemButton disabled={true}>
                                 <Grid
                                     container
                                     direction="column"

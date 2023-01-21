@@ -18,6 +18,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import {
+  AddDevice,
+  GetDeviceList
+} from '../../store/actionCreater'
 
 const columns = [
   { id: 'action', label: 'Action', minWidth: '14vw' },
@@ -27,36 +31,24 @@ const columns = [
   { id: 'message', label: 'Message', minWidth: '20vw' }
 ]
 
-function createData(action, serialNumber, deviceName, command, message) {
-  return { action, serialNumber, deviceName, command, message };
-}
-
-const rows = [
-  createData('', '0x000000001', 'A', 'TEST', 'response'),
-  createData('', '0x000000002', 'B', 'TEST', 'response'),
-  createData('', '0x000000003', 'C', 'TEST', 'response'),
-  createData('', '0x000000004', 'D', 'TEST', 'response'),
-  createData('', '0x000000005', 'E', 'TEST', 'response'),
-  createData('', '0x000000006', 'F', 'TEST', 'response'),
-  createData('', '0x000000007', 'G', 'TEST', 'response'),
-  createData('', '0x000000008', 'H', 'TEST', 'response'),
-  createData('', '0x000000009', 'I', 'TEST', 'response'),
-]
-
 const DeviceTable = (props) => {
   const {
-    dataList,
+    deviceList,
+    addDevice,
+    getDeviceList
   } = props
 
   useEffect(() => {
-    // console.log('dataList', dataList)
-    dataList
+    // console.log('deviceList', deviceList)
+    deviceList
+    getDeviceList(deviceList.id)
   },[])
 
   const [ open, setOpen ] = useState(false)
   const [ input, setInput ] = useState({
     serialNumber: '',
     deviceName: '',
+    ProjectId: deviceList.id
   })
   const [ page, setPage ] = useState(0)
   const [ rowsPerPage, setRowsPerPage ] = useState(5)
@@ -71,7 +63,7 @@ const DeviceTable = (props) => {
   }
 
   const onCreate = async () => {
-    createProject(input)
+    addDevice(input)
     setOpen(false)
   }
 
@@ -188,7 +180,7 @@ const DeviceTable = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows
+                        {deviceList.Devices
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => {
                             return (
@@ -211,7 +203,7 @@ const DeviceTable = (props) => {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 20, 50]}
                     component="div"
-                    count={rows.length}
+                    count={deviceList.Devices.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -263,7 +255,7 @@ const DeviceTable = (props) => {
           </DialogTitle>
           <DialogActions style={{ backgroundColor: '#444950' }}>
             <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
-            <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>ADD</Button>
+            <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>ADD</Button>
           </DialogActions>
         </Dialog>
       </Box>
@@ -273,13 +265,22 @@ const DeviceTable = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
-      dataList: state.dataList
+      deviceList: state.deviceList
     }
   }
 
   const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
-    return {}
+    return {
+      addDevice(value) {
+        const action = AddDevice(value)
+        dispatch(action)
+      },
+      getDeviceList(id, text) {
+        const action = GetDeviceList(id)
+        dispatch(action)
+      },
+    }
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeviceTable)

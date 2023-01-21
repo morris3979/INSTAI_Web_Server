@@ -207,7 +207,7 @@ const InvitePeopleTable = (props) => {
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
           <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>ADD</Button>
+          <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>INVITE</Button>
         </DialogActions>
       </Dialog>
     </div>

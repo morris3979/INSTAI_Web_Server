@@ -16,10 +16,22 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { GetProjectList, CreateProject, GetDataList } from '../../store/actionCreater'
+import {
+  GetProjectList,
+  CreateProject,
+  GetDataList,
+  GetDeviceList
+} from '../../store/actionCreater'
 
 const ActionAreaCard = (props) => {
-  const { userInformation, projectList, getProjectList, createProject, getDataList } = props
+  const {
+    userInformation,
+    projectList,
+    getProjectList,
+    createProject,
+    getDataList,
+    getDeviceList
+  } = props
 
   const [ open, setOpen ] = useState(false)
   const [ searchName, setSearchName] = useState('')
@@ -143,6 +155,7 @@ const ActionAreaCard = (props) => {
                       key={key}
                       onClick={() => {
                         getDataList(value.id)
+                        getDeviceList(value.id)
                         navigate('/Data')
                       }}
                     >
@@ -185,6 +198,7 @@ const ActionAreaCard = (props) => {
                       key={key}
                       onClick={() => {
                         getDataList(value.id)
+                        getDeviceList(value.id)
                         navigate('/Data')
                       }}
                     >
@@ -293,6 +307,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getDataList(id, text) {
       const action = GetDataList(id)
+      dispatch(action)
+    },
+    getDeviceList(id, text) {
+      const action = GetDeviceList(id)
       dispatch(action)
     },
   }

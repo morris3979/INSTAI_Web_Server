@@ -2,7 +2,7 @@ import {
   Modal_File, Which_Modal, Table_Status, Map_Position,
   Which_Project, Which_Host, Which_Device,
   Logout_Information, User_Information,
-  Project_List, Data_List, Members_List
+  Project_List, Data_List, Members_List, Device_List
 } from './actionType'
 
 const defaultState = {
@@ -16,7 +16,8 @@ const defaultState = {
   userInformation: {},
   projectList: {},
   dataList: {},
-  membersList: {}
+  membersList: {},
+  deviceList: {},
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -68,6 +69,10 @@ const Reducer = (state = defaultState, action) => {
     }
     case Members_List: {
       newState.membersList = action.value
+      return newState
+    }
+    case Device_List: {
+      newState.deviceList = action.value
       return newState
     }
     default: {

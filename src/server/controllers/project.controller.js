@@ -3,6 +3,7 @@ const Project = db.Project;
 const Organization = db.Organization;
 const User = db.User;
 const Data = db.Data;
+const Device = db.Device;
 
 // Create and Save a new Project
 exports.create = async (req, res) => {
@@ -111,6 +112,43 @@ exports.findData = (req, res) => {
           if (key == 'createdAt') return undefined
           else if (key == 'updatedAt') return undefined
           else if (key == 'deletedAt') return undefined
+          else return value
+      }
+
+      res.send(JSON.parse(JSON.stringify(data, replacer)))
+  }).catch(err => {
+      res.status(500).send({ message: err.message })
+  })
+}
+
+// Find all Device From a Project
+exports.findDevice = (req, res) => {
+  Project.findOne({
+      where: {
+          id: req.params.id
+      },
+      include: [{
+          model: Device
+      }],
+      order: [
+        [Device, 'id', 'DESC']
+      ],
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      }
+  }).then(data => {
+      if (!data) {
+          return res.status(404).send({ message: "Project Not found." });
+      }
+
+      const replacer = (key, value) => {
+          if (key == 'createdAt') return undefined
+          else if (key == 'updatedAt') return undefined
+          else if (key == 'deletedAt') return undefined
+          else if (key == 'type') return undefined
+          else if (key == 'accessAuth') return undefined
+          else if (key == 'accessKey') return undefined
+          else if (key == 'secretKey') return undefined
           else return value
       }
 

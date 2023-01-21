@@ -3,7 +3,7 @@ import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
   User_Information, Logout_Information,
-  Project_List, Data_List, Members_List
+  Project_List, Data_List, Members_List, Device_List
 } from './actionType'
 
 //共用Function <<<
@@ -215,7 +215,7 @@ export const GetDataList = (id, data) => {
       const action = TableStatus(true)
       dispatch(action)
       try {
-        const response = await axios.get(`/api/project/${id}`)
+        const response = await axios.get(`/api/project/${id}/data`)
         // console.log(response.data)
         const action = DeliverData(response.data, Data_List)
         dispatch(action)
@@ -252,6 +252,41 @@ export const InviteMember = (data) => {
     async (dispatch) => {
       try {
         const response = await axios.post('/api/user/invite', data)
+        if (response.data) {
+          location.reload()
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
+export const GetDeviceList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}/device`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Device_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const AddDevice = (data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.post('/api/device', data)
         if (response.data) {
           location.reload()
           return

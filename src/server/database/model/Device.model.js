@@ -9,9 +9,9 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true
         },
         serialNumber: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          unique: true
+            type: Sequelize.STRING,
+            allowNull: false,
+            unique: true
         },
         deviceName: {
             type: Sequelize.STRING,

@@ -9,6 +9,9 @@ projectRouter.post("/", Project.create);
 projectRouter.patch("/:id", Project.update);
 
 // Find all Data From a Project
-projectRouter.get("/:id", Project.findData);
+projectRouter.get("/:id/data", Project.findData);
+
+// Find all Device From a Project
+projectRouter.get("/:id/device", Project.findDevice);
 
 module.exports = [ projectRouter ];
