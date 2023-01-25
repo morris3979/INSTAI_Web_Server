@@ -19,7 +19,11 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Logout from '@mui/icons-material/Logout';
 import InstAI from '../../icon image/instai_icon.png'
-import { LogoutData, GetProjectList } from '../../store/actionCreater'
+import {
+  LogoutData,
+  GetProjectList,
+  GetOrganizationMembers
+} from '../../store/actionCreater'
 
 const stringToColor = (string) => {
   let hash = 0
@@ -62,6 +66,7 @@ const ResponsiveAppBar = (props) => {
   useEffect(() => {
     dataList
     projectList
+    getOrganizationMembers(projectList.id)
     // console.log('dataList', dataList)
     // console.log('projectList', projectList)
   },[])
@@ -207,6 +212,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getProjectList(id, text) {
       const action = GetProjectList(id)
+      dispatch(action)
+    },
+    getOrganizationMembers(id) {
+      const action = GetOrganizationMembers(id)
       dispatch(action)
     },
   }

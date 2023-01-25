@@ -152,7 +152,7 @@ const InvitePeopleTable = (props) => {
                     .map((row) => {
                       return (
                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                            {columns.map((column) => {
+                          {columns.map((column) => {
                             const value = row[column.id] || row.UserGroup[column.id]
                             return (
                                 <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
@@ -160,10 +160,10 @@ const InvitePeopleTable = (props) => {
                                     ? column.format(value)
                                     : value}
                                 </TableCell>
-                            );
-                            })}
+                            )
+                          })}
                         </TableRow>
-                        );
+                      )
                     })}
                 </TableBody>
                 </Table>

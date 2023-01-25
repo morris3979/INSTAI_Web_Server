@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
@@ -18,13 +19,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import {
   AddDevice,
   GetDeviceList
 } from '../../store/actionCreater'
 
 const columns = [
-  { id: 'action', label: 'Action', minWidth: '14vw' },
   { id: 'serialNumber', label: 'SerialNumber', minWidth: '18vw' },
   { id: 'deviceName', label: 'Device Name', minWidth: '18vw' },
   { id: 'command', label: 'Command', minWidth: '20vw' },
@@ -82,6 +85,20 @@ const DeviceTable = (props) => {
     }))
   }
 
+  const actionBtn = (
+    <ButtonGroup variant="outlined" aria-label="outlined button group">
+      <Button aria-label='delete'>
+        <DeleteIcon style={{ color: 'white' }} />
+      </Button>
+      <Button aria-label='edit'>
+        <EditIcon style={{ color: 'white' }} />
+      </Button>
+      <Button aria-label='send'>
+        <RocketLaunchIcon style={{ color: 'white' }} />
+      </Button>
+    </ButtonGroup>
+  )
+
   return (
       <Box
         style={{ borderRadius: 20, marginLeft: '5.5vw', marginTop: '13vh' }}
@@ -106,7 +123,7 @@ const DeviceTable = (props) => {
               variant="h5"
               sx={{ color: 'white', fontWeight: 'bold', marginLeft: 5 }}
             >
-              Setting
+              Device
             </Typography>
           </Grid>
           <div
@@ -164,38 +181,48 @@ const DeviceTable = (props) => {
                             },
                         }}
                     >
-                        <TableRow>
-                        {columns.map((column) => (
-                            <TableCell
-                                key={column.id}
-                                align={column.align}
-                                style={{
-                                    minWidth: column.minWidth,
-                                    fontSize: '14pt'
-                                }}
-                            >
-                            {column.label}
-                            </TableCell>
-                        ))}
-                        </TableRow>
+                      <TableRow>
+                        <TableCell
+                          key={'action'}
+                          style={{
+                              minWidth: '14vw',
+                              fontSize: '14pt'
+                          }}
+                        >
+                          Action
+                        </TableCell>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{
+                              minWidth: column.minWidth,
+                              fontSize: '14pt'
+                          }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                      </TableRow>
                     </TableHead>
                     <TableBody>
                         {deviceList.Devices
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => {
-                            return (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                {columns.map((column) => {
-                                const value = row[column.id];
-                                return (
-                                    <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
-                                    {column.format && typeof value === 'number'
-                                        ? column.format(value)
-                                        : value}
-                                    </TableCell>
-                                )})}
+                          return (
+                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                              <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
+                                {actionBtn}
+                              </TableCell>
+                              {columns.map((column) => {
+                              const value = row[column.id];
+                              return (
+                                <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
+                                  {value}
+                                </TableCell>
+                              )})}
                             </TableRow>
-                            )
+                          )
                         })}
                     </TableBody>
                     </Table>

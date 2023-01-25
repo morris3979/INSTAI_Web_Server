@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
@@ -19,7 +19,10 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Logout from '@mui/icons-material/Logout';
 import InstAI from '../../icon image/instai.png'
-import { LogoutData } from '../../store/actionCreater'
+import {
+  LogoutData,
+  GetOrganizationMembers
+} from '../../store/actionCreater'
 
 const stringToColor = (string) => {
   let hash = 0
@@ -49,9 +52,13 @@ const stringAvatar = (name) => {
 }
 
 const ResponsiveAppBar = (props) => {
-  const { onClick, userInformation, projectList } = props
+  const { onClick, userInformation, projectList, getOrganizationMembers } = props
 
   const [ anchorElUser, setAnchorElUser ] = useState(null);
+
+  useEffect(() => {
+    getOrganizationMembers(projectList.id)
+  }, [])
 
   const navigate = useNavigate();
 
@@ -172,6 +179,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onClick() {
       const action = LogoutData()
+      dispatch(action)
+    },
+    getOrganizationMembers(id) {
+      const action = GetOrganizationMembers(id)
       dispatch(action)
     },
   }
