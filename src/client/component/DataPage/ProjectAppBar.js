@@ -8,6 +8,11 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
 import EditIcon from '@mui/icons-material/Edit';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 import { LogoutData, GetProjectList } from '../../store/actionCreater'
 
 const ProjectAppBar = (props) => {
@@ -16,12 +21,39 @@ const ProjectAppBar = (props) => {
     dataList,
   } = props
 
+  const [ open, setOpen ] = useState(false)
+  const [ input, setInput ] = useState({
+    project: '',
+    type: 'Object Detection',
+    OrganizationId: projectList.id,
+  })
+
   useEffect(() => {
     dataList
     projectList
     // console.log('dataList', dataList)
     // console.log('projectList', projectList)
   },[])
+
+  const onSave = async () => {
+    createProject(input)
+    setOpen(false)
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const onChangeProject = (e) => {
+    setInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  }
 
   return (
     <AppBar position="fixed" elevation={0}
@@ -47,12 +79,57 @@ const ProjectAppBar = (props) => {
             >
               {dataList.project}
             </Typography>
-            <Button>
+            <Button onClick={handleClickOpen}>
                 <EditIcon style={{ color: 'white' }} />
             </Button>
           </Grid>
         </Toolbar>
       </Container>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Edit Project</DialogContent>
+        <DialogTitle style={{ backgroundColor: '#444950' }}>
+        <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+        >
+          <TextField
+            focused
+            id="outlined-start-adornment"
+            label="Project"
+            name='project'
+            size='small'
+            color='info'
+            sx={{ width: 300 }}
+            defaultValue={dataList.project}
+            InputProps={{
+              style: { color: 'white' }
+            }}
+            onChange={onChangeProject}
+          />
+          <TextField
+            focused
+            id="outlined-start-adornment"
+            label="Type"
+            name='type'
+            size='small'
+            color='info'
+            sx={{ width: 300 }}
+            defaultValue='Object Detection'
+            InputProps={{
+              style: { color: 'white' }
+            }}
+            style={{ marginTop: 20 }}
+            onChange={onChangeProject}
+          />
+        </Grid>
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950' }}>
+          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={onSave} style={{marginTop: 10}}>Save</Button>
+        </DialogActions>
+      </Dialog>
     </AppBar>
   );
 }

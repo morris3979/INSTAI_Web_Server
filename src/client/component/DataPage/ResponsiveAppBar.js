@@ -58,6 +58,7 @@ const ResponsiveAppBar = (props) => {
     userInformation,
     projectList,
     dataList,
+    getOrganizationMembers
     // getProjectList
   } = props
 

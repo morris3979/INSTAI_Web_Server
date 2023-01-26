@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -72,7 +73,7 @@ const DataWarehouse = (props) => {
               minWidth='90vw'
               container
               direction="row"
-              sx={{ marginTop: 3, marginBottom: 2, justifyContent: 'space-between' }}
+              sx={{ marginTop: 4, marginBottom: 3, justifyContent: 'space-between' }}
             >
               <Typography
                 noWrap
@@ -81,7 +82,15 @@ const DataWarehouse = (props) => {
               >
                 Data
               </Typography>
-              <Button variant="contained" sx={{ marginRight: 5 }}>UPLOAD</Button>
+              <ButtonGroup aria-label="button group" sx={{ marginRight: 5 }}>
+                <Button aria-label='upload' variant="outlined">
+                  Upload
+                </Button>
+                <Button aria-label='train' variant="contained">
+                  Train
+                </Button>
+              </ButtonGroup>
+              {/* <Button variant="contained" sx={{ marginRight: 5 }}>UPLOAD</Button> */}
             </Grid>
             <Box sx={{ flexGrow: 1 }} style={{ marginBottom: 20 }}>
               <Grid container
