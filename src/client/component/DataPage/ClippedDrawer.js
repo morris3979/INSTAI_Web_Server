@@ -17,7 +17,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 const drawerWidth = '5.5vw';
 
 const ClippedDrawer = (props) => {
-
     const navigate = useNavigate()
 
     return (

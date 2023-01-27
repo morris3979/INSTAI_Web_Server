@@ -52,7 +52,12 @@ const stringAvatar = (name) => {
 }
 
 const ResponsiveAppBar = (props) => {
-  const { onClick, userInformation, projectList, getOrganizationMembers } = props
+  const {
+    onClick,
+    userInformation,
+    projectList,
+    getOrganizationMembers
+  } = props
 
   const [ anchorElUser, setAnchorElUser ] = useState(null);
 

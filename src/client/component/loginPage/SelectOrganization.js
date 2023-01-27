@@ -36,7 +36,7 @@ const SelectOrganization = (props) => {
         fontSize='30px'
         align='center'
         color='lightblue'
-        style={{marginBottom:'5px'}}
+        style={{ marginBottom:'5px' }}
       >
         Select Your Organization
       </Typography>
@@ -48,12 +48,13 @@ const SelectOrganization = (props) => {
             <Button
               variant="outlined"
               sx={{
-                    width: 400,
-                    height: 50,
-                    marginBottom: 2,
-                    color: 'lightblue',
-                    borderColor: 'lightblue'
-                  }}
+                width: 400,
+                height: 50,
+                marginTop: 2,
+                marginBottom: 2,
+                color: 'lightblue',
+                borderColor: 'lightblue'
+              }}
               align='center'
               onClick={() => selectOrganization(c.id)}
               component={Link}
@@ -83,7 +84,7 @@ const SelectOrganization = (props) => {
       <Button
         variant="contained"
         style={{ backgroundColor: 'darkorange' }}
-        sx={{ width: 400, marginBottom: 2 }}
+        sx={{ width: 400, marginTop: 2, marginBottom: 2 }}
         align='center'
         component={Link}
         to='/CreateOrganization'

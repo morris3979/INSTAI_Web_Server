@@ -63,7 +63,7 @@ const CreateOrganization = (props) => {
       </Button>
       <Button
         variant="contained"
-        style={{ backgroundColor: 'grey' }}
+        style={{ backgroundColor: 'darkslategrey' }}
         sx={{ width: 400, marginBottom: 2 }}
         align='center'
         component={Link}

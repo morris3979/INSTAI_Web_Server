@@ -24,7 +24,6 @@ import InstAI from '../../icon image/instai.png'
 import { RegisterFormData, LogoutData } from '../../store/actionCreater'
 
 const RegisterForm = (props) => {
-
   const { registerFormData, userInformation } = props
 
   const [ open, setOpen ] = useState(false)

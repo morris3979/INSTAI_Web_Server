@@ -33,7 +33,7 @@ const InvitePeopleTable = (props) => {
     getOrganizationMembers,
     membersList,
     inviteMember
-} = props
+  } = props
 
   const [ open, setOpen ] = useState(false)
   const [ input, setInput ] = useState({
