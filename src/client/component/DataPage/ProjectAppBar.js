@@ -116,7 +116,7 @@ const ProjectAppBar = (props) => {
             size='small'
             color='info'
             sx={{ width: 300 }}
-            defaultValue='Object Detection'
+            defaultValue={dataList.type}
             InputProps={{
               style: { color: 'white' }
             }}
