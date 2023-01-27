@@ -98,7 +98,7 @@ const ActionAreaCard = (props) => {
           color='info'
           onChange={handleChange}
           sx={{ width: 400 }}
-          placeholder='Project name, Project type, Creator...'
+          placeholder='by project name, project type, or creator'
           InputProps={{
             style: { color: 'white' },
             endAdornment: <SearchIcon style={{ color: 'white' }} />,

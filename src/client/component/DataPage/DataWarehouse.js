@@ -49,6 +49,7 @@ const DataWarehouse = (props) => {
           >
             <Button
               variant="contained"
+              component="label"
               sx={{ marginTop: 5, fontWeight: 'bold', width: 300, height: 70, borderRadius: 10 }}
             >
               <CloudUploadIcon fontSize='large' />
@@ -65,6 +66,7 @@ const DataWarehouse = (props) => {
                 }}
               >
                 UPLOAD IMAGE
+                <input hidden accept="image/*" multiple type="file" />
               </Typography>
             </Button>
           </div>:
@@ -83,14 +85,14 @@ const DataWarehouse = (props) => {
                 Data
               </Typography>
               <ButtonGroup aria-label="button group" sx={{ marginRight: 5 }}>
-                <Button aria-label='upload' variant="outlined">
+                <Button aria-label='upload' variant="outlined" component="label">
                   Upload
+                  <input hidden accept="image/*" multiple type="file" />
                 </Button>
-                <Button aria-label='train' variant="contained">
+                <Button aria-label='train' variant="contained" component="label">
                   Train
                 </Button>
               </ButtonGroup>
-              {/* <Button variant="contained" sx={{ marginRight: 5 }}>UPLOAD</Button> */}
             </Grid>
             <Box sx={{ flexGrow: 1 }} style={{ marginBottom: 20 }}>
               <Grid container

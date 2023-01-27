@@ -145,98 +145,98 @@ const DeviceTable = (props) => {
               </Button>
             </div>
             <div style={{ float:'right' }}>
-                <TextField
-                    focused
-                    id="outlined-start-adornment"
-                    label="Search"
-                    size='small'
-                    color='info'
-                    sx={{ width: 400 }}
-                    placeholder='SerialNumber, Device Name...'
-                    InputProps={{
-                        style: { color: 'white' },
-                        endAdornment: <SearchIcon style={{ color: 'white' }} />,
-                    }}
-                />
+              <TextField
+                focused
+                id="outlined-start-adornment"
+                label="Search"
+                size='small'
+                color='info'
+                sx={{ width: 400 }}
+                placeholder='by serialnumber or device name'
+                InputProps={{
+                    style: { color: 'white' },
+                    endAdornment: <SearchIcon style={{ color: 'white' }} />,
+                }}
+              />
             </div>
           </div>
           <div>
             <Container
-                style={{
-                    marginBottom: 10,
-                    width: '90vw',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
+              style={{
+                marginBottom: 10,
+                width: '90vw',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
-                <TableContainer sx={{ minHeight: '50vh', minWidth: '90vw', marginTop: 3 }}>
-                    <Table stickyHeader aria-label="sticky table">
-                    <TableHead
-                        sx={{
-                            [`& .MuiTableCell-head`]: {
-                                backgroundColor: 'lightblue',
-                                fontWeight: 'bold'
-                            },
+              <TableContainer sx={{ minHeight: '50vh', minWidth: '90vw', marginTop: 3 }}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead
+                    sx={{
+                      [`& .MuiTableCell-head`]: {
+                        backgroundColor: 'lightblue',
+                        fontWeight: 'bold'
+                      },
+                    }}
+                  >
+                    <TableRow>
+                      <TableCell
+                        key={'action'}
+                        style={{
+                          minWidth: '14vw',
+                          fontSize: '14pt'
                         }}
-                    >
-                      <TableRow>
-                        <TableCell
-                          key={'action'}
-                          style={{
-                              minWidth: '14vw',
-                              fontSize: '14pt'
-                          }}
-                        >
-                          Action
-                        </TableCell>
-                      {columns.map((column) => (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          style={{
-                              minWidth: column.minWidth,
-                              fontSize: '14pt'
-                          }}
-                        >
-                          {column.label}
-                        </TableCell>
-                      ))}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {deviceList.Devices
-                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((row) => {
+                      >
+                        Action
+                      </TableCell>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{
+                            minWidth: column.minWidth,
+                            fontSize: '14pt'
+                        }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {deviceList.Devices
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                          <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
+                            {actionBtn}
+                          </TableCell>
+                          {columns.map((column) => {
+                          const value = row[column.id];
                           return (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                              <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
-                                {actionBtn}
-                              </TableCell>
-                              {columns.map((column) => {
-                              const value = row[column.id];
-                              return (
-                                <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
-                                  {value}
-                                </TableCell>
-                              )})}
-                            </TableRow>
-                          )
-                        })}
-                    </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 20, 50]}
-                    component="div"
-                    count={deviceList.Devices.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    style={{ fontSize: '12pt', backgroundColor: 'lightblue', minWidth: '90vw' }}
-                />
+                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
+                              {value}
+                            </TableCell>
+                          )})}
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 20, 50]}
+                component="div"
+                count={deviceList.Devices.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                style={{ fontSize: '12pt', backgroundColor: 'lightblue', minWidth: '90vw' }}
+              />
             </Container>
           </div>
         </div>
@@ -244,10 +244,10 @@ const DeviceTable = (props) => {
           <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Add Device</DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
           <Grid
-              container
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
           >
             <TextField
               focused

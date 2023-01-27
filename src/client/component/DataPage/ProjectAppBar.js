@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus';
 import EditIcon from '@mui/icons-material/Edit';
 import Dialog from '@mui/material/Dialog';
@@ -64,7 +65,7 @@ const ProjectAppBar = (props) => {
         <Toolbar disableGutters>
           <Grid container justifyContent='flex-start'>
             <Typography>
-                <FilterCenterFocusIcon style={{ color: 'white', marginLeft: 9, marginTop: 8 }} />
+              <FilterCenterFocusIcon style={{ color: 'white', marginLeft: 9, marginTop: 8 }} />
             </Typography>
             <Typography
               noWrap
@@ -79,9 +80,9 @@ const ProjectAppBar = (props) => {
             >
               {dataList.project}
             </Typography>
-            <Button onClick={handleClickOpen}>
-                <EditIcon style={{ color: 'white' }} />
-            </Button>
+            <IconButton color="primary" aria-label="upload picture" component="label" onClick={handleClickOpen}>
+              <EditIcon />
+            </IconButton>
           </Grid>
         </Toolbar>
       </Container>
@@ -89,10 +90,10 @@ const ProjectAppBar = (props) => {
         <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Edit Project</DialogContent>
         <DialogTitle style={{ backgroundColor: '#444950' }}>
         <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
         >
           <TextField
             focused

@@ -53,16 +53,23 @@ const CreateOrganization = (props) => {
       />
       <Button
         variant="contained"
-        sx={{
-              width: 400,
-              marginBottom: 5,
-            }}
+        sx={{ width: 400, marginBottom: 2 }}
         align='center'
         onClick={onCreate}
         component={Link}
         to='/SelectOrganization'
       >
         CREATE ORGANIZATION
+      </Button>
+      <Button
+        variant="contained"
+        style={{ backgroundColor: 'grey' }}
+        sx={{ width: 400, marginBottom: 2 }}
+        align='center'
+        component={Link}
+        to='/SelectOrganization'
+      >
+        CANCEL
       </Button>
     </Typography>
   )

@@ -83,10 +83,7 @@ const SelectOrganization = (props) => {
       <Button
         variant="contained"
         style={{ backgroundColor: 'darkorange' }}
-        sx={{
-              width: 400,
-              marginBottom: 2,
-            }}
+        sx={{ width: 400, marginBottom: 2 }}
         align='center'
         component={Link}
         to='/CreateOrganization'
@@ -95,10 +92,7 @@ const SelectOrganization = (props) => {
       </Button>
       <Button
         variant="contained"
-        sx={{
-              width: 400,
-              marginBottom: 2,
-            }}
+        sx={{ width: 400, marginBottom: 2 }}
         align='center'
         onClick={onClick}
         component={Link}
