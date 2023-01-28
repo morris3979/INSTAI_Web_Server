@@ -36,11 +36,11 @@ const SelectOrganization = (props) => {
         fontSize='30px'
         align='center'
         color='lightblue'
-        style={{ marginBottom:'5px' }}
+        style={{ marginBottom: 10 }}
       >
         Select Your Organization
       </Typography>
-      <div style={{marginBottom:'5px'}}>
+      <div style={{ marginBottom: 10 }}>
       {
         (userInformation.Organizations) != undefined
         ?userInformation.Organizations.map((c) => {
@@ -50,7 +50,6 @@ const SelectOrganization = (props) => {
               sx={{
                 width: 400,
                 height: 50,
-                marginTop: 2,
                 marginBottom: 2,
                 color: 'lightblue',
                 borderColor: 'lightblue'
@@ -77,7 +76,7 @@ const SelectOrganization = (props) => {
             }
           }
         }}
-        style={{ marginBottom: 10, color: 'white' }}
+        style={{ marginTop: 10, marginBottom: 10, color: 'white' }}
       >
         or
       </Divider>
@@ -92,7 +91,8 @@ const SelectOrganization = (props) => {
         ADD ORGANIZATION
       </Button>
       <Button
-        variant="contained"
+        variant="outlined"
+        color='error'
         sx={{ width: 400, marginBottom: 2 }}
         align='center'
         onClick={onClick}

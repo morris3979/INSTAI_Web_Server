@@ -87,19 +87,6 @@ exports.findUsers = (req, res) => {
         return res.status(404).send({ message: "Organization Not found." });
       }
 
-      // const newUsers = {
-      //   id: data.id,
-      //   organization: data.organization,
-      //   Users: [
-      //     {
-      //       id: data.Users.id,
-      //       username: data.Users.username,
-      //       authorize: data.Users.UserGroup.authorize,
-      //       status: data.Users.UserGroup.status
-      //     }
-      //   ]
-      // }
-
       const replacer = (key, value) => {
         if (key == 'password') return undefined
         else if (key == 'admin') return undefined

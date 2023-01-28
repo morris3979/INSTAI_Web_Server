@@ -20,7 +20,12 @@ const CreateOrganization = (props) => {
   }
 
   const onCreate = () => {
-    createNewOrganization(organizationName, userInformation.id)
+    if (organizationName.length === 0) {
+      alert('Organization can not be empty!')
+      location.reload()
+    } else {
+      createNewOrganization(organizationName, userInformation.id)
+    }
   }
 
   return(
@@ -53,6 +58,7 @@ const CreateOrganization = (props) => {
       />
       <Button
         variant="contained"
+        style={{ backgroundColor: 'darkorange' }}
         sx={{ width: 400, marginBottom: 2 }}
         align='center'
         onClick={onCreate}
@@ -63,7 +69,6 @@ const CreateOrganization = (props) => {
       </Button>
       <Button
         variant="contained"
-        style={{ backgroundColor: 'darkslategrey' }}
         sx={{ width: 400, marginBottom: 2 }}
         align='center'
         component={Link}

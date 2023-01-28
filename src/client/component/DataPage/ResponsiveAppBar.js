@@ -182,7 +182,7 @@ const ResponsiveAppBar = (props) => {
                 <Divider />
                 <MenuItem onClick={onSignOut} sx={{ color: 'red' }}>
                   <ListItemIcon>
-                    <Logout fontSize="small" />
+                    <Logout fontSize="small" color='error' />
                   </ListItemIcon>
                   Sign Out
                 </MenuItem>

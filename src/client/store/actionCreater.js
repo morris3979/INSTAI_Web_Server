@@ -199,6 +199,8 @@ export const CreateProject = (data) => {
       try {
         const response = await axios.post('/api/project', data)
         if (response.data) {
+          const action = GetProjectList(response.data.OrganizationId)
+          dispatch(action)
           location.reload()
           return
         }
