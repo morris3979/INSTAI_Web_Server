@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import Checkbox from '@mui/material/Checkbox';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -105,8 +107,16 @@ const DataWarehouse = (props) => {
                   return(
                     <Grid item xs={2} sm={4} md={4} key={key}>
                       <Card sx={{ maxWidth: 280 }}>
-                        <CardActionArea>
+                        <CardActionArea style={{ position: 'relative' }}>
+                          <Checkbox
+                            inputProps={{ 'aria-label': 'data-checkbox' }}
+                            style={{ position: 'absolute', top: 0 }}
+                            sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
+                            icon={<CheckCircleIcon color='disabled' />}
+                            checkedIcon={<CheckCircleIcon color='primary' />}
+                          />
                           <CardMedia
+                            title='Image'
                             component="img"
                             image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
                           />
