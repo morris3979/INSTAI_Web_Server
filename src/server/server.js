@@ -26,7 +26,7 @@ async function app() {
     const http = require('./protocol/http/index');
     const https = require('./protocol/https/index');
 
-    // check connection is OK
+    // check connection is ok.
     db.sequelize.authenticate().then(() => {
         console.log("=> Database connected successfully!");
     }).catch(err => {
@@ -35,22 +35,22 @@ async function app() {
     });
     // creates the table if it doesn't exist.
     db.sequelize.sync(
-        { alter: true } // performs the necessary changes in the table to make it match the model.
-        // { force: true } // creates the table, dropping it first if it already existed.
+        // { alter: true } // performs the necessary changes in the table to make it match the model.
+        { force: true } // creates the table, dropping it first if it already existed.
     );
 
     app.use(cors(corsOptions));
     app.use(bodyParser.json()) // for parsing application/json
     app.use(compression()); // auto compress response
     app.use(express.static('dist')); // serve frontend file
-    app.use(bodyParser.urlencoded({ extended: true }))
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(pageRouter); // serve html on frontend route
     app.use('/api', apiRouter); // mount api router
 
     // process.setMaxListeners(0); // turn off the limit for listener
     process.on('unhandledRejection', error => {
         console.error('unhandledRejection', error);
-        process.exit(1) // To exit with a 'failure' code
+        process.exit(1); // To exit with a 'failure' code
     });
     require('events').defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
