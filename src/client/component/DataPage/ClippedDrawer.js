@@ -46,9 +46,10 @@ const ClippedDrawer = (props) => {
                                     direction="column"
                                     justifyContent="center"
                                     alignItems="center"
+                                    width={drawerWidth}
                                 >
-                                    <PermMediaIcon style={{color: 'white'}} />
-                                    <ListItemText primary={'Data'} style={{color: 'white'}} />
+                                    <PermMediaIcon style={{ color: 'white' }} />
+                                    <ListItemText primary={'Data'} style={{ color: 'white' }} />
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
@@ -59,8 +60,9 @@ const ClippedDrawer = (props) => {
                                     direction="column"
                                     justifyContent="center"
                                     alignItems="center"
+                                    width={drawerWidth}
                                 >
-                                    <SettingsRemoteIcon style={{color: 'white'}} />
+                                    <SettingsRemoteIcon style={{ color: 'white' }} />
                                     <ListItemText
                                         primary={'Device'}
                                         style={{
@@ -81,8 +83,9 @@ const ClippedDrawer = (props) => {
                                     direction="column"
                                     justifyContent="center"
                                     alignItems="center"
+                                    width={drawerWidth}
                                 >
-                                    <SettingsIcon style={{color: 'white'}} />
+                                    <SettingsIcon style={{ color: 'white' }} />
                                     <ListItemText
                                         primary={'Settings'}
                                         style={{

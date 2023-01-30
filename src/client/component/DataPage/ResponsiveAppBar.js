@@ -117,7 +117,8 @@ const ResponsiveAppBar = (props) => {
                 fontWeight: 'bold',
                 color: 'inherit',
                 marginTop: 0.5,
-                marginLeft: 1
+                marginLeft: 1,
+                height: '4vh'
               }}
             >
               {dataList.project}
