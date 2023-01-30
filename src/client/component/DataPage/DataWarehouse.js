@@ -120,6 +120,27 @@ const DataWarehouse = (props) => {
                             component="img"
                             image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
                           />
+                          <Box
+                            style={{
+                              position: 'absolute',
+                              right: 5,
+                              bottom: 5,
+                              backgroundColor: '#000',
+                              color: '#fff',
+                              opacity: .5,
+                              borderRadius: 5
+                            }}
+                          >
+                            <Typography
+                              style={{
+                                marginLeft: 5,
+                                marginRight: 5,
+                                fontSize: '12px'
+                              }}
+                            >
+                              {item.json == '0'? 'Unlabeled': null}
+                            </Typography>
+                          </Box>
                         </CardActionArea>
                       </Card>
                     </Grid>
