@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -28,10 +29,10 @@ import {
 } from '../../store/actionCreater'
 
 const columns = [
-  { id: 'serialNumber', label: 'SerialNumber', minWidth: '18vw' },
-  { id: 'deviceName', label: 'Device Name', minWidth: '18vw' },
+  { id: 'serialNumber', label: 'SerialNumber', minWidth: '20vw' },
+  { id: 'deviceName', label: 'Device Name', minWidth: '20vw' },
   { id: 'command', label: 'Command', minWidth: '20vw' },
-  { id: 'message', label: 'Message', minWidth: '20vw' }
+  { id: 'message', label: 'Response', minWidth: '20vw' }
 ]
 
 const DeviceTable = (props) => {
@@ -48,6 +49,7 @@ const DeviceTable = (props) => {
   },[])
 
   const [ open, setOpen ] = useState(false)
+  const [ openCommand, setOpenCommand ] = useState(false)
   const [ input, setInput ] = useState({
     serialNumber: '',
     deviceName: '',
@@ -78,6 +80,14 @@ const DeviceTable = (props) => {
     setOpen(false)
   }
 
+  const handleClickOpenCommand = () => {
+    setOpenCommand(true)
+  }
+
+  const handleCloseCommand = () => {
+    setOpenCommand(false)
+  }
+
   const onChangeDevice = (e) => {
     setInput((prevState) => ({
       ...prevState,
@@ -90,9 +100,9 @@ const DeviceTable = (props) => {
       <Button aria-label='delete'>
         <DeleteIcon style={{ color: 'white' }} />
       </Button>
-      <Button aria-label='edit'>
+      {/* <Button aria-label='edit' onClick={handleClickOpenEdit}>
         <EditIcon style={{ color: 'white' }} />
-      </Button>
+      </Button> */}
       <Button aria-label='send'>
         <RocketLaunchIcon style={{ color: 'white' }} />
       </Button>
@@ -185,7 +195,7 @@ const DeviceTable = (props) => {
                       <TableCell
                         key={'action'}
                         style={{
-                          minWidth: '14vw',
+                          minWidth: '10vw',
                           fontSize: '14pt'
                         }}
                       >
@@ -214,13 +224,33 @@ const DeviceTable = (props) => {
                           <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
                             {actionBtn}
                           </TableCell>
-                          {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
-                              {value}
-                            </TableCell>
-                          )})}
+                          <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            {row.serialNumber}
+                            <IconButton size='small' color="primary" aria-label="edit serialNumber" component="label" style={{ marginLeft: 15 }}>
+                              <EditIcon />
+                            </IconButton>
+                          </TableCell>
+                          <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            {row.deviceName}
+                            <IconButton size='small' color="primary" aria-label="edit deviceName" component="label" style={{ marginLeft: 15 }}>
+                              <EditIcon />
+                            </IconButton>
+                          </TableCell>
+                          <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            {row.command}
+                            <IconButton
+                              size='small' color="primary"
+                              aria-label="edit command"
+                              component="label"
+                              style={{ marginLeft: 15 }}
+                              onClick={handleClickOpenCommand}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          </TableCell>
+                          <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            {row.message}
+                          </TableCell>
                         </TableRow>
                       )
                     })}
@@ -243,46 +273,76 @@ const DeviceTable = (props) => {
         <Dialog open={open} onClose={handleClose}>
           <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Add Device</DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
-          <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <TextField
-              focused
-              id="outlined-start-adornment"
-              label="SerialNumber"
-              name='serialNumber'
-              size='small'
-              color='info'
-              sx={{ width: 300 }}
-              placeholder='Host SerialNumber'
-              InputProps={{
-                style: { color: 'white' }
-              }}
-              onChange={onChangeDevice}
-            />
-            <TextField
-              focused
-              id="outlined-start-adornment"
-              label="Device Name"
-              name='deviceName'
-              size='small'
-              color='info'
-              sx={{ width: 300 }}
-              style={{ marginTop: 20 }}
-              placeholder='Collection Device Name'
-              InputProps={{
-                style: { color: 'white' }
-              }}
-              onChange={onChangeDevice}
-            />
-          </Grid>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <TextField
+                focused
+                id="outlined-start-adornment"
+                label="SerialNumber"
+                name='serialNumber'
+                size='small'
+                color='info'
+                sx={{ width: 300 }}
+                placeholder='Host SerialNumber'
+                InputProps={{
+                  style: { color: 'white' }
+                }}
+                onChange={onChangeDevice}
+              />
+              <TextField
+                focused
+                id="outlined-start-adornment"
+                label="Device Name"
+                name='deviceName'
+                size='small'
+                color='info'
+                sx={{ width: 300 }}
+                style={{ marginTop: 20 }}
+                placeholder='Collection Device Name'
+                InputProps={{
+                  style: { color: 'white' }
+                }}
+                onChange={onChangeDevice}
+              />
+            </Grid>
           </DialogTitle>
           <DialogActions style={{ backgroundColor: '#444950' }}>
             <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
             <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>ADD</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openCommand} onClose={handleCloseCommand}>
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Edit</DialogContent>
+          <DialogTitle style={{ backgroundColor: '#444950' }}>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <TextField
+                focused
+                id="outlined-start-adornment"
+                label="Command"
+                name='command'
+                size='small'
+                color='info'
+                sx={{ width: 300 }}
+                placeholder='ex: Upload...'
+                InputProps={{
+                  style: { color: 'white' }
+                }}
+                // onChange={onChangeDevice}
+              />
+            </Grid>
+          </DialogTitle>
+          <DialogActions style={{ backgroundColor: '#444950' }}>
+            <Button variant="contained" size='small' onClick={handleCloseCommand} style={{marginTop: 10}}>Cancel</Button>
+            <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>Save</Button>
           </DialogActions>
         </Dialog>
       </Box>

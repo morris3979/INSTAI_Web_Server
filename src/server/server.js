@@ -35,8 +35,8 @@ async function app() {
     });
     // creates the table if it doesn't exist.
     db.sequelize.sync(
-        // { alter: true } // performs the necessary changes in the table to make it match the model.
-        { force: true } // creates the table, dropping it first if it already existed.
+        { alter: true } // performs the necessary changes in the table to make it match the model.
+        // { force: true } // creates the table, dropping it first if it already existed.
     );
 
     app.use(cors(corsOptions));
@@ -52,7 +52,7 @@ async function app() {
         console.error('unhandledRejection', error);
         process.exit(1); // To exit with a 'failure' code
     });
-    require('events').defaultMaxListeners = 100; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
+    require('events').EventEmitter.defaultMaxListeners = Infinity; // fix (node) warning: possible EventEmitter memory leak detected. 11 listeners added.
 
     // tcp.connect();
     http.connect(app);

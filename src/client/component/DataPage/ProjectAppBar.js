@@ -80,7 +80,7 @@ const ProjectAppBar = (props) => {
             >
               {dataList.project}
             </Typography>
-            <IconButton color="primary" aria-label="upload picture" component="label" onClick={handleClickOpen}>
+            <IconButton color="primary" aria-label="edit project" component="label" onClick={handleClickOpen}>
               <EditIcon />
             </IconButton>
           </Grid>
