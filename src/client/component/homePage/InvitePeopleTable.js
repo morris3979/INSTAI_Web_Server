@@ -36,6 +36,7 @@ const InvitePeopleTable = (props) => {
   } = props
 
   const [ open, setOpen ] = useState(false)
+  const [ searchName, setSearchName] = useState('')
   const [ input, setInput ] = useState({
     email: '',
     organizationId: projectList.id
@@ -69,6 +70,10 @@ const InvitePeopleTable = (props) => {
     }))
   }
 
+  const handleChangeText = (e) => {
+    setSearchName(e.target.value)
+  }
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   }
@@ -77,6 +82,10 @@ const InvitePeopleTable = (props) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   }
+
+  const filterMemberList = membersList.Users.filter((e) => {
+    return e.username.includes(searchName) || e.email.includes(searchName)
+  })
 
   return (
     <div style={{ marginTop: 20, marginBottom: 40 }}>
@@ -101,6 +110,7 @@ const InvitePeopleTable = (props) => {
             label="Search"
             size='small'
             color='info'
+            onChange={handleChangeText}
             sx={{ width: 400 }}
             placeholder='by user name or email'
             InputProps={{
@@ -147,24 +157,44 @@ const InvitePeopleTable = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {membersList.Users
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                      {columns.map((column) => {
-                        const value = row[column.id] || row.UserGroup[column.id]
-                        return (
-                          <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                          </TableCell>
-                        )
-                      })}
-                    </TableRow>
-                  )
-                })}
+                {searchName.length == 0
+                ? membersList.Users
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                        {columns.map((column) => {
+                          const value = row[column.id] || row.UserGroup[column.id]
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
+                            {column.format && typeof value === 'number'
+                              ? column.format(value)
+                              : value}
+                            </TableCell>
+                          )
+                        })}
+                      </TableRow>
+                    )
+                  })
+                : filterMemberList
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                        {columns.map((column) => {
+                          const value = row[column.id] || row.UserGroup[column.id]
+                          return (
+                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
+                            {column.format && typeof value === 'number'
+                              ? column.format(value)
+                              : value}
+                            </TableCell>
+                          )
+                        })}
+                      </TableRow>
+                    )
+                  })
+                }
               </TableBody>
             </Table>
           </TableContainer>
