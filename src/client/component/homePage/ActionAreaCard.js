@@ -42,7 +42,7 @@ const ActionAreaCard = (props) => {
     UserId: userInformation.id
   })
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     projectList

@@ -14,11 +14,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ImageIcon from '@mui/icons-material/Image';
 import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import {
   GetDataList,
   GetDataItem
@@ -31,13 +33,24 @@ const DataWarehouse = (props) => {
     getDataItem
   } = props
 
-  const navigate = useNavigate();
+  const [ anchorEl, setAnchorEl ] = useState(null)
+  const open = Boolean(anchorEl)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     // console.log('dataList', dataList)
     dataList
     getDataList(dataList.id)
   },[])
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
       <Box
@@ -135,24 +148,31 @@ const DataWarehouse = (props) => {
                   Filter
                 </Button>
               </Grid>
-              <Grid item style={{ position: 'absolute', right: 25, marginRight: 5 }}>
-                <TextField
-                  focused
-                  select
-                  id="outlined-select-data"
-                  label="Select"
-                  color='info'
-                  size='small'
-                  sx={{ m: 1, minWidth: 120 }}
-                  InputProps={{ style:{ color: 'white' }}}
+              <Grid item style={{ position: 'absolute', right: 35, marginRight: 5 }}>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  variant="outlined"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                  color='primary'
+                  endIcon={<ExpandCircleDownIcon />}
                 >
-                  <MenuItem key={'selectAll'} value={'selectAll'}>
-                    Select All
-                  </MenuItem>
-                  <MenuItem key={'selectPage'} value={'selectPage'}>
-                    Select Page
-                  </MenuItem>
-                </TextField>
+                  Select
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Select All</MenuItem>
+                  <MenuItem onClick={handleClose}>Select Page</MenuItem>
+                </Menu>
               </Grid>
             </Grid>
             <Box sx={{ flexGrow: 1 }} style={{ marginBottom: 20 }}>
