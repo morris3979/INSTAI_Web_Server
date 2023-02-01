@@ -16,7 +16,8 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ImageIcon from '@mui/icons-material/Image';
+import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import {
   GetDataList,
 } from '../../store/actionCreater'
@@ -113,10 +114,10 @@ const DataWarehouse = (props) => {
             >
               <Grid item>
                 <ButtonGroup aria-label="button group-2" sx={{ marginLeft: 5 }}>
-                  <Button aria-label='image' variant="outlined" component="label">
+                  <Button aria-label='image' variant="outlined" component="label" startIcon={<ImageIcon />}>
                     Image View
                   </Button>
-                  <Button aria-label='video' variant="outlined" component="label">
+                  <Button aria-label='video' variant="outlined" component="label" startIcon={<VideoCameraBackIcon />}>
                     Video View
                   </Button>
                 </ButtonGroup>
