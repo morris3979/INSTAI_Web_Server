@@ -49,6 +49,7 @@ const DeviceTable = (props) => {
   },[])
 
   const [ open, setOpen ] = useState(false)
+  const [ searchName, setSearchName] = useState('')
   const [ openCommand, setOpenCommand ] = useState(false)
   const [ input, setInput ] = useState({
     serialNumber: '',
@@ -80,6 +81,10 @@ const DeviceTable = (props) => {
     setOpen(false)
   }
 
+  const handleChangeText = (e) => {
+    setSearchName(e.target.value)
+  }
+
   const handleClickOpenCommand = () => {
     setOpenCommand(true)
   }
@@ -94,6 +99,10 @@ const DeviceTable = (props) => {
       [e.target.name]: e.target.value
     }))
   }
+
+  const filterDeviceList = deviceList.Devices.filter((e) => {
+    return e.serialNumber.includes(searchName) || e.deviceName.includes(searchName)
+  })
 
   const actionBtn = (
     <ButtonGroup variant="outlined" aria-label="outlined button group">
@@ -161,6 +170,7 @@ const DeviceTable = (props) => {
                 label="Search"
                 size='small'
                 color='info'
+                onChange={handleChangeText}
                 sx={{ width: 400 }}
                 placeholder='by serialnumber or device name'
                 InputProps={{
@@ -216,44 +226,83 @@ const DeviceTable = (props) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {deviceList.Devices
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                          <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
-                            {actionBtn}
-                          </TableCell>
-                          <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                            {row.serialNumber}
-                            <IconButton size='small' color="primary" aria-label="edit serialNumber" component="label" style={{ marginLeft: 15 }}>
-                              <EditIcon />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                            {row.deviceName}
-                            <IconButton size='small' color="primary" aria-label="edit deviceName" component="label" style={{ marginLeft: 15 }}>
-                              <EditIcon />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                            {row.command}
-                            <IconButton
-                              size='small' color="primary"
-                              aria-label="edit command"
-                              component="label"
-                              style={{ marginLeft: 15 }}
-                              onClick={handleClickOpenCommand}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                          </TableCell>
-                          <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                            {row.message}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
+                    {searchName.length == 0
+                    ? deviceList.Devices
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((row) => {
+                        return (
+                          <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
+                              {actionBtn}
+                            </TableCell>
+                            <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.serialNumber}
+                              <IconButton size='small' color="primary" aria-label="edit serialNumber" component="label" style={{ marginLeft: 15 }}>
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.deviceName}
+                              <IconButton size='small' color="primary" aria-label="edit deviceName" component="label" style={{ marginLeft: 15 }}>
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.command}
+                              <IconButton
+                                size='small' color="primary"
+                                aria-label="edit command"
+                                component="label"
+                                style={{ marginLeft: 15 }}
+                                onClick={handleClickOpenCommand}
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.message}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })
+                    : filterDeviceList
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((row) => {
+                        return (
+                          <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
+                              {actionBtn}
+                            </TableCell>
+                            <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.serialNumber}
+                              <IconButton size='small' color="primary" aria-label="edit serialNumber" component="label" style={{ marginLeft: 15 }}>
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.deviceName}
+                              <IconButton size='small' color="primary" aria-label="edit deviceName" component="label" style={{ marginLeft: 15 }}>
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.command}
+                              <IconButton
+                                size='small' color="primary"
+                                aria-label="edit command"
+                                component="label"
+                                style={{ marginLeft: 15 }}
+                                onClick={handleClickOpenCommand}
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.message}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
                   </TableBody>
                 </Table>
               </TableContainer>
