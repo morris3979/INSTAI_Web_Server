@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -11,7 +12,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   GetDataList,
 } from '../../store/actionCreater'
@@ -77,7 +82,7 @@ const DataWarehouse = (props) => {
               minWidth='90vw'
               container
               direction="row"
-              sx={{ marginTop: 4, marginBottom: 3, justifyContent: 'space-between' }}
+              sx={{ marginTop: 4, marginBottom: 2, justifyContent: 'space-between' }}
             >
               <Typography
                 noWrap
@@ -95,6 +100,54 @@ const DataWarehouse = (props) => {
                   Train
                 </Button>
               </ButtonGroup>
+            </Grid>
+            <Grid
+              minWidth='90vw'
+              container
+              direction="row"
+              justifyContent="left"
+              alignItems="center"
+              spacing={2}
+              sx={{ marginBottom: 3 }}
+              style={{ position: 'relative' }}
+            >
+              <Grid item>
+                <ButtonGroup aria-label="button group-2" sx={{ marginLeft: 5 }}>
+                  <Button aria-label='image' variant="outlined" component="label">
+                    Image View
+                  </Button>
+                  <Button aria-label='video' variant="outlined" component="label">
+                    Video View
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="outlined"
+                  startIcon={<FilterListIcon />}
+                >
+                  Filter
+                </Button>
+              </Grid>
+              <Grid item style={{ position: 'absolute', right: 25, marginRight: 5 }}>
+                <TextField
+                  focused
+                  select
+                  id="outlined-select-data"
+                  label="Select"
+                  color='info'
+                  size='small'
+                  sx={{ m: 1, minWidth: 120 }}
+                  InputProps={{ style:{ color: 'white' }}}
+                >
+                  <MenuItem key={'selectAll'} value={'selectAll'}>
+                    Select All
+                  </MenuItem>
+                  <MenuItem key={'selectPage'} value={'selectPage'}>
+                    Select Page
+                  </MenuItem>
+                </TextField>
+              </Grid>
             </Grid>
             <Box sx={{ flexGrow: 1 }} style={{ marginBottom: 20 }}>
               <Grid container
