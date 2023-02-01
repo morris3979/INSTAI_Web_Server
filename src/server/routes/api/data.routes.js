@@ -20,4 +20,7 @@ dataRouter.post("/uploadToS3", (req, res) => {
     )
 });
 
+// Find a Data onClick
+dataRouter.get("/:id", Data.findData);
+
 module.exports = [ dataRouter ];

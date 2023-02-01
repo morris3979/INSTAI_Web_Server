@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -20,13 +21,17 @@ import ImageIcon from '@mui/icons-material/Image';
 import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import {
   GetDataList,
+  GetDataItem
 } from '../../store/actionCreater'
 
 const DataWarehouse = (props) => {
   const {
     dataList,
-    getDataList
+    getDataList,
+    getDataItem
   } = props
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // console.log('dataList', dataList)
@@ -161,7 +166,14 @@ const DataWarehouse = (props) => {
                   return(
                     <Grid item xs={2} sm={4} md={4} key={key}>
                       <Card sx={{ maxWidth: 280 }}>
-                        <CardActionArea style={{ position: 'relative' }}>
+                        <CardActionArea
+                          key={key}
+                          onClick={() => {
+                            getDataItem(item.id)
+                            navigate('/Label')
+                          }}
+                          style={{ position: 'relative' }}
+                        >
                           <Checkbox
                             inputProps={{ 'aria-label': 'data-checkbox' }}
                             style={{ position: 'absolute', top: 0 }}
@@ -221,6 +233,10 @@ const mapStateToProps = (state) => {
     return {
       getDataList(id, text) {
         const action = GetDataList(id)
+        dispatch(action)
+      },
+      getDataItem(id, text) {
+        const action = GetDataItem(id)
         dispatch(action)
       },
     }

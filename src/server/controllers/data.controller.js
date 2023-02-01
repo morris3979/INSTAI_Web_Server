@@ -81,3 +81,30 @@ exports.uploadToS3 = async(req, res, key, callback) => {
         }
     })
 }
+
+// Find a Data onClick
+exports.findData = (req, res) => {
+  Data.findOne({
+      where: {
+          id: req.params.id
+      },
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      }
+  }).then(data => {
+      if (!data) {
+          return res.status(404).send({ message: "Data Not found." });
+      }
+
+      const replacer = (key, value) => {
+          if (key == 'createdAt') return undefined
+          else if (key == 'updatedAt') return undefined
+          else if (key == 'deletedAt') return undefined
+          else return value
+      }
+
+      res.send(JSON.parse(JSON.stringify(data, replacer)))
+  }).catch(err => {
+      res.status(500).send({ message: err.message })
+  })
+}

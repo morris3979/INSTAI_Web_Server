@@ -3,7 +3,8 @@ import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
   User_Information, Logout_Information,
-  Project_List, Data_List, Members_List, Device_List
+  Project_List, Data_List, Members_List,
+  Device_List, Data_Item
 } from './actionType'
 
 //共用Function <<<
@@ -295,6 +296,25 @@ export const AddDevice = (data) => {
         }
       } catch (e) {
         alert(e.response.data.message)
+      }
+    }
+  )
+}
+
+export const GetDataItem = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/data/${id}`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Data_Item)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
       }
     }
   )

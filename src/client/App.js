@@ -12,6 +12,7 @@ const HomePage = lazy(() => import('./page/HomePage'))
 const DataPage = lazy(() => import('./page/DataPage'))
 const DevicePage = lazy(() => import('./page/DevicePage'))
 const OrganizationPage = lazy(() => import('./page/OrganizationPage'))
+const LabelPage = lazy(() => import('./page/LabelPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
@@ -35,6 +36,7 @@ const App = (props) => {
           <Route path='/Data' element={<DataPage/>} />
           <Route path='/Device' element={<DevicePage/>} />
           <Route path='/Organization' element={<OrganizationPage/>} />
+          <Route path='/Label' element={<LabelPage/>} />
           <Route path='/Initial' element={<InitialPage/>} />
         </Routes>
       </Box>
