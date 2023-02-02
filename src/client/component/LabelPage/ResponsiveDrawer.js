@@ -188,16 +188,16 @@ const ResponsiveDrawer = (props) => {
             aria-label="mailbox folders"
         >
             <Drawer
-            variant="permanent"
-            sx={{
-                display: { xs: 'none', sm: 'block' },
-                '& .MuiDrawer-paper': {
-                    boxSizing: 'border-box',
-                    width: drawerWidth,
-                    backgroundColor: '#0A1929'
-                },
-            }}
-            open
+                variant="permanent"
+                sx={{
+                    display: { xs: 'none', sm: 'block' },
+                    '& .MuiDrawer-paper': {
+                        boxSizing: 'border-box',
+                        width: drawerWidth,
+                        backgroundColor: '#0A1929'
+                    },
+                }}
+                open
             >
             {drawer}
             </Drawer>

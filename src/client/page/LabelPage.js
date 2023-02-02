@@ -2,8 +2,8 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-// const ResponsiveAppBar = lazy(() => import('../component/HomePage/ResponsiveAppBar'))
 const ResponsiveDrawer = lazy(() => import('../component/LabelPage/ResponsiveDrawer'))
+const LabelStudio = lazy(() => import('../component/LabelPage/LabelStudio'))
 
 const LabelPage = () => {
   return (
@@ -22,9 +22,10 @@ const LabelPage = () => {
         <Helmet>
           <title>Label - InstAI</title>
         </Helmet>
-        <h1>Hi, This is Label Page.</h1>
         <ResponsiveDrawer />
-        {/* <ActionAreaCard /> */}
+        <div style={{ marginTop: '80px', marginLeft: '240px' }}>
+          <LabelStudio />
+        </div>
       </div>
     </Suspense>
   )
