@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
+import Toolbar from '@mui/material/Toolbar';
 
 const ResponsiveDrawer = lazy(() => import('../component/LabelPage/ResponsiveDrawer'))
 const LabelStudio = lazy(() => import('../component/LabelPage/LabelStudio'))
@@ -16,14 +17,15 @@ const LabelPage = () => {
           flexDirection: 'column',
           alignItems: 'center',
           // justifyContent: 'center',
+          position: 'relative',
           backgroundColor: '#1c2127',
         }}
       >
         <Helmet>
           <title>Label - InstAI</title>
         </Helmet>
-        <ResponsiveDrawer />
-        <div style={{ marginTop: '80px', marginLeft: '240px' }}>
+        <ResponsiveDrawer />\
+        <div style={{ position: 'absolute', left: 250, top: 80 }}>
           <LabelStudio />
         </div>
       </div>

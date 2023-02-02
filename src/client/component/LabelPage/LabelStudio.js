@@ -17,21 +17,12 @@ const LabelStudioWrapper = (props) => {
   const [path, setPath] = useState()
   const [json4Training, setJson4Training] = useState()
   const [additionalLabels, setAdditionalLabels] = useState([])
-  const [fileList, setFileList] = useState([])
-  const [checkValue, setCheckValue] = useState([])
 
-  const [previewImage, setPreviewImage] = useState('https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png')
-  const [previewTitle, setPreviewTitle] = useState('')
-  const [urlImage, setUrlImage] = useState()
-  const [selectDataId, setSelectDataId] = useState()
-  const [labeledDataId, setLabeledDataId] = useState()
-  const {
-  } = props
+  const { dataItem } = props
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
-    // getAccountTableData()
-    // getDetailsData()
+    dataItem
     if (rootRef.current) {
       lsfRef.current = new LabelStudio(rootRef.current, {
         /* all the options according to the docs */
@@ -87,7 +78,7 @@ const LabelStudioWrapper = (props) => {
             userGenerate: true
           });
           ls.annotationStore.selectAnnotation(c.id);
-          setPath(previewImage);
+          setPath(`https://d20cmf4o2f77jz.cloudfront.net/image/${dataItem.data}.jpg`);
         },
 
         onSubmitAnnotation: (ls, annotation) => {
@@ -114,7 +105,7 @@ const LabelStudioWrapper = (props) => {
             {
               "image":
               {
-                "file_name": "${previewTitle}",
+                "file_name": "${dataItem.data}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -150,7 +141,7 @@ const LabelStudioWrapper = (props) => {
             {
               "image":
               {
-                "file_name": "${previewTitle}",
+                "file_name": "${dataItem.data}",
                 "width": ${originalWidth},
                 "height": ${originalHeight}
               },
@@ -164,7 +155,7 @@ const LabelStudioWrapper = (props) => {
       }
       );
     }
-  }, [ path, previewImage, previewTitle, additionalLabels ])
+  }, [ path, additionalLabels ])
 
 
   // just a wrapper node to place LSF into
@@ -179,7 +170,9 @@ const LabelStudioWrapper = (props) => {
 
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
-  return {}
+  return {
+    dataItem: state.dataItem
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

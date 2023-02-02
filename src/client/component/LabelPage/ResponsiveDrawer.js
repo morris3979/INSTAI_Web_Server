@@ -31,7 +31,7 @@ const ResponsiveDrawer = (props) => {
 
   useEffect(() => {
     dataItem
-    console.log('dataItem', dataItem)
+    // console.log('dataItem', dataItem)
   },[])
 
   const drawer = (
