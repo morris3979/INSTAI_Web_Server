@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -138,7 +139,22 @@ const ResponsiveDrawer = (props) => {
                 }
             }}
         />
-        <Toolbar />
+        <List>
+            <ListItem style={{ marginTop: 8 }}>
+                <ListItemButton
+                    style={{
+                        backgroundColor: 'darkorange',
+                        color: 'darkslateblue',
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontWeight: 'bold',
+                        borderRadius: 5
+                    }}
+                >
+                    Save & Exist
+                </ListItemButton>
+            </ListItem>
+        </List>
         <Toolbar />
     </div>
   );
