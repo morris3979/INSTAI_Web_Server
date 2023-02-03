@@ -301,6 +301,22 @@ export const AddDevice = (data) => {
   )
 }
 
+export const PatchDeviceData = (id,data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.patch(`/api/device/${id}`, data)
+        if (response.data) {
+          location.reload()
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  ) 
+}
+
 export const GetDataItem = (id, data) => {
   return (
     async (dispatch) => {
