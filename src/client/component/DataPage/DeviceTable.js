@@ -373,7 +373,9 @@ const DeviceTable = (props) => {
           </div>
         </div>
         <Dialog open={open} onClose={handleClose}>
-          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Add Device</DialogContent>
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>
+            {modifyValue.text? `Edit ${modifyValue.text}`: 'Add Device'}
+          </DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
           {modifyValue.text
           ? <Grid
@@ -456,7 +458,7 @@ const DeviceTable = (props) => {
           </DialogActions>
         </Dialog>
         <Dialog open={openCommand} onClose={handleCloseCommand}>
-          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Edit</DialogContent>
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>command</DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
             <Grid
               container

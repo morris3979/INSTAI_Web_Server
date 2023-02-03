@@ -8,6 +8,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -21,11 +23,15 @@ import Grid from '@mui/material/Grid';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import InstAI from '../../icon image/instai.png'
 
 const drawerWidth = 240;
 
 const ResponsiveDrawer = (props) => {
   const { dataItem } = props
+
+  const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
+  const openSelect = Boolean(anchorEl_Download)
 
   const navigate = useNavigate()
 
@@ -33,6 +39,14 @@ const ResponsiveDrawer = (props) => {
     dataItem
     // console.log('dataItem', dataItem)
   },[])
+
+  const handleClickDownload = (event) => {
+    setAnchorEl_Download(event.currentTarget)
+  }
+
+  const handleCloseDownload = () => {
+    setAnchorEl_Download(null)
+  }
 
   const drawer = (
     <div>
@@ -47,6 +61,22 @@ const ResponsiveDrawer = (props) => {
             <CloseIcon />
         </IconButton>
         {/* <Toolbar /> */}
+        <List>
+            <ListItem style={{ marginTop: 4 }}>
+                <ListItemButton
+                    style={{
+                        backgroundColor: 'darkorange',
+                        color: 'darkslateblue',
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontWeight: 'bold',
+                        borderRadius: 5
+                    }}
+                >
+                    Save & Exist
+                </ListItemButton>
+            </ListItem>
+        </List>
         <Divider
             sx={{
                 '&.MuiDivider-root': {
@@ -91,40 +121,6 @@ const ResponsiveDrawer = (props) => {
                 spacing={2}
                 style={{ marginLeft: 10, marginTop: 8 }}
             >
-                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Uploaded</Typography>
-                <Grid
-                    container
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    style={{ marginTop: 3 }}
-                >
-                    <Typography color='darkgrey'>{dataItem.createdAt.slice(0, -5).replace('T', ' ')}</Typography>
-                </Grid>
-            </Grid>
-            <Grid
-                container
-                direction="column"
-                spacing={2}
-                style={{ marginLeft: 10, marginTop: 8 }}
-            >
-                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Label Worker</Typography>
-                <Grid
-                    container
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    style={{ marginTop: 3 }}
-                >
-                    <Typography color='darkgrey'>user</Typography>
-                </Grid>
-            </Grid>
-            <Grid
-                container
-                direction="column"
-                spacing={2}
-                style={{ marginLeft: 10, marginTop: 8, marginBottom: 8 }}
-            >
                 <Typography color='grey' sx={{ fontWeight: 'bold' }}>Action</Typography>
                 <Grid
                     container
@@ -135,10 +131,42 @@ const ResponsiveDrawer = (props) => {
                     <IconButton
                         aria-label="download label"
                         component="label"
+                        aria-controls={openSelect ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openSelect ? 'true' : undefined}
+                        onClick={handleClickDownload}
                         style={{ color: 'darkgrey' }}
                     >
                         <FileDownloadIcon />
                     </IconButton>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl_Download}
+                        open={openSelect}
+                        onClose={handleCloseDownload}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button'
+                        }}
+                        PaperProps={{
+                            sx: {
+                            color: 'white',
+                            backgroundColor: '#1c2127'
+                            }
+                        }}
+                    >
+                        <MenuItem
+                            sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                            onClick={handleCloseDownload}
+                        >
+                            Image file (.jpg)
+                        </MenuItem>
+                        <MenuItem
+                            sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                            onClick={handleCloseDownload}
+                        >
+                            Label file (.json)
+                        </MenuItem>
+                    </Menu>
                     <IconButton
                         aria-label="delete label"
                         component="label"
@@ -152,27 +180,108 @@ const ResponsiveDrawer = (props) => {
         <Divider
             sx={{
                 '&.MuiDivider-root': {
-                    border: 'thin solid darkslateblue'
-                }
+                    "&::before": {
+                      borderTop: "thin solid green"
+                    },
+                    "&::after": {
+                      borderTop: "thin solid blue"
+                    }
+                },
+                marginTop: 3
             }}
-        />
+        >
+            <Typography
+                color='darkgrey'
+                sx={{ fontWeight: 'bold' }}
+            >
+                Details
+            </Typography>
+        </Divider>
         <List>
-            <ListItem style={{ marginTop: 8 }}>
-                <ListItemButton
-                    style={{
-                        backgroundColor: 'darkorange',
-                        color: 'darkslateblue',
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontWeight: 'bold',
-                        borderRadius: 5
-                    }}
+            <Grid
+                container
+                direction="column"
+                spacing={2}
+                style={{ marginLeft: 10, marginTop: 8 }}
+            >
+                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Uploaded by</Typography>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ marginTop: 3 }}
                 >
-                    Save & Exist
-                </ListItemButton>
-            </ListItem>
+                    <Typography color='darkgrey'>(serialnumber)</Typography>
+                </Grid>
+            </Grid>
+            <Grid
+                container
+                direction="column"
+                spacing={2}
+                style={{ marginLeft: 10, marginTop: 8 }}
+            >
+                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Uploaded at</Typography>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ marginTop: 4 }}
+                >
+                    <Typography color='darkgrey' variant='button'>
+                        {dataItem.createdAt.slice(0, -5).replace('T', ' ')}
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid
+                container
+                direction="column"
+                spacing={2}
+                style={{ marginLeft: 10, marginTop: 8 }}
+            >
+                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Label worker</Typography>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ marginTop: 3 }}
+                >
+                    <Typography color='darkgrey'>(username)</Typography>
+                </Grid>
+            </Grid>
+            <Grid
+                container
+                direction="column"
+                spacing={2}
+                style={{ marginLeft: 10, marginTop: 8 }}
+            >
+                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Last updated</Typography>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ marginTop: 4 }}
+                >
+                    <Typography color='darkgrey' variant='button'>
+                        {dataItem.updatedAt.slice(0, -5).replace('T', ' ')}
+                    </Typography>
+                </Grid>
+            </Grid>
         </List>
-        <Toolbar />
+        <List style={{ position: 'fixed', left: 0, bottom: 0 }}>
+            <img src={InstAI} alt='Logo' style={{ width: drawerWidth }} />
+        </List>
+        {/* <Divider
+            sx={{
+                '&.MuiDivider-root': {
+                    border: 'thin solid darkslateblue'
+                },
+                marginTop: 3
+            }}
+        /> */}
     </div>
   );
 

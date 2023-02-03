@@ -43,6 +43,7 @@ module.exports = (sequelize, Sequelize) => {
         Project.belongsTo(models.User);
         Project.hasMany(models.Device, {foreignKey: 'ProjectId'});
         Project.hasMany(models.Data, {foreignKey: 'ProjectId'});
+        Project.hasMany(models.Label, {foreignKey: 'ProjectId'});
     };
     return Project;
 };

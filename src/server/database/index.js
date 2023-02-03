@@ -32,14 +32,15 @@ db.HwUpdateLog = require("./model/HwUpdateLog.model")(sequelize, Sequelize);
 db.Device = require("./model/Device.model")(sequelize, Sequelize);
 db.Data = require("./model/Data.model")(sequelize, Sequelize);
 db.Label = require("./model/Label.model")(sequelize, Sequelize);
-db.LabelGroup = require("./model/LabelGroup.model")(sequelize, Sequelize);
-db.Model = require("./model/Model.model")(sequelize, Sequelize);
-db.ModelGroup = require("./model/ModelGroup.model")(sequelize, Sequelize);
+// db.LabelGroup = require("./model/LabelGroup.model")(sequelize, Sequelize);
+// db.Model = require("./model/Model.model")(sequelize, Sequelize);
+// db.ModelGroup = require("./model/ModelGroup.model")(sequelize, Sequelize);
 
 // One to Many
 db.Organization.hasMany(db.Project, {foreignKey: 'OrganizationId'});
 db.Project.hasMany(db.Device, {foreignKey: 'ProjectId'});
 db.Project.hasMany(db.Data, {foreignKey: 'ProjectId'});
+db.Project.hasMany(db.Label, {foreignKey: 'ProjectId'});
 db.Device.hasMany(db.Data, {foreignKey: 'DeviceId'});
 db.User.hasMany(db.Project, {foreignKey: 'UserId'});
 db.User.hasMany(db.Data, {foreignKey: 'UserId'});
@@ -48,6 +49,7 @@ db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
 // Many to One
 db.Project.belongsTo(db.Organization, {foreignKey: 'OrganizationId'});
 db.Device.belongsTo(db.Project, {foreignKey: 'ProjectId'});
+db.Label.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Data.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Data.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 db.Project.belongsTo(db.User, {foreignKey: 'UserId'});
@@ -55,11 +57,11 @@ db.Data.belongsTo(db.User, {foreignKey: 'UserId'});
 db.HwUpdateLog.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 
 // Many to Many
-db.Label.belongsToMany(db.Project, { through: db.LabelGroup });
-db.Project.belongsToMany(db.Label, { through: db.LabelGroup });
+// db.Label.belongsToMany(db.Project, { through: db.LabelGroup });
+// db.Project.belongsToMany(db.Label, { through: db.LabelGroup });
 db.Organization.belongsToMany(db.User, { through: db.UserGroup });
 db.User.belongsToMany(db.Organization, { through: db.UserGroup });
-db.Label.belongsToMany(db.Model, { through: db.ModelGroup });
-db.Model.belongsToMany(db.Label, { through: db.ModelGroup });
+// db.Label.belongsToMany(db.Model, { through: db.ModelGroup });
+// db.Model.belongsToMany(db.Label, { through: db.ModelGroup });
 
 module.exports = db;
