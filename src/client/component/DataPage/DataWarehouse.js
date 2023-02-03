@@ -16,6 +16,7 @@ import { CardActionArea } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ImageIcon from '@mui/icons-material/Image';
@@ -33,8 +34,11 @@ const DataWarehouse = (props) => {
     getDataItem
   } = props
 
-  const [ anchorEl, setAnchorEl ] = useState(null)
-  const open = Boolean(anchorEl)
+  const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
+  const openSelect = Boolean(anchorEl_Select)
+
+  const [ anchorEl_Filter, setAnchorEl_Filter ] = useState(null)
+  const openFilter = Boolean(anchorEl_Filter)
 
   const navigate = useNavigate()
 
@@ -44,12 +48,20 @@ const DataWarehouse = (props) => {
     getDataList(dataList.id)
   },[])
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
+  const handleClickFilter = (event) => {
+    setAnchorEl_Filter(event.currentTarget)
   }
 
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleCloseFilter = () => {
+    setAnchorEl_Filter(null)
+  }
+
+  const handleClickSelect = (event) => {
+    setAnchorEl_Select(event.currentTarget)
+  }
+
+  const handleCloseSelect = () => {
+    setAnchorEl_Select(null)
   }
 
   return (
@@ -142,20 +154,66 @@ const DataWarehouse = (props) => {
               </Grid>
               <Grid item>
                 <Button
+                  id="basic-button"
                   variant="outlined"
+                  aria-controls={openFilter ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openFilter ? 'true' : undefined}
+                  onClick={handleClickFilter}
+                  color='primary'
                   startIcon={<FilterListIcon />}
                 >
                   Filter
                 </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl_Filter}
+                  open={openFilter}
+                  onClose={handleCloseFilter}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button'
+                  }}
+                  PaperProps={{
+                    sx: {
+                      color: 'white',
+                      backgroundColor: '#1c2127'
+                    }
+                  }}
+                >
+                  <MenuItem
+                    key={'labeled'}
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    onClick={handleCloseFilter}
+                  >
+                    <Checkbox sx={{ color: 'white' }} />
+                    <ListItemText primary={'Labeled'} sx={{ marginRight: 5 }} />
+                  </MenuItem>
+                  <MenuItem
+                    key={'unlabeled'}
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    onClick={handleCloseFilter}
+                  >
+                    <Checkbox sx={{ color: 'white' }} />
+                    <ListItemText primary={'Unlabeled'} sx={{ marginRight: 5 }} />
+                  </MenuItem>
+                  <MenuItem
+                    key={'trained'}
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    onClick={handleCloseFilter}
+                  >
+                    <Checkbox sx={{ color: 'white' }} />
+                    <ListItemText primary={'Trained'} sx={{ marginRight: 5 }} />
+                  </MenuItem>
+                </Menu>
               </Grid>
               <Grid item style={{ position: 'absolute', right: 35, marginRight: 5 }}>
                 <Button
                   id="basic-button"
-                  aria-controls={open ? 'basic-menu' : undefined}
-                  aria-haspopup="true"
                   variant="outlined"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClick}
+                  aria-controls={openSelect ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openSelect ? 'true' : undefined}
+                  onClick={handleClickSelect}
                   color='primary'
                   endIcon={<ExpandCircleDownIcon />}
                 >
@@ -163,15 +221,31 @@ const DataWarehouse = (props) => {
                 </Button>
                 <Menu
                   id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
+                  anchorEl={anchorEl_Select}
+                  open={openSelect}
+                  onClose={handleCloseSelect}
                   MenuListProps={{
-                    'aria-labelledby': 'basic-button',
+                    'aria-labelledby': 'basic-button'
+                  }}
+                  PaperProps={{
+                    sx: {
+                      color: 'white',
+                      backgroundColor: '#1c2127'
+                    }
                   }}
                 >
-                  <MenuItem onClick={handleClose}>Select All</MenuItem>
-                  <MenuItem onClick={handleClose}>Select Page</MenuItem>
+                  <MenuItem
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    onClick={handleCloseSelect}
+                  >
+                    Select All
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    onClick={handleCloseSelect}
+                  >
+                    Select Page
+                  </MenuItem>
                 </Menu>
               </Grid>
             </Grid>
@@ -188,10 +262,6 @@ const DataWarehouse = (props) => {
                       <Card sx={{ maxWidth: 280 }}>
                         <CardActionArea
                           key={key}
-                          onClick={() => {
-                            getDataItem(item.id)
-                            navigate('/Label')
-                          }}
                           style={{ position: 'relative' }}
                         >
                           <Checkbox
@@ -205,6 +275,10 @@ const DataWarehouse = (props) => {
                             title='Image'
                             component="img"
                             image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
+                            onClick={() => {
+                              getDataItem(item.id)
+                              navigate('/Label')
+                            }}
                           />
                           <Box
                             style={{

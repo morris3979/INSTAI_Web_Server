@@ -1,9 +1,10 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
+import Toolbar from '@mui/material/Toolbar';
 
-// const ResponsiveAppBar = lazy(() => import('../component/HomePage/ResponsiveAppBar'))
 const ResponsiveDrawer = lazy(() => import('../component/LabelPage/ResponsiveDrawer'))
+const LabelStudio = lazy(() => import('../component/LabelPage/LabelStudio'))
 
 const LabelPage = () => {
   return (
@@ -16,15 +17,17 @@ const LabelPage = () => {
           flexDirection: 'column',
           alignItems: 'center',
           // justifyContent: 'center',
+          position: 'relative',
           backgroundColor: '#1c2127',
         }}
       >
         <Helmet>
           <title>Label - InstAI</title>
         </Helmet>
-        <h1>Hi, This is Label Page.</h1>
-        <ResponsiveDrawer />
-        {/* <ActionAreaCard /> */}
+        <ResponsiveDrawer />\
+        <div style={{ position: 'absolute', left: 250, top: 80 }}>
+          <LabelStudio />
+        </div>
       </div>
     </Suspense>
   )

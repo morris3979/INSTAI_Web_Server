@@ -31,7 +31,7 @@ const ResponsiveDrawer = (props) => {
 
   useEffect(() => {
     dataItem
-    console.log('dataItem', dataItem)
+    // console.log('dataItem', dataItem)
   },[])
 
   const drawer = (
@@ -100,6 +100,23 @@ const ResponsiveDrawer = (props) => {
                     style={{ marginTop: 3 }}
                 >
                     <Typography color='darkgrey'>{dataItem.createdAt.slice(0, -5).replace('T', ' ')}</Typography>
+                </Grid>
+            </Grid>
+            <Grid
+                container
+                direction="column"
+                spacing={2}
+                style={{ marginLeft: 10, marginTop: 8 }}
+            >
+                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Label Worker</Typography>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ marginTop: 3 }}
+                >
+                    <Typography color='darkgrey'>user</Typography>
                 </Grid>
             </Grid>
             <Grid
@@ -188,16 +205,16 @@ const ResponsiveDrawer = (props) => {
             aria-label="mailbox folders"
         >
             <Drawer
-            variant="permanent"
-            sx={{
-                display: { xs: 'none', sm: 'block' },
-                '& .MuiDrawer-paper': {
-                    boxSizing: 'border-box',
-                    width: drawerWidth,
-                    backgroundColor: '#0A1929'
-                },
-            }}
-            open
+                variant="permanent"
+                sx={{
+                    display: { xs: 'none', sm: 'block' },
+                    '& .MuiDrawer-paper': {
+                        boxSizing: 'border-box',
+                        width: drawerWidth,
+                        backgroundColor: '#0A1929'
+                    },
+                }}
+                open
             >
             {drawer}
             </Drawer>
