@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {
 } from '../../store/actionCreater'
 
@@ -162,7 +165,30 @@ const LabelStudioWrapper = (props) => {
   return (
     <div>
         <Box style={{ width: '85vw' }}>
-            <div style={{ margin: 5 }} ref={rootRef} />
+          <div style={{ marginBottom: 10 }}>
+            <TextField
+              focused
+              id="outlined-new-class"
+              label="new class"
+              size='small'
+              color='info'
+              // onChange={handleChangeText}
+              sx={{ width: 220 }}
+              placeholder='input class name'
+              InputProps={{
+                style: { color: 'white' },
+                endAdornment: <BookmarkBorderIcon style={{ color: 'white' }} />,
+              }}
+            />
+            <Button
+              variant="contained"
+              onClick={[]}
+              style={{ marginLeft: 4 }}
+            >
+              ADD
+            </Button>
+          </div>
+          <div style={{ margin: 5 }} ref={rootRef} />
         </Box>
     </div>
   );
