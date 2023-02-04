@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        labelName: {
+        labelClass: {
           type: Sequelize.STRING,
           allowNull: false,
           // unique: true

@@ -4,6 +4,7 @@ const Organization = db.Organization;
 const User = db.User;
 const Data = db.Data;
 const Device = db.Device;
+const Label = db.Label;
 
 // Create and Save a new Project
 exports.create = async (req, res) => {
@@ -121,7 +122,7 @@ exports.findData = (req, res) => {
   })
 }
 
-// Find all Device From a Project
+// Find all Devices From a Project
 exports.findDevice = (req, res) => {
   Project.findOne({
       where: {
@@ -149,6 +150,44 @@ exports.findDevice = (req, res) => {
           else if (key == 'accessAuth') return undefined
           else if (key == 'accessKey') return undefined
           else if (key == 'secretKey') return undefined
+          else return value
+      }
+
+      res.send(JSON.parse(JSON.stringify(data, replacer)))
+  }).catch(err => {
+      res.status(500).send({ message: err.message })
+  })
+}
+
+// Find all Labels From a Project
+exports.findLabel = (req, res) => {
+  Project.findOne({
+      where: {
+          id: req.params.id
+      },
+      include: [{
+          model: Label
+      }],
+      order: [
+        [Label, 'id', 'DESC']
+      ],
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      }
+  }).then(data => {
+      if (!data) {
+          return res.status(404).send({ message: "Project Not found." });
+      }
+
+      const replacer = (key, value) => {
+          if (key == 'createdAt') return undefined
+          else if (key == 'updatedAt') return undefined
+          else if (key == 'deletedAt') return undefined
+          else if (key == 'type') return undefined
+          else if (key == 'accessAuth') return undefined
+          else if (key == 'ProjectId') return undefined
+          else if (key == 'OrganizationId') return undefined
+          else if (key == 'UserId') return undefined
           else return value
       }
 

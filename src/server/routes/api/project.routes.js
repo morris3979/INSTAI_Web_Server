@@ -11,7 +11,10 @@ projectRouter.patch("/:id", Project.update);
 // Find all Data From a Project
 projectRouter.get("/:id/data", Project.findData);
 
-// Find all Device From a Project
+// Find all Devices From a Project
 projectRouter.get("/:id/device", Project.findDevice);
+
+// Find all Labels From a Project
+projectRouter.get("/:id/label", Project.findLabel);
 
 module.exports = [ projectRouter ];
