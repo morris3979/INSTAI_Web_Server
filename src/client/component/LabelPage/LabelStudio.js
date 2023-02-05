@@ -7,25 +7,37 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {
+  AddLabel,
+  GetLabelList
 } from '../../store/actionCreater'
 
 const LabelStudioWrapper = (props) => {
+  const {
+    dataItem,
+    addLabel,
+    getLabelList,
+    labelList
+  } = props
+
   // we need a reference to a DOM node here so LSF knows where to render
   const rootRef = useRef()
   // this reference will be populated when LSF initialized and can be used somewhere else
   const lsfRef = useRef()
-  const labelRef = useRef(true)
+  const labelRef = useRef()
 
   const annotationArr = []
   const [path, setPath] = useState()
   const [json4Training, setJson4Training] = useState()
   const [additionalLabels, setAdditionalLabels] = useState([])
 
-  const { dataItem } = props
-
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
     dataItem
+    getLabelList(dataItem.ProjectId)
+    labelList.Labels.map((value) => {
+      setAdditionalLabels((newClass) => [ ...newClass, `<Label value="${value.labelClass}"/>` ])
+    })
+    // console.log('ProjectId', dataItem.ProjectId)
     if (rootRef.current) {
       lsfRef.current = new LabelStudio(rootRef.current, {
         /* all the options according to the docs */
@@ -158,8 +170,18 @@ const LabelStudioWrapper = (props) => {
       }
       );
     }
-  }, [ path, additionalLabels ])
+  }, [ path ])
 
+  const onAddLabel = () => {
+    if (labelRef.current.value != '') {
+      addLabel({
+        labelClass: labelRef.current.value,
+        ProjectId: dataItem.ProjectId
+      })
+    } else {
+      alert('Input Label Name cannot be empty !')
+    }
+  }
 
   // just a wrapper node to place LSF into
   return (
@@ -179,10 +201,11 @@ const LabelStudioWrapper = (props) => {
                 style: { color: 'white' },
                 endAdornment: <BookmarkBorderIcon style={{ color: 'white' }} />,
               }}
+              inputRef={labelRef}
             />
             <Button
               variant="contained"
-              onClick={[]}
+              onClick={onAddLabel}
               style={{ marginLeft: 4 }}
             >
               ADD
@@ -197,13 +220,23 @@ const LabelStudioWrapper = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    dataItem: state.dataItem
+    dataItem: state.dataItem,
+    labelList: state.labelList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
-  return {}
+  return {
+    addLabel(value) {
+      const action = AddLabel(value)
+      dispatch(action)
+    },
+    getLabelList(id, text) {
+      const action = GetLabelList(id)
+      dispatch(action)
+    },
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LabelStudioWrapper)

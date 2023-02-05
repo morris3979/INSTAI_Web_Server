@@ -24,7 +24,7 @@ import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import {
   GetDataList,
-  GetDataItem
+  GetDataItem,
 } from '../../store/actionCreater'
 
 const DataWarehouse = (props) => {

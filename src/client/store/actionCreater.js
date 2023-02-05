@@ -4,7 +4,7 @@ import {
   Which_Project, Which_Host, Which_Device,
   User_Information, Logout_Information,
   Project_List, Data_List, Members_List,
-  Device_List, Data_Item
+  Device_List, Data_Item, Label_List
 } from './actionType'
 
 //共用Function <<<
@@ -314,7 +314,7 @@ export const PatchDeviceData = (id,data) => {
         alert(e.response.data.message)
       }
     }
-  ) 
+  )
 }
 
 export const GetDataItem = (id, data) => {
@@ -335,4 +335,42 @@ export const GetDataItem = (id, data) => {
     }
   )
 }
+
+export const GetLabelList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}/label`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Label_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const AddLabel = (data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.post('/api/label', data)
+        if (response.data) {
+          // const action = GetLabelList(response.data.id)
+          // dispatch(action)
+          location.reload()
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
 // >>>

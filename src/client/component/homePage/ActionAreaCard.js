@@ -20,7 +20,8 @@ import {
   GetProjectList,
   CreateProject,
   GetDataList,
-  GetDeviceList
+  GetDeviceList,
+  GetLabelList
 } from '../../store/actionCreater'
 
 const ActionAreaCard = (props) => {
@@ -30,7 +31,8 @@ const ActionAreaCard = (props) => {
     getProjectList,
     createProject,
     getDataList,
-    getDeviceList
+    getDeviceList,
+    getLabelList
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -156,6 +158,7 @@ const ActionAreaCard = (props) => {
                       onClick={() => {
                         getDataList(value.id)
                         getDeviceList(value.id)
+                        getLabelList(value.id)
                         navigate('/Data')
                       }}
                     >
@@ -199,6 +202,7 @@ const ActionAreaCard = (props) => {
                       onClick={() => {
                         getDataList(value.id)
                         getDeviceList(value.id)
+                        getLabelList(value.id)
                         navigate('/Data')
                       }}
                     >
@@ -311,6 +315,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getDeviceList(id, text) {
       const action = GetDeviceList(id)
+      dispatch(action)
+    },
+    getLabelList(id, text) {
+      const action = GetLabelList(id)
       dispatch(action)
     },
   }
