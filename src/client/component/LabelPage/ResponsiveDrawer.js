@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
@@ -18,20 +18,36 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import InstAI from '../../icon image/instai.png'
+import {
+  AddLabel,
+} from '../../store/actionCreater'
 
 const drawerWidth = 240;
 
 const ResponsiveDrawer = (props) => {
-  const { dataItem } = props
+  const {
+    dataItem,
+    addLabel
+} = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
   const openSelect = Boolean(anchorEl_Download)
+  const [ open, setOpen ] = useState(false)
 
   const navigate = useNavigate()
+  const labelRef = useRef()
 
   useEffect(() => {
     dataItem
@@ -44,6 +60,22 @@ const ResponsiveDrawer = (props) => {
 
   const handleCloseDownload = () => {
     setAnchorEl_Download(null)
+  }
+
+  const onAddLabel = () => {
+    if (labelRef.current.value != '') {
+      addLabel({
+        labelClass: labelRef.current.value,
+        ProjectId: dataItem.ProjectId
+      })
+      setOpen(false)
+    } else {
+      alert('Input Label Name cannot be empty !')
+    }
+  }
+
+  const onCancel = () => {
+    setOpen(false)
   }
 
   const drawer = (
@@ -172,6 +204,14 @@ const ResponsiveDrawer = (props) => {
                     >
                         <DeleteIcon />
                     </IconButton>
+                    <IconButton
+                        aria-label="delete label"
+                        component="label"
+                        style={{ color: 'darkgrey' }}
+                        onClick={() => setOpen(true)}
+                    >
+                        <AddCircleIcon />
+                    </IconButton>
                 </Grid>
             </Grid>
         </List>
@@ -280,6 +320,50 @@ const ResponsiveDrawer = (props) => {
                 marginTop: 3
             }}
         /> */}
+        <Dialog
+            open={open}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogContent style={{ backgroundColor: '#444950', width: '30vh' }}>
+                <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
+                    Add Class
+                </DialogContentText>
+            </DialogContent>
+            <DialogTitle id="alert-dialog-title" textAlign={'center'} style={{ backgroundColor: '#444950', color: 'white', width: '30vh' }}>
+                <TextField
+                    focused
+                    id="outlined-new-class"
+                    label="new class"
+                    size='small'
+                    color='info'
+                    // onChange={handleChangeText}
+                    sx={{ width: 220 }}
+                    placeholder='input class name'
+                    InputProps={{
+                    style: { color: 'white' },
+                    endAdornment: <BookmarkBorderIcon style={{ color: 'white' }} />,
+                    }}
+                    inputRef={labelRef}
+                />
+            </DialogTitle>
+            <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
+                <Button autoFocus size='small'
+                    variant="contained"
+                    style={{marginTop: 10}}
+                    onClick={onCancel}
+                >
+                    CANCEL
+                </Button>
+                <Button autoFocus size='small'
+                    variant="contained"
+                    style={{marginTop: 10}}
+                    onClick={onAddLabel}
+                >
+                    ADD
+                </Button>
+            </DialogActions>
+        </Dialog>
     </div>
   );
 
@@ -339,7 +423,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
-    return {}
+    return {
+        addLabel(value) {
+          const action = AddLabel(value)
+          dispatch(action)
+        },
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveDrawer)

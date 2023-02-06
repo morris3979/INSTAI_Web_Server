@@ -3,18 +3,13 @@ import { connect } from 'react-redux'
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import {
-  AddLabel,
   GetLabelList
 } from '../../store/actionCreater'
 
 const LabelStudioWrapper = (props) => {
   const {
     dataItem,
-    addLabel,
     getLabelList,
     labelList
   } = props
@@ -23,19 +18,18 @@ const LabelStudioWrapper = (props) => {
   const rootRef = useRef()
   // this reference will be populated when LSF initialized and can be used somewhere else
   const lsfRef = useRef()
-  const labelRef = useRef()
 
   const annotationArr = []
-  const [path, setPath] = useState()
-  const [json4Training, setJson4Training] = useState()
-  const [additionalLabels, setAdditionalLabels] = useState([])
+  const [ path, setPath ] = useState()
+  const [ json4Training, setJson4Training ] = useState()
+  const [ additionalLabels, setAdditionalLabels ] = useState([])
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
     dataItem
     getLabelList(dataItem.ProjectId)
     labelList.Labels.map((value) => {
-      setAdditionalLabels((newClass) => [ ...newClass, `<Label value="${value.labelClass}"/>` ])
+      setAdditionalLabels((newClass) => [...newClass, `<Label value="${value.labelClass}"/>`])
     })
     // console.log('ProjectId', dataItem.ProjectId)
     if (rootRef.current) {
@@ -59,7 +53,7 @@ const LabelStudioWrapper = (props) => {
           "infobar",
           "topbar",
           "instruction",
-          // "side-column",
+          "side-column",
           // "annotations:history",
           // "annotations:tabs",
           // "annotations:menu",
@@ -172,47 +166,12 @@ const LabelStudioWrapper = (props) => {
     }
   }, [ path ])
 
-  const onAddLabel = () => {
-    if (labelRef.current.value != '') {
-      addLabel({
-        labelClass: labelRef.current.value,
-        ProjectId: dataItem.ProjectId
-      })
-    } else {
-      alert('Input Label Name cannot be empty !')
-    }
-  }
-
   // just a wrapper node to place LSF into
   return (
     <div>
-        <Box style={{ width: '85vw' }}>
-          <div style={{ marginBottom: 10 }}>
-            <TextField
-              focused
-              id="outlined-new-class"
-              label="new class"
-              size='small'
-              color='info'
-              // onChange={handleChangeText}
-              sx={{ width: 220 }}
-              placeholder='input class name'
-              InputProps={{
-                style: { color: 'white' },
-                endAdornment: <BookmarkBorderIcon style={{ color: 'white' }} />,
-              }}
-              inputRef={labelRef}
-            />
-            <Button
-              variant="contained"
-              onClick={onAddLabel}
-              style={{ marginLeft: 4 }}
-            >
-              ADD
-            </Button>
-          </div>
-          <div style={{ margin: 5 }} ref={rootRef} />
-        </Box>
+      <Box style={{ width: '85vw' }}>
+        <div style={{ margin: 5 }} ref={rootRef} />
+      </Box>
     </div>
   );
 }
@@ -228,10 +187,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    addLabel(value) {
-      const action = AddLabel(value)
-      dispatch(action)
-    },
     getLabelList(id, text) {
       const action = GetLabelList(id)
       dispatch(action)

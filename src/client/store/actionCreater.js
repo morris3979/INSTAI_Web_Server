@@ -361,8 +361,6 @@ export const AddLabel = (data) => {
       try {
         const response = await axios.post('/api/label', data)
         if (response.data) {
-          // const action = GetLabelList(response.data.id)
-          // dispatch(action)
           location.reload()
           return
         }
