@@ -23,4 +23,7 @@ dataRouter.post("/uploadToS3", (req, res) => {
 // Find a Data onClick
 dataRouter.get("/:id", Data.findData);
 
+// Update Label
+dataRouter.patch("/:id/label", Data.updateLabel);
+
 module.exports = [ dataRouter ];

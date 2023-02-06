@@ -22,6 +22,15 @@ exports.create = async (req, res) => {
       })
       return
     }
+    const findDevice = await Device.findOne({
+      where: { serialNumber: serialNumber },
+    })
+    if (findDevice) {
+      res.status(400).send({
+        message: "This device is in use, please checked!"
+      })
+      return
+    }
 
     // Create a Device
     const newDevice = {

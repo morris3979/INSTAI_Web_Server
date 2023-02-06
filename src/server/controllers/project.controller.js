@@ -168,9 +168,9 @@ exports.findLabel = (req, res) => {
       include: [{
           model: Label
       }],
-      order: [
-        [Label, 'id', 'DESC']
-      ],
+      // order: [
+      //   [Label, 'id', 'DESC']
+      // ],
       attributes: {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']
       }

@@ -32,6 +32,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import InstAI from '../../icon image/instai.png'
 import {
   AddLabel,
+  GetLabelList
 } from '../../store/actionCreater'
 
 const drawerWidth = 240;
@@ -39,7 +40,8 @@ const drawerWidth = 240;
 const ResponsiveDrawer = (props) => {
   const {
     dataItem,
-    addLabel
+    addLabel,
+    getLabelList
 } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
@@ -51,6 +53,7 @@ const ResponsiveDrawer = (props) => {
 
   useEffect(() => {
     dataItem
+    getLabelList(dataItem.ProjectId)
     // console.log('dataItem', dataItem)
   },[])
 
@@ -68,6 +71,7 @@ const ResponsiveDrawer = (props) => {
         labelClass: labelRef.current.value,
         ProjectId: dataItem.ProjectId
       })
+      getLabelList(dataItem.ProjectId)
       setOpen(false)
     } else {
       alert('Input Label Name cannot be empty !')
@@ -219,10 +223,10 @@ const ResponsiveDrawer = (props) => {
             sx={{
                 '&.MuiDivider-root': {
                     "&::before": {
-                      borderTop: "thin solid green"
+                      borderTop: "thin solid blue"
                     },
                     "&::after": {
-                      borderTop: "thin solid blue"
+                      borderTop: "thin solid green"
                     }
                 },
                 marginTop: 3
@@ -250,7 +254,9 @@ const ResponsiveDrawer = (props) => {
                     alignItems="center"
                     style={{ marginTop: 3 }}
                 >
-                    <Typography color='darkgrey'>(serialnumber)</Typography>
+                    <Typography color='darkgrey'>
+                        {dataItem.DeviceId == null? '(Local)': dataItem.Device.serialNumber}
+                    </Typography>
                 </Grid>
             </Grid>
             <Grid
@@ -286,7 +292,9 @@ const ResponsiveDrawer = (props) => {
                     alignItems="center"
                     style={{ marginTop: 3 }}
                 >
-                    <Typography color='darkgrey'>(username)</Typography>
+                    <Typography color='darkgrey'>
+                        {dataItem.UserId == null? '(Unlabeled)': dataItem.User.username}
+                    </Typography>
                 </Grid>
             </Grid>
             <Grid
@@ -426,6 +434,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addLabel(value) {
           const action = AddLabel(value)
+          dispatch(action)
+        },
+        getLabelList(id, text) {
+          const action = GetLabelList(id)
           dispatch(action)
         },
     }

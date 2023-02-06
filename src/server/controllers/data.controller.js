@@ -1,6 +1,7 @@
 const db = require('../database');
 const Project = db.Project;
 const Data = db.Data;
+const User = db.User;
 
 require('dotenv').config();
 const aws = require('aws-sdk');
@@ -88,6 +89,9 @@ exports.findData = (req, res) => {
       where: {
           id: req.params.id
       },
+      include: [{
+          model: User
+      }],
       attributes: {
           exclude: ['deletedAt']
       }
@@ -98,6 +102,10 @@ exports.findData = (req, res) => {
 
       const replacer = (key, value) => {
           if (key == 'deletedAt') return undefined
+          else if (key == 'password') return undefined
+          else if (key == 'admin') return undefined
+          else if (key == 'user') return undefined
+          else if (key == 'token') return undefined
           else return value
       }
 
@@ -105,4 +113,50 @@ exports.findData = (req, res) => {
   }).catch(err => {
       res.status(500).send({ message: err.message })
   })
+}
+
+// Update a Data Label by the id in the request
+exports.updateLabel = async(req, res) => {
+  const id = req.params.id
+  const { json, UserId } = req.body
+  // Validate request
+  if (!(json && UserId)) {
+    res.status(400).send({
+      message: "json & UserId can not be empty!"
+    })
+    return
+  }
+  const findUser = await User.findOne({
+    where: { id: UserId },
+  })
+  if (!findUser) {
+    res.status(400).send({
+      message: "User not existed, please create a new User!"
+    })
+    return
+  }
+
+  const newLabel = {
+    json: json,
+    UserId: UserId
+  }
+
+  Data.update(newLabel, {
+    where: { id: id }
+  }).then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Data was updated successfully."
+        })
+      } else {
+        res.send({
+          message: `Cannot update Data with id=${id}. Maybe Data was not found or req.body is empty!`
+        })
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Data with id=" + id
+      })
+    })
 }

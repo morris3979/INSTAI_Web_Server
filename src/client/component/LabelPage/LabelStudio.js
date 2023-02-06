@@ -161,8 +161,7 @@ const LabelStudioWrapper = (props) => {
             }
           `)
         }
-      }
-      );
+      })
     }
   }, [ path ])
 
