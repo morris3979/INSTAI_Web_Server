@@ -247,6 +247,22 @@ export const GetDataList = (id, data) => {
   )
 }
 
+export const PatchDataList = (id, data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.patch(`/api/data/${id}`, data)
+        if (response.data) {
+          location.reload()
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
 export const GetOrganizationMembers = (id, data) => {
   return (
     async (dispatch) => {

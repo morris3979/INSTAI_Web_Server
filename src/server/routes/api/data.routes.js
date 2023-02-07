@@ -20,6 +20,9 @@ dataRouter.post("/uploadToS3", (req, res) => {
     )
 });
 
+// Update Data
+dataRouter.patch("/:id", Data.update)
+
 // Find a Data onClick
 dataRouter.get("/:id", Data.findData);
 

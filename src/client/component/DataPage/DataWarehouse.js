@@ -25,13 +25,15 @@ import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import {
   GetDataList,
   GetDataItem,
+  PatchDataList
 } from '../../store/actionCreater'
 
 const DataWarehouse = (props) => {
   const {
     dataList,
     getDataList,
-    getDataItem
+    getDataItem,
+    patchDataList
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -40,6 +42,7 @@ const DataWarehouse = (props) => {
   const [ anchorEl_Filter, setAnchorEl_Filter ] = useState(null)
   const openFilter = Boolean(anchorEl_Filter)
 
+  const [ selectItem, setSelectItem ] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -62,6 +65,31 @@ const DataWarehouse = (props) => {
 
   const handleCloseSelect = () => {
     setAnchorEl_Select(null)
+  }
+
+  const handleSelectItem = (id, value) => {
+    if(selectItem.some(value => value.id==id)) {
+      setSelectItem(
+        selectItem.filter((c) => {
+          return c.id != id
+        })
+      )
+    }else{
+      setSelectItem([
+        ...selectItem,
+        {id:id,value:value}
+      ])
+    }
+  }
+  
+  const handleTagClick = () => {
+    if(selectItem.length) {
+      selectItem.forEach((data) => {
+        patchDataList(data.id,{ tag: 1 })
+      })
+    }else{
+      return
+    }
   }
 
   return (
@@ -206,6 +234,30 @@ const DataWarehouse = (props) => {
                   </MenuItem>
                 </Menu>
               </Grid>
+              <Grid item style={{ position: 'absolute', right: 160, marginRight: 5 }}>
+                <Button
+                    id="basic-button"
+                    variant="outlined"
+                    color='primary'
+                    disabled={selectItem.length==0}
+                    sx={selectItem.length==0?
+                      {
+                      "&.Mui-disabled": {
+                        color: "#FF0000",
+                        border: '1px solid rgba(255, 0, 0, 0.5)'
+                      }
+                      }:
+                      {
+                        "&.Mui-Eabled": {
+                          color: "#1976D2",
+                          border: '1px solid rgba(25, 118, 210, 0.5)'
+                        }
+                      }}
+                    onClick={handleTagClick}
+                  >
+                    Tag
+                  </Button>
+              </Grid>
               <Grid item style={{ position: 'absolute', right: 35, marginRight: 5 }}>
                 <Button
                   id="basic-button"
@@ -270,6 +322,7 @@ const DataWarehouse = (props) => {
                             sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
                             icon={<CheckCircleIcon color='disabled' />}
                             checkedIcon={<CheckCircleIcon color='primary' />}
+                            onClick={() => { handleSelectItem(item.id,item.data)} }
                           />
                           <CardMedia
                             title='Image'
@@ -333,6 +386,10 @@ const mapStateToProps = (state) => {
         const action = GetDataItem(id)
         dispatch(action)
       },
+      patchDataList(id ,data) {
+        const action = PatchDataList(id, data)
+        dispatch(action)
+      }
     }
   }
 

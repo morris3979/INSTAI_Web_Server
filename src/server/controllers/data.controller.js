@@ -83,6 +83,30 @@ exports.uploadToS3 = async(req, res, key, callback) => {
     })
 }
 
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Data.update(req.body, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Data was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Data with id=${id}. Maybe Data was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Project with id=" + id
+      });
+    });
+};
+
 // Find a Data onClick
 exports.findData = (req, res) => {
   Data.findOne({
