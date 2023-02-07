@@ -375,9 +375,6 @@ const DeviceTable = (props) => {
       <Button aria-label='delete'>
         <DeleteIcon style={{ color: 'white' }} />
       </Button>
-      {/* <Button aria-label='edit' onClick={handleClickOpenEdit}>
-        <EditIcon style={{ color: 'white' }} />
-      </Button> */}
       <Button aria-label='send'>
         <RocketLaunchIcon style={{ color: 'white' }} />
       </Button>
@@ -506,31 +503,33 @@ const DeviceTable = (props) => {
                             </TableCell>
                             <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.serialNumber}
-                              <IconButton 
-                                size='small' 
-                                color="primary" 
-                                aria-label="edit serialNumber" 
-                                component="label" 
-                                style={{ marginLeft: 15 }} 
+                              <IconButton
+                                size='small'
+                                color="primary"
+                                aria-label="edit serialNumber"
+                                component="label"
+                                style={{ marginLeft: 15 }}
                                 onClick={() => {
                                   setModifyValue({ id: row.id, text: 'serialNumber', command: null })
                                   handleSerialNumberOpen(row.serialNumber)
-                                }}>
+                                }}
+                              >
                                 <EditIcon/>
                               </IconButton>
                             </TableCell>
                             <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.deviceName}
-                              <IconButton 
-                                size='small' 
-                                color="primary" 
-                                aria-label="edit deviceName" 
-                                component="label" 
-                                style={{ marginLeft: 15 }} 
+                              <IconButton
+                                size='small'
+                                color="primary"
+                                aria-label="edit deviceName"
+                                component="label"
+                                style={{ marginLeft: 15 }}
                                 onClick={()=>{
                                   setModifyValue({ id: row.id, text: 'deviceName', command: null })
                                   handleDeviceNameOpen(row.deviceName)
-                                }}>
+                                }}
+                              >
                                 <EditIcon />
                               </IconButton>
                             </TableCell>
@@ -565,31 +564,33 @@ const DeviceTable = (props) => {
                             </TableCell>
                             <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.serialNumber}
-                              <IconButton 
-                                size='small' 
-                                color="primary" 
-                                aria-label="edit serialNumber" 
-                                component="label" 
-                                style={{ marginLeft: 15 }} 
+                              <IconButton
+                                size='small'
+                                color="primary"
+                                aria-label="edit serialNumber"
+                                component="label"
+                                style={{ marginLeft: 15 }}
                                 onClick={()=>{
                                   setModifyValue({ id: row.id, text: 'serialNumber', command: null })
                                   handleSerialNumberOpen(row.serialNumber)
-                                }}>
+                                }}
+                              >
                                 <EditIcon />
                               </IconButton>
                             </TableCell>
                             <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.deviceName}
-                              <IconButton 
-                                size='small' 
-                                color="primary" 
-                                aria-label="edit deviceName" 
-                                component="label" 
-                                style={{ marginLeft: 15 }} 
+                              <IconButton
+                                size='small'
+                                color="primary"
+                                aria-label="edit deviceName"
+                                component="label"
+                                style={{ marginLeft: 15 }}
                                 onClick={()=>{
                                   setModifyValue({ id: row.id, text: 'deviceName', command: null })
                                   handleDeviceNameOpen(row.deviceName)
-                                }}>
+                                }}
+                              >
                                 <EditIcon />
                               </IconButton>
                             </TableCell>
@@ -728,7 +729,6 @@ const DeviceTable = (props) => {
                 size='small'
                 color='info'
                 sx={{ width: 300 }}
-                style={{ marginTop: 20 }}
                 defaultValue={`${input.deviceName}`}
                 InputProps={{
                   style: { color: 'white' }
@@ -742,22 +742,20 @@ const DeviceTable = (props) => {
             <Button variant="contained" size='small' onClick={onCreateDevice} style={{marginTop: 10}}>SAVE</Button>
           </DialogActions>
         </Dialog>
-        <Dialog 
-          open={openCommand} 
-          onClose={handleCloseCommand} 
+        <Dialog
+          open={openCommand}
+          onClose={handleCloseCommand}
           PaperProps={{
             sx: {
             width: "100%",
             maxWidth: "550px",
             },
           }}>
-          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>command</DialogContent>
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Command</DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
             <Grid
               container
               direction="column"
-              // justifyContent="center"
-              // alignItems="center"
             >
               <TextField
                 focused
@@ -773,7 +771,6 @@ const DeviceTable = (props) => {
                   style: { color: 'white' }
                 }}
                 onChange={handleCommandChange}
-                // onChange={onChangeDevice}
               >
                 <MenuItem value='reset'>reset</MenuItem>
                 <MenuItem value='mode?'>mode?</MenuItem>
@@ -782,7 +779,7 @@ const DeviceTable = (props) => {
                 <MenuItem value='current_model?'>current_model?</MenuItem>
               </TextField>
             </Grid>
-            <Grid 
+            <Grid
               justifyContent="left"
               alignItems="left"
               style={{ marginTop: 20 }}
@@ -791,25 +788,25 @@ const DeviceTable = (props) => {
                 <FormLabel component="legend" style={{ color: 'white' }}>Change Mode</FormLabel>
                   <FormControlLabel
                     control={
-                      <Switch 
-                        name="Enable" 
+                      <Switch
+                        name="Enable"
                         checked={commandValue.Enable}
                         onChange={handleSwitchChange}/>
                     }
                   />
               </FormControl>
             </Grid>
-            <Grid 
+            <Grid
               justifyContent="left"
               alignItems="left"
               style={{ marginTop: 20 }}
               hidden={!commandValue.Enable}
             >
-              <TextField 
-                focused 
-                id="outlined-basic" 
-                label="Please Select Mode to use" 
-                name="Mode" 
+              <TextField
+                focused
+                id="outlined-basic"
+                label="Please Select Mode to use"
+                name="Mode"
                 select
                 size='small'
                 color='info'
@@ -838,10 +835,11 @@ const DeviceTable = (props) => {
                 <FormLabel component="legend" style={{ color: 'white' }}>Parameter Configuration</FormLabel>
                   <FormControlLabel
                     control={
-                      <Switch 
-                        name='related_params' 
+                      <Switch
+                        name='related_params'
                         checked={commandValue.related_params}
-                        onChange={handleSwitchChange}/>
+                        onChange={handleSwitchChange}
+                      />
                     }
                   />
               </FormControl>
@@ -856,10 +854,11 @@ const DeviceTable = (props) => {
                 <FormLabel component="legend" style={{ color: 'white' }}>Whether to start recording after a CNN event triggers</FormLabel>
                   <FormControlLabel
                     control={
-                      <Switch 
-                        name='rec_after_event_switch' 
+                      <Switch
+                        name='rec_after_event_switch'
                         checked={commandValue.rec_after_event_switch}
-                        onChange={handleSwitchChange}/>
+                        onChange={handleSwitchChange}
+                      />
                     }
                   />
               </FormControl>
@@ -1016,10 +1015,11 @@ const DeviceTable = (props) => {
                 <FormLabel component="legend" style={{ color: 'white' }}>Upload All Pictures</FormLabel>
                   <FormControlLabel
                     control={
-                      <Switch 
-                        name='upload_all_pictures_switch' 
+                      <Switch
+                        name='upload_all_pictures_switch'
                         checked={commandValue.upload_all_pictures_switch}
-                        onChange={handleSwitchChange}/>
+                        onChange={handleSwitchChange}
+                      />
                     }
                   />
               </FormControl>
@@ -1034,10 +1034,11 @@ const DeviceTable = (props) => {
                 <FormLabel component="legend" style={{ color: 'white' }}>Upload Collected Data to the Cloud</FormLabel>
                   <FormControlLabel
                     control={
-                      <Switch 
-                        name='upload_all_files_switch' 
+                      <Switch
+                        name='upload_all_files_switch'
                         checked={commandValue.upload_all_files_switch}
-                        onChange={handleSwitchChange}/>
+                        onChange={handleSwitchChange}
+                      />
                     }
                   />
               </FormControl>
