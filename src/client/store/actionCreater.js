@@ -212,6 +212,22 @@ export const CreateProject = (data) => {
   )
 }
 
+export const PatchProjectData = (id, data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.patch(`/api/project/${id}`, data)
+        if (response.data) {
+          location.reload()
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
 export const GetDataList = (id, data) => {
   return (
     async (dispatch) => {

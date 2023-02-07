@@ -69,7 +69,7 @@ exports.update = (req, res) => {
     return
   }
 
-  Project.update(project, {
+  Project.update(req.body, {
     where: { id: id }
   }).then(num => {
       if (num == 1) {

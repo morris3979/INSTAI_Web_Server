@@ -14,12 +14,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import { LogoutData, GetProjectList } from '../../store/actionCreater'
+import { LogoutData, GetProjectList, PatchProjectData } from '../../store/actionCreater'
 
 const ProjectAppBar = (props) => {
   const {
     projectList,
     dataList,
+    patchProjectData
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -37,15 +38,37 @@ const ProjectAppBar = (props) => {
   },[])
 
   const onSave = async () => {
-    createProject(input)
-    setOpen(false)
+    const converted = {}
+    converted.project = input.project
+    converted.type = input.type
+    if(input.project&&input.type) {
+      patchProjectData(dataList.id,converted)
+      setInput({
+        project: '',
+        type: 'Object Detection',
+        OrganizationId: projectList.id,
+      })
+      setOpen(false)
+    }else{
+      alert('Empty Value ! Please Check Again')
+    }
   }
 
   const handleClickOpen = () => {
+    setInput((prevState) => ({
+      ...prevState,
+      project: dataList.project,
+      type: dataList.type
+    }))
     setOpen(true)
   }
 
   const handleClose = () => {
+    setInput({
+      project: '',
+      type: 'Object Detection',
+      OrganizationId: projectList.id,
+    })
     setOpen(false)
   }
 
@@ -155,6 +178,10 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetProjectList(id)
       dispatch(action)
     },
+    patchProjectData(id, data) {
+      const action = PatchProjectData(id, data)
+      dispatch(action)
+    }
   }
 }
 
