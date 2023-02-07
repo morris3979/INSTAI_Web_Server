@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
@@ -38,6 +38,8 @@ const LoginForm = (props) => {
     ? setOpen(true): setOpen(false)
   },[userInformation])
 
+  const navigate = useNavigate();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const handleMouseDownPassword = (event) => {
@@ -54,6 +56,11 @@ const LoginForm = (props) => {
   const onSubmit = (e) => {
     // e.preventDefault()
     loginFormData(input)
+  }
+
+  const onNext = () => {
+    navigate('/SelectOrganization')
+    location.reload()
   }
 
   return(
@@ -206,8 +213,7 @@ const LoginForm = (props) => {
         <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
           <Button autoFocus size='small'
             variant="contained"
-            component={Link}
-            to={'/SelectOrganization'}
+            onClick={onNext}
             sx={{ margin: 1 }}
           >
             next

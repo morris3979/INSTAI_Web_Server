@@ -22,10 +22,6 @@ const SelectOrganization = (props) => {
     return () => userInformation
   },[])
 
-  const selectOrganization = async (id) => {
-    return getProjectList(id)
-  }
-
   return(
     <Typography align='center' sx={{ width : 400 }}>
       <div>
@@ -55,7 +51,7 @@ const SelectOrganization = (props) => {
                 borderColor: 'lightblue'
               }}
               align='center'
-              onClick={() => selectOrganization(c.id)}
+              onClick={() => getProjectList(c.id)}
               component={Link}
               to='/Home'
             >
