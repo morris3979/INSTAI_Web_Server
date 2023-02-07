@@ -58,6 +58,8 @@ const DeviceTable = (props) => {
   },[])
 
   const [ open, setOpen ] = useState(false)
+  const [ openSerialNumber, setOpenSerialNumber ] = useState(false)
+  const [ openDeviceName, setOpenDeviceName ] = useState(false)
   const [ searchName, setSearchName] = useState('')
   const [ modifyValue, setModifyValue ] = useState({
     id: '',
@@ -97,15 +99,21 @@ const DeviceTable = (props) => {
 
   const onCreateDevice = async () => {
     if(modifyValue.id) {
-      if(modifyValue.text == 'serialNumber') {
-        patchDeviceData(modifyValue.id, { serialNumber: input.serialNumber })
+      if(input.serialNumber||input.deviceName){
+        if(modifyValue.text == 'serialNumber') {
+          patchDeviceData(modifyValue.id, { serialNumber: input.serialNumber })
+          setOpenSerialNumber(false)
+        }else{
+          patchDeviceData(modifyValue.id, { deviceName: input.deviceName })
+          setOpenDeviceName(false)
+        }
       }else{
-        patchDeviceData(modifyValue.id, { deviceName: input.deviceName })
+        alert(`Invalid Value ! Please Check Again`)
       }
     }else{
       addDevice(input)
+      setOpen(false)
     }
-    setOpen(false)
   }
 
   const onCreateCommand = async () => {
@@ -150,6 +158,40 @@ const DeviceTable = (props) => {
     }
     setOpenCommand(false)
     patchDeviceData(modifyValue.id,{ command: command })
+  }
+
+  const handleSerialNumberOpen = (value) => {
+    setOpenSerialNumber(true)
+    setInput((prevState) => ({
+      ...prevState,
+      serialNumber: value
+    }))
+  }
+
+  const handleSerialNumberClose = () => {
+    setInput({
+      serialNumber: '',
+      deviceName: '',
+      ProjectId: deviceList.id
+    })
+    setOpenSerialNumber(false)
+  }
+
+  const handleDeviceNameOpen = (value) => {
+    setOpenDeviceName(true)
+    setInput((prevState) => ({
+      ...prevState,
+      deviceName: value
+    }))
+  }
+
+  const handleDeviceNameClose = () => {
+    setInput({
+      serialNumber: '',
+      deviceName: '',
+      ProjectId: deviceList.id
+    })
+    setOpenDeviceName(false)
   }
 
   const handleSliderChange = (event, newValue) => {
@@ -472,7 +514,7 @@ const DeviceTable = (props) => {
                                 style={{ marginLeft: 15 }} 
                                 onClick={() => {
                                   setModifyValue({ id: row.id, text: 'serialNumber', command: null })
-                                  handleClickOpen()
+                                  handleSerialNumberOpen(row.serialNumber)
                                 }}>
                                 <EditIcon/>
                               </IconButton>
@@ -487,7 +529,7 @@ const DeviceTable = (props) => {
                                 style={{ marginLeft: 15 }} 
                                 onClick={()=>{
                                   setModifyValue({ id: row.id, text: 'deviceName', command: null })
-                                  handleClickOpen()
+                                  handleDeviceNameOpen(row.deviceName)
                                 }}>
                                 <EditIcon />
                               </IconButton>
@@ -531,7 +573,7 @@ const DeviceTable = (props) => {
                                 style={{ marginLeft: 15 }} 
                                 onClick={()=>{
                                   setModifyValue({ id: row.id, text: 'serialNumber', command: null })
-                                  handleClickOpen()
+                                  handleSerialNumberOpen(row.serialNumber)
                                 }}>
                                 <EditIcon />
                               </IconButton>
@@ -546,7 +588,7 @@ const DeviceTable = (props) => {
                                 style={{ marginLeft: 15 }} 
                                 onClick={()=>{
                                   setModifyValue({ id: row.id, text: 'deviceName', command: null })
-                                  handleClickOpen()
+                                  handleDeviceNameOpen(row.deviceName)
                                 }}>
                                 <EditIcon />
                               </IconButton>
@@ -590,48 +632,10 @@ const DeviceTable = (props) => {
         </div>
         <Dialog open={open} onClose={handleClose}>
           <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>
-            {modifyValue.text? `Edit ${modifyValue.text}`: 'Add Device'}
+            Add Device
           </DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
-          {modifyValue.text
-          ? <Grid
-              container
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-            {modifyValue.text == 'serialNumber'
-            ? <TextField
-                focused
-                id="outlined-start-adornment"
-                label="SerialNumber"
-                name='serialNumber'
-                size='small'
-                color='info'
-                sx={{ width: 300 }}
-                placeholder='Host SerialNumber'
-                InputProps={{
-                  style: { color: 'white' }
-                }}
-                onChange={onChangeDevice}
-              />
-            : <TextField
-                focused
-                id="outlined-start-adornment"
-                label="Device Name"
-                name='deviceName'
-                size='small'
-                color='info'
-                sx={{ width: 300 }}
-                placeholder='Collection Device Name'
-                InputProps={{
-                  style: { color: 'white' }
-                }}
-                onChange={onChangeDevice}
-              />
-            }
-            </Grid>
-          : <Grid
+            <Grid
               container
               direction="column"
               justifyContent="center"
@@ -666,11 +670,76 @@ const DeviceTable = (props) => {
                 }}
                 onChange={onChangeDevice}
               />
-            </Grid>}
+            </Grid>
           </DialogTitle>
           <DialogActions style={{ backgroundColor: '#444950' }}>
             <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
             <Button variant="contained" size='small' onClick={onCreateDevice} style={{marginTop: 10}}>ADD</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openSerialNumber} onClose={handleSerialNumberClose}>
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>
+            Edit SerialNumber
+          </DialogContent>
+          <DialogTitle style={{ backgroundColor: '#444950' }}>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <TextField
+                focused
+                id="outlined-start-adornment"
+                label="SerialNumber"
+                name='serialNumber'
+                size='small'
+                color='info'
+                sx={{ width: 300 }}
+                defaultValue={`${input.serialNumber}`}
+                InputProps={{
+                  style: { color: 'white' }
+                }}
+                onChange={onChangeDevice}
+              />
+            </Grid>
+          </DialogTitle>
+          <DialogActions style={{ backgroundColor: '#444950' }}>
+            <Button variant="contained" size='small' onClick={handleSerialNumberClose} style={{marginTop: 10}}>Cancel</Button>
+            <Button variant="contained" size='small' onClick={onCreateDevice} style={{marginTop: 10}}>SAVE</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openDeviceName} onClose={handleDeviceNameClose}>
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>
+            Edit DeviceName
+          </DialogContent>
+          <DialogTitle style={{ backgroundColor: '#444950' }}>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <TextField
+                focused
+                id="outlined-start-adornment"
+                label="Device Name"
+                name='deviceName'
+                size='small'
+                color='info'
+                sx={{ width: 300 }}
+                style={{ marginTop: 20 }}
+                defaultValue={`${input.deviceName}`}
+                InputProps={{
+                  style: { color: 'white' }
+                }}
+                onChange={onChangeDevice}
+              />
+            </Grid>
+          </DialogTitle>
+          <DialogActions style={{ backgroundColor: '#444950' }}>
+            <Button variant="contained" size='small' onClick={handleDeviceNameClose} style={{marginTop: 10}}>Cancel</Button>
+            <Button variant="contained" size='small' onClick={onCreateDevice} style={{marginTop: 10}}>SAVE</Button>
           </DialogActions>
         </Dialog>
         <Dialog 
