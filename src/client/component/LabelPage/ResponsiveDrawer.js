@@ -36,7 +36,8 @@ import {
   GetLabelList,
   PatchDataItem,
   DownloadImage,
-  GetDataItem
+  GetDataItem,
+  DownloadJSON
 } from '../../store/actionCreater'
 
 const drawerWidth = 240;
@@ -49,7 +50,8 @@ const ResponsiveDrawer = (props) => {
     patchDataItem,
     userInformation,
     downloadImage,
-    getDataItem
+    getDataItem,
+    downloadJSON
 } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
@@ -102,8 +104,7 @@ const ResponsiveDrawer = (props) => {
   }
 
   const onSave = () => {
-    patchDataItem(dataItem.id, { json: 1, tag: 0, UserId: userInformation.id })
-    navigate('/Data')
+    patchDataItem(dataItem.id, { json: 1, UserId: userInformation.id })
     location.reload()
   }
 
@@ -125,7 +126,7 @@ const ResponsiveDrawer = (props) => {
                 <ListItemButton
                     style={{
                         backgroundColor: 'darkorange',
-                        color: 'darkslateblue',
+                        color: '#0A1929',
                         justifyContent: "center",
                         alignItems: "center",
                         fontWeight: 'bold',
@@ -134,7 +135,7 @@ const ResponsiveDrawer = (props) => {
                     onClick={onSave}
                 >
                     <SaveIcon style={{ marginRight: 5 }} />
-                    Save & Exist
+                    Save labeled
                 </ListItemButton>
             </ListItem>
         </List>
@@ -223,7 +224,8 @@ const ResponsiveDrawer = (props) => {
                         </MenuItem>
                         <MenuItem
                             sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                            onClick={handleCloseDownload}
+                            onClick={() => downloadJSON(dataItem.data)}
+                            disabled={dataItem.json == 0}
                         >
                             Label file (.json)
                         </MenuItem>
@@ -257,12 +259,13 @@ const ResponsiveDrawer = (props) => {
                         <MenuItem
                             sx={{ color: 'white', backgroundColor: '#1c2127' }}
                             onClick={() => patchDataItem(dataItem.id, { json: 0, UserId: null })}
+                            disabled={dataItem.json == 0}
                         >
                             Label file (.json)
                         </MenuItem>
                     </Menu>
                     <IconButton
-                        aria-label="delete label"
+                        aria-label="add label"
                         component="label"
                         style={{ color: 'darkgrey' }}
                         onClick={() => setOpen(true)}
@@ -346,7 +349,7 @@ const ResponsiveDrawer = (props) => {
                     style={{ marginTop: 3 }}
                 >
                     <Typography color='darkgrey'>
-                        {dataItem.UserId == null? '(Unlabeled)': dataItem.User.username}
+                        {dataItem.UserId === null? '(Unlabeled)': dataItem.User.username}
                     </Typography>
                 </Grid>
             </Grid>
@@ -498,12 +501,16 @@ const mapDispatchToProps = (dispatch) => {
           const action = PatchDataItem(id, data)
           dispatch(action)
         },
-        downloadImage(imageName) {
-          const action = DownloadImage(imageName)
+        downloadImage(filename) {
+          const action = DownloadImage(filename)
           dispatch(action)
         },
         getDataItem(id, text) {
           const action = GetDataItem(id)
+          dispatch(action)
+        },
+        downloadJSON(filename) {
+          const action = DownloadJSON(filename)
           dispatch(action)
         },
     }

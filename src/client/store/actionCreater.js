@@ -421,20 +421,39 @@ export const UploadJsonFile = (file) => {
   )
 }
 
-
-export const DownloadImage = (imageName) => {
+export const DownloadImage = (filename) => {
   return (
     async () => {
       try {
         const response = await axios.get(
-          `/api/aws/s3/getFile/image/${imageName}.jpg`, //AWS
-          // `/api/aliyun/oss/getFile/image/${imageName}.jpg`, //Aliyun
+          `/api/aws/s3/getFile/image/${filename}.jpg`, //AWS
           { responseType: 'blob' }
         )
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', `${imageName}.jpg`)
+        link.setAttribute('download', `${filename}.jpg`)
+        document.body.appendChild(link)
+        link.click()
+      } catch (error) {
+        alert(error)
+      }
+    }
+  )
+}
+
+export const DownloadJSON = (filename) => {
+  return (
+    async () => {
+      try {
+        const response = await axios.get(
+          `/api/aws/s3/getFile/json/${filename}.json`, //AWS
+          { responseType: 'blob' }
+        )
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${filename}.json`)
         document.body.appendChild(link)
         link.click()
       } catch (error) {

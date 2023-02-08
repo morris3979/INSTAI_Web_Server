@@ -760,7 +760,7 @@ const DeviceTable = (props) => {
               <TextField
                 focused
                 id="outlined-start-adornment"
-                label='ex: Upload...'
+                label='Select a command to the Device'
                 name='command'
                 value={selected}
                 select
