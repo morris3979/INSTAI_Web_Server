@@ -237,7 +237,7 @@ const DataWarehouse = (props) => {
               <Grid item style={{ position: 'absolute', right: 160, marginRight: 5 }}>
                 <Button
                     id="basic-button"
-                    variant="outlined"
+                    variant={selectItem.length == 0? "outlined": "contained"}
                     color='primary'
                     disabled={selectItem.length == 0}
                     sx={selectItem.length == 0?
