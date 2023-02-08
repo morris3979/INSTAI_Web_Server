@@ -421,4 +421,27 @@ export const UploadJsonFile = (file) => {
   )
 }
 
+
+export const DownloadImage = (imageName) => {
+  return (
+    async () => {
+      try {
+        const response = await axios.get(
+          `/api/aws/s3/getFile/image/${imageName}.jpg`, //AWS
+          // `/api/aliyun/oss/getFile/image/${imageName}.jpg`, //Aliyun
+          { responseType: 'blob' }
+        )
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${imageName}.jpg`)
+        document.body.appendChild(link)
+        link.click()
+      } catch (error) {
+        alert(error)
+      }
+    }
+  )
+}
+
 // >>>

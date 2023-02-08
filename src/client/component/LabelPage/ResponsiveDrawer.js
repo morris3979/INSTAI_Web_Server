@@ -34,7 +34,8 @@ import InstAI from '../../icon image/instai.png'
 import {
   AddLabel,
   GetLabelList,
-  PatchDataItem
+  PatchDataItem,
+  DownloadImage
 } from '../../store/actionCreater'
 
 const drawerWidth = 240;
@@ -45,7 +46,8 @@ const ResponsiveDrawer = (props) => {
     addLabel,
     getLabelList,
     patchDataItem,
-    userInformation
+    userInformation,
+    downloadImage
 } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
@@ -202,7 +204,7 @@ const ResponsiveDrawer = (props) => {
                     >
                         <MenuItem
                             sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                            onClick={handleCloseDownload}
+                            onClick={() => downloadImage(dataItem.data)}
                         >
                             Image file (.jpg)
                         </MenuItem>
@@ -456,7 +458,11 @@ const mapDispatchToProps = (dispatch) => {
         patchDataItem(id ,data) {
           const action = PatchDataItem(id, data)
           dispatch(action)
-        }
+        },
+        downloadImage(imageName) {
+          const action = DownloadImage(imageName)
+          dispatch(action)
+        },
     }
 }
 

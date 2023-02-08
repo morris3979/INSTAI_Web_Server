@@ -20,7 +20,8 @@ const LabelStudioWrapper = (props) => {
     dataItem,
     getLabelList,
     labelList,
-    uploadJsonFile
+    uploadJsonFile,
+    downloadImage
   } = props
 
   // we need a reference to a DOM node here so LSF knows where to render

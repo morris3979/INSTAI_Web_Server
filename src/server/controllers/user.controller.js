@@ -232,13 +232,13 @@ exports.inviteMember = async (req, res) => {
     })
     return
   }
-  const findBindUser = await UserGroup.findOne({
-    where: { UserId: findUser.dataValues.id }
+  const findMember = await UserGroup.findOne({
+    where: {
+      UserId: findUser.dataValues.id,
+      OrganizationId: organizationId
+    }
   })
-  const findBindOrganization = await UserGroup.findOne({
-    where: { OrganizationId: organizationId }
-  })
-  if (findBindUser && findBindOrganization) {
+  if (findMember) {
     res.status(400).send({
       message: "This user is already a member!"
     })
