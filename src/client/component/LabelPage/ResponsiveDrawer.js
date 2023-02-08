@@ -29,10 +29,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SaveIcon from '@mui/icons-material/Save';
 import InstAI from '../../icon image/instai.png'
 import {
   AddLabel,
-  GetLabelList
+  GetLabelList,
+  PatchDataItem
 } from '../../store/actionCreater'
 
 const drawerWidth = 240;
@@ -41,7 +43,9 @@ const ResponsiveDrawer = (props) => {
   const {
     dataItem,
     addLabel,
-    getLabelList
+    getLabelList,
+    patchDataItem,
+    userInformation
 } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
@@ -54,7 +58,7 @@ const ResponsiveDrawer = (props) => {
   useEffect(() => {
     dataItem
     getLabelList(dataItem.ProjectId)
-    // console.log('dataItem', dataItem)
+    // console.log('userInformation', userInformation)
   },[])
 
   const handleClickDownload = (event) => {
@@ -74,12 +78,18 @@ const ResponsiveDrawer = (props) => {
       getLabelList(dataItem.ProjectId)
       setOpen(false)
     } else {
-      alert('Input Label Name cannot be empty !')
+      alert('Input Class Name cannot be empty!')
     }
   }
 
   const onCancel = () => {
     setOpen(false)
+  }
+
+  const onSave = () => {
+    patchDataItem(dataItem.id, { json: 1, UserId: userInformation.id })
+    navigate('/Data')
+    location.reload()
   }
 
   const drawer = (
@@ -106,7 +116,9 @@ const ResponsiveDrawer = (props) => {
                         fontWeight: 'bold',
                         borderRadius: 5
                     }}
+                    onClick={onSave}
                 >
+                    <SaveIcon style={{ marginRight: 5 }} />
                     Save & Exist
                 </ListItemButton>
             </ListItem>
@@ -425,7 +437,8 @@ const ResponsiveDrawer = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
-        dataItem: state.dataItem
+        dataItem: state.dataItem,
+        userInformation: state.userInformation,
     }
 }
 
@@ -440,6 +453,10 @@ const mapDispatchToProps = (dispatch) => {
           const action = GetLabelList(id)
           dispatch(action)
         },
+        patchDataItem(id ,data) {
+          const action = PatchDataItem(id, data)
+          dispatch(action)
+        }
     }
 }
 

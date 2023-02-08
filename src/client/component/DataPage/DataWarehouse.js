@@ -25,7 +25,7 @@ import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import {
   GetDataList,
   GetDataItem,
-  PatchDataList
+  PatchDataItem
 } from '../../store/actionCreater'
 
 const DataWarehouse = (props) => {
@@ -33,7 +33,7 @@ const DataWarehouse = (props) => {
     dataList,
     getDataList,
     getDataItem,
-    patchDataList
+    patchDataItem
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -81,11 +81,11 @@ const DataWarehouse = (props) => {
       ])
     }
   }
-  
+
   const handleTagClick = () => {
     if(selectItem.length) {
       selectItem.forEach((data) => {
-        patchDataList(data.id,{ tag: 1 })
+        patchDataItem(data.id,{ tag: 1 })
       })
     }else{
       return
@@ -387,8 +387,8 @@ const mapStateToProps = (state) => {
         const action = GetDataItem(id)
         dispatch(action)
       },
-      patchDataList(id ,data) {
-        const action = PatchDataList(id, data)
+      patchDataItem(id ,data) {
+        const action = PatchDataItem(id, data)
         dispatch(action)
       }
     }

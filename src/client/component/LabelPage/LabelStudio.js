@@ -9,6 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {
   GetLabelList,
   UploadJsonFile
@@ -186,12 +187,16 @@ const LabelStudioWrapper = (props) => {
   }
 
   const exportJson = () => {
-    const jsonData = JSON.parse(json4Training)
-    const fileName = dataItem.data+'.json'
-    const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
-    // console.log('export file', file)
-    setFileList([...fileList, file])
-    setOpen(true)
+    if (json4Training) {
+      const jsonData = JSON.parse(json4Training)
+      const fileName = dataItem.data+'.json'
+      const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
+      // console.log('export file', file)
+      setFileList([...fileList, file])
+      setOpen(true)
+    } else {
+      alert('Please Label first!')
+    }
   }
 
   // just a wrapper node to place LSF into
@@ -202,6 +207,7 @@ const LabelStudioWrapper = (props) => {
         <Button
           variant="contained"
           style={{margin: 10}}
+          startIcon={<ExitToAppIcon />}
           onClick={exportJson}
         >
           export

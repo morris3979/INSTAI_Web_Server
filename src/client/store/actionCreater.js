@@ -247,7 +247,7 @@ export const GetDataList = (id, data) => {
   )
 }
 
-export const PatchDataList = (id, data) => {
+export const PatchDataItem = (id, data) => {
   return (
     async (dispatch) => {
       try {
