@@ -239,16 +239,17 @@ const DataWarehouse = (props) => {
                     id="basic-button"
                     variant="outlined"
                     color='primary'
-                    disabled={selectItem.length==0}
-                    sx={selectItem.length==0?
+                    disabled={selectItem.length == 0}
+                    sx={selectItem.length == 0?
                       {
-                      "&.Mui-disabled": {
-                        color: "#FF0000",
-                        border: '1px solid rgba(255, 0, 0, 0.5)'
-                      }
+                        "&.Mui-disabled": {
+                          color: 'grey',
+                          opacity: .3,
+                          border: '1px solid grey'
+                        }
                       }:
                       {
-                        "&.Mui-Eabled": {
+                        "&.Mui-Enabled": {
                           color: "#1976D2",
                           border: '1px solid rgba(25, 118, 210, 0.5)'
                         }

@@ -404,4 +404,21 @@ export const AddLabel = (data) => {
   )
 }
 
+export const UploadJsonFile = (file) => {
+  return (
+    async () => {
+      let formData = new FormData();
+      formData.append('file', file)
+      return axios.post(
+        `/api/aws/s3/upload/json`, formData
+      ).then(response => {
+        console.log('response', response)
+        // JSON responses are automatically parsed.
+      }).catch(e => {
+        this.errors.push(e);
+      });
+    }
+  )
+}
+
 // >>>

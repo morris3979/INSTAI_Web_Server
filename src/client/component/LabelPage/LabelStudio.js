@@ -3,15 +3,23 @@ import { connect } from 'react-redux'
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import {
-  GetLabelList
+  GetLabelList,
+  UploadJsonFile
 } from '../../store/actionCreater'
 
 const LabelStudioWrapper = (props) => {
   const {
     dataItem,
     getLabelList,
-    labelList
+    labelList,
+    uploadJsonFile
   } = props
 
   // we need a reference to a DOM node here so LSF knows where to render
@@ -23,6 +31,9 @@ const LabelStudioWrapper = (props) => {
   const [ path, setPath ] = useState()
   const [ json4Training, setJson4Training ] = useState()
   const [ additionalLabels, setAdditionalLabels ] = useState([])
+  const [ fileList, setFileList ] = useState([])
+
+  const [ open, setOpen ] = useState(false)
 
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
@@ -165,12 +176,74 @@ const LabelStudioWrapper = (props) => {
     }
   }, [ path ])
 
+  const onConfirm = () => {
+    uploadJsonFile(fileList[0])
+    setOpen(false)
+  }
+
+  const onCancel = () => {
+    setOpen(false)
+  }
+
+  const exportJson = () => {
+    const jsonData = JSON.parse(json4Training)
+    const fileName = dataItem.data+'.json'
+    const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
+    // console.log('export file', file)
+    setFileList([...fileList, file])
+    setOpen(true)
+  }
+
   // just a wrapper node to place LSF into
   return (
     <div>
       <Box style={{ width: '85vw' }}>
         <div style={{ margin: 5 }} ref={rootRef} />
+        <Button
+          variant="contained"
+          style={{margin: 10}}
+          onClick={exportJson}
+        >
+          export
+        </Button>
       </Box>
+      <Dialog
+        open={open}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent style={{ backgroundColor: '#444950', width: '50vh' }}>
+          <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
+            {dataItem.data+'.json'}
+          </DialogContentText>
+        </DialogContent>
+        <DialogTitle
+          id="alert-dialog-title"
+          textAlign={'center'}
+          style={{ backgroundColor: '#444950', color: 'white', width: '50vh' }}>
+          <div>
+            <p>{json4Training}</p>
+          </div>
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
+          <Button
+            size='small'
+            variant="contained"
+            onClick={onCancel}
+            sx={{ margin: 1 }}
+          >
+            CANCEL
+          </Button>
+          <Button
+            size='small'
+            variant="contained"
+            onClick={onConfirm}
+            sx={{ margin: 1 }}
+          >
+            CONFIRM
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
@@ -188,6 +261,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getLabelList(id, text) {
       const action = GetLabelList(id)
+      dispatch(action)
+    },
+    uploadJsonFile(file) {
+      const action = UploadJsonFile(file)
       dispatch(action)
     },
   }

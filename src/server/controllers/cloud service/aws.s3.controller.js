@@ -25,7 +25,7 @@ exports.uploadToS3 = async(req, res, key, callback) => {
             // acl: 'public-read',
             bucket: process.env.AWS_BUCKET_NAME,
             metadata: (req, file, cb) => {
-                cb(null, {fieldName: file.fieldname});
+                cb(null, { fieldName: file.fieldname });
             },
             key: (req, file, cb) => {
                 cb(null, 'json' + '/' + file.originalname); // file.originalname
@@ -37,7 +37,7 @@ exports.uploadToS3 = async(req, res, key, callback) => {
         if (err) {
             callback({error: {title: 'File Upload Error', detail: err.message}});
         } else {
-            callback(null, {url: req.file.location, key: req.file.key});
+            callback(null, { url: req.file.location, key: req.file.key });
         }
     });
 };
