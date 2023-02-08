@@ -35,7 +35,8 @@ import {
   AddLabel,
   GetLabelList,
   PatchDataItem,
-  DownloadImage
+  DownloadImage,
+  GetDataItem
 } from '../../store/actionCreater'
 
 const drawerWidth = 240;
@@ -47,11 +48,14 @@ const ResponsiveDrawer = (props) => {
     getLabelList,
     patchDataItem,
     userInformation,
-    downloadImage
+    downloadImage,
+    getDataItem
 } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
-  const openSelect = Boolean(anchorEl_Download)
+  const openSelectDownload = Boolean(anchorEl_Download)
+  const [ anchorEl_Delete, setAnchorEl_Delete ] = useState(null)
+  const openSelectDelete = Boolean(anchorEl_Delete)
   const [ open, setOpen ] = useState(false)
 
   const navigate = useNavigate()
@@ -60,6 +64,7 @@ const ResponsiveDrawer = (props) => {
   useEffect(() => {
     dataItem
     getLabelList(dataItem.ProjectId)
+    getDataItem(dataItem.id)
     // console.log('userInformation', userInformation)
   },[])
 
@@ -69,6 +74,14 @@ const ResponsiveDrawer = (props) => {
 
   const handleCloseDownload = () => {
     setAnchorEl_Download(null)
+  }
+
+  const handleClickDelete = (event) => {
+    setAnchorEl_Delete(event.currentTarget)
+  }
+
+  const handleCloseDelete = () => {
+    setAnchorEl_Delete(null)
   }
 
   const onAddLabel = () => {
@@ -89,7 +102,7 @@ const ResponsiveDrawer = (props) => {
   }
 
   const onSave = () => {
-    patchDataItem(dataItem.id, { json: 1, UserId: userInformation.id })
+    patchDataItem(dataItem.id, { json: 1, tag: 0, UserId: userInformation.id })
     navigate('/Data')
     location.reload()
   }
@@ -179,9 +192,9 @@ const ResponsiveDrawer = (props) => {
                     <IconButton
                         aria-label="download label"
                         component="label"
-                        aria-controls={openSelect ? 'basic-menu' : undefined}
+                        aria-controls={openSelectDownload ? 'basic-menu' : undefined}
                         aria-haspopup="true"
-                        aria-expanded={openSelect ? 'true' : undefined}
+                        aria-expanded={openSelectDownload ? 'true' : undefined}
                         onClick={handleClickDownload}
                         style={{ color: 'darkgrey' }}
                     >
@@ -190,7 +203,7 @@ const ResponsiveDrawer = (props) => {
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl_Download}
-                        open={openSelect}
+                        open={openSelectDownload}
                         onClose={handleCloseDownload}
                         MenuListProps={{
                             'aria-labelledby': 'basic-button'
@@ -218,10 +231,36 @@ const ResponsiveDrawer = (props) => {
                     <IconButton
                         aria-label="delete label"
                         component="label"
+                        aria-controls={openSelectDelete ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openSelectDelete ? 'true' : undefined}
+                        onClick={handleClickDelete}
                         style={{ color: 'darkgrey' }}
                     >
                         <DeleteIcon />
                     </IconButton>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl_Delete}
+                        open={openSelectDelete}
+                        onClose={handleCloseDelete}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button'
+                        }}
+                        PaperProps={{
+                            sx: {
+                            color: 'white',
+                            backgroundColor: '#1c2127'
+                            }
+                        }}
+                    >
+                        <MenuItem
+                            sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                            onClick={() => patchDataItem(dataItem.id, { json: 0, UserId: null })}
+                        >
+                            Label file (.json)
+                        </MenuItem>
+                    </Menu>
                     <IconButton
                         aria-label="delete label"
                         component="label"
@@ -461,6 +500,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         downloadImage(imageName) {
           const action = DownloadImage(imageName)
+          dispatch(action)
+        },
+        getDataItem(id, text) {
+          const action = GetDataItem(id)
           dispatch(action)
         },
     }
