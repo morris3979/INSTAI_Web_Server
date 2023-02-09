@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
@@ -113,6 +114,44 @@ const DataWarehouse = (props) => {
               alignItems: 'center',
             }}
           >
+            <Typography
+              noWrap
+              variant="h4"
+              sx={{
+                color: 'orangered',
+                fontWeight: 'bold',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: 5,
+              }}
+            >
+              Please use Device to data collection
+            </Typography>
+            <Box width={'20vw'}>
+              <Divider
+                sx={{
+                  '&.MuiDivider-root': {
+                      "&::before": {
+                        borderTop: "thin solid green"
+                      },
+                      "&::after": {
+                        borderTop: "thin solid blue"
+                      }
+                  },
+                  marginTop: 5,
+                  marginBottom: 2
+                }}
+              >
+                <Typography
+                  color='lightblue'
+                  variant='h6'
+                  sx={{ fontWeight: 'bold' }}
+                >
+                  or
+                </Typography>
+              </Divider>
+            </Box>
             <Button
               variant="contained"
               component="label"

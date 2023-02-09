@@ -230,8 +230,9 @@ const ProjectAppBar = (props) => {
                         },
                         '& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text': {
                           color: 'black',
-                        },
-                      }}>
+                        }
+                      }}
+                    >
                       <StepLabel {...labelProps}>{label}</StepLabel>
                     </Step>
                   )

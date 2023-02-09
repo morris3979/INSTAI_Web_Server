@@ -356,7 +356,7 @@ const ResponsiveDrawer = (props) => {
                     style={{ marginTop: 3 }}
                 >
                     <Typography color='darkgrey'>
-                        (Model)
+                        (No Model)
                     </Typography>
                 </Grid>
             </Grid>
