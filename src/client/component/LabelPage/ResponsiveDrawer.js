@@ -347,6 +347,25 @@ const ResponsiveDrawer = (props) => {
                 spacing={2}
                 style={{ marginLeft: 10, marginTop: 8 }}
             >
+                <Typography color='grey' sx={{ fontWeight: 'bold' }}>Used Model</Typography>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ marginTop: 3 }}
+                >
+                    <Typography color='darkgrey'>
+                        (Model)
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid
+                container
+                direction="column"
+                spacing={2}
+                style={{ marginLeft: 10, marginTop: 8 }}
+            >
                 <Typography color='grey' sx={{ fontWeight: 'bold' }}>Label worker</Typography>
                 <Grid
                     container
