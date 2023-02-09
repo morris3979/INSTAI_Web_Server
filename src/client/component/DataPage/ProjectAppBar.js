@@ -18,6 +18,10 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { LogoutData, GetProjectList, PatchProjectData } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Label', 'Train']
@@ -173,6 +177,7 @@ const ProjectAppBar = (props) => {
                 variant='outlined'
                 disabled={activeStep === 0}
                 onClick={handleBack}
+                startIcon={<ChevronLeftIcon />}
                 sx={{
                   mr: 1,
                   "&.Mui-disabled": {
@@ -234,16 +239,16 @@ const ProjectAppBar = (props) => {
               </Stepper>
               {activeStep === steps.length ? (
                 <div>
-                  <Button onClick={handleReset} sx={{ margin: 1 }}>Reset</Button>
+                  <Button onClick={handleReset} variant='outlined' sx={{ margin: 1 }} endIcon={<RestartAltIcon />}>Restart</Button>
                 </div>
               ) : (
                 <div>
                   {isStepOptional(activeStep) && (
-                    <Button color="inherit" variant='outlined' onClick={handleSkip} sx={{ margin: 1 }}>
+                    <Button color="inherit" variant='outlined' onClick={handleSkip} sx={{ margin: 1 }} endIcon={<SkipNextIcon />}>
                       Skip
                     </Button>
                   )}
-                  <Button onClick={handleNext} variant='outlined' sx={{ margin: 1 }}>
+                  <Button onClick={handleNext} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                   </Button>
                 </div>

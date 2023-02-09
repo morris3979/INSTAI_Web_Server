@@ -209,28 +209,28 @@ const DataWarehouse = (props) => {
                   }}
                 >
                   <MenuItem
-                    key={'labeled'}
+                    key={'tag'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleCloseFilter}
+                    // onClick={handleCloseFilter}
                   >
                     <Checkbox sx={{ color: 'white' }} />
-                    <ListItemText primary={'Labeled'} sx={{ marginRight: 5 }} />
+                    <ListItemText primary={'tag'} sx={{ marginRight: 3 }} />
+                  </MenuItem>
+                  <MenuItem
+                    key={'labeled'}
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    // onClick={handleCloseFilter}
+                  >
+                    <Checkbox sx={{ color: 'white' }} />
+                    <ListItemText primary={'Labeled'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
                     key={'unlabeled'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleCloseFilter}
+                    // onClick={handleCloseFilter}
                   >
                     <Checkbox sx={{ color: 'white' }} />
-                    <ListItemText primary={'Unlabeled'} sx={{ marginRight: 5 }} />
-                  </MenuItem>
-                  <MenuItem
-                    key={'trained'}
-                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleCloseFilter}
-                  >
-                    <Checkbox sx={{ color: 'white' }} />
-                    <ListItemText primary={'Trained'} sx={{ marginRight: 5 }} />
+                    <ListItemText primary={'Unlabeled'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                 </Menu>
               </Grid>
