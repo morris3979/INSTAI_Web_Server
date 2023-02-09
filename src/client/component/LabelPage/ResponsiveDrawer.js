@@ -37,7 +37,8 @@ import {
   PatchDataItem,
   DownloadImage,
   GetDataItem,
-  DownloadJSON
+  DownloadJSON,
+  GetDataList
 } from '../../store/actionCreater'
 
 const drawerWidth = 240;
@@ -51,7 +52,9 @@ const ResponsiveDrawer = (props) => {
     userInformation,
     downloadImage,
     getDataItem,
-    downloadJSON
+    downloadJSON,
+    getDataList,
+    dataList
 } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
@@ -67,7 +70,7 @@ const ResponsiveDrawer = (props) => {
     dataItem
     getLabelList(dataItem.ProjectId)
     getDataItem(dataItem.id)
-    // console.log('userInformation', userInformation)
+    console.log('dataItem', dataItem)
   },[])
 
   const handleClickDownload = (event) => {
@@ -108,14 +111,18 @@ const ResponsiveDrawer = (props) => {
     location.reload()
   }
 
+  const onCloseLabel = () => {
+    navigate('/Data')
+    getDataList(dataList.id)
+    location.reload()
+  }
+
   const drawer = (
     <div>
         <IconButton
             aria-label="close label"
             component="label"
-            onClick={() => {
-                navigate('/Data')
-            }}
+            onClick={onCloseLabel}
             style={{ marginLeft: 2, marginTop: 2, color: 'lightblue' }}
         >
             <CloseIcon />
@@ -483,6 +490,7 @@ const mapStateToProps = (state) => {
     return {
         dataItem: state.dataItem,
         userInformation: state.userInformation,
+        dataList: state.dataList
     }
 }
 
@@ -511,6 +519,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         downloadJSON(filename) {
           const action = DownloadJSON(filename)
+          dispatch(action)
+        },
+        getDataList(id, text) {
+          const action = GetDataList(id)
           dispatch(action)
         },
     }
