@@ -14,7 +14,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
 import { LogoutData, GetProjectList, PatchProjectData } from '../../store/actionCreater'
+
+const steps = ['Data collection', 'Clean data', 'Label', 'Train']
 
 const ProjectAppBar = (props) => {
   const {
@@ -29,6 +35,8 @@ const ProjectAppBar = (props) => {
     type: 'Object Detection',
     OrganizationId: projectList.id,
   })
+  const [ activeStep, setActiveStep ] = useState(0)
+  const [ skipped, setSkipped ] = useState(new Set())
 
   useEffect(() => {
     dataList
@@ -79,6 +87,48 @@ const ProjectAppBar = (props) => {
     }))
   }
 
+  const isStepOptional = (step) => {
+    return step === 1
+  }
+
+  const isStepSkipped = (step) => {
+    return skipped.has(step)
+  }
+
+  const handleNext = () => {
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values())
+      newSkipped.delete(activeStep)
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    setSkipped(newSkipped)
+  }
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
+
+  const handleSkip = () => {
+    if (!isStepOptional(activeStep)) {
+      // You probably want to guard against something like this,
+      // it should never occur unless someone's actively trying to break something.
+      throw new Error("You can't skip a step that isn't optional.")
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    setSkipped((prevSkipped) => {
+      const newSkipped = new Set(prevSkipped.values())
+      newSkipped.add(activeStep)
+      return newSkipped
+    })
+  }
+
+  const handleReset = () => {
+    setActiveStep(0);
+  }
+
   return (
     <AppBar position="fixed" elevation={0}
       style={{ backgroundColor: '#1c2127', height: '7vh', marginTop: '6vh' }}
@@ -86,27 +136,119 @@ const ProjectAppBar = (props) => {
     >
       <Container maxWidth="100vh">
         <Toolbar disableGutters>
-          <Grid container justifyContent='flex-start'>
-            <Typography>
-              <FilterCenterFocusIcon style={{ color: 'white', marginLeft: 9, marginTop: 8 }} />
-            </Typography>
-            <Typography
-              noWrap
-              variant="h6"
-              sx={{
-                mr: 2,
-                fontWeight: 'bold',
-                color: 'inherit',
-                marginLeft: 4,
-                marginTop: 0.5
-              }}
+            <Grid container justifyContent='flex-start'>
+              <Typography>
+                <FilterCenterFocusIcon style={{ color: 'white', marginLeft: 9, marginTop: 8 }} />
+              </Typography>
+              <Typography
+                noWrap
+                variant="h6"
+                sx={{
+                  mr: 2,
+                  fontWeight: 'bold',
+                  color: 'inherit',
+                  marginLeft: 4,
+                  marginTop: 0.5
+                }}
+              >
+                {dataList.project}
+              </Typography>
+              <IconButton
+                color="primary"
+                aria-label="edit project"
+                component="label"
+                onClick={handleClickOpen}
+              >
+                <EditIcon />
+              </IconButton>
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
             >
-              {dataList.project}
-            </Typography>
-            <IconButton color="primary" aria-label="edit project" component="label" onClick={handleClickOpen}>
-              <EditIcon />
-            </IconButton>
-          </Grid>
+              <Button
+                color="inherit"
+                variant='outlined'
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{
+                  mr: 1,
+                  "&.Mui-disabled": {
+                    color: 'grey',
+                    opacity: .3,
+                    border: '1px solid grey'
+                  }
+                }}
+              >
+                Back
+              </Button>
+              <Stepper activeStep={activeStep}>
+                {steps.map((label, index) => {
+                  const stepProps = {};
+                  const labelProps = {};
+                  if (isStepOptional(index)) {
+                    labelProps.optional = (
+                      <Typography variant="caption" sx={{ color: 'grey' }}>Optional</Typography>
+                    )
+                  }
+                  if (isStepSkipped(index)) {
+                    stepProps.completed = false;
+                  }
+                  return (
+                    <Step
+                      key={label}
+                      {...stepProps}
+                      sx={{
+                        '& .MuiStepLabel-root .Mui-completed': {
+                          color: 'darkgray', // circle color (COMPLETED)
+                        },
+                        '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
+                          {
+                            color: 'darkgray', // Just text label (COMPLETED)
+                          },
+                        '& .MuiStepLabel-root .Mui-active': {
+                          color: 'green', // circle color (ACTIVE)
+                        },
+                        '& .MuiStepLabel-label .Mui-active.MuiStepLabel-alternativeLabel': {
+                          color: 'common.white', // Just text label (ACTIVE)
+                        },
+                        '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                          fill: 'common.white', // circle's number (ACTIVE)
+                        },
+                        '& .MuiStepIcon-root .Mui-disabled': {
+                          color: 'darkgrey'
+                        },
+                        '& .MuiStepLabel-root .Mui-disabled': {
+                          color: 'darkgrey',
+                        },
+                        '& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text': {
+                          color: 'black',
+                        },
+                      }}>
+                      <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                  )
+                })}
+              </Stepper>
+              {activeStep === steps.length ? (
+                <div>
+                  <Button onClick={handleReset} sx={{ margin: 1 }}>Reset</Button>
+                </div>
+              ) : (
+                <div>
+                  {isStepOptional(activeStep) && (
+                    <Button color="inherit" variant='outlined' onClick={handleSkip} sx={{ margin: 1 }}>
+                      Skip
+                    </Button>
+                  )}
+                  <Button onClick={handleNext} variant='outlined' sx={{ margin: 1 }}>
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
+              )}
+            </Grid>
         </Toolbar>
       </Container>
       <Dialog open={open} onClose={handleClose}>
