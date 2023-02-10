@@ -39,6 +39,8 @@ const DataWarehouse = (props) => {
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
   const openSelect = Boolean(anchorEl_Select)
+  const [ anchorEl_Tag, setAnchorEl_Tag ] = useState(null)
+  const openTag = Boolean(anchorEl_Tag)
 
   const [ anchorEl_Filter, setAnchorEl_Filter ] = useState(null)
   const openFilter = Boolean(anchorEl_Filter)
@@ -68,6 +70,14 @@ const DataWarehouse = (props) => {
     setAnchorEl_Select(null)
   }
 
+  const handleClickTag = (event) => {
+    setAnchorEl_Tag(event.currentTarget)
+  }
+
+  const handleCloseTag = () => {
+    setAnchorEl_Tag(null)
+  }
+
   const handleSelectItem = (id, value) => {
     if(selectItem.some(value => value.id==id)) {
       setSelectItem(
@@ -83,10 +93,10 @@ const DataWarehouse = (props) => {
     }
   }
 
-  const handleTagClick = () => {
+  const handleClickCleanTag = () => {
     if(selectItem.length) {
       selectItem.forEach((data) => {
-        patchDataItem(data.id,{ tag: 1 })
+        patchDataItem(data.id, { cleanTag: 1 })
       })
     }else{
       return
@@ -256,12 +266,12 @@ const DataWarehouse = (props) => {
                     <ListItemText primary={'All'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
-                    key={'tag'}
+                    key={'cleaned'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     // onClick={handleCloseFilter}
                   >
                     <Checkbox sx={{ color: 'white' }} />
-                    <ListItemText primary={'tag'} sx={{ marginRight: 3 }} />
+                    <ListItemText primary={'cleaned'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
                     key={'labeled'}
@@ -275,28 +285,47 @@ const DataWarehouse = (props) => {
               </Grid>
               <Grid item style={{ position: 'absolute', right: 160, marginRight: 5 }}>
                 <Button
-                    id="basic-button"
-                    variant={selectItem.length == 0? "outlined": "contained"}
-                    color='primary'
+                  id="basic-button"
+                  variant="outlined"
+                  aria-controls={openTag ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openTag ? 'true' : undefined}
+                  onClick={handleClickTag}
+                  color='primary'
+                  endIcon={<ExpandCircleDownIcon />}
+                >
+                  Tag
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl_Tag}
+                  open={openTag}
+                  onClose={handleCloseTag}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button'
+                  }}
+                  PaperProps={{
+                    sx: {
+                      color: 'white',
+                      backgroundColor: '#1c2127'
+                    }
+                  }}
+                >
+                  <MenuItem
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     disabled={selectItem.length == 0}
-                    sx={selectItem.length == 0?
-                      {
-                        "&.Mui-disabled": {
-                          color: 'grey',
-                          opacity: .3,
-                          border: '1px solid grey'
-                        }
-                      }:
-                      {
-                        "&.Mui-Enabled": {
-                          color: "#1976D2",
-                          border: '1px solid rgba(25, 118, 210, 0.5)'
-                        }
-                      }}
-                    onClick={handleTagClick}
+                    onClick={handleClickCleanTag}
                   >
-                    Tag
-                  </Button>
+                    clean
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    disabled={selectItem.length == 0}
+                    onClick={handleCloseTag}
+                  >
+                    train
+                  </MenuItem>
+                </Menu>
               </Grid>
               <Grid item style={{ position: 'absolute', right: 35, marginRight: 5 }}>
                 <Button

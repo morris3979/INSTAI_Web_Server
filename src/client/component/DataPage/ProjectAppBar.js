@@ -250,7 +250,7 @@ const ProjectAppBar = (props) => {
                     </Button>
                   )}
                   <Button onClick={handleNext} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                   </Button>
                 </div>
               )}

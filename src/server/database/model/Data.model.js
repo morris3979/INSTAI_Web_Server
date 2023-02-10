@@ -26,7 +26,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
-        tag: {
+        cleanTag: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        trainTag: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
