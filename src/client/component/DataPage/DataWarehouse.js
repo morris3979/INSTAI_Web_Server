@@ -248,6 +248,14 @@ const DataWarehouse = (props) => {
                   }}
                 >
                   <MenuItem
+                    key={'All'}
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    // onClick={handleCloseFilter}
+                  >
+                    <Checkbox sx={{ color: 'white' }} defaultChecked={true} />
+                    <ListItemText primary={'All'} sx={{ marginRight: 3 }} />
+                  </MenuItem>
+                  <MenuItem
                     key={'tag'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     // onClick={handleCloseFilter}
@@ -262,14 +270,6 @@ const DataWarehouse = (props) => {
                   >
                     <Checkbox sx={{ color: 'white' }} />
                     <ListItemText primary={'Labeled'} sx={{ marginRight: 3 }} />
-                  </MenuItem>
-                  <MenuItem
-                    key={'unlabeled'}
-                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    // onClick={handleCloseFilter}
-                  >
-                    <Checkbox sx={{ color: 'white' }} />
-                    <ListItemText primary={'Unlabeled'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                 </Menu>
               </Grid>
