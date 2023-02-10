@@ -18,6 +18,22 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.BOOLEAN,
           defaultValue: true,
         },
+        collect: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: true,
+        },
+        clean: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        label: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
+        train: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
         createdAt: {
             field: 'created_at',
             type: Sequelize.DATE,
