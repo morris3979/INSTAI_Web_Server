@@ -46,6 +46,11 @@ const DataWarehouse = (props) => {
   const openFilter = Boolean(anchorEl_Filter)
 
   const [ selectItem, setSelectItem ] = useState([])
+  const [ menuItem, setMenuItem ] = useState({
+    all: true,
+    cleaned: false,
+    labeled: false
+  })
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -102,6 +107,20 @@ const DataWarehouse = (props) => {
       return
     }
   }
+
+  const filterData = dataList.Data.filter((data) => {
+    if(menuItem.cleaned && menuItem.labeled) {
+      return data.cleanTag == true && data.trainTag == true
+    }
+    else if(menuItem.cleaned) {
+      return data.cleanTag == true
+    }
+    else if(menuItem.labeled) {
+      return data.trainTag == true
+    }else{
+      return data
+    }
+  })
 
   return (
       <Box
@@ -260,25 +279,40 @@ const DataWarehouse = (props) => {
                   <MenuItem
                     key={'All'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    // onClick={handleCloseFilter}
+                    onClick={(e) => {
+                      setMenuItem((prevState) => ({
+                        ...prevState,
+                        all: e.target.checked
+                      }))
+                    }}
                   >
-                    <Checkbox sx={{ color: 'white' }} defaultChecked={true} />
+                    <Checkbox sx={{ color: 'white' }} checked={menuItem.all} />
                     <ListItemText primary={'All'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
                     key={'cleaned'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    // onClick={handleCloseFilter}
+                    onClick={(e) => {
+                      setMenuItem((prevState) => ({
+                        ...prevState,
+                        cleaned: e.target.checked
+                      }))
+                    }}
                   >
-                    <Checkbox sx={{ color: 'white' }} />
+                    <Checkbox sx={{ color: 'white' }} checked={menuItem.cleaned} />
                     <ListItemText primary={'cleaned'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
                     key={'labeled'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    // onClick={handleCloseFilter}
+                    onClick={(e) => {
+                      setMenuItem((prevState) => ({
+                        ...prevState,
+                        labeled: e.target.checked
+                      }))
+                    }}
                   >
-                    <Checkbox sx={{ color: 'white' }} />
+                    <Checkbox sx={{ color: 'white' }} checked={menuItem.labeled} />
                     <ListItemText primary={'Labeled'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                 </Menu>
@@ -377,7 +411,7 @@ const DataWarehouse = (props) => {
                 columns={{ xs: 4, sm: 8, md: 20 }}
                 style={{ marginLeft: 10 }}
               >
-                {dataList.Data.map((item, key) => {
+                {filterData.map((item, key) => {
                   return(
                     <Grid item xs={2} sm={4} md={4} key={key}>
                       <Card sx={{ maxWidth: 280 }}>
