@@ -1,21 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { lazy } from 'react'
 import { connect } from 'react-redux'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
-import {
-} from '../../store/actionCreater'
+
+const TFYolo = lazy(() => import('./TensorflowYolo/index'))
 
 const ObjectDetection = (props) => {
-  const {
-  } = props
-
-  useEffect(() => {
-    // console.log('deviceList', deviceList)
-  },[])
 
   return (
       <Box
@@ -44,8 +35,14 @@ const ObjectDetection = (props) => {
               AI Lab
             </Typography>
           </Grid>
-          <div>
-            ZONE
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <TFYolo />
           </div>
         </div>
       </Box>

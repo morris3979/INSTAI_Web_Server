@@ -56,9 +56,8 @@ const DataWarehouse = (props) => {
 
   useEffect(() => {
     // console.log('dataList', dataList)
-    if (dataList.collect == '1') {
-      getDataList(dataList.id)
-    }
+    dataList
+    getDataList(dataList.id)
   },[])
 
   const handleClickFilter = (event) => {
@@ -95,7 +94,7 @@ const DataWarehouse = (props) => {
     }else{
       setSelectItem([
         ...selectItem,
-        {id:id,value:value}
+        {id: id, value: value}
       ])
     }
   }
