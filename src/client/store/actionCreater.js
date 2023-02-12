@@ -236,8 +236,10 @@ export const GetDataList = (id, data) => {
       try {
         const response = await axios.get(`/api/project/${id}/data`)
         // console.log(response.data)
-        const action = DeliverData(response.data, Data_List)
-        dispatch(action)
+        if (response.data.collect == '1') {
+          const action = DeliverData(response.data, Data_List)
+          dispatch(action)
+        }
       } catch (e) {
         alert(e.response.data.message)
         location.reload()

@@ -49,14 +49,16 @@ const DataWarehouse = (props) => {
   const [ menuItem, setMenuItem ] = useState({
     all: true,
     cleaned: false,
-    labeled: false
+    labeled: false,
+    trainable: false
   })
   const navigate = useNavigate()
 
   useEffect(() => {
     // console.log('dataList', dataList)
-    dataList
-    getDataList(dataList.id)
+    if (dataList.collect == '1') {
+      getDataList(dataList.id)
+    }
   },[])
 
   const handleClickFilter = (event) => {
@@ -84,7 +86,7 @@ const DataWarehouse = (props) => {
   }
 
   const handleSelectItem = (id, value) => {
-    if(selectItem.some(value => value.id==id)) {
+    if(selectItem.some(value => value.id == id)) {
       setSelectItem(
         selectItem.filter((c) => {
           return c.id != id
@@ -109,15 +111,18 @@ const DataWarehouse = (props) => {
   }
 
   const filterData = dataList.Data.filter((data) => {
-    if(menuItem.cleaned && menuItem.labeled) {
-      return data.cleanTag == true && data.trainTag == true
+    if (menuItem.cleaned && menuItem.labeled && menuItem.trainable) {
+      return data.cleanTag == true && data.json == true && data.trainTag == true
     }
-    else if(menuItem.cleaned) {
+    else if (menuItem.cleaned) {
       return data.cleanTag == true
     }
-    else if(menuItem.labeled) {
+    else if (menuItem.labeled) {
+      return data.json == true
+    }
+    else if (menuItem.trainable) {
       return data.trainTag == true
-    }else{
+    } else {
       return data
     }
   })
@@ -218,15 +223,16 @@ const DataWarehouse = (props) => {
               >
                 Data
               </Typography>
-              <ButtonGroup aria-label="button group" sx={{ marginRight: 5 }}>
-                <Button aria-label='upload' variant="outlined" component="label">
-                  Upload
-                  <input hidden accept="image/*" multiple type="file" />
-                </Button>
-                <Button aria-label='train' variant="contained" component="label">
-                  Train
-                </Button>
-              </ButtonGroup>
+              <Button
+                aria-label='upload'
+                variant="contained"
+                component="label"
+                sx={{ marginRight: 5 }}
+                startIcon={<CloudUploadIcon />}
+              >
+                Upload
+                <input hidden accept="image/*" multiple type="file" />
+              </Button>
             </Grid>
             <Grid
               minWidth='90vw'
@@ -286,7 +292,7 @@ const DataWarehouse = (props) => {
                       }))
                     }}
                   >
-                    <Checkbox sx={{ color: 'white' }} checked={menuItem.all} />
+                    <Checkbox sx={{ color: 'white' }} checked={menuItem.all} indeterminate={menuItem.cleaned || menuItem.labeled} />
                     <ListItemText primary={'All'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
@@ -313,7 +319,20 @@ const DataWarehouse = (props) => {
                     }}
                   >
                     <Checkbox sx={{ color: 'white' }} checked={menuItem.labeled} />
-                    <ListItemText primary={'Labeled'} sx={{ marginRight: 3 }} />
+                    <ListItemText primary={'labeled'} sx={{ marginRight: 3 }} />
+                  </MenuItem>
+                  <MenuItem
+                    key={'trainable'}
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    onClick={(e) => {
+                      setMenuItem((prevState) => ({
+                        ...prevState,
+                        trainable: e.target.checked
+                      }))
+                    }}
+                  >
+                    <Checkbox sx={{ color: 'white' }} checked={menuItem.trainable} />
+                    <ListItemText primary={'trainable'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                 </Menu>
               </Grid>

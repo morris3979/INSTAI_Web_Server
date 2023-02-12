@@ -13,6 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ScienceIcon from '@mui/icons-material/Science';
 
 const drawerWidth = '5.5vw';
 
@@ -65,6 +66,29 @@ const ClippedDrawer = (props) => {
                                     <SettingsRemoteIcon style={{ color: 'white' }} />
                                     <ListItemText
                                         primary={'Device'}
+                                        style={{
+                                            color: 'white',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            flexDirection: 'column',
+                                            textAlign: 'center'
+                                        }}
+                                    />
+                                </Grid>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key={'AILab'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
+                            <ListItemButton onClick={() => navigate('/AILab')}>
+                                <Grid
+                                    container
+                                    direction="column"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    width={drawerWidth}
+                                >
+                                    <ScienceIcon style={{ color: 'white' }} />
+                                    <ListItemText
+                                        primary={'AI Lab'}
                                         style={{
                                             color: 'white',
                                             display: 'flex',

@@ -82,7 +82,7 @@ const DeviceTable = (props) => {
     rec_after_event_switch: false,
     upload_all_pictures_switch: true,
     upload_all_files_switch: true,
-    rec_time: 5, 
+    rec_time: 5,
     rec_fps: 15,
     rec_after_event_cycle: 1,
     rec_after_event_duration : 5
@@ -398,7 +398,7 @@ const DeviceTable = (props) => {
             container
             minWidth='90vw'
             direction="row"
-            sx={{ marginTop: 3, marginBottom: 3, justifyContent: 'space-between' }}
+            sx={{ marginTop: 4, marginBottom: 3, justifyContent: 'space-between' }}
           >
             <Typography
               noWrap
