@@ -368,14 +368,14 @@ const DataWarehouse = (props) => {
                     disabled={selectItem.length == 0}
                     onClick={handleClickCleanTag}
                   >
-                    clean
+                    CLEAN
                   </MenuItem>
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     disabled={selectItem.length == 0}
                     onClick={handleCloseTag}
                   >
-                    train
+                    TRAIN
                   </MenuItem>
                 </Menu>
               </Grid>
