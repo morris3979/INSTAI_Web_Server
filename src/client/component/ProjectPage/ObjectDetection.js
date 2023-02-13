@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
-const TFYolo = lazy(() => import('./TensorflowYolo/index'))
+const TFYolo = lazy(() => import('./TFYolo/index'))
 
 const ObjectDetection = (props) => {
 
