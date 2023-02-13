@@ -432,7 +432,7 @@ const DataWarehouse = (props) => {
                 {filterData.map((item, key) => {
                   return(
                     <Grid item xs={2} sm={4} md={4} key={key}>
-                      <Card sx={{ maxWidth: 280 }}>
+                      <Card sx={{ maxWidth: 280, "&:hover": { border: '2px solid lightblue' } }}>
                         <CardActionArea
                           key={key}
                           style={{ position: 'relative' }}
@@ -443,7 +443,7 @@ const DataWarehouse = (props) => {
                             sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
                             icon={<CheckCircleIcon color='disabled' />}
                             checkedIcon={<CheckCircleIcon color='primary' />}
-                            onClick={() => { handleSelectItem(item.id,item.data)} }
+                            onClick={() => { handleSelectItem(item.id, item.data)} }
                           />
                           <CardMedia
                             title='Image'
