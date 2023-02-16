@@ -109,6 +109,16 @@ const DataWarehouse = (props) => {
     }
   }
 
+  const handleClickTrainTag = () => {
+    if(selectItem.length) {
+      selectItem.forEach((data) => {
+        patchDataItem(data.id, { trainTag: 1 })
+      })
+    }else{
+      return
+    }
+  }
+
   const filterData = dataList.Data.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled && menuItem.trainable) {
       return data.cleanTag == true && data.json == true && data.trainTag == true
@@ -373,7 +383,7 @@ const DataWarehouse = (props) => {
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     disabled={selectItem.length == 0}
-                    onClick={handleCloseTag}
+                    onClick={handleClickTrainTag}
                   >
                     TRAIN
                   </MenuItem>
@@ -417,7 +427,7 @@ const DataWarehouse = (props) => {
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     onClick={handleCloseSelect}
                   >
-                    Select Page
+                    Random
                   </MenuItem>
                 </Menu>
               </Grid>
