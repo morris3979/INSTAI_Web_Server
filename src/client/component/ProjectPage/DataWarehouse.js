@@ -99,6 +99,11 @@ const DataWarehouse = (props) => {
     }
   }
 
+  const handleSelectAll = () => {
+    handleCloseSelect()
+    setSelectItem(filterData)
+  }
+
   const handleClickCleanTag = () => {
     if(selectItem.length) {
       selectItem.forEach((data) => {
@@ -108,6 +113,17 @@ const DataWarehouse = (props) => {
       return
     }
   }
+
+  const handleClickTrainTag = () => {
+    if(selectItem.length) {
+      selectItem.forEach((data) => {
+        patchDataItem(data.id, { trainTag: 1 })
+      })
+    }else{
+      return
+    }
+  }
+
 
   const filterData = dataList.Data.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled && menuItem.trainable) {
@@ -373,7 +389,7 @@ const DataWarehouse = (props) => {
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     disabled={selectItem.length == 0}
-                    onClick={handleCloseTag}
+                    onClick={handleClickTrainTag}
                   >
                     train
                   </MenuItem>
@@ -409,7 +425,7 @@ const DataWarehouse = (props) => {
                 >
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleCloseSelect}
+                    onClick={handleSelectAll}
                   >
                     Select All
                   </MenuItem>
@@ -443,7 +459,8 @@ const DataWarehouse = (props) => {
                             sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
                             icon={<CheckCircleIcon color='disabled' />}
                             checkedIcon={<CheckCircleIcon color='primary' />}
-                            onClick={() => { handleSelectItem(item.id,item.data)} }
+                            onClick={() => {handleSelectItem(item.id,item.data)}}
+                            checked={selectItem.some(value => value.id == item.id)}
                           />
                           <CardMedia
                             title='Image'
