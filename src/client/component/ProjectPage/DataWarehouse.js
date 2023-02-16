@@ -124,7 +124,6 @@ const DataWarehouse = (props) => {
     }
   }
 
-
   const filterData = dataList.Data.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled && menuItem.trainable) {
       return data.cleanTag == true && data.json == true && data.trainTag == true
@@ -448,7 +447,13 @@ const DataWarehouse = (props) => {
                 {filterData.map((item, key) => {
                   return(
                     <Grid item xs={2} sm={4} md={4} key={key}>
-                      <Card sx={{ maxWidth: 280, "&:hover": { border: '2px solid lightblue' } }}>
+                      <Card
+                        sx={{
+                          maxWidth: 280,
+                          border: selectItem.some(value => value.id == item.id)? '2px solid green': null,
+                          "&:hover": { border: '2px solid lightblue' }
+                        }}
+                      >
                         <CardActionArea
                           key={key}
                           style={{ position: 'relative' }}
