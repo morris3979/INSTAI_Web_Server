@@ -12,7 +12,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # loads nvm bash_completion (node is in path now)
 
 # install node modules
-npm install --legacy-peer-deps
+npm install
 
 # stop and clean
 pm2 stop all
