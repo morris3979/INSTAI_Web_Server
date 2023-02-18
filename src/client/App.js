@@ -4,16 +4,16 @@ import { Route, Routes } from 'react-router-dom'
 import Loading from './loading'
 import Box from '@mui/material/Box';
 
-const LoginPage = lazy(() => import('./page/LoginPage'))
-const RegisterPage = lazy(() => import('./page/RegisterPage'))
-const CreateOrganizationPage = lazy(() => import('./page/CreateOrganizationPage'))
-const SelectOrganizationPage = lazy(() => import('./page/SelectOrganizationPage'))
-const HomePage = lazy(() => import('./page/HomePage'))
-const DataPage = lazy(() => import('./page/DataPage'))
-const DevicePage = lazy(() => import('./page/DevicePage'))
-const AILabPage = lazy(() => import('./page/AILabPage'))
-const OrganizationPage = lazy(() => import('./page/OrganizationPage'))
-const LabelPage = lazy(() => import('./page/LabelPage'))
+const LoginPage = lazy(() => import('./page/loginPage'))
+const RegisterPage = lazy(() => import('./page/registerPage'))
+const CreateOrganizationPage = lazy(() => import('./page/createOrganizationPage'))
+const SelectOrganizationPage = lazy(() => import('./page/selectOrganizationPage'))
+const HomePage = lazy(() => import('./page/homePage'))
+const DataPage = lazy(() => import('./page/dataPage'))
+const DevicePage = lazy(() => import('./page/devicePage'))
+const AILabPage = lazy(() => import('./page/labPage'))
+const OrganizationPage = lazy(() => import('./page/organizationPage'))
+const LabelPage = lazy(() => import('./page/labelPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
