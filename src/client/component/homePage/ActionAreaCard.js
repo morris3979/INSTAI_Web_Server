@@ -21,7 +21,8 @@ import {
   CreateProject,
   GetDataList,
   GetDeviceList,
-  GetLabelList
+  GetLabelList,
+  GetProjectItem
 } from '../../store/actionCreater'
 
 const ActionAreaCard = (props) => {
@@ -32,7 +33,8 @@ const ActionAreaCard = (props) => {
     createProject,
     getDataList,
     getDeviceList,
-    getLabelList
+    getLabelList,
+    getProjectItem
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -156,6 +158,7 @@ const ActionAreaCard = (props) => {
                     <CardActionArea
                       key={key}
                       onClick={() => {
+                        getProjectItem(value.id)
                         getDataList(value.id)
                         getDeviceList(value.id)
                         getLabelList(value.id)
@@ -202,6 +205,7 @@ const ActionAreaCard = (props) => {
                     <CardActionArea
                       key={key}
                       onClick={() => {
+                        getProjectItem(value.id)
                         getDataList(value.id)
                         getDeviceList(value.id)
                         getLabelList(value.id)
@@ -323,6 +327,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getLabelList(id, text) {
       const action = GetLabelList(id)
+      dispatch(action)
+    },
+    getProjectItem(id, text) {
+      const action = GetProjectItem(id)
       dispatch(action)
     },
   }

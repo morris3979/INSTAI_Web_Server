@@ -22,15 +22,15 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { LogoutData, GetProjectList, PatchProjectData } from '../../store/actionCreater'
+import { LogoutData, GetProjectList, PatchProjectItem } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Label', 'Train']
 
 const ProjectAppBar = (props) => {
   const {
     projectList,
-    dataList,
-    patchProjectData
+    projectItem,
+    patchProjectItem
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -43,9 +43,9 @@ const ProjectAppBar = (props) => {
   const [ skipped, setSkipped ] = useState(new Set())
 
   useEffect(() => {
-    dataList
+    projectItem
     projectList
-    // console.log('dataList', dataList)
+    // console.log('projectItem', projectItem)
     // console.log('projectList', projectList)
   },[])
 
@@ -54,7 +54,7 @@ const ProjectAppBar = (props) => {
     converted.project = input.project
     converted.type = input.type
     if(input.project&&input.type) {
-      patchProjectData(dataList.id,converted)
+      patchProjectItem(projectItem.id, converted)
       setInput({
         project: '',
         type: 'Object Detection',
@@ -69,8 +69,8 @@ const ProjectAppBar = (props) => {
   const handleClickOpen = () => {
     setInput((prevState) => ({
       ...prevState,
-      project: dataList.project,
-      type: dataList.type
+      project: projectItem.project,
+      type: projectItem.type
     }))
     setOpen(true)
   }
@@ -155,7 +155,7 @@ const ProjectAppBar = (props) => {
                   marginTop: 0.5
                 }}
               >
-                {dataList.project}
+                {projectItem.project}
               </Typography>
               <IconButton
                 color="primary"
@@ -274,7 +274,7 @@ const ProjectAppBar = (props) => {
             size='small'
             color='info'
             sx={{ width: 300 }}
-            defaultValue={dataList.project}
+            defaultValue={projectItem.project}
             InputProps={{
               style: { color: 'white' }
             }}
@@ -288,7 +288,7 @@ const ProjectAppBar = (props) => {
             size='small'
             color='info'
             sx={{ width: 300 }}
-            defaultValue={dataList.type}
+            defaultValue={projectItem.type}
             InputProps={{
               style: { color: 'white' }
             }}
@@ -311,7 +311,7 @@ const mapStateToProps = (state) => {
   return {
     userInformation: state.userInformation,
     projectList: state.projectList,
-    dataList: state.dataList
+    projectItem: state.projectItem
   }
 }
 
@@ -326,8 +326,8 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetProjectList(id)
       dispatch(action)
     },
-    patchProjectData(id, data) {
-      const action = PatchProjectData(id, data)
+    patchProjectItem(id, data) {
+      const action = PatchProjectItem(id, data)
       dispatch(action)
     }
   }

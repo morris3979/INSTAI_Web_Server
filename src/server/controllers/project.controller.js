@@ -90,6 +90,33 @@ exports.update = (req, res) => {
 }
 
 // Find all Data From a Project
+exports.findProject = (req, res) => {
+  Project.findOne({
+      where: {
+          id: req.params.id
+      },
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      }
+  }).then(data => {
+      if (!data) {
+          return res.status(404).send({ message: "Project Not found." });
+      }
+
+      const replacer = (key, value) => {
+          if (key == 'createdAt') return undefined
+          else if (key == 'updatedAt') return undefined
+          else if (key == 'deletedAt') return undefined
+          else return value
+      }
+
+      res.send(JSON.parse(JSON.stringify(data, replacer)))
+  }).catch(err => {
+      res.status(500).send({ message: err.message })
+  })
+}
+
+// Find all Data From a Project
 exports.findData = (req, res) => {
   Project.findOne({
       where: {
@@ -168,9 +195,6 @@ exports.findLabel = (req, res) => {
       include: [{
           model: Label
       }],
-      // order: [
-      //   [Label, 'id', 'DESC']
-      // ],
       attributes: {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']
       }

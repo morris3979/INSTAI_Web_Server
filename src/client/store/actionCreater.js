@@ -4,7 +4,7 @@ import {
   Which_Project, Which_Host, Which_Device,
   User_Information, Logout_Information,
   Project_List, Data_List, Members_List,
-  Device_List, Data_Item, Label_List
+  Device_List, Data_Item, Label_List, Project_Item
 } from './actionType'
 
 //共用Function <<<
@@ -212,7 +212,7 @@ export const CreateProject = (data) => {
   )
 }
 
-export const PatchProjectData = (id, data) => {
+export const PatchProjectItem = (id, data) => {
   return (
     async (dispatch) => {
       try {
@@ -223,6 +223,25 @@ export const PatchProjectData = (id, data) => {
         }
       } catch (e) {
         alert(e.response.data.message)
+      }
+    }
+  )
+}
+
+export const GetProjectItem = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Project_Item)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
       }
     }
   )

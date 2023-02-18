@@ -3,7 +3,7 @@ import {
   Which_Project, Which_Host, Which_Device,
   Logout_Information, User_Information,
   Project_List, Data_List, Members_List,
-  Device_List, Data_Item, Label_List
+  Device_List, Data_Item, Label_List, Project_Item
 } from './actionType'
 
 const defaultState = {
@@ -21,6 +21,7 @@ const defaultState = {
   deviceList: {},
   dataItem: {},
   labelList: {},
+  projectItem: {},
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -84,6 +85,10 @@ const Reducer = (state = defaultState, action) => {
     }
     case Label_List: {
       newState.labelList = action.value
+      return newState
+    }
+    case Project_Item: {
+      newState.projectItem = action.value
       return newState
     }
     default: {
