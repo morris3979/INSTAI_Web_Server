@@ -26,7 +26,7 @@ import { LogoutData, GetProjectList, PatchProjectItem } from '../../store/action
 
 const steps = ['Data collection', 'Clean data', 'Label', 'Train']
 
-const ProjectAppBar = (props) => {
+const projectAppBar = (props) => {
   const {
     projectList,
     projectItem,
@@ -338,4 +338,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectAppBar)
+export default connect(mapStateToProps, mapDispatchToProps)(projectAppBar)

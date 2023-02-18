@@ -2,10 +2,10 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/HomePage/ResponsiveAppBar'))
-const ActionAreaCard = lazy(() => import('../component/HomePage/ActionAreaCard'))
+const ResponsiveAppBar = lazy(() => import('../component/homePage/responsiveAppBar'))
+const ActionAreaCard = lazy(() => import('../component/homePage/actionAreaCard'))
 
-const HomePage = () => {
+const homePage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -29,4 +29,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default homePage

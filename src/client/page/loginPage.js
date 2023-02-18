@@ -2,9 +2,9 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const Login = lazy(() => import('../component/LoginPage/Login'))
+const Login = lazy(() => import('../component/loginPage/login'))
 
-const LoginPage = () => {
+const loginPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -26,4 +26,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default loginPage

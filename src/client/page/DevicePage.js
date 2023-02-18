@@ -2,12 +2,12 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/ProjectPage/ResponsiveAppBar'))
-const ProjectAppBar = lazy(() => import('../component/ProjectPage/ProjectAppBar'))
-const ClippedDrawer = lazy(() => import('../component/ProjectPage/ClippedDrawer'))
-const DeviceTable = lazy(() => import('../component/ProjectPage/DeviceTable'))
+const ResponsiveAppBar = lazy(() => import('../component/ProjectPage/responsiveAppBar'))
+const ProjectAppBar = lazy(() => import('../component/ProjectPage/projectAppBar'))
+const ClippedDrawer = lazy(() => import('../component/ProjectPage/clippedDrawer'))
+const DeviceTable = lazy(() => import('../component/ProjectPage/deviceTable'))
 
-const DevicePage = () => {
+const devicePage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -33,4 +33,4 @@ const DevicePage = () => {
   )
 }
 
-export default DevicePage
+export default devicePage

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { CirclesWithBar } from 'react-loader-spinner'
 
-const InitialPage = () => {
+const initialPage = () => {
   return (
     <Fragment>
       <div
@@ -32,4 +32,4 @@ const InitialPage = () => {
   )
 }
 
-export default InitialPage
+export default initialPage

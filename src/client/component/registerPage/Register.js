@@ -23,7 +23,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
 import { RegisterFormData, LogoutData } from '../../store/actionCreater'
 
-const RegisterForm = (props) => {
+const registerForm = (props) => {
   const { registerFormData, userInformation } = props
 
   const [ open, setOpen ] = useState(false)
@@ -242,4 +242,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)
+export default connect(mapStateToProps, mapDispatchToProps)(registerForm)

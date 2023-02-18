@@ -23,7 +23,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import InstAI from '../../icon image/instai.png'
 import { LoginFormData, LogoutData } from '../../store/actionCreater'
 
-const LoginForm = (props) => {
+const loginForm = (props) => {
   const { loginFormData, userInformation } = props
 
   const [ open, setOpen ] = useState(false)
@@ -245,4 +245,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+export default connect(mapStateToProps, mapDispatchToProps)(loginForm)

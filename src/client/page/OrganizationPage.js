@@ -2,10 +2,10 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/HomePage/ResponsiveAppBar'))
-const InvitePeopleTable = lazy(() => import('../component/HomePage/InvitePeopleTable'))
+const ResponsiveAppBar = lazy(() => import('../component/homePage/responsiveAppBar'))
+const InvitePeopleTable = lazy(() => import('../component/homePage/invitePeopleTable'))
 
-const OrganizationPage = () => {
+const organizationPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -29,4 +29,4 @@ const OrganizationPage = () => {
   )
 }
 
-export default OrganizationPage
+export default organizationPage

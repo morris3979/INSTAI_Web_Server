@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
 import { GetLoginUser, LogoutData, GetProjectList } from '../../store/actionCreater'
 
-const SelectOrganization = (props) => {
+const selectOrganization = (props) => {
   const {
     getLoginUser,
     onClick,
@@ -127,4 +127,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectOrganization)
+export default connect(mapStateToProps, mapDispatchToProps)(selectOrganization)

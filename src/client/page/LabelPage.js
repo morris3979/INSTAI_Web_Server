@@ -3,10 +3,10 @@ import Loading from '../loading'
 import { Helmet } from "react-helmet"
 import Toolbar from '@mui/material/Toolbar';
 
-const ResponsiveDrawer = lazy(() => import('../component/LabelPage/ResponsiveDrawer'))
+const ResponsiveDrawer = lazy(() => import('../component/LabelPage/responsiveDrawer'))
 const LabelStudio = lazy(() => import('../component/LabelPage/LabelStudio'))
 
-const LabelPage = () => {
+const labelPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -33,4 +33,4 @@ const LabelPage = () => {
   )
 }
 
-export default LabelPage
+export default labelPage
