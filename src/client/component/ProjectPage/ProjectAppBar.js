@@ -134,7 +134,8 @@ const ProjectAppBar = (props) => {
   }
 
   return (
-    <AppBar position="fixed" elevation={0}
+    <AppBar
+      position="fixed" elevation={0}
       style={{ backgroundColor: '#1c2127', height: '7vh', marginTop: '6vh' }}
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
@@ -238,11 +239,15 @@ const ProjectAppBar = (props) => {
                   )
                 })}
               </Stepper>
+              {/* {console.log('activeStep', activeStep)}
+              {console.log('steps.length', steps.length)} */}
               {activeStep === steps.length ? (
                 <div>
-                  <Button onClick={handleReset} variant='outlined' sx={{ margin: 1 }} endIcon={<RestartAltIcon />}>Restart</Button>
+                  <Button onClick={handleReset} variant='outlined' sx={{ margin: 1 }} endIcon={<RestartAltIcon />}>
+                    Restart
+                  </Button>
                 </div>
-              ) : (
+              ):(
                 <div>
                   {isStepOptional(activeStep) && (
                     <Button color="inherit" variant='outlined' onClick={handleSkip} sx={{ margin: 1 }} endIcon={<SkipNextIcon />}>
