@@ -2,12 +2,10 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/projectPage/responsiveAppBar'))
-const ProjectAppBar = lazy(() => import('../component/projectPage/projectAppBar'))
-const ClippedDrawer = lazy(() => import('../component/projectPage/clippedDrawer'))
-const DataWarehouse = lazy(() => import('../component/projectPage/dataWarehouse'))
+const ResponsiveAppBar = lazy(() => import('../component/homePage/responsiveAppBar'))
+const InvitePeopleTable = lazy(() => import('../component/homePage/invitePeopleTable'))
 
-const dataPage = () => {
+const OrganizationManegePage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -22,15 +20,13 @@ const dataPage = () => {
         }}
       >
         <Helmet>
-          <title>Data - InstAI</title>
+          <title>Organization Management - InstAI</title>
         </Helmet>
         <ResponsiveAppBar />
-        <ProjectAppBar />
-        <ClippedDrawer />
-        <DataWarehouse />
+        <InvitePeopleTable />
       </div>
     </Suspense>
   )
 }
 
-export default dataPage
+export default OrganizationManegePage
