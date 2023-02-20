@@ -2,10 +2,10 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/projectPage/ResponsiveAppBar'))
-const ProjectAppBar = lazy(() => import('../component/projectPage/ProjectAppBar'))
-const ClippedDrawer = lazy(() => import('../component/projectPage/ClippedDrawer'))
-const ObjectDetection = lazy(() => import('../component/projectPage/ObjectDetection'))
+const ResponsiveAppBar = lazy(() => import('../component/projectDataPage/ResponsiveAppBar'))
+const ProjectAppBar = lazy(() => import('../component/projectDataPage/ProjectAppBar'))
+const ClippedDrawer = lazy(() => import('../component/projectDataPage/ClippedDrawer'))
+const ObjectDetection = lazy(() => import('../component/projectDataPage/ObjectDetection'))
 
 const DetectorPage = () => {
   return (

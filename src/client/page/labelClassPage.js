@@ -3,8 +3,8 @@ import Loading from '../loading'
 import { Helmet } from "react-helmet"
 import Toolbar from '@mui/material/Toolbar';
 
-const ResponsiveDrawer = lazy(() => import('../component/labelPage/ResponsiveDrawer'))
-const LabelStudioWrapper = lazy(() => import('../component/labelPage/LabelStudioWrapper'))
+const ResponsiveDrawer = lazy(() => import('../component/labelClassPage/ResponsiveDrawer'))
+const LabelStudioWrapper = lazy(() => import('../component/labelClassPage/LabelStudio'))
 
 const LabelClassPage = () => {
   return (
