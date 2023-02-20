@@ -55,7 +55,7 @@ const ResponsiveDrawer = (props) => {
     downloadJSON,
     getDataList,
     dataList
-} = props
+  } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
   const openSelectDownload = Boolean(anchorEl_Download)

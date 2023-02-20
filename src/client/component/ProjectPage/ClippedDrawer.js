@@ -77,8 +77,8 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'AILab'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
-                            <ListItemButton onClick={() => navigate('/AILab')}>
+                        <ListItem key={'Detector'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
+                            <ListItemButton onClick={() => navigate('/Detector')}>
                                 <Grid
                                     container
                                     direction="column"
@@ -88,7 +88,7 @@ const ClippedDrawer = (props) => {
                                 >
                                     <ScienceIcon style={{ color: 'white' }} />
                                     <ListItemText
-                                        primary={'AI Lab'}
+                                        primary={'Detector'}
                                         style={{
                                             color: 'white',
                                             display: 'flex',
