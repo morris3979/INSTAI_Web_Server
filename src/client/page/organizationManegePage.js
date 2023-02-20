@@ -2,8 +2,8 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/homePage/responsiveAppBar'))
-const InvitePeopleTable = lazy(() => import('../component/homePage/invitePeopleTable'))
+const ResponsiveAppBar = lazy(() => import('../component/homePage/ResponsiveAppBar'))
+const InvitePeopleTable = lazy(() => import('../component/homePage/InvitePeopleTable'))
 
 const OrganizationManegePage = () => {
   return (

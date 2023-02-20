@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 
-const SelectOrganization = lazy(() => import('../component/loginPage/selectOrganization'))
+const SelectOrganization = lazy(() => import('../component/loginPage/SelectOrganization'))
 
 const OrganizationSelectPage = () => {
   return (

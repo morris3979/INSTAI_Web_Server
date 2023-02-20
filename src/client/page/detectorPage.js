@@ -2,12 +2,12 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/projectPage/responsiveAppBar'))
-const ProjectAppBar = lazy(() => import('../component/projectPage/projectAppBar'))
-const ClippedDrawer = lazy(() => import('../component/projectPage/clippedDrawer'))
-const ObjectDetection = lazy(() => import('../component/projectPage/objectDetection'))
+const ResponsiveAppBar = lazy(() => import('../component/projectPage/ResponsiveAppBar'))
+const ProjectAppBar = lazy(() => import('../component/projectPage/ProjectAppBar'))
+const ClippedDrawer = lazy(() => import('../component/projectPage/ClippedDrawer'))
+const ObjectDetection = lazy(() => import('../component/projectPage/ObjectDetection'))
 
-const labPage = () => {
+const DetectorPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -33,4 +33,4 @@ const labPage = () => {
   )
 }
 
-export default labPage
+export default DetectorPage

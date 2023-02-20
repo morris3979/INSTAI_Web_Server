@@ -11,7 +11,7 @@ const OrganizationSelectPage = lazy(() => import('./page/organizationSelectPage'
 const HomePage = lazy(() => import('./page/homePage'))
 const ProjectDataPage = lazy(() => import('./page/projectDataPage')) //
 const ProjectDevicePage = lazy(() => import('./page/projectDevicePage')) //
-const AILabPage = lazy(() => import('./page/labPage'))
+const DetectorPage = lazy(() => import('./page/detectorPage'))
 const OrganizationManegePage = lazy(() => import('./page/organizationManegePage')) //
 const LabelClassPage = lazy(() => import('./page/labelClassPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
@@ -36,7 +36,7 @@ const App = (props) => {
           <Route path='/Home' element={<HomePage/>} />
           <Route path='/Data' element={<ProjectDataPage/>} />
           <Route path='/Device' element={<ProjectDevicePage/>} />
-          <Route path='/AILab' element={<AILabPage/>} />
+          <Route path='/Detector' element={<DetectorPage/>} />
           <Route path='/Organization' element={<OrganizationManegePage/>} />
           <Route path='/Label' element={<LabelClassPage/>} />
           <Route path='/Initial' element={<InitialPage/>} />
