@@ -6,14 +6,14 @@ import Box from '@mui/material/Box';
 
 const LoginPage = lazy(() => import('./page/loginPage'))
 const RegisterPage = lazy(() => import('./page/registerPage'))
-const CreateOrganizationPage = lazy(() => import('./page/createOrganizationPage')) //
-const SelectOrganizationPage = lazy(() => import('./page/selectOrganizationPage')) //
+const OrganizationCreatePage = lazy(() => import('./page/organizationCreatePage')) //
+const OrganizationSelectPage = lazy(() => import('./page/organizationSelectPage')) //
 const HomePage = lazy(() => import('./page/homePage'))
 const DataPage = lazy(() => import('./page/dataPage')) //
 const DevicePage = lazy(() => import('./page/devicePage')) //
 const AILabPage = lazy(() => import('./page/labPage'))
 const OrganizationPage = lazy(() => import('./page/organizationPage')) //
-const LabelClassPage = lazy(() => import('./page/labelClassPage')) //
+const LabelClassPage = lazy(() => import('./page/labelClassPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
 const App = (props) => {
@@ -31,8 +31,8 @@ const App = (props) => {
         <Routes>
           <Route path='/' element={<LoginPage/>} />
           <Route path='/Register' element={<RegisterPage/>} />
-          <Route path='/CreateOrganization' element={<CreateOrganizationPage/>} />
-          <Route path='/SelectOrganization' element={<SelectOrganizationPage/>} />
+          <Route path='/CreateOrganization' element={<OrganizationCreatePage/>} />
+          <Route path='/SelectOrganization' element={<OrganizationSelectPage/>} />
           <Route path='/Home' element={<HomePage/>} />
           <Route path='/Data' element={<DataPage/>} />
           <Route path='/Device' element={<DevicePage/>} />
