@@ -25,7 +25,7 @@ import {
   GetProjectItem
 } from '../../store/actionCreater'
 
-const actionAreaCard = (props) => {
+const ActionAreaCard = (props) => {
   const {
     userInformation,
     projectList,
@@ -336,4 +336,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(actionAreaCard)
+export default connect(mapStateToProps, mapDispatchToProps)(ActionAreaCard)

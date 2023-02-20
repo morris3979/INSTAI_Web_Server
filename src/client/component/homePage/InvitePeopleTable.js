@@ -26,7 +26,7 @@ const columns = [
     { id: 'status', label: 'Status', minWidth: '15vw' }
 ]
 
-const invitePeopleTable = (props) => {
+const InvitePeopleTable = (props) => {
   const {
     projectList,
     getProjectList,
@@ -271,4 +271,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(invitePeopleTable)
+export default connect(mapStateToProps, mapDispatchToProps)(InvitePeopleTable)

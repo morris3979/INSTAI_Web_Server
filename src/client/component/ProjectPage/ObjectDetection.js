@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 
 const TFYolo = lazy(() => import('./TFYolo/index'))
 
-const objectDetection = (props) => {
+const ObjectDetection = (props) => {
 
   return (
       <Box
@@ -59,4 +59,4 @@ const mapStateToProps = (state) => {
     return {}
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(objectDetection)
+export default connect(mapStateToProps, mapDispatchToProps)(ObjectDetection)

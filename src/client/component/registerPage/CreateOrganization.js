@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
 import { CreateNewOrganization } from '../../store/actionCreater'
 
-const createOrganization = (props) => {
+const CreateOrganization = (props) => {
   const { createNewOrganization, userInformation } = props
 
   const [ organizationName, setOrganizationName ] = useState('')
@@ -97,4 +97,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(createOrganization)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateOrganization)

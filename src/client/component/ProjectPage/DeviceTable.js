@@ -43,7 +43,7 @@ const columns = [
   { id: 'message', label: 'Response', minWidth: '20vw' }
 ]
 
-const deviceTable = (props) => {
+const DeviceTable = (props) => {
   const {
     deviceList,
     addDevice,
@@ -1078,4 +1078,4 @@ const mapStateToProps = (state) => {
     }
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(deviceTable)
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceTable)

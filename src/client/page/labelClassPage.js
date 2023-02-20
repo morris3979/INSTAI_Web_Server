@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import Toolbar from '@mui/material/Toolbar';
 
 const ResponsiveDrawer = lazy(() => import('../component/labelPage/responsiveDrawer'))
-const LabelStudio = lazy(() => import('../component/labelPage/LabelStudio'))
+const LabelStudioWrapper = lazy(() => import('../component/labelPage/LabelStudio'))
 
 const LabelClassPage = () => {
   return (
@@ -26,7 +26,7 @@ const LabelClassPage = () => {
         </Helmet>
         <ResponsiveDrawer />\
         <div style={{ position: 'absolute', left: 250, top: 80 }}>
-          <LabelStudio />
+          <LabelStudioWrapper />
         </div>
       </div>
     </Suspense>

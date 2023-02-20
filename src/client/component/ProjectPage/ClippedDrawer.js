@@ -17,7 +17,7 @@ import ScienceIcon from '@mui/icons-material/Science';
 
 const drawerWidth = '5.5vw';
 
-const clippedDrawer = (props) => {
+const ClippedDrawer = (props) => {
     const navigate = useNavigate()
 
     return (
@@ -140,4 +140,4 @@ const mapStateToProps = (state) => {
     return {}
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(clippedDrawer)
+export default connect(mapStateToProps, mapDispatchToProps)(ClippedDrawer)

@@ -52,7 +52,7 @@ const stringAvatar = (name) => {
   };
 }
 
-const responsiveAppBar = (props) => {
+const ResponsiveAppBar = (props) => {
   const {
     onClick,
     userInformation,
@@ -223,4 +223,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(responsiveAppBar)
+export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveAppBar)

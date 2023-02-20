@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const Register = lazy(() => import('../component/registerPage/register'))
+const RegisterForm = lazy(() => import('../component/registerPage/registerForm'))
 
 const registerPage = () => {
   return (
@@ -20,7 +20,7 @@ const registerPage = () => {
         <Helmet>
           <title>Register - InstAI</title>
         </Helmet>
-        <Register />
+        <RegisterForm />
       </div>
     </Suspense>
   )

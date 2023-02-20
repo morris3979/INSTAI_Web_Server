@@ -43,7 +43,7 @@ import {
 
 const drawerWidth = 240;
 
-const responsiveDrawer = (props) => {
+const ResponsiveDrawer = (props) => {
   const {
     dataItem,
     addLabel,
@@ -547,4 +547,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(responsiveDrawer)
+export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveDrawer)

@@ -29,7 +29,7 @@ import {
   PatchDataItem
 } from '../../store/actionCreater'
 
-const dataWarehouse = (props) => {
+const DataWarehouse = (props) => {
   const {
     dataList,
     getDataList,
@@ -536,4 +536,4 @@ const mapStateToProps = (state) => {
     }
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(dataWarehouse)
+export default connect(mapStateToProps, mapDispatchToProps)(DataWarehouse)

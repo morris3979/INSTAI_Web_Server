@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react'
 import Loading from '../loading'
 import { Helmet } from "react-helmet"
 
-const Login = lazy(() => import('../component/loginPage/login'))
+const LoginForm = lazy(() => import('../component/loginPage/loginForm'))
 
 const loginPage = () => {
   return (
@@ -20,7 +20,7 @@ const loginPage = () => {
         <Helmet>
           <title>Sign in - InstAI</title>
         </Helmet>
-        <Login />
+        <LoginForm />
       </div>
     </Suspense>
   )
