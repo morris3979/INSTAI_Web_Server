@@ -32,7 +32,7 @@ const ObjectDetection = (props) => {
               variant="h5"
               sx={{ color: 'white', fontWeight: 'bold', marginLeft: 5 }}
             >
-              AI Lab
+              Object Detector
             </Typography>
           </Grid>
           <div
