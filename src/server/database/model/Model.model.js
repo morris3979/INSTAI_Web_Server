@@ -9,7 +9,6 @@ module.exports = (sequelize, Sequelize) => {
         modelName: {
           type: Sequelize.STRING,
           allowNull: false,
-          unique: true
         },
         createdAt: {
             field: 'created_at',
@@ -31,5 +30,8 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: true,
         paranoid: true
     });
+    Model.associate = function (models) {
+        Model.belongsTo(models.Project);
+    };
     return Model;
 };
