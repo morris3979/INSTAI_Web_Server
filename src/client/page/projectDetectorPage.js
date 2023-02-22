@@ -7,7 +7,7 @@ const ProjectAppBar = lazy(() => import('../component/projectDataPage/ProjectApp
 const ClippedDrawer = lazy(() => import('../component/projectDataPage/ClippedDrawer'))
 const ObjectDetection = lazy(() => import('../component/projectDataPage/ObjectDetection'))
 
-const DetectorPage = () => {
+const ProjectDetectorPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -33,4 +33,4 @@ const DetectorPage = () => {
   )
 }
 
-export default DetectorPage
+export default ProjectDetectorPage
