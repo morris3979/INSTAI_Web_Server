@@ -473,7 +473,7 @@ const DataWarehouse = (props) => {
                             image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
                             onClick={() => {
                               getDataItem(item.id)
-                              navigate('/Label')
+                              navigate('/Annotation')
                             }}
                           />
                           <Box

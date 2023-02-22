@@ -3,10 +3,10 @@ import Loading from '../loading'
 import { Helmet } from "react-helmet"
 import Toolbar from '@mui/material/Toolbar';
 
-const ResponsiveDrawer = lazy(() => import('../component/labelClassPage/ResponsiveDrawer'))
-const LabelStudioWrapper = lazy(() => import('../component/labelClassPage/LabelStudio'))
+const ResponsiveDrawer = lazy(() => import('../component/annotationPage/ResponsiveDrawer'))
+const LabelStudioWrapper = lazy(() => import('../component/annotationPage/LabelStudio'))
 
-const LabelClassPage = () => {
+const AnnotationPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -22,7 +22,7 @@ const LabelClassPage = () => {
         }}
       >
         <Helmet>
-          <title>Label - InstAI</title>
+          <title>Annotation - InstAI</title>
         </Helmet>
         <ResponsiveDrawer />\
         <div style={{ position: 'absolute', left: 250, top: 80 }}>
@@ -33,4 +33,4 @@ const LabelClassPage = () => {
   )
 }
 
-export default LabelClassPage
+export default AnnotationPage

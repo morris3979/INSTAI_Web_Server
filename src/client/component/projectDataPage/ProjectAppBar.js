@@ -24,7 +24,7 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { LogoutData, GetProjectList, PatchProjectItem } from '../../store/actionCreater'
 
-const steps = ['Data collection', 'Clean data', 'Label', 'Train']
+const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
 
 const ProjectAppBar = (props) => {
   const {

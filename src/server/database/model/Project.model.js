@@ -26,7 +26,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
-        label: {
+        annotation: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
