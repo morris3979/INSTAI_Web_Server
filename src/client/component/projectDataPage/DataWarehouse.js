@@ -46,6 +46,7 @@ const DataWarehouse = (props) => {
   const openFilter = Boolean(anchorEl_Filter)
 
   const [ selectItem, setSelectItem ] = useState([])
+  const [ selectText, setSelectText ] = useState('Select All')
   const [ menuItem, setMenuItem ] = useState({
     all: true,
     cleaned: false,
@@ -100,8 +101,37 @@ const DataWarehouse = (props) => {
   }
 
   const handleSelectAll = () => {
-    handleCloseSelect()
-    setSelectItem(filterData)
+    if(selectText=='Select All'){
+      handleCloseSelect()
+      setSelectItem(filterData)
+      setTimeout(()=>{
+        setSelectText('Clean All')
+      },100)
+    }
+    else if(selectText=='Clean All'){
+      handleCloseSelect()
+      setSelectItem([])
+      setTimeout(()=>{
+        setSelectText('Select All')
+      },100)
+    }
+  }
+
+  const handleRandomSelect = () => {
+    handleCloseSelect();
+    setSelectItem([])
+    const item = filterData
+    var newItems = [];
+
+    for (var i = 0; i < item.length; i++) {
+      var idx = Math.floor(Math.random() * item.length);
+      newItems.push(item[idx]);
+      item.splice(idx, 1);
+    }
+    setSelectItem(newItems)
+    setTimeout(()=>{
+      setSelectText('Select All')
+    },100)
   }
 
   const handleClickCleanTag = () => {
@@ -426,11 +456,11 @@ const DataWarehouse = (props) => {
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     onClick={handleSelectAll}
                   >
-                    Select All
+                    {selectText}
                   </MenuItem>
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleCloseSelect}
+                    onClick={handleRandomSelect}
                   >
                     Random
                   </MenuItem>
