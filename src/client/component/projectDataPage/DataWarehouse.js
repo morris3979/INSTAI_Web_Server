@@ -92,7 +92,7 @@ const DataWarehouse = (props) => {
           return c.id != id
         })
       )
-    }else{
+    } else {
       setSelectItem([
         ...selectItem,
         {id: id, value: value}
@@ -101,23 +101,23 @@ const DataWarehouse = (props) => {
   }
 
   const handleSelectAll = () => {
-    if(selectText=='Select All'){
+    if(selectText == 'Select All'){
       handleCloseSelect()
       setSelectItem(filterData)
-      setTimeout(()=>{
-        setSelectText('Clean All')
-      },100)
+      setTimeout(() => {
+        setSelectText('Deselect All')
+      }, 100)
     }
-    else if(selectText=='Clean All'){
+    else if(selectText == 'Deselect All') {
       handleCloseSelect()
       setSelectItem([])
-      setTimeout(()=>{
+      setTimeout(() => {
         setSelectText('Select All')
-      },100)
+      }, 100)
     }
   }
 
-  const handleRandomSelect = () => {
+  const handleAutoSampling = () => {
     handleCloseSelect();
     setSelectItem([])
     const item = filterData
@@ -129,9 +129,9 @@ const DataWarehouse = (props) => {
       item.splice(idx, 1);
     }
     setSelectItem(newItems)
-    setTimeout(()=>{
+    setTimeout(() => {
       setSelectText('Select All')
-    },100)
+    }, 100)
   }
 
   const handleClickCleanTag = () => {
@@ -380,7 +380,28 @@ const DataWarehouse = (props) => {
                   </MenuItem>
                 </Menu>
               </Grid>
-              <Grid item style={{ position: 'absolute', right: 160, marginRight: 5 }}>
+              <Grid
+                item
+                style={{ marginLeft: 2 }}
+              >
+                {selectItem.length > 0?
+                <Typography
+                  noWrap
+                  variant="h6"
+                  sx={{
+                    color: 'white',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  {`Selected ${selectItem.length} items`}
+                </Typography>
+                :null
+                }
+              </Grid>
+              <Grid
+                item
+                style={{ position: 'absolute', right: 160, marginRight: 5 }}
+              >
                 <Button
                   id="basic-button"
                   variant="outlined"
@@ -460,9 +481,9 @@ const DataWarehouse = (props) => {
                   </MenuItem>
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleRandomSelect}
+                    onClick={handleAutoSampling}
                   >
-                    Random
+                    Auto Sampling
                   </MenuItem>
                 </Menu>
               </Grid>
