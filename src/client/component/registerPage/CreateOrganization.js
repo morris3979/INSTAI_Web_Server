@@ -63,7 +63,7 @@ const CreateOrganization = (props) => {
         align='center'
         onClick={onCreate}
         component={Link}
-        to='/SelectOrganization'
+        to='/Organization/Select'
       >
         CREATE ORGANIZATION
       </Button>

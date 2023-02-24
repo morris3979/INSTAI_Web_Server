@@ -34,7 +34,7 @@ const DataWarehouse = (props) => {
     dataList,
     getDataList,
     getDataItem,
-    patchDataItem
+    patchDataItem,
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -523,8 +523,11 @@ const DataWarehouse = (props) => {
                             component="img"
                             image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
                             onClick={() => {
+                              console.log('id', item.id)
                               getDataItem(item.id)
-                              navigate('/Annotation')
+                              setTimeout(() => {
+                                navigate('/Annotation')
+                              }, 300)
                             }}
                           />
                           <Box
@@ -565,7 +568,8 @@ const DataWarehouse = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
-      dataList: state.dataList
+      dataList: state.dataList,
+      dataItem: state.dataItem
     }
   }
 

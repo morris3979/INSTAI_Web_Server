@@ -133,7 +133,7 @@ const Overview = (props) => {
                                 float: 'right'
                             }}
                         >
-                            0
+                            {dataList.Data.filter(item => item.json === true).length}
                         </Typography>
                     </Box>
                 </Grid>
@@ -156,7 +156,7 @@ const Overview = (props) => {
                                 marginLeft: 3
                             }}
                         >
-                            Data Trained
+                            Data to Train
                         </Typography>
                         <Typography
                             noWrap
@@ -169,7 +169,7 @@ const Overview = (props) => {
                                 float: 'right'
                             }}
                         >
-                            0
+                            {dataList.Data.filter(item => item.trainTag === true).length}
                         </Typography>
                     </Box>
                 </Grid>
@@ -206,31 +206,72 @@ const Overview = (props) => {
                                 color: 'grey',
                                 fontWeight: 'bold',
                                 marginTop: 2,
-                                marginLeft: 3
+                                marginLeft: 3,
+                                marginBottom: 4
                             }}
                         >
                             Classes
                         </Typography>
+                        {labelList.Labels.length === 0?
                         <div
                             style={{
-                                marginTop: 4,
-                                marginLeft: 3
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
                             }}
                         >
-                            {labelList.Labels.map((Labels) => {
+                            <Box
+                                style={{
+                                    backgroundColor: '#000',
+                                    color: '#fff',
+                                    opacity: .5,
+                                    borderRadius: 10,
+                                }}
+                            >
                                 <Typography
-                                    noWrap
-                                    variant="h4"
                                     sx={{
-                                        color: 'lightblue',
+                                        color: 'lightgrey',
                                         fontWeight: 'bold',
-                                        marginTop: 1,
+                                        fontSize: '30px',
+                                        marginLeft: 2,
+                                        marginRight: 2,
                                     }}
                                 >
-                                    {`● ${Labels.labelClass}`}
+                                    Empty...
                                 </Typography>
-                            })}
+                            </Box>
+                        </div>:
+                        <div
+                            style={{
+                                marginTop: 3,
+                                marginLeft: 40
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    display: 'grid',
+                                    columnGap: 3,
+                                    rowGap: 2,
+                                    gridTemplateColumns: 'repeat(2, 1fr)',
+                                }}
+                            >
+                                {labelList.Labels.map((Labels) => {
+                                    return(
+                                        <Typography
+                                            noWrap
+                                            variant="h5"
+                                            sx={{
+                                                color: 'lightsteelblue',
+                                                fontWeight: 'bold',
+                                            }}
+                                        >
+                                            {`● ${Labels.labelClass}`}
+                                        </Typography>
+                                    )
+                                })}
+                            </Box>
                         </div>
+                        }
                     </Box>
                 </Grid>
                 <Grid item>

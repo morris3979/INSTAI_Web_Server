@@ -69,7 +69,6 @@ const ResponsiveDrawer = (props) => {
   useEffect(() => {
     dataItem
     getLabelList(dataItem.ProjectId)
-    getDataItem(dataItem.id)
     console.log('dataItem', dataItem)
   },[])
 
@@ -108,13 +107,15 @@ const ResponsiveDrawer = (props) => {
 
   const onSave = () => {
     patchDataItem(dataItem.id, { json: 1, UserId: userInformation.id })
+    getDataItem(dataItem.id)
     location.reload()
   }
 
   const onCloseLabel = () => {
-    navigate('/Project/Data')
     getDataList(dataList.id)
-    location.reload()
+    setTimeout(() => {
+        navigate('/Project/Data')
+    }, 100)
   }
 
   const drawer = (

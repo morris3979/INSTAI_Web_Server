@@ -274,6 +274,8 @@ export const PatchDataItem = (id, data) => {
       try {
         const response = await axios.patch(`/api/data/${id}`, data)
         if (response.data) {
+          const action = GetDataItem(response.data.id)
+          dispatch(action)
           location.reload()
           return
         }
@@ -414,7 +416,11 @@ export const AddLabel = (data) => {
       try {
         const response = await axios.post('/api/label', data)
         if (response.data) {
-          location.reload()
+          const action = GetLabelList(response.data.ProjectId)
+          dispatch(action)
+          setTimeout(() => {
+            location.reload()
+          }, 300)
           // console.log('response', response.data)
           return
         }
