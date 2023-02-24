@@ -143,7 +143,7 @@ const DataWarehouse = (props) => {
       selectItem.forEach((data) => {
         patchDataItem(data.id, { cleanTag: 1 })
       })
-    }else{
+    } else {
       return
     }
   }
@@ -153,25 +153,25 @@ const DataWarehouse = (props) => {
       selectItem.forEach((data) => {
         patchDataItem(data.id, { trainTag: 1 })
       })
-    }else{
+    } else {
       return
     }
   }
 
   const handleUploadImage = (e) => {
-    var now = new Date();
-    var localTime = now.getFullYear().toString() + 
-        (now.getMonth() + 1).toString().padStart(2, '0') + 
-        now.getDate().toString().padStart(2, '0') + 
-        now.getHours().toString().padStart(2, '0') + 
-        now.getMinutes().toString().padStart(2, '0') + 
-        now.getSeconds().toString().padStart(2, '0');
+    var now = new Date()
+    var localTime = now.getFullYear().toString() +
+        (now.getMonth() + 1).toString().padStart(2, '0') +
+        now.getDate().toString().padStart(2, '0') + '-' +
+        now.getHours().toString().padStart(2, '0') + '-' +
+        now.getMinutes().toString().padStart(2, '0') + '-' +
+        now.getSeconds().toString().padStart(2, '0')
 
-    if(e.target.files.length>0) {
-      for(var i =0;i<e.target.files.length;i++) {
+    if(e.target.files.length > 0) {
+      for(var i = 0; i < e.target.files.length; i++) {
         var newName = `${dataList.project}_${localTime}_${('000' + (i + 1)).slice(-3)}_${e.target.files[i].name}`
         uploadImageFile(new File([e.target.files[i]], newName, { type: e.target.files[i].type }))
-        postDataItem({ data:newName.slice(0,newName.indexOf('.')), image:1, ProjectId: dataList.id })
+        postDataItem({ data:newName.slice(0, newName.indexOf('.')), image:1, ProjectId: dataList.id })
       }
       setTimeout(() => {location.reload()}, 500)
     }
@@ -196,7 +196,7 @@ const DataWarehouse = (props) => {
 
   return (
       <Box
-        style={{ borderRadius: 20, marginLeft: '5.5vw', marginTop: '13vh' }}
+        style={{ borderRadius: 20, marginLeft: 100, marginTop: 130 }}
         sx={{ display: 'flex', backgroundColor: '#0A1929' }}
       >
         <div

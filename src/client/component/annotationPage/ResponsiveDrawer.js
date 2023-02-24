@@ -182,7 +182,15 @@ const ResponsiveDrawer = (props) => {
                     alignItems="center"
                     style={{ marginTop: 3 }}
                 >
-                    <Typography color='darkgrey'>{dataItem.data}</Typography>
+                    <Typography
+                        color='darkgrey'
+                        maxWidth={drawerWidth - 80}
+                        style={{
+                            wordWrap: 'break-word'
+                        }}
+                    >
+                        {dataItem.data}
+                    </Typography>
                 </Grid>
             </Grid>
             <Grid

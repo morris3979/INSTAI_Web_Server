@@ -135,16 +135,23 @@ const ProjectAppBar = (props) => {
 
   return (
     <AppBar
-      position="fixed" elevation={0}
-      style={{ backgroundColor: '#1c2127', height: '7vh', marginTop: '6vh' }}
+      position="fixed"
+      elevation={0}
+      style={{ backgroundColor: '#1c2127', height: 60, marginTop: 60 }}
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Container maxWidth="100vh">
         <Toolbar disableGutters>
             <Grid container justifyContent='flex-start'>
-              <Typography>
-                <FilterCenterFocusIcon style={{ color: 'white', marginLeft: 9, marginTop: 8 }} />
-              </Typography>
+              <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                width={55}
+              >
+                <FilterCenterFocusIcon style={{ color: 'white', marginTop: 8 }} />
+              </Grid>
               <Typography
                 noWrap
                 variant="h6"

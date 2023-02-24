@@ -26,7 +26,7 @@ const Overview = (props) => {
 
   return (
       <Box
-        style={{ borderRadius: 20, marginLeft: '5.5vw', marginTop: '13vh' }}
+        style={{ borderRadius: 20, marginLeft: 100, marginTop: 130 }}
         sx={{ display: 'flex', backgroundColor: '#0A1929' }}
       >
         <div

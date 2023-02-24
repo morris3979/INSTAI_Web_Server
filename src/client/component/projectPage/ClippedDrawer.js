@@ -16,7 +16,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ScienceIcon from '@mui/icons-material/Science';
 import DvrIcon from '@mui/icons-material/Dvr';
 
-const drawerWidth = '5.5vw';
+const drawerWidth = '120';
 
 const ClippedDrawer = (props) => {
     const navigate = useNavigate()
@@ -40,7 +40,13 @@ const ClippedDrawer = (props) => {
                 <Toolbar />
                 <Toolbar />
                 <Box sx={{ overflow: 'auto' }}>
-                    <List>
+                    <List
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
                         <ListItem key={'Overview'} disablePadding style={{ marginTop: 10, marginBottom: 15 }}>
                             <ListItemButton onClick={() => navigate('/Project/Overview')}>
                                 <Grid
@@ -115,7 +121,7 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Settings'} disablePadding style={{ position: 'fixed', bottom: 15, maxWidth: '5.5vw' }}>
+                        <ListItem key={'Settings'} disablePadding style={{ position: 'fixed', bottom: 15, maxWidth: drawerWidth }}>
                             <ListItemButton disabled={true}>
                                 <Grid
                                     container

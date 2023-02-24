@@ -99,7 +99,7 @@ const ResponsiveAppBar = (props) => {
 
   return (
     <AppBar position="fixed" elevation={0}
-      style={{ backgroundColor: '#0A1929', height: '6vh' }}
+      style={{ backgroundColor: '#0A1929', height: 60 }}
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Container maxWidth="100vh">
