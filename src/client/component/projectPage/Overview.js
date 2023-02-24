@@ -1,10 +1,28 @@
-import React, { lazy } from 'react'
+import React, { lazy, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import {
+  GetDataList,
+  GetLabelList
+} from '../../store/actionCreater'
 
 const Overview = (props) => {
+  const {
+    dataList,
+    getDataList,
+    labelList,
+    getLabelList
+  } = props
+
+  useEffect(() => {
+    // console.log('dataList', dataList)
+    dataList
+    labelList
+    getDataList(dataList.id)
+    getLabelList(dataList.id)
+  },[])
 
   return (
       <Box
@@ -40,8 +58,206 @@ const Overview = (props) => {
               justifyContent: 'center'
             }}
           >
-            component
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                spacing={5}
+            >
+                <Grid item>
+                    <Box
+                        sx={{
+                            minWidth: '25vw',
+                            minHeight: '20vh',
+                            borderRadius: 5,
+                            border: '2px solid grey'
+                        }}
+                    >
+                        <Typography
+                            noWrap
+                            variant="h6"
+                            sx={{
+                                color: 'grey',
+                                fontWeight: 'bold',
+                                marginTop: 2,
+                                marginLeft: 3
+                            }}
+                        >
+                            Data Uploaded
+                        </Typography>
+                        <Typography
+                            noWrap
+                            variant="h2"
+                            sx={{
+                                color: 'green',
+                                fontWeight: 'bold',
+                                marginTop: 5,
+                                marginRight: 3,
+                                float: 'right'
+                            }}
+                        >
+                            {dataList.Data.length}
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box
+                        sx={{
+                            minWidth: '25vw',
+                            minHeight: '20vh',
+                            borderRadius: 5,
+                            border: '2px solid grey'
+                        }}
+                    >
+                        <Typography
+                            noWrap
+                            variant="h6"
+                            sx={{
+                                color: 'grey',
+                                fontWeight: 'bold',
+                                marginTop: 2,
+                                marginLeft: 3
+                            }}
+                        >
+                            Data Labeled
+                        </Typography>
+                        <Typography
+                            noWrap
+                            variant="h2"
+                            sx={{
+                                color: 'green',
+                                fontWeight: 'bold',
+                                marginTop: 5,
+                                marginRight: 3,
+                                float: 'right'
+                            }}
+                        >
+                            0
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box
+                        sx={{
+                            minWidth: '25vw',
+                            minHeight: '20vh',
+                            borderRadius: 5,
+                            border: '2px solid grey'
+                        }}
+                    >
+                        <Typography
+                            noWrap
+                            variant="h6"
+                            sx={{
+                                color: 'grey',
+                                fontWeight: 'bold',
+                                marginTop: 2,
+                                marginLeft: 3
+                            }}
+                        >
+                            Data Trained
+                        </Typography>
+                        <Typography
+                            noWrap
+                            variant="h2"
+                            sx={{
+                                color: 'green',
+                                fontWeight: 'bold',
+                                marginTop: 5,
+                                marginRight: 3,
+                                float: 'right'
+                            }}
+                        >
+                            0
+                        </Typography>
+                    </Box>
+                </Grid>
+            </Grid>
           </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 30
+            }}
+          >
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                spacing={5}
+            >
+                <Grid item>
+                    <Box
+                        sx={{
+                            minWidth: '25vw',
+                            minHeight: '50vh',
+                            borderRadius: 5,
+                            border: '2px solid grey'
+                        }}
+                    >
+                        <Typography
+                            noWrap
+                            variant="h6"
+                            sx={{
+                                color: 'grey',
+                                fontWeight: 'bold',
+                                marginTop: 2,
+                                marginLeft: 3
+                            }}
+                        >
+                            Classes
+                        </Typography>
+                        <div
+                            style={{
+                                marginTop: 4,
+                                marginLeft: 3
+                            }}
+                        >
+                            {labelList.Labels.map((Labels) => {
+                                <Typography
+                                    noWrap
+                                    variant="h4"
+                                    sx={{
+                                        color: 'lightblue',
+                                        fontWeight: 'bold',
+                                        marginTop: 1,
+                                    }}
+                                >
+                                    {`● ${Labels.labelClass}`}
+                                </Typography>
+                            })}
+                        </div>
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box
+                        sx={{
+                            minWidth: '52vw',
+                            minHeight: '50vh',
+                            borderRadius: 5,
+                            border: '2px solid grey'
+                        }}
+                    >
+                        <Typography
+                            noWrap
+                            variant="h6"
+                            sx={{
+                                color: 'grey',
+                                fontWeight: 'bold',
+                                marginTop: 2,
+                                marginLeft: 3
+                            }}
+                        >
+                            Models
+                        </Typography>
+                    </Box>
+                </Grid>
+            </Grid>
+        </div>
         </div>
       </Box>
   )
@@ -49,12 +265,24 @@ const Overview = (props) => {
 
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
-    return {}
+    return {
+        dataList: state.dataList,
+        labelList: state.labelList
+    }
   }
 
   const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
-    return {}
+    return {
+        getDataList(id, text) {
+          const action = GetDataList(id)
+          dispatch(action)
+        },
+        getLabelList(id, text) {
+          const action = GetLabelList(id)
+          dispatch(action)
+        },
+    }
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Overview)
