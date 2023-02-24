@@ -268,6 +268,21 @@ export const GetDataList = (id, data) => {
   )
 }
 
+export const PostDataItem = (data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.post('/api/data/', data)
+        if (response.data) {
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
 export const PatchDataItem = (id, data) => {
   return (
     async (dispatch) => {
@@ -421,6 +436,23 @@ export const AddLabel = (data) => {
       } catch (e) {
         alert(e.response.data.message)
       }
+    }
+  )
+}
+
+export const UploadImageFile = (file) => {
+  return (
+    async () => {
+      let formData = new FormData();
+      formData.append('file', file)
+      return axios.post(
+        `/api/data/uploadToS3`, formData
+      ).then(response => {
+        console.log('response', response)
+        // JSON responses are automatically parsed.
+      }).catch(e => {
+        this.errors.push(e);
+      });
     }
   )
 }

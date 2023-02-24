@@ -97,7 +97,10 @@ const Overview = (props) => {
                                 float: 'right'
                             }}
                         >
-                            {dataList.Data.length}
+                            {dataList.id != undefined
+                            ? dataList.Data.length
+                            : {}
+                            }
                         </Typography>
                     </Box>
                 </Grid>
@@ -217,7 +220,8 @@ const Overview = (props) => {
                                 marginLeft: 3
                             }}
                         >
-                            {labelList.Labels.map((Labels) => {
+                            {labelList.id != undefined
+                            ? labelList.Labels.map((Labels) => {
                                 <Typography
                                     noWrap
                                     variant="h4"
@@ -229,7 +233,9 @@ const Overview = (props) => {
                                 >
                                     {`● ${Labels.labelClass}`}
                                 </Typography>
-                            })}
+                            })
+                            : {}
+                            }
                         </div>
                     </Box>
                 </Grid>

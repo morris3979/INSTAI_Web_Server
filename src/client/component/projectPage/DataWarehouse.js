@@ -26,7 +26,9 @@ import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import {
   GetDataList,
   GetDataItem,
-  PatchDataItem
+  PostDataItem,
+  PatchDataItem,
+  UploadImageFile
 } from '../../store/actionCreater'
 
 const DataWarehouse = (props) => {
@@ -34,7 +36,9 @@ const DataWarehouse = (props) => {
     dataList,
     getDataList,
     getDataItem,
-    patchDataItem
+    postDataItem,
+    patchDataItem,
+    uploadImageFile
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -154,6 +158,25 @@ const DataWarehouse = (props) => {
     }
   }
 
+  const handleUploadImage = (e) => {
+    var now = new Date();
+    var localTime = now.getFullYear().toString() + 
+        (now.getMonth() + 1).toString().padStart(2, '0') + 
+        now.getDate().toString().padStart(2, '0') + 
+        now.getHours().toString().padStart(2, '0') + 
+        now.getMinutes().toString().padStart(2, '0') + 
+        now.getSeconds().toString().padStart(2, '0');
+
+    if(e.target.files.length>0) {
+      for(var i =0;i<e.target.files.length;i++) {
+        var newName = `${dataList.project}_${localTime}_${('000' + (i + 1)).slice(-3)}_${e.target.files[i].name}`
+        uploadImageFile(new File([e.target.files[i]], newName, { type: e.target.files[i].type }))
+        postDataItem({ data:newName.slice(0,newName.indexOf('.')), image:1, ProjectId: dataList.id })
+      }
+      setTimeout(() => {location.reload()}, 500)
+    }
+  }
+
   const filterData = dataList.Data.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled && menuItem.trainable) {
       return data.cleanTag == true && data.json == true && data.trainTag == true
@@ -249,7 +272,7 @@ const DataWarehouse = (props) => {
                 }}
               >
                 UPLOAD IMAGE
-                <input hidden accept="image/*" multiple type="file" />
+                <input hidden accept="image/*" multiple type="file" onChange={handleUploadImage}/>
               </Typography>
             </Button>
           </div>:
@@ -275,7 +298,7 @@ const DataWarehouse = (props) => {
                 startIcon={<CloudUploadIcon />}
               >
                 Upload
-                <input hidden accept="image/*" multiple type="file" />
+                <input hidden accept="image/*" multiple type="file" onChange={handleUploadImage}/>
               </Button>
             </Grid>
             <Grid
@@ -580,8 +603,16 @@ const mapStateToProps = (state) => {
         const action = GetDataItem(id)
         dispatch(action)
       },
+      postDataItem(data) {
+        const action = PostDataItem(data)
+        dispatch(action)
+      },
       patchDataItem(id ,data) {
         const action = PatchDataItem(id, data)
+        dispatch(action)
+      },
+      uploadImageFile(file) {
+        const action = UploadImageFile(file)
         dispatch(action)
       }
     }
