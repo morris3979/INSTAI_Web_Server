@@ -55,7 +55,7 @@ const DataWarehouse = (props) => {
     all: true,
     cleaned: false,
     labeled: false,
-    trainable: false
+    toTrain: false
   })
   const navigate = useNavigate()
 
@@ -167,18 +167,24 @@ const DataWarehouse = (props) => {
         now.getMinutes().toString().padStart(2, '0') + '-' +
         now.getSeconds().toString().padStart(2, '0')
 
-    if(e.target.files.length > 0) {
+    if(e.target.files.length < 6) {
       for(var i = 0; i < e.target.files.length; i++) {
         var newName = `${dataList.project}_${localTime}_${('000' + (i + 1)).slice(-3)}_${e.target.files[i].name}`
         uploadImageFile(new File([e.target.files[i]], newName, { type: e.target.files[i].type }))
         postDataItem({ data:newName.slice(0, newName.indexOf('.')), image:1, ProjectId: dataList.id })
       }
       setTimeout(() => {location.reload()}, 500)
+    } else {
+      alert('Uploaded limit. (Max: 5)')
     }
   }
 
+  const callbackReload = () => {
+    location.reload()
+  }
+
   const filterData = dataList.Data.filter((data) => {
-    if (menuItem.cleaned && menuItem.labeled && menuItem.trainable) {
+    if (menuItem.cleaned && menuItem.labeled && menuItem.toTrain) {
       return data.cleanTag == true && data.json == true && data.trainTag == true
     }
     else if (menuItem.cleaned) {
@@ -187,7 +193,7 @@ const DataWarehouse = (props) => {
     else if (menuItem.labeled) {
       return data.json == true
     }
-    else if (menuItem.trainable) {
+    else if (menuItem.toTrain) {
       return data.trainTag == true
     } else {
       return data
@@ -389,17 +395,17 @@ const DataWarehouse = (props) => {
                     <ListItemText primary={'labeled'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
-                    key={'trainable'}
+                    key={'toTrain'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     onClick={(e) => {
                       setMenuItem((prevState) => ({
                         ...prevState,
-                        trainable: e.target.checked
+                        toTrain: e.target.checked
                       }))
                     }}
                   >
-                    <Checkbox sx={{ color: 'white' }} checked={menuItem.trainable} />
-                    <ListItemText primary={'trainable'} sx={{ marginRight: 3 }} />
+                    <Checkbox sx={{ color: 'white' }} checked={menuItem.toTrain} />
+                    <ListItemText primary={'to train'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                 </Menu>
               </Grid>
@@ -464,7 +470,7 @@ const DataWarehouse = (props) => {
                     disabled={selectItem.length == 0}
                     onClick={handleClickTrainTag}
                   >
-                    TRAIN
+                    TO TRAIN
                   </MenuItem>
                 </Menu>
               </Grid>
