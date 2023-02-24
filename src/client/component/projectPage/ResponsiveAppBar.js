@@ -88,7 +88,7 @@ const ResponsiveAppBar = (props) => {
   }
 
   const onInvitePeople = () => {
-    navigate('/Organization')
+    navigate('/Organization/Management')
     location.reload()
   }
 

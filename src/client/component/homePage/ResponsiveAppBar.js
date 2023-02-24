@@ -76,12 +76,12 @@ const ResponsiveAppBar = (props) => {
   }
 
   const onSwitchOrganization = () => {
-    navigate('/SelectOrganization')
+    navigate('/Organization/Select')
     location.reload()
   }
 
   const onInvitePeople = () => {
-    navigate('/Organization')
+    navigate('/Organization/Management')
     location.reload()
   }
 
