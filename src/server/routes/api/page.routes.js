@@ -10,11 +10,15 @@ pageRouter.get("/Register", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/CreateOrganization", async (req, res) => {
+pageRouter.get("/Organization/Create", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/SelectOrganization", async (req, res) => {
+pageRouter.get("/Organization/Select", async (req, res) => {
+    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+});
+
+pageRouter.get("/Organization/Management", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
@@ -26,19 +30,19 @@ pageRouter.get("/Home", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/Data", async (req, res) => {
+pageRouter.get("/Project/Overview", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/Device", async (req, res) => {
+pageRouter.get("/Project/Data", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/Detector", async (req, res) => {
+pageRouter.get("/Project/Device", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
-pageRouter.get("/Organization", async (req, res) => {
+pageRouter.get("/Project/Detector", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 

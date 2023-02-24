@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from 'react'
-import Loading from '../loading'
+import Loading from '../../loading'
 import { Helmet } from "react-helmet"
 
-const ResponsiveAppBar = lazy(() => import('../component/homePage/ResponsiveAppBar'))
-const InvitePeopleTable = lazy(() => import('../component/homePage/InvitePeopleTable'))
+const ResponsiveAppBar = lazy(() => import('../../component/homePage/ResponsiveAppBar'))
+const InvitePeopleTable = lazy(() => import('../../component/homePage/InvitePeopleTable'))
 
-const OrganizationManegePage = () => {
+const ManagementPage = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div
@@ -29,4 +29,4 @@ const OrganizationManegePage = () => {
   )
 }
 
-export default OrganizationManegePage
+export default ManagementPage

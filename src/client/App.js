@@ -6,13 +6,14 @@ import Box from '@mui/material/Box';
 
 const LoginPage = lazy(() => import('./page/loginPage'))
 const RegisterPage = lazy(() => import('./page/registerPage'))
-const OrganizationCreatePage = lazy(() => import('./page/organizationCreatePage'))
-const OrganizationSelectPage = lazy(() => import('./page/organizationSelectPage'))
+const CreatePage = lazy(() => import('./page/organization/createPage'))
+const SelectPage = lazy(() => import('./page/organization/selectPage'))
+const ManagementPage = lazy(() => import('./page/organization/managementPage'))
 const HomePage = lazy(() => import('./page/homePage'))
-const ProjectDataPage = lazy(() => import('./page/projectDataPage'))
-const ProjectDevicePage = lazy(() => import('./page/projectDevicePage'))
-const ProjectDetectorPage = lazy(() => import('./page/projectDetectorPage'))
-const OrganizationManegePage = lazy(() => import('./page/organizationManegePage'))
+const ProjectOverviewPage = lazy(() => import('./page/project/overviewPage'))
+const ProjectDataPage = lazy(() => import('./page/project/dataPage'))
+const ProjectDevicePage = lazy(() => import('./page/project/devicePage'))
+const ProjectDetectorPage = lazy(() => import('./page/project/detectorPage'))
 const AnnotationPage = lazy(() => import('./page/annotationPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
 
@@ -32,13 +33,14 @@ const App = (props) => {
         <Routes>
           <Route path='/' element={<LoginPage/>} />
           <Route path='/Register' element={<RegisterPage/>} />
-          <Route path='/CreateOrganization' element={<OrganizationCreatePage/>} />
-          <Route path='/SelectOrganization' element={<OrganizationSelectPage/>} />
+          <Route path='/Organization/Create' element={<CreatePage/>} />
+          <Route path='/Organization/Select' element={<SelectPage/>} />
+          <Route path='/Organization/Management' element={<ManagementPage/>} />
           <Route path='/Home' element={<HomePage/>} />
-          <Route path='/Data' element={<ProjectDataPage/>} />
-          <Route path='/Device' element={<ProjectDevicePage/>} />
-          <Route path='/Detector' element={<ProjectDetectorPage/>} />
-          <Route path='/Organization' element={<OrganizationManegePage/>} />
+          <Route path='/Project/Overview' element={<ProjectOverviewPage/>} />
+          <Route path='/Project/Data' element={<ProjectDataPage/>} />
+          <Route path='/Project/Device' element={<ProjectDevicePage/>} />
+          <Route path='/Project/Detector' element={<ProjectDetectorPage/>} />
           <Route path='/Annotation' element={<AnnotationPage/>} />
           <Route path='/Initial' element={<InitialPage/>} />
         </Routes>

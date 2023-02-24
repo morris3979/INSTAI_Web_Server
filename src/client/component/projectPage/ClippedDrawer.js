@@ -14,6 +14,7 @@ import PermMediaIcon from '@mui/icons-material/PermMedia';
 import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ScienceIcon from '@mui/icons-material/Science';
+import DvrIcon from '@mui/icons-material/Dvr';
 
 const drawerWidth = '5.5vw';
 
@@ -40,8 +41,22 @@ const ClippedDrawer = (props) => {
                 <Toolbar />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
-                        <ListItem key={'Data'} disablePadding style={{ marginTop: 10, marginBottom: 15 }}>
-                            <ListItemButton onClick={() => navigate('/Data')}>
+                        <ListItem key={'Overview'} disablePadding style={{ marginTop: 10, marginBottom: 15 }}>
+                            <ListItemButton onClick={() => navigate('/Project/Overview')}>
+                                <Grid
+                                    container
+                                    direction="column"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    width={drawerWidth}
+                                >
+                                    <DvrIcon style={{ color: 'white' }} />
+                                    <ListItemText primary={'Overview'} style={{ color: 'white' }} />
+                                </Grid>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key={'Data'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
+                            <ListItemButton onClick={() => navigate('/Project/Data')}>
                                 <Grid
                                     container
                                     direction="column"
@@ -55,7 +70,7 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Device'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
-                            <ListItemButton onClick={() => navigate('/Device')}>
+                            <ListItemButton onClick={() => navigate('/Project/Device')}>
                                 <Grid
                                     container
                                     direction="column"
@@ -78,7 +93,7 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Detector'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
-                            <ListItemButton onClick={() => navigate('/Detector')}>
+                            <ListItemButton onClick={() => navigate('/Project/Detector')}>
                                 <Grid
                                     container
                                     direction="column"

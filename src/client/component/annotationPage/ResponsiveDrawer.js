@@ -112,7 +112,7 @@ const ResponsiveDrawer = (props) => {
   }
 
   const onCloseLabel = () => {
-    navigate('/Data')
+    navigate('/Project/Data')
     getDataList(dataList.id)
     location.reload()
   }

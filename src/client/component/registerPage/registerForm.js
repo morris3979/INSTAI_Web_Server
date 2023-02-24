@@ -210,7 +210,7 @@ const RegisterForm = (props) => {
           <Button autoFocus size='small'
             variant="contained"
             component={Link}
-            to={'/CreateOrganization'}
+            to={'/Organization/Create'}
             sx={{ margin: 1 }}
           >
             next

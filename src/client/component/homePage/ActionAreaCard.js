@@ -163,7 +163,7 @@ const ActionAreaCard = (props) => {
                         getDeviceList(value.id)
                         getLabelList(value.id)
                         setTimeout(() => {
-                          navigate('/Data')
+                          navigate('/Project/Overview')
                         }, 100)
                       }}
                     >
@@ -210,7 +210,7 @@ const ActionAreaCard = (props) => {
                         getDeviceList(value.id)
                         getLabelList(value.id)
                         setTimeout(() => {
-                          navigate('/Data')
+                          navigate('/Project/Overview')
                         }, 100)
                       }}
                     >

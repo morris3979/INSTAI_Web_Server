@@ -72,7 +72,7 @@ const CreateOrganization = (props) => {
         sx={{ width: 400, marginBottom: 2 }}
         align='center'
         component={Link}
-        to='/SelectOrganization'
+        to='/Organization/Select'
       >
         CANCEL
       </Button>

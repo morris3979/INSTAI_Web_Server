@@ -59,7 +59,7 @@ const LoginForm = (props) => {
   }
 
   const onNext = () => {
-    navigate('/SelectOrganization')
+    navigate('/Organization/Select')
     location.reload()
   }
 
