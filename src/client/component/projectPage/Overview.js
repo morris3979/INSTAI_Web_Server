@@ -97,7 +97,10 @@ const Overview = (props) => {
                                 float: 'right'
                             }}
                         >
-                            {dataList.Data.length}
+                            {dataList.id != undefined
+                            ? dataList.Data.length
+                            : {}
+                            }
                         </Typography>
                     </Box>
                 </Grid>

@@ -83,7 +83,7 @@ const ResponsiveAppBar = (props) => {
   }
 
   const onSwitchOrganization = () => {
-    navigate('/SelectOrganization')
+    navigate('/Organization/Select')
     location.reload()
   }
 
