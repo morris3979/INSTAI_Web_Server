@@ -71,7 +71,8 @@ const Overview = (props) => {
                             minWidth: '25vw',
                             minHeight: '20vh',
                             borderRadius: 5,
-                            border: '2px solid grey'
+                            border: '2px solid grey',
+                            position: 'relative'
                         }}
                     >
                         <Typography
@@ -92,9 +93,9 @@ const Overview = (props) => {
                             sx={{
                                 color: 'green',
                                 fontWeight: 'bold',
-                                marginTop: 5,
-                                marginRight: 3,
-                                float: 'right'
+                                position: 'absolute',
+                                right: 30,
+                                bottom: 15
                             }}
                         >
                             {dataList.id != undefined
@@ -110,7 +111,8 @@ const Overview = (props) => {
                             minWidth: '25vw',
                             minHeight: '20vh',
                             borderRadius: 5,
-                            border: '2px solid grey'
+                            border: '2px solid grey',
+                            position: 'relative'
                         }}
                     >
                         <Typography
@@ -131,9 +133,9 @@ const Overview = (props) => {
                             sx={{
                                 color: 'green',
                                 fontWeight: 'bold',
-                                marginTop: 5,
-                                marginRight: 3,
-                                float: 'right'
+                                position: 'absolute',
+                                right: 30,
+                                bottom: 15
                             }}
                         >
                             {dataList.Data.filter(item => item.json === true).length}
@@ -146,7 +148,8 @@ const Overview = (props) => {
                             minWidth: '25vw',
                             minHeight: '20vh',
                             borderRadius: 5,
-                            border: '2px solid grey'
+                            border: '2px solid grey',
+                            position: 'relative'
                         }}
                     >
                         <Typography
@@ -167,9 +170,9 @@ const Overview = (props) => {
                             sx={{
                                 color: 'green',
                                 fontWeight: 'bold',
-                                marginTop: 5,
-                                marginRight: 3,
-                                float: 'right'
+                                position: 'absolute',
+                                right: 30,
+                                bottom: 15
                             }}
                         >
                             {dataList.Data.filter(item => item.trainTag === true).length}
@@ -197,7 +200,7 @@ const Overview = (props) => {
                     <Box
                         sx={{
                             minWidth: '25vw',
-                            minHeight: '50vh',
+                            minHeight: '45vh',
                             borderRadius: 5,
                             border: '2px solid grey'
                         }}
@@ -281,7 +284,7 @@ const Overview = (props) => {
                     <Box
                         sx={{
                             minWidth: '52vw',
-                            minHeight: '50vh',
+                            minHeight: '45vh',
                             borderRadius: 5,
                             border: '2px solid grey'
                         }}

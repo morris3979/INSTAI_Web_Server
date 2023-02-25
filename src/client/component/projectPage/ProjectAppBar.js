@@ -177,11 +177,11 @@ const ProjectAppBar = (props) => {
             <Grid
               container
               direction="row"
-              justifyContent="flex-end"
               alignItems="center"
+              justifyContent="flex-end"
             >
               <Button
-                color="inherit"
+                color='info'
                 variant='outlined'
                 disabled={activeStep === 0}
                 onClick={handleBack}
@@ -215,20 +215,19 @@ const ProjectAppBar = (props) => {
                       {...stepProps}
                       sx={{
                         '& .MuiStepLabel-root .Mui-completed': {
-                          color: 'darkgray', // circle color (COMPLETED)
+                          color: 'grey', // circle color (COMPLETED)
                         },
-                        '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
-                          {
-                            color: 'darkgray', // Just text label (COMPLETED)
-                          },
+                        '& .MuiStepLabel-label .Mui-completed .MuiStepLabel-alternativeLabel': {
+                          color: 'grey', // Just text label (COMPLETED)
+                        },
                         '& .MuiStepLabel-root .Mui-active': {
                           color: 'green', // circle color (ACTIVE)
                         },
-                        '& .MuiStepLabel-label .Mui-active.MuiStepLabel-alternativeLabel': {
-                          color: 'common.white', // Just text label (ACTIVE)
-                        },
                         '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
                           fill: 'common.white', // circle's number (ACTIVE)
+                        },
+                        '& .MuiStepLabel-label': {
+                          color: 'darkgrey', // Just text label (SKIP)
                         },
                         '& .MuiStepIcon-root .Mui-disabled': {
                           color: 'darkgrey'
@@ -236,9 +235,6 @@ const ProjectAppBar = (props) => {
                         '& .MuiStepLabel-root .Mui-disabled': {
                           color: 'darkgrey',
                         },
-                        '& .MuiStepLabel-root .Mui-disabled .MuiStepIcon-text': {
-                          color: 'black',
-                        }
                       }}
                     >
                       <StepLabel {...labelProps}>{label}</StepLabel>
@@ -257,7 +253,7 @@ const ProjectAppBar = (props) => {
               ):(
                 <div>
                   {isStepOptional(activeStep) && (
-                    <Button color="inherit" variant='outlined' onClick={handleSkip} sx={{ margin: 1 }} endIcon={<SkipNextIcon />}>
+                    <Button color='info' variant='outlined' onClick={handleSkip} sx={{ margin: 1 }} endIcon={<SkipNextIcon />}>
                       Skip
                     </Button>
                   )}
