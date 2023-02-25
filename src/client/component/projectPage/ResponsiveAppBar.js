@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -104,25 +105,25 @@ const ResponsiveAppBar = (props) => {
     >
       <Container maxWidth="100vh">
         <Toolbar disableGutters>
-          <Grid container justifyContent='flex-start'>
-            <Typography href="/Home" component={'a'}>
-              <img src={InstAI} alt='Logo' style={{ width: '4vh', height: '4vh' }} />
-            </Typography>
-            <Typography
-              noWrap
-              variant="h5"
-              sx={{
-                mr: 2,
-                fontFamily: 'monospace',
-                fontWeight: 'bold',
-                color: 'inherit',
-                marginTop: 0.5,
-                marginLeft: 1,
-                height: '4vh'
-              }}
-            >
-              {dataList.project}
-            </Typography>
+          <Grid
+            container
+            justifyContent='flex-start'
+          >
+            <Button LinkComponent={'a'} href='/Home'>
+              <img src={InstAI} alt='Logo' style={{ width: 42, height: 40 }} />
+              <Typography
+                noWrap
+                variant="h5"
+                sx={{
+                  fontFamily: 'monospace',
+                  fontWeight: 'bold',
+                  color: 'inherit',
+                  alignContent: 'center'
+                }}
+              >
+                {dataList.project}
+              </Typography>
+            </Button>
           </Grid>
           <Grid container justifyContent='flex-end'>
             <Box sx={{ flexGrow: 0 }}>
