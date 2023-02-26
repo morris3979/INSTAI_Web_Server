@@ -105,20 +105,8 @@ const DataWarehouse = (props) => {
   }
 
   const handleSelectAll = () => {
-    if(selectText == 'Select All'){
-      handleCloseSelect()
-      setSelectItem(filterData)
-      setTimeout(() => {
-        setSelectText('Deselect All')
-      }, 100)
-    }
-    else if(selectText == 'Deselect All') {
-      handleCloseSelect()
-      setSelectItem([])
-      setTimeout(() => {
-        setSelectText('Select All')
-      }, 100)
-    }
+    handleCloseSelect()
+    setSelectItem(filterData)
   }
 
   const handleAutoSampling = () => {
@@ -221,6 +209,20 @@ const DataWarehouse = (props) => {
               alignItems: 'center',
             }}
           >
+            <Grid
+              minWidth='90vw'
+              container
+              direction="row"
+              sx={{ marginTop: 4, marginBottom: 2, justifyContent: 'flex-start' }}
+            >
+              <Typography
+                noWrap
+                variant="h5"
+                sx={{ color: 'white', fontWeight: 'bold', marginLeft: 5 }}
+              >
+                Data
+              </Typography>
+            </Grid>
             <Typography
               noWrap
               variant="h4"
@@ -414,16 +416,30 @@ const DataWarehouse = (props) => {
                 style={{ marginLeft: 2 }}
               >
                 {selectItem.length > 0?
-                <Typography
-                  noWrap
-                  variant="h6"
-                  sx={{
-                    color: 'white',
-                    fontWeight: 'bold'
-                  }}
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
                 >
-                  {`Selected ${selectItem.length} items`}
-                </Typography>
+                  <Typography
+                    noWrap
+                    variant="h6"
+                    sx={{
+                      color: 'white',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    {`Selected ${selectItem.length} items`}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() => setSelectItem([])}
+                    style={{ marginLeft: 10 }}
+                  >
+                    Deselect
+                  </Button>
+                </Grid>
                 :null
                 }
               </Grid>

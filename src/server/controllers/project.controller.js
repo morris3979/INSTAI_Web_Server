@@ -89,7 +89,7 @@ exports.update = (req, res) => {
     })
 }
 
-// Find all Data From a Project
+// Find a Project
 exports.findProject = (req, res) => {
   Project.findOne({
       where: {
@@ -132,9 +132,10 @@ exports.findData = (req, res) => {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']
       }
   }).then(data => {
-      if (!data) {
-          return res.status(404).send({ message: "Project Not found." });
-      }
+      // if (!data) {
+      //   console.log('Data', data)
+      //   return res.status(404).send({ message: "Data Not found." });
+      // }
 
       const replacer = (key, value) => {
           if (key == 'createdAt') return undefined
@@ -165,9 +166,10 @@ exports.findDevice = (req, res) => {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']
       }
   }).then(data => {
-      if (!data) {
-          return res.status(404).send({ message: "Project Not found." });
-      }
+      // if (!data) {
+      //   console.log('Device', data)
+      //   return res.status(404).send({ message: "Device Not found." });
+      // }
 
       const replacer = (key, value) => {
           if (key == 'createdAt') return undefined
@@ -199,9 +201,10 @@ exports.findLabel = (req, res) => {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']
       }
   }).then(data => {
-      if (!data) {
-          return res.status(404).send({ message: "Project Not found." });
-      }
+      // if (!data) {
+      //   console.log('Label', data)
+      //   return res.status(404).send({ message: "Label Not found." });
+      // }
 
       const replacer = (key, value) => {
           if (key == 'createdAt') return undefined

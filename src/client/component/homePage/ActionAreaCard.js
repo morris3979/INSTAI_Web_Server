@@ -164,7 +164,7 @@ const ActionAreaCard = (props) => {
                         getLabelList(value.id)
                         setTimeout(() => {
                           navigate('/Project/Overview')
-                        }, 100)
+                        }, 300)
                       }}
                     >
                       <CardContent>
@@ -211,7 +211,7 @@ const ActionAreaCard = (props) => {
                         getLabelList(value.id)
                         setTimeout(() => {
                           navigate('/Project/Overview')
-                        }, 100)
+                        }, 300)
                       }}
                     >
                       <CardContent>

@@ -47,7 +47,7 @@ const ClippedDrawer = (props) => {
                             alignItems: 'center',
                         }}
                     >
-                        <ListItem key={'Overview'} disablePadding style={{ marginTop: 10, marginBottom: 15 }}>
+                        <ListItem key={'Overview'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
                             <ListItemButton onClick={() => navigate('/Project/Overview')}>
                                 <Grid
                                     container
@@ -61,7 +61,7 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Data'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
+                        <ListItem key={'Data'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
                             <ListItemButton onClick={() => navigate('/Project/Data')}>
                                 <Grid
                                     container
@@ -75,7 +75,7 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Device'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
+                        <ListItem key={'Device'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
                             <ListItemButton onClick={() => navigate('/Project/Device')}>
                                 <Grid
                                     container
@@ -98,7 +98,7 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Detector'} disablePadding style={{ marginTop: 15, marginBottom: 15 }}>
+                        <ListItem key={'Detector'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
                             <ListItemButton onClick={() => navigate('/Project/Detector')}>
                                 <Grid
                                     container

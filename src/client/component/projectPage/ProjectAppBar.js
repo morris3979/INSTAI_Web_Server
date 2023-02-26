@@ -22,7 +22,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { LogoutData, GetProjectList, PatchProjectItem } from '../../store/actionCreater'
+import {
+  LogoutData,
+  GetProjectList,
+  PatchProjectItem,
+  GetProjectItem
+} from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
 
@@ -30,7 +35,8 @@ const ProjectAppBar = (props) => {
   const {
     projectList,
     projectItem,
-    patchProjectItem
+    patchProjectItem,
+    getProjectItem
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -45,6 +51,7 @@ const ProjectAppBar = (props) => {
   useEffect(() => {
     projectItem
     projectList
+    getProjectItem(projectItem.id)
     // console.log('projectItem', projectItem)
     // console.log('projectList', projectList)
   },[])
@@ -337,7 +344,11 @@ const mapDispatchToProps = (dispatch) => {
     patchProjectItem(id, data) {
       const action = PatchProjectItem(id, data)
       dispatch(action)
-    }
+    },
+    getProjectItem(id, text) {
+      const action = GetProjectItem(id)
+      dispatch(action)
+    },
   }
 }
 
