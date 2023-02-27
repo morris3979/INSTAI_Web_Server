@@ -148,11 +148,11 @@ const DataWarehouse = (props) => {
 
   const handleUploadImage = (e) => {
     var now = new Date()
-    var localTime = now.getFullYear().toString() +
-        (now.getMonth() + 1).toString().padStart(2, '0') +
+    var localTime = now.getFullYear().toString() + '-' +
+        (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
         now.getDate().toString().padStart(2, '0') + '-' +
-        now.getHours().toString().padStart(2, '0') + '-' +
-        now.getMinutes().toString().padStart(2, '0') + '-' +
+        now.getHours().toString().padStart(2, '0') + ':' +
+        now.getMinutes().toString().padStart(2, '0') + ':' +
         now.getSeconds().toString().padStart(2, '0')
 
     if(e.target.files.length < 6) {
