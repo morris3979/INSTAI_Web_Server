@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -11,6 +11,8 @@ const CreateOrganization = (props) => {
   const { createNewOrganization, userInformation } = props
 
   const [ organizationName, setOrganizationName ] = useState('')
+
+  const navigate = useNavigate()
 
   const handleChangeOrganization = (e) => {
     setOrganizationName((prevState) => ({
@@ -25,6 +27,7 @@ const CreateOrganization = (props) => {
       location.reload()
     } else {
       createNewOrganization(organizationName, userInformation.id)
+      navigate('/Organization/Select')
     }
   }
 
@@ -62,8 +65,6 @@ const CreateOrganization = (props) => {
         sx={{ width: 400, marginBottom: 2 }}
         align='center'
         onClick={onCreate}
-        component={Link}
-        to='/Organization/Select'
       >
         CREATE ORGANIZATION
       </Button>

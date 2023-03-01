@@ -16,10 +16,8 @@ const SelectOrganization = (props) => {
   } = props
 
   useEffect(() => {
-    if(userInformation.id){
-      return getLoginUser(userInformation.id)
-    }
-    return () => userInformation
+    getLoginUser(userInformation.id)
+    userInformation
   },[])
 
   return(
@@ -37,9 +35,8 @@ const SelectOrganization = (props) => {
         Select Your Organization
       </Typography>
       <div style={{ marginBottom: 10 }}>
-      {
-        (userInformation.Organizations) != undefined
-        ?userInformation.Organizations.map((c) => {
+      {userInformation.Organizations?
+        userInformation.Organizations.map((c) => {
           return (
             <Button
               variant="outlined"
@@ -58,7 +55,7 @@ const SelectOrganization = (props) => {
               {c.organization}
             </Button>
           )
-        }): ''
+        }): null
       }
       </div>
       <Divider
@@ -82,7 +79,7 @@ const SelectOrganization = (props) => {
         sx={{ width: 400, marginTop: 2, marginBottom: 2 }}
         align='center'
         component={Link}
-        to='/CreateOrganization'
+        to='/Organization/Create'
       >
         ADD ORGANIZATION
       </Button>

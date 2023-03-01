@@ -154,6 +154,9 @@ export const CreateNewOrganization = (data, id) => {
           dispatch(second)
           const third = GetLoginUser(id)
           dispatch(third)
+          setTimeout(() => {
+            location.reload()
+          }, 300)
           return
         }
       } catch (e) {
