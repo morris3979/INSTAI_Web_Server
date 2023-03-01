@@ -62,7 +62,8 @@ const ResponsiveAppBar = (props) => {
   const [ anchorElUser, setAnchorElUser ] = useState(null);
 
   useEffect(() => {
-    getOrganizationMembers(projectList.id)
+    projectList
+    // getOrganizationMembers(projectList.id)
   }, [])
 
   const navigate = useNavigate();
@@ -140,7 +141,10 @@ const ResponsiveAppBar = (props) => {
                 </MenuItem>
                 <Divider />
                 <Typography sx={{ fontWeight: 'bold', marginLeft: 2, color: 'grey' }}>
-                  {projectList.organization.toUpperCase()}
+                  {projectList.id != undefined
+                  ? projectList.organization.toUpperCase()
+                  : []
+                  }
                 </Typography>
                 <MenuItem onClick={onInvitePeople}>
                   <ListItemIcon>
