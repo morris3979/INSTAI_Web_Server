@@ -49,8 +49,10 @@ const ActionAreaCard = (props) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // getProjectList(projectList.id)
     projectList
+    if (projectList) {
+      getProjectList(projectList.id)
+    }
   },[input])
 
   const onCreate = async () => {

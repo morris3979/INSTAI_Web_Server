@@ -50,7 +50,7 @@ const InvitePeopleTable = (props) => {
     getOrganizationMembers(projectList.id)
   },[input])
 
-  const onCreate = async () => {
+  const onCreate = () => {
     inviteMember(input)
     setOpen(false)
   }

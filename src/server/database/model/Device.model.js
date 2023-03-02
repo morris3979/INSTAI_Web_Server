@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
         serialNumber: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true
+            unique: 'serialNumber'
         },
         deviceName: {
             type: Sequelize.STRING,

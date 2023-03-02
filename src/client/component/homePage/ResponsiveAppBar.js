@@ -63,7 +63,9 @@ const ResponsiveAppBar = (props) => {
 
   useEffect(() => {
     projectList
-    // getOrganizationMembers(projectList.id)
+    if (projectList) {
+      getOrganizationMembers(projectList.id)
+    }
   }, [])
 
   const navigate = useNavigate();

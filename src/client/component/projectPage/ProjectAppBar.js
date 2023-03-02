@@ -48,11 +48,12 @@ const ProjectAppBar = (props) => {
   })
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
-  const mounted=useRef();
+
+  const mounted = useRef();
 
   useEffect(() => {
-    if(mounted.current===false) {
-      mounted.current=true;
+    if(mounted.current === false) {
+      mounted.current = true;
       dataList
       projectItem
       projectList
@@ -60,29 +61,37 @@ const ProjectAppBar = (props) => {
       // console.log('projectItem', projectItem)
       // console.log('projectList', projectList)
     } else {
-        if(dataList.Data.length) {
-          setActiveStep(1)
-          if(((skipped.size == 1)||(dataList.Data.map((e) => e.cleanTag).indexOf(true) != -1))) {
-            setActiveStep(2)
-            if((dataList.Data.map((e) => e.json).indexOf(true) != -1)) {
-              setActiveStep(3)
-              if ((dataList.Data.map((e) => e.trainTag).indexOf(true) != -1)) {
-                setActiveStep(4)
-              } else {
-                return
-              }
-            } else {
-              return
-            }
+        if (dataList.Data.length) {
+          const step1 = (skipped.size == 0) &&
+                        (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                        (dataList.Data.map((e) => e.json).indexOf(true) == -1)
+          const step2 = (skipped.size == 0) &&
+                        (dataList.Data.map((e) => e.cleanTag).indexOf(true) != -1) &&
+                        (dataList.Data.map((e) => e.json).indexOf(true) == -1)
+          const step2_skip = (skipped.size == 0) &&
+                        (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                        (dataList.Data.map((e) => e.json).indexOf(true) != -1)
+          if (step1) {
+            setActiveStep(1)
           } else {
-            return
+            if (step2) {
+              setActiveStep(2)
+            } else if (step2_skip) {
+              setActiveStep(3)
+              setSkipped((prevSkipped) => {
+                const newSkipped = new Set(prevSkipped.values())
+                newSkipped.add(1)
+                return newSkipped
+              })
+            } else {
+              setActiveStep(3)
+            }
           }
-        } 
-        else if (dataList.Data.length==0) {
+        } else {
           setActiveStep(0)
         }
       }
-  },[activeStep])
+  }, [activeStep])
 
   const onSave = async () => {
     const converted = {}
@@ -134,38 +143,8 @@ const ProjectAppBar = (props) => {
     return skipped.has(step)
   }
 
-  // const handleNext = () => {
-  //   let newSkipped = skipped;
-  //   if (isStepSkipped(activeStep)) {
-  //     newSkipped = new Set(newSkipped.values())
-  //     newSkipped.delete(activeStep)
-  //   }
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  //   setSkipped(newSkipped)
-  // }
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  // }
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.")
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values())
-      newSkipped.add(activeStep)
-      return newSkipped
-    })
-  }
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setSkipped(new Set())
+  const handleSubmit = () => {
+    console.log('Submit')
   }
 
   return (
@@ -215,23 +194,6 @@ const ProjectAppBar = (props) => {
               alignItems="center"
               justifyContent="flex-end"
             >
-              {/* <Button
-                color='info'
-                variant='outlined'
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                startIcon={<ChevronLeftIcon />}
-                sx={{
-                  mr: 1,
-                  "&.Mui-disabled": {
-                    color: 'grey',
-                    opacity: .3,
-                    border: '1px solid grey'
-                  }
-                }}
-              >
-                Back
-              </Button> */}
               <Stepper activeStep={activeStep}>
                 {steps.map((label, index) => {
                   const stepProps = {};
@@ -277,26 +239,13 @@ const ProjectAppBar = (props) => {
                   )
                 })}
               </Stepper>
-              {/* {console.log('activeStep', activeStep)}
-              {console.log('steps.length', steps.length)} */}
               {activeStep === steps.length ? (
                 <div>
-                  <Button onClick={handleReset} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
+                  <Button onClick={handleSubmit} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
                     Submit
                   </Button>
                 </div>
-              ):(
-                <div>
-                  {isStepOptional(activeStep) && (
-                    <Button color='info' variant='outlined' onClick={handleSkip} sx={{ margin: 1 }} endIcon={<SkipNextIcon />}>
-                      Skip
-                    </Button>
-                  )}
-                  {/* <Button onClick={handleNext} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
-                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-                  </Button> */}
-                </div>
-              )}
+              ):null}
             </Grid>
         </Toolbar>
       </Container>

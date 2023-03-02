@@ -17,11 +17,12 @@ const Overview = (props) => {
   } = props
 
   useEffect(() => {
-    // console.log('dataList', dataList)
     dataList
     labelList
-    // getDataList(dataList.id)
-    // getLabelList(dataList.id)
+    if (dataList) {
+      getDataList(dataList.id)
+      getLabelList(dataList.id)
+    }
   },[])
 
   if((dataList.id != undefined)&&(labelList.id != undefined)) {

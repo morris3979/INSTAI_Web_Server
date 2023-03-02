@@ -34,10 +34,10 @@ async function app() {
         process.exit(1);
     });
     // creates the table if it doesn't exist.
-    db.sequelize.sync(
-        { alter: true } // performs the necessary changes in the table to make it match the model.
-        // { force: true } // creates the table, dropping it first if it already existed.
-    );
+    db.sequelize.sync({
+        alter: true, // performs the necessary changes in the table to make it match the model.
+        // force: true // creates the table, dropping it first if it already existed.
+    });
 
     app.use(cors(corsOptions));
     app.use(bodyParser.json()) // for parsing application/json
