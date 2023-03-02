@@ -115,7 +115,7 @@ const ResponsiveDrawer = (props) => {
     getDataList(dataList.id)
     setTimeout(() => {
         navigate('/Project/Data')
-    }, 100)
+    }, 300)
   }
 
   const drawer = (

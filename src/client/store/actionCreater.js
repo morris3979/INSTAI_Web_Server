@@ -294,7 +294,11 @@ export const PatchDataItem = (id, data) => {
         if (response.data) {
           const action = GetDataItem(response.data.id)
           dispatch(action)
-          location.reload()
+          const second = GetDataList(response.data.ProjectId)
+          dispatch(second)
+          setTimeout(() => {
+            location.reload()
+          }, 300)
           return
         }
       } catch (e) {

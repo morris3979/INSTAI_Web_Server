@@ -239,9 +239,16 @@ const ProjectAppBar = (props) => {
                   )
                 })}
               </Stepper>
-              {activeStep === steps.length ? (
+              {activeStep == 3 &&
+              ((dataList.Data.map((e) => e.trainTag).indexOf(true) != -1) &&
+              (dataList.Data.map((e) => e.json).indexOf(true) != -1))?(
                 <div>
-                  <Button onClick={handleSubmit} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
+                  <Button
+                    onClick={handleSubmit}
+                    variant='outlined'
+                    sx={{ margin: 1 }}
+                    endIcon={<ChevronRightIcon />}
+                  >
                     Submit
                   </Button>
                 </div>
