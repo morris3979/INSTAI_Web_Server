@@ -136,10 +136,30 @@ const DataWarehouse = (props) => {
     }
   }
 
+  const handleCancelCleanTag = () => {
+    if(selectItem.length) {
+      selectItem.forEach((data) => {
+        patchDataItem(data.id, { cleanTag: 0 })
+      })
+    } else {
+      return
+    }
+  }
+
   const handleClickTrainTag = () => {
     if(selectItem.length) {
       selectItem.forEach((data) => {
         patchDataItem(data.id, { trainTag: 1 })
+      })
+    } else {
+      return
+    }
+  }
+
+  const handleCancelTrainTag = () => {
+    if(selectItem.length) {
+      selectItem.forEach((data) => {
+        patchDataItem(data.id, { trainTag: 0 })
       })
     } else {
       return
@@ -484,9 +504,23 @@ const DataWarehouse = (props) => {
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     disabled={selectItem.length == 0}
+                    onClick={handleCancelCleanTag}
+                  >
+                    CENCEL CLEAN
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    disabled={selectItem.length == 0}
                     onClick={handleClickTrainTag}
                   >
                     TO TRAIN
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
+                    disabled={selectItem.length == 0}
+                    onClick={handleCancelTrainTag}
+                  >
+                    CANCEL TO TRAIN
                   </MenuItem>
                 </Menu>
               </Grid>
