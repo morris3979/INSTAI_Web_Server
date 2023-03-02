@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -36,7 +36,8 @@ const ProjectAppBar = (props) => {
     projectList,
     projectItem,
     patchProjectItem,
-    getProjectItem
+    getProjectItem,
+    dataList
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -47,14 +48,41 @@ const ProjectAppBar = (props) => {
   })
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
+  const mounted=useRef();
 
   useEffect(() => {
-    projectItem
-    projectList
-    getProjectItem(projectItem.id)
-    // console.log('projectItem', projectItem)
-    // console.log('projectList', projectList)
-  },[])
+    if(mounted.current===false) {
+      mounted.current=true;
+      dataList
+      projectItem
+      projectList
+      getProjectItem(projectItem.id)
+      // console.log('projectItem', projectItem)
+      // console.log('projectList', projectList)
+    } else {
+        if(dataList.Data.length) {
+          setActiveStep(1)
+          if(((skipped.size == 1)||(dataList.Data.map((e) => e.cleanTag).indexOf(true) != -1))) {
+            setActiveStep(2)
+            if((dataList.Data.map((e) => e.json).indexOf(true) != -1)) {
+              setActiveStep(3)
+              if ((dataList.Data.map((e) => e.trainTag).indexOf(true) != -1)) {
+                setActiveStep(4)
+              } else {
+                return
+              }
+            } else {
+              return
+            }
+          } else {
+            return
+          }
+        } 
+        else if (dataList.Data.length==0) {
+          setActiveStep(0)
+        }
+      }
+  },[activeStep])
 
   const onSave = async () => {
     const converted = {}
@@ -106,20 +134,19 @@ const ProjectAppBar = (props) => {
     return skipped.has(step)
   }
 
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values())
-      newSkipped.delete(activeStep)
-    }
+  // const handleNext = () => {
+  //   let newSkipped = skipped;
+  //   if (isStepSkipped(activeStep)) {
+  //     newSkipped = new Set(newSkipped.values())
+  //     newSkipped.delete(activeStep)
+  //   }
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  //   setSkipped(newSkipped)
+  // }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    setSkipped(newSkipped)
-  }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  // }
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
@@ -138,6 +165,7 @@ const ProjectAppBar = (props) => {
 
   const handleReset = () => {
     setActiveStep(0);
+    setSkipped(new Set())
   }
 
   return (
@@ -187,7 +215,7 @@ const ProjectAppBar = (props) => {
               alignItems="center"
               justifyContent="flex-end"
             >
-              <Button
+              {/* <Button
                 color='info'
                 variant='outlined'
                 disabled={activeStep === 0}
@@ -203,7 +231,7 @@ const ProjectAppBar = (props) => {
                 }}
               >
                 Back
-              </Button>
+              </Button> */}
               <Stepper activeStep={activeStep}>
                 {steps.map((label, index) => {
                   const stepProps = {};
@@ -253,8 +281,8 @@ const ProjectAppBar = (props) => {
               {console.log('steps.length', steps.length)} */}
               {activeStep === steps.length ? (
                 <div>
-                  <Button onClick={handleReset} variant='outlined' sx={{ margin: 1 }} endIcon={<RestartAltIcon />}>
-                    Restart
+                  <Button onClick={handleReset} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
+                    Submit
                   </Button>
                 </div>
               ):(
@@ -264,9 +292,9 @@ const ProjectAppBar = (props) => {
                       Skip
                     </Button>
                   )}
-                  <Button onClick={handleNext} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
+                  {/* <Button onClick={handleNext} variant='outlined' sx={{ margin: 1 }} endIcon={<ChevronRightIcon />}>
                     {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-                  </Button>
+                  </Button> */}
                 </div>
               )}
             </Grid>
@@ -326,7 +354,8 @@ const mapStateToProps = (state) => {
   return {
     userInformation: state.userInformation,
     projectList: state.projectList,
-    projectItem: state.projectItem
+    projectItem: state.projectItem,
+    dataList: state.dataList
   }
 }
 
