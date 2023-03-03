@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
@@ -14,6 +14,8 @@ const SelectOrganization = (props) => {
     userInformation,
     getProjectList
   } = props
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     getLoginUser(userInformation.id)
@@ -36,7 +38,7 @@ const SelectOrganization = (props) => {
       </Typography>
       <div style={{ marginBottom: 10 }}>
       {userInformation.Organizations?
-        userInformation.Organizations.map((c) => {
+        userInformation.Organizations?.map((c) => {
           return (
             <Button
               variant="outlined"
@@ -48,9 +50,12 @@ const SelectOrganization = (props) => {
                 borderColor: 'lightblue'
               }}
               align='center'
-              onClick={() => getProjectList(c.id)}
-              component={Link}
-              to='/Home'
+              onClick={() => {
+                getProjectList(c.id)
+                setTimeout(() => {
+                  navigate('/Home')
+                }, 300)
+              }}
             >
               {c.organization}
             </Button>

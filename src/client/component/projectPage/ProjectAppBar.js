@@ -144,7 +144,9 @@ const ProjectAppBar = (props) => {
   }
 
   const handleSubmit = () => {
+    const trainData = dataList.Data?.filter(item => item.trainTag === true)
     console.log('Submit')
+    console.log('trainData', trainData)
   }
 
   return (

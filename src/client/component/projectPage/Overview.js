@@ -140,7 +140,7 @@ const Overview = (props) => {
                                   bottom: 15
                               }}
                           >
-                              {dataList.Data.filter(item => item.json === true).length}
+                              {dataList.Data?.filter(item => item.json === true).length}
                           </Typography>
                       </Box>
                   </Grid>
@@ -177,7 +177,7 @@ const Overview = (props) => {
                                   bottom: 15
                               }}
                           >
-                              {dataList.Data.filter(item => item.trainTag === true).length}
+                              {dataList.Data?.filter(item => item.trainTag === true).length}
                           </Typography>
                       </Box>
                   </Grid>

@@ -60,7 +60,9 @@ const LoginForm = (props) => {
 
   const onNext = () => {
     navigate('/Organization/Select')
-    location.reload()
+    setTimeout(() => {
+      location.reload()
+    }, 300)
   }
 
   return(

@@ -50,9 +50,7 @@ const ActionAreaCard = (props) => {
 
   useEffect(() => {
     projectList
-    if (projectList) {
-      getProjectList(projectList.id)
-    }
+    getProjectList(projectList.id)
   },[input])
 
   const onCreate = async () => {

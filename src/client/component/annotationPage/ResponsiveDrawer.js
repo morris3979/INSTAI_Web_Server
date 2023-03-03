@@ -69,7 +69,7 @@ const ResponsiveDrawer = (props) => {
   useEffect(() => {
     dataItem
     getLabelList(dataItem.ProjectId)
-    console.log('dataItem', dataItem)
+    // console.log('dataItem', dataItem)
   },[])
 
   const handleClickDownload = (event) => {
@@ -346,7 +346,7 @@ const ResponsiveDrawer = (props) => {
                     style={{ marginTop: 4 }}
                 >
                     <Typography color='darkgrey' variant='button'>
-                        {dataItem.createdAt.slice(0, -5).replace('T', ' ')}
+                        {dataItem.createdAt?.slice(0, -5).replace('T', ' ')}
                     </Typography>
                 </Grid>
             </Grid>

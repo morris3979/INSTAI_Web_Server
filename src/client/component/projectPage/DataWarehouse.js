@@ -602,7 +602,7 @@ const DataWarehouse = (props) => {
                             component="img"
                             image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
                             onClick={() => {
-                              console.log('id', item.id)
+                              // console.log('id', item.id)
                               getDataItem(item.id)
                               setTimeout(() => {
                                 navigate('/Annotation')
