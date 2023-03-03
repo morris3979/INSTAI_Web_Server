@@ -274,7 +274,7 @@ const ResponsiveDrawer = (props) => {
                     >
                         <MenuItem
                             sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                            onClick={() => patchDataItem(dataItem.id, { json: 0, UserId: null })}
+                            onClick={() => patchDataItem(dataItem.id, { json: 0, trainTag: 0, UserId: null })}
                             disabled={dataItem.json == 0}
                         >
                             Label file (.json)
@@ -327,7 +327,7 @@ const ResponsiveDrawer = (props) => {
                     style={{ marginTop: 3 }}
                 >
                     <Typography color='darkgrey'>
-                        {dataItem.DeviceId == null? '(Local)': dataItem.Device.serialNumber}
+                        {dataItem.DeviceId == null? '(Local)': dataItem.Device?.serialNumber}
                     </Typography>
                 </Grid>
             </Grid>
@@ -384,7 +384,7 @@ const ResponsiveDrawer = (props) => {
                     style={{ marginTop: 3 }}
                 >
                     <Typography color='darkgrey'>
-                        {dataItem.UserId === null? '(Unlabeled)': dataItem.User.username}
+                        {dataItem.UserId === null? '(Unlabeled)': dataItem.User?.username}
                     </Typography>
                 </Grid>
             </Grid>
@@ -403,7 +403,7 @@ const ResponsiveDrawer = (props) => {
                     style={{ marginTop: 4 }}
                 >
                     <Typography color='darkgrey' variant='button'>
-                        {dataItem.updatedAt.slice(0, -5).replace('T', ' ')}
+                        {dataItem.updatedAt?.slice(0, -5).replace('T', ' ')}
                     </Typography>
                 </Grid>
             </Grid>

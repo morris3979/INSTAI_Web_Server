@@ -22,7 +22,9 @@ import {
   GetDataList,
   GetDeviceList,
   GetLabelList,
-  GetProjectItem
+  GetProjectItem,
+  GetModelList,
+  ProjectImport
 } from '../../store/actionCreater'
 
 const ActionAreaCard = (props) => {
@@ -31,10 +33,8 @@ const ActionAreaCard = (props) => {
     projectList,
     getProjectList,
     createProject,
-    getDataList,
-    getDeviceList,
-    getLabelList,
-    getProjectItem
+    projectImport,
+    organizationImport
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -153,20 +153,17 @@ const ActionAreaCard = (props) => {
         : <Box sx={{ flexGrow: 1 }}>
             <Grid container maxWidth='90vw' spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 6, md: 16 }}>
               {searchName.length == 0
-              ? projectList.Projects.map((value, key) => {
+              ? projectList.Projects?.map((value, key) => {
                 return(
                   <Grid item xs={2} sm={6} md={4} key={key}>
                     <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
                       <CardActionArea
                         key={key}
                         onClick={() => {
-                          getProjectItem(value.id)
-                          getDataList(value.id)
-                          getDeviceList(value.id)
-                          getLabelList(value.id)
+                          projectImport(value.id)
                           setTimeout(() => {
                             navigate('/Project/Overview')
-                          }, 300)
+                          }, 500)
                         }}
                       >
                         <CardContent>
@@ -200,20 +197,17 @@ const ActionAreaCard = (props) => {
                     </Card>
                   </Grid>
                 )})
-              : filterProjectList.map((value, key) => {
+              : filterProjectList?.map((value, key) => {
                 return(
                   <Grid item xs={2} sm={6} md={4} key={key}>
                     <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
                       <CardActionArea
                         key={key}
                         onClick={() => {
-                          getProjectItem(value.id)
-                          getDataList(value.id)
-                          getDeviceList(value.id)
-                          getLabelList(value.id)
+                          projectImport(value.id)
                           setTimeout(() => {
                             navigate('/Project/Overview')
-                          }, 300)
+                          }, 500)
                         }}
                       >
                         <CardContent>
@@ -307,7 +301,8 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     userInformation: state.userInformation,
-    projectList: state.projectList
+    projectList: state.projectList,
+    organizationImport: state.organizationImport
   }
 }
 
@@ -334,8 +329,16 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetLabelList(id)
       dispatch(action)
     },
+    getModelList(id, text) {
+      const action = GetModelList(id)
+      dispatch(action)
+    },
     getProjectItem(id, text) {
       const action = GetProjectItem(id)
+      dispatch(action)
+    },
+    projectImport(id, text) {
+      const action = ProjectImport(id)
       dispatch(action)
     },
   }

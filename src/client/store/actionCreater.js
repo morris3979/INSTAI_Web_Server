@@ -4,7 +4,9 @@ import {
   Which_Project, Which_Host, Which_Device,
   User_Information, Logout_Information,
   Project_List, Data_List, Members_List,
-  Device_List, Data_Item, Label_List, Project_Item
+  Device_List, Label_List, Model_List,
+  Data_Item, Project_Item,
+  User_Import, Organization_Import, Project_Import
 } from './actionType'
 
 //共用Function <<<
@@ -197,6 +199,79 @@ export const GetProjectList = (id, data) => {
   )
 }
 
+export const GetDataList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}/data`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Data_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const GetDeviceList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}/device`)
+        const action = DeliverData(response.data, Device_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const GetLabelList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}/label`)
+        const action = DeliverData(response.data, Label_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const GetModelList = (id, data) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}/model`)
+        const action = DeliverData(response.data, Model_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
 export const CreateProject = (data) => {
   return (
     async (dispatch) => {
@@ -238,30 +313,8 @@ export const GetProjectItem = (id, data) => {
       dispatch(action)
       try {
         const response = await axios.get(`/api/project/${id}`)
-        // console.log(response.data)
         const action = DeliverData(response.data, Project_Item)
         dispatch(action)
-      } catch (e) {
-        alert(e.response.data.message)
-        location.reload()
-        return
-      }
-    }
-  )
-}
-
-export const GetDataList = (id, data) => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get(`/api/project/${id}/data`)
-        // console.log(response.data)
-        if (response.data.collect == '1') {
-          const action = DeliverData(response.data, Data_List)
-          dispatch(action)
-        }
       } catch (e) {
         alert(e.response.data.message)
         location.reload()
@@ -275,7 +328,7 @@ export const PostDataItem = (data) => {
   return (
     async (dispatch) => {
       try {
-        const response = await axios.post('/api/data/', data)
+        const response = await axios.post('/api/data', data)
         if (response.data) {
           return
         }
@@ -343,25 +396,6 @@ export const InviteMember = (data) => {
   )
 }
 
-export const GetDeviceList = (id, data) => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get(`/api/project/${id}/device`)
-        // console.log(response.data)
-        const action = DeliverData(response.data, Device_List)
-        dispatch(action)
-      } catch (e) {
-        alert(e.response.data.message)
-        location.reload()
-        return
-      }
-    }
-  )
-}
-
 export const AddDevice = (data) => {
   return (
     async (dispatch) => {
@@ -378,7 +412,7 @@ export const AddDevice = (data) => {
   )
 }
 
-export const PatchDeviceData = (id,data) => {
+export const PatchDeviceData = (id, data) => {
   return (
     async (dispatch) => {
       try {
@@ -403,25 +437,6 @@ export const GetDataItem = (id, data) => {
         const response = await axios.get(`/api/data/${id}`)
         // console.log(response.data)
         const action = DeliverData(response.data, Data_Item)
-        dispatch(action)
-      } catch (e) {
-        alert(e.response.data.message)
-        location.reload()
-        return
-      }
-    }
-  )
-}
-
-export const GetLabelList = (id, data) => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get(`/api/project/${id}/label`)
-        // console.log(response.data)
-        const action = DeliverData(response.data, Label_List)
         dispatch(action)
       } catch (e) {
         alert(e.response.data.message)
@@ -525,6 +540,37 @@ export const DownloadJSON = (filename) => {
       } catch (error) {
         alert(error)
       }
+    }
+  )
+}
+
+// >>>
+
+// <<< Import
+
+export const UserImport = (id) => {
+  return (
+    async (dispatch) => {
+      const action = DeliverData(id, User_Import)
+      dispatch(action)
+    }
+  )
+}
+
+export const OrganizationImport = (id) => {
+  return (
+    async (dispatch) => {
+      const action = DeliverData(id, Organization_Import)
+      dispatch(action)
+    }
+  )
+}
+
+export const ProjectImport = (id) => {
+  return (
+    async (dispatch) => {
+      const action = DeliverData(id, Project_Import)
+      dispatch(action)
     }
   )
 }

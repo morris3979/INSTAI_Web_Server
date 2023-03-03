@@ -26,7 +26,8 @@ import {
   LogoutData,
   GetProjectList,
   PatchProjectItem,
-  GetProjectItem
+  GetProjectItem,
+  GetDataList
 } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
@@ -37,10 +38,12 @@ const ProjectAppBar = (props) => {
     projectItem,
     patchProjectItem,
     getProjectItem,
-    dataList
+    dataList,
+    projectImport,
+    getDataList
   } = props
 
-  const [ open, setOpen ] = useState(false)
+  const [ openEditProject, setOpenEditProject ] = useState(false)
   const [ input, setInput ] = useState({
     project: '',
     type: 'Object Detection',
@@ -48,52 +51,75 @@ const ProjectAppBar = (props) => {
   })
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
+  const [ openTrainData, setOpenTrainData ] = useState(false)
 
-  const mounted = useRef();
+  var now = new Date()
+  var localTime = now.getFullYear().toString() + '-' +
+      (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
+      now.getDate().toString().padStart(2, '0') + '_' +
+      now.getHours().toString().padStart(2, '0') + ':' +
+      now.getMinutes().toString().padStart(2, '0') + ':' +
+      now.getSeconds().toString().padStart(2, '0')
+
+  const replacer = (key, value) => {
+    if (key == 'id') return undefined
+    else if (key == 'image') return undefined
+    else if (key == 'video') return undefined
+    else if (key == 'csv') return undefined
+    else if (key == 'json') return undefined
+    else if (key == 'cleanTag') return undefined
+    else if (key == 'trainTag') return undefined
+    else if (key == 'ProjectId') return undefined
+    else if (key == 'DeviceId') return undefined
+    else if (key == 'UserId') return undefined
+    else return value
+  }
+
+  const trainData = JSON.stringify({
+    "project": projectItem.project,
+    "filename": projectItem.project+'_'+localTime,
+    "trainData": dataList.Data?.filter(item => item.trainTag === true),
+    "timestamp": localTime
+  }, replacer, 2)
 
   useEffect(() => {
-    if(mounted.current === false) {
-      mounted.current = true;
-      dataList
-      projectItem
-      projectList
-      getProjectItem(projectItem.id)
-      // console.log('projectItem', projectItem)
-      // console.log('projectList', projectList)
-    } else {
-        if (dataList.Data.length) {
-          const step1 = (skipped.size == 0) &&
-                        (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
-                        (dataList.Data.map((e) => e.json).indexOf(true) == -1)
-          const step2 = (skipped.size == 0) &&
-                        (dataList.Data.map((e) => e.cleanTag).indexOf(true) != -1) &&
-                        (dataList.Data.map((e) => e.json).indexOf(true) == -1)
-          const step2_skip = (skipped.size == 0) &&
-                        (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
-                        (dataList.Data.map((e) => e.json).indexOf(true) != -1)
-          if (step1) {
-            setActiveStep(1)
-          } else {
-            if (step2) {
-              setActiveStep(2)
-            } else if (step2_skip) {
-              setActiveStep(3)
-              setSkipped((prevSkipped) => {
-                const newSkipped = new Set(prevSkipped.values())
-                newSkipped.add(1)
-                return newSkipped
-              })
-            } else {
-              setActiveStep(3)
-            }
-          }
+    dataList
+    projectItem
+    projectList
+    getDataList(projectImport)
+    getProjectItem(projectImport)
+    if (dataList.Data?.length) {
+      const step1 = (skipped.size == 0) &&
+                    (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                    (dataList.Data.map((e) => e.json).indexOf(true) == -1)
+      const step2 = (skipped.size == 0) &&
+                    (dataList.Data.map((e) => e.cleanTag).indexOf(true) != -1) &&
+                    (dataList.Data.map((e) => e.json).indexOf(true) == -1)
+      const step2_skip = (skipped.size == 0) &&
+                    (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                    (dataList.Data.map((e) => e.json).indexOf(true) != -1)
+      if (step1) {
+        setActiveStep(1)
+      } else {
+        if (step2) {
+          setActiveStep(2)
+        } else if (step2_skip) {
+          setActiveStep(3)
+          setSkipped((prevSkipped) => {
+            const newSkipped = new Set(prevSkipped.values())
+            newSkipped.add(1)
+            return newSkipped
+          })
         } else {
-          setActiveStep(0)
+          setActiveStep(3)
         }
       }
-  }, [activeStep])
+    } else {
+      setActiveStep(0)
+    }
+  }, [activeStep, setActiveStep])
 
-  const onSave = async () => {
+  const onSaveEditProject = async () => {
     const converted = {}
     converted.project = input.project
     converted.type = input.type
@@ -104,28 +130,28 @@ const ProjectAppBar = (props) => {
         type: 'Object Detection',
         OrganizationId: projectList.id,
       })
-      setOpen(false)
+      setOpenEditProject(false)
     }else{
       alert('Empty Value ! Please Check Again')
     }
   }
 
-  const handleClickOpen = () => {
+  const handleClickOpenEditProject = () => {
     setInput((prevState) => ({
       ...prevState,
       project: projectItem.project,
       type: projectItem.type
     }))
-    setOpen(true)
+    setOpenEditProject(true)
   }
 
-  const handleClose = () => {
+  const handleCloseEditProject = () => {
     setInput({
       project: '',
       type: 'Object Detection',
       OrganizationId: projectList.id,
     })
-    setOpen(false)
+    setOpenEditProject(false)
   }
 
   const onChangeProject = (e) => {
@@ -144,9 +170,11 @@ const ProjectAppBar = (props) => {
   }
 
   const handleSubmit = () => {
-    const trainData = dataList.Data?.filter(item => item.trainTag === true)
-    console.log('Submit')
-    console.log('trainData', trainData)
+    setOpenTrainData(true)
+  }
+
+  const handleCloseTrainData = () => {
+    setOpenTrainData(false)
   }
 
   return (
@@ -185,7 +213,7 @@ const ProjectAppBar = (props) => {
                 color="primary"
                 aria-label="edit project"
                 component="label"
-                onClick={handleClickOpen}
+                onClick={handleClickOpenEditProject}
               >
                 <EditIcon />
               </IconButton>
@@ -202,7 +230,7 @@ const ProjectAppBar = (props) => {
                   const labelProps = {};
                   if (isStepOptional(index)) {
                     labelProps.optional = (
-                      <Typography variant="caption" sx={{ color: 'grey' }}>Optional</Typography>
+                      <Typography variant="caption" sx={{ color: 'grey' }}>Ignorable</Typography>
                     )
                   }
                   if (isStepSkipped(index)) {
@@ -258,7 +286,7 @@ const ProjectAppBar = (props) => {
             </Grid>
         </Toolbar>
       </Container>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={openEditProject} onClose={handleCloseEditProject}>
         <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Edit Project</DialogContent>
         <DialogTitle style={{ backgroundColor: '#444950' }}>
         <Grid
@@ -299,8 +327,34 @@ const ProjectAppBar = (props) => {
         </Grid>
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
-          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={onSave} style={{marginTop: 10}}>Save</Button>
+          <Button variant="contained" size='small' onClick={handleCloseEditProject} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={onSaveEditProject} style={{marginTop: 10}}>Save</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openTrainData} onClose={handleCloseTrainData}>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>To AIServer</DialogContent>
+        <DialogTitle style={{ backgroundColor: '#444950' }}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <div
+            style={{
+              borderRadius: 5,
+              backgroundColor: 'lightgrey',
+            }}
+          >
+            <Typography style={{ margin: 5 }}>
+              {trainData}
+            </Typography>
+          </div>
+        </Grid>
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950' }}>
+          <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Send</Button>
         </DialogActions>
       </Dialog>
     </AppBar>
@@ -313,7 +367,8 @@ const mapStateToProps = (state) => {
     userInformation: state.userInformation,
     projectList: state.projectList,
     projectItem: state.projectItem,
-    dataList: state.dataList
+    dataList: state.dataList,
+    projectImport: state.projectImport
   }
 }
 
@@ -334,6 +389,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getProjectItem(id, text) {
       const action = GetProjectItem(id)
+      dispatch(action)
+    },
+    getDataList(id, text) {
+      const action = GetDataList(id)
       dispatch(action)
     },
   }

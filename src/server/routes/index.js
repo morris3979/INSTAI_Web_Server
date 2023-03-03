@@ -9,6 +9,7 @@ const userRouter = require('./api/user.routes');
 const organizationRouter = require('./api/organization.routes');
 const dataRouter = require('./api/data.routes');
 const labelRouter = require('./api/label.routes');
+const modelRouter = require('./api/model.routes');
 
 // cloud
 apiRouter.use("/aws", awsRouter);
@@ -20,5 +21,6 @@ apiRouter.use('/user', userRouter);
 apiRouter.use('/organization', organizationRouter);
 apiRouter.use('/data', dataRouter);
 apiRouter.use('/label', labelRouter);
+apiRouter.use('/model', modelRouter);
 
 module.exports = apiRouter;

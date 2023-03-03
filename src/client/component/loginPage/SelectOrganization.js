@@ -5,14 +5,20 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import InstAI from '../../icon image/instai.png'
-import { GetLoginUser, LogoutData, GetProjectList } from '../../store/actionCreater'
+import {
+  GetLoginUser,
+  LogoutData,
+  GetProjectList,
+  OrganizationImport
+} from '../../store/actionCreater'
 
 const SelectOrganization = (props) => {
   const {
     getLoginUser,
     onClick,
     userInformation,
-    getProjectList
+    getProjectList,
+    organizationImport
   } = props
 
   const navigate = useNavigate()
@@ -124,6 +130,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getProjectList(id, text) {
       const action = GetProjectList(id)
+      dispatch(action)
+    },
+    organizationImport(id, text) {
+      const action = OrganizationImport(id)
       dispatch(action)
     },
   }

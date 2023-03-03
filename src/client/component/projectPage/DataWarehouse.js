@@ -38,7 +38,8 @@ const DataWarehouse = (props) => {
     getDataItem,
     postDataItem,
     patchDataItem,
-    uploadImageFile
+    uploadImageFile,
+    projectImport
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -60,9 +61,7 @@ const DataWarehouse = (props) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // console.log('dataList', dataList)
-    dataList
-    getDataList(dataList.id)
+    getDataList(projectImport)
   },[])
 
   const handleClickFilter = (event) => {
@@ -170,7 +169,7 @@ const DataWarehouse = (props) => {
     var now = new Date()
     var localTime = now.getFullYear().toString() + '-' +
         (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
-        now.getDate().toString().padStart(2, '0') + '-' +
+        now.getDate().toString().padStart(2, '0') + '_' +
         now.getHours().toString().padStart(2, '0') + ':' +
         now.getMinutes().toString().padStart(2, '0') + ':' +
         now.getSeconds().toString().padStart(2, '0')
@@ -187,11 +186,7 @@ const DataWarehouse = (props) => {
     }
   }
 
-  const callbackReload = () => {
-    location.reload()
-  }
-
-  const filterData = dataList.Data.filter((data) => {
+  const filterData = dataList.Data?.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled && menuItem.toTrain) {
       return data.cleanTag == true && data.json == true && data.trainTag == true
     }
@@ -221,7 +216,7 @@ const DataWarehouse = (props) => {
             width: 'auto',
           }}
         >
-          {dataList.Data.length === 0?
+          {dataList.Data?.length == 0?
           <div
             style={{
               display: 'flex',
@@ -457,7 +452,7 @@ const DataWarehouse = (props) => {
                     onClick={() => setSelectItem([])}
                     style={{ marginLeft: 10 }}
                   >
-                    Deselect
+                    Deselect All
                   </Button>
                 </Grid>
                 :null
@@ -574,7 +569,7 @@ const DataWarehouse = (props) => {
                 columns={{ xs: 4, sm: 8, md: 20 }}
                 style={{ marginLeft: 10 }}
               >
-                {filterData.map((item, key) => {
+                {filterData?.map((item, key) => {
                   return(
                     <Grid item xs={2} sm={4} md={4} key={key}>
                       <Card
@@ -648,7 +643,8 @@ const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
       dataList: state.dataList,
-      dataItem: state.dataItem
+      dataItem: state.dataItem,
+      projectImport: state.projectImport
     }
   }
 

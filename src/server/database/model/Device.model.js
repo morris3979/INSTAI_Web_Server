@@ -28,12 +28,10 @@ module.exports = (sequelize, Sequelize) => {
         accessKey: {
             type: Sequelize.STRING,
             defaultValue: process.env.AWS_ACCESS_KEY_ID,
-            // defaultValue: process.env.ALIYUN_ACCESS_KEY_ID,
         },
         secretKey: {
             type: Sequelize.STRING,
             defaultValue: process.env.AWS_SECRET_ACCESS_KEY,
-            // defaultValue: process.env.ALIYUN_SECRET_ACCESS_KEY,
         },
         createdAt: {
             field: 'created_at',
@@ -58,7 +56,6 @@ module.exports = (sequelize, Sequelize) => {
     Device.associate = function (models) {
         Device.belongsTo(models.Project);
         Device.hasMany(models.Data, {foreignKey: 'DeviceId'});
-        // Device.hasMany(models.HwUpdateLog, {foreignKey: 'DeviceId'});
     };
     return Device;
 };

@@ -20,4 +20,7 @@ projectRouter.get("/:id/device", Project.findDevice);
 // Find all Labels From a Project
 projectRouter.get("/:id/label", Project.findLabel);
 
+// Find all Models From a Project
+projectRouter.get("/:id/model", Project.findModel);
+
 module.exports = [ projectRouter ];

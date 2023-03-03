@@ -48,13 +48,13 @@ const DeviceTable = (props) => {
     deviceList,
     addDevice,
     getDeviceList,
-    patchDeviceData
+    patchDeviceData,
+    projectImport
   } = props
 
   useEffect(() => {
     // console.log('deviceList', deviceList)
-    deviceList
-    getDeviceList(deviceList.id)
+    getDeviceList(projectImport)
   },[])
 
   const [ open, setOpen ] = useState(false)
@@ -492,8 +492,8 @@ const DeviceTable = (props) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {searchName.length == 0
-                    ? deviceList.Devices
+                    {searchName.length == 0?
+                      deviceList.Devices
                       ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => {
                         return (
@@ -1056,7 +1056,8 @@ const DeviceTable = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
-      deviceList: state.deviceList
+      deviceList: state.deviceList,
+      projectImport: state.projectImport
     }
   }
 

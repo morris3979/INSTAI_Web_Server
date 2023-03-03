@@ -48,18 +48,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
         },
     }, {
-        // indexes: [
-        //     {unique: true, fields: ['id']},
-        //     {unique: true, fields: ['username']},
-        //     {unique: true, fields: ['email']},
-        //     {unique: true, fields: ['password']},
-        //     {unique: true, fields: ['admin']},
-        //     {unique: true, fields: ['user']},
-        //     {unique: true, fields: ['token']},
-        //     {unique: true, fields: ['created_at']},
-        //     {unique: true, fields: ['updated_at']},
-        //     {unique: true, fields: ['deleted_at']},
-        // ],
         timestamps: true,
         paranoid: true
     });

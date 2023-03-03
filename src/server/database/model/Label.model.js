@@ -9,7 +9,6 @@ module.exports = (sequelize, Sequelize) => {
         labelClass: {
           type: Sequelize.STRING,
           allowNull: false,
-          // unique: true
         },
         createdAt: {
             field: 'created_at',

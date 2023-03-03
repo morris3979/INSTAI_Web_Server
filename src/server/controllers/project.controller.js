@@ -5,6 +5,7 @@ const User = db.User;
 const Data = db.Data;
 const Device = db.Device;
 const Label = db.Label;
+const Model = db.Model;
 
 // Create and Save a new Project
 exports.create = async (req, res) => {
@@ -204,6 +205,42 @@ exports.findLabel = (req, res) => {
       // if (!data) {
       //   console.log('Label', data)
       //   return res.status(404).send({ message: "Label Not found." });
+      // }
+
+      const replacer = (key, value) => {
+          if (key == 'createdAt') return undefined
+          else if (key == 'updatedAt') return undefined
+          else if (key == 'deletedAt') return undefined
+          else if (key == 'type') return undefined
+          else if (key == 'accessAuth') return undefined
+          else if (key == 'ProjectId') return undefined
+          else if (key == 'OrganizationId') return undefined
+          else if (key == 'UserId') return undefined
+          else return value
+      }
+
+      res.send(JSON.parse(JSON.stringify(data, replacer)))
+  }).catch(err => {
+      res.status(500).send({ message: err.message })
+  })
+}
+
+// Find all Models From a Project
+exports.findModel = (req, res) => {
+  Project.findOne({
+      where: {
+          id: req.params.id
+      },
+      include: [{
+          model: Model
+      }],
+      attributes: {
+          exclude: ['createdAt', 'updatedAt', 'deletedAt']
+      }
+  }).then(data => {
+      // if (!data) {
+      //   console.log('Model', data)
+      //   return res.status(404).send({ message: "Model Not found." });
       // }
 
       const replacer = (key, value) => {

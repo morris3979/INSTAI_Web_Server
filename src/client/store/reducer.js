@@ -1,15 +1,16 @@
 import {
-  Modal_File, Which_Modal, Table_Status, Map_Position,
+  Modal_File, Which_Modal, Table_Status,
   Which_Project, Which_Host, Which_Device,
   Logout_Information, User_Information,
   Project_List, Data_List, Members_List,
-  Device_List, Data_Item, Label_List, Project_Item
+  Device_List, Label_List, Model_List,
+  Data_Item, Project_Item,
+  User_Import, Organization_Import, Project_Import
 } from './actionType'
 
 const defaultState = {
   tableStatus: false,
   whichModal: {},
-  mapPositionData: [],
   modalFile: [],
   whichProjectName:[],
   whichHostName:[],
@@ -22,6 +23,10 @@ const defaultState = {
   dataItem: {},
   labelList: {},
   projectItem: {},
+  ModelList: {},
+  userImport: {},
+  organizationImport: {},
+  projectImport: {},
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -29,10 +34,6 @@ const Reducer = (state = defaultState, action) => {
   switch (action.type) {
     case Table_Status: {
       newState.tableStatus = action.value
-      return newState
-    }
-    case Map_Position: {
-      newState.mapPositionData = action.value
       return newState
     }
     case Modal_File: {
@@ -89,6 +90,22 @@ const Reducer = (state = defaultState, action) => {
     }
     case Project_Item: {
       newState.projectItem = action.value
+      return newState
+    }
+    case Model_List: {
+      newState.modelList = action.value
+      return newState
+    }
+    case User_Import: {
+      newState.userImport = action.value
+      return newState
+    }
+    case Organization_Import: {
+      newState.organizationImport = action.value
+      return newState
+    }
+    case Project_Import: {
+      newState.projectImport = action.value
       return newState
     }
     default: {

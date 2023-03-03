@@ -41,7 +41,7 @@ const LabelStudioWrapper = (props) => {
   useEffect(() => {
     dataItem
     getLabelList(dataItem.ProjectId)
-    labelList.Labels.map((value) => {
+    labelList.Labels?.map((value) => {
       setAdditionalLabels((newClass) => [...newClass, `<Label value="${value.labelClass}"/>`])
     })
     // console.log('ProjectId', dataItem.ProjectId)

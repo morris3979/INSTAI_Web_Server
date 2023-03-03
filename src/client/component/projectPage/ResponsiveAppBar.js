@@ -59,18 +59,15 @@ const ResponsiveAppBar = (props) => {
     userInformation,
     projectList,
     dataList,
-    getOrganizationMembers
+    getOrganizationMembers,
+    projectImport
     // getProjectList
   } = props
 
   const [ anchorElUser, setAnchorElUser ] = useState(null)
 
   useEffect(() => {
-    dataList
-    projectList
-    getOrganizationMembers(projectList.id)
-    // console.log('dataList', dataList)
-    // console.log('projectList', projectList)
+    getOrganizationMembers(projectImport)
   },[])
 
   const navigate = useNavigate();
@@ -202,7 +199,8 @@ const mapStateToProps = (state) => {
   return {
     userInformation: state.userInformation,
     projectList: state.projectList,
-    dataList: state.dataList
+    dataList: state.dataList,
+    projectImport: state.projectImport
   }
 }
 
