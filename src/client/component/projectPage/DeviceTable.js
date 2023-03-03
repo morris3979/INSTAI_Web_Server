@@ -366,7 +366,7 @@ const DeviceTable = (props) => {
     }
   }
 
-  const filterDeviceList = deviceList.Devices.filter((e) => {
+  const filterDeviceList = deviceList.Devices?.filter((e) => {
     return e.serialNumber.includes(searchName) || e.deviceName.includes(searchName)
   })
 
@@ -494,7 +494,7 @@ const DeviceTable = (props) => {
                   <TableBody>
                     {searchName.length == 0
                     ? deviceList.Devices
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => {
                         return (
                           <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
@@ -621,7 +621,7 @@ const DeviceTable = (props) => {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 20, 50]}
                 component="div"
-                count={deviceList.Devices.length}
+                count={deviceList.Devices?.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

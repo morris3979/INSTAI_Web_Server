@@ -6,10 +6,6 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        modelName: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
         createdAt: {
             field: 'created_at',
             type: Sequelize.DATE,
@@ -25,8 +21,5 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         timestamps: true,
     });
-    HwUpdateLog.associate = function (models) {
-        HwUpdateLog.belongsTo(models.Device);
-    };
     return HwUpdateLog;
 };
