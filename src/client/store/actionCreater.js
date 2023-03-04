@@ -6,7 +6,7 @@ import {
   Project_List, Data_List, Members_List,
   Device_List, Label_List, Model_List,
   Data_Item, Project_Item,
-  User_Import, Organization_Import, Project_Import
+  User_Import, Organization_Import, Project_Import, S3_Image
 } from './actionType'
 
 //共用Function <<<
@@ -470,15 +470,45 @@ export const AddLabel = (data) => {
   )
 }
 
+export const GetS3Image = (filename) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.get(
+          `/api/aws/s3/getFile/image/${filename}`, //AWS
+          { responseType: 'blob' }
+        )
+        if(response.data){
+          const action = DeliverData({filename: filename}, S3_Image)
+          dispatch(action)
+        }
+      } catch (error) {
+        alert(error)
+      }
+    }
+  )
+}
+
+export const ResetS3ImageData = () => {
+  return ({
+    type: S3_Image,
+    value: {}
+  })
+}
+
 export const UploadImageFile = (file) => {
   return (
-    async () => {
+    async (dispatch) => {
       let formData = new FormData();
       formData.append('file', file)
       return axios.post(
         `/api/data/uploadToS3`, formData
       ).then(response => {
         console.log('response', response)
+        if(response.data){
+          const action = GetS3Image(response.data.filename)
+          dispatch(action)
+        }
         // JSON responses are automatically parsed.
       }).catch(e => {
         this.errors.push(e);
