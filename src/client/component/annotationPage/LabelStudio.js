@@ -12,7 +12,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {
   GetLabelList,
-  UploadJsonFile
+  UploadJsonFile,
+  GetDataItem
 } from '../../store/actionCreater'
 
 const LabelStudioWrapper = (props) => {
@@ -21,7 +22,10 @@ const LabelStudioWrapper = (props) => {
     getLabelList,
     labelList,
     uploadJsonFile,
-    downloadImage
+    downloadImage,
+    getDataItem,
+    projectImport,
+    dataImport
   } = props
 
   // we need a reference to a DOM node here so LSF knows where to render
@@ -40,7 +44,8 @@ const LabelStudioWrapper = (props) => {
   // we're running an effect on component mount and rendering LSF inside rootRef node
   useEffect(() => {
     dataItem
-    getLabelList(dataItem.ProjectId)
+    getDataItem(dataImport)
+    getLabelList(projectImport)
     labelList.Labels?.map((value) => {
       setAdditionalLabels((newClass) => [...newClass, `<Label value="${value.labelClass}"/>`])
     })
@@ -176,7 +181,7 @@ const LabelStudioWrapper = (props) => {
         }
       })
     }
-  }, [ path ])
+  }, [ path, setAdditionalLabels ])
 
   const onConfirm = () => {
     uploadJsonFile(fileList[0])
@@ -259,7 +264,9 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     dataItem: state.dataItem,
-    labelList: state.labelList
+    labelList: state.labelList,
+    projectImport: state.projectImport,
+    dataImport: state.dataImport,
   }
 }
 
@@ -272,6 +279,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     uploadJsonFile(file) {
       const action = UploadJsonFile(file)
+      dispatch(action)
+    },
+    getDataItem(id, text) {
+      const action = GetDataItem(id)
       dispatch(action)
     },
   }

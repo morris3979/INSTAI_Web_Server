@@ -54,7 +54,8 @@ const ResponsiveDrawer = (props) => {
     getDataItem,
     downloadJSON,
     getDataList,
-    dataList
+    dataList,
+    projectImport
   } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
@@ -68,7 +69,7 @@ const ResponsiveDrawer = (props) => {
 
   useEffect(() => {
     dataItem
-    getLabelList(dataItem.ProjectId)
+    getLabelList(projectImport)
     // console.log('dataItem', dataItem)
   },[])
 
@@ -92,9 +93,9 @@ const ResponsiveDrawer = (props) => {
     if (labelRef.current.value != '') {
       addLabel({
         labelClass: labelRef.current.value,
-        ProjectId: dataItem.ProjectId
+        ProjectId: projectImport
       })
-      getLabelList(dataItem.ProjectId)
+      getLabelList(projectImport)
       setOpen(false)
     } else {
       alert('Input Class Name cannot be empty!')
@@ -518,7 +519,8 @@ const mapStateToProps = (state) => {
     return {
         dataItem: state.dataItem,
         userInformation: state.userInformation,
-        dataList: state.dataList
+        dataList: state.dataList,
+        projectImport: state.projectImport,
     }
 }
 

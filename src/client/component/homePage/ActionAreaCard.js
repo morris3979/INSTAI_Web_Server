@@ -305,8 +305,8 @@ const mapStateToProps = (state) => {
   return {
     userInformation: state.userInformation,
     projectList: state.projectList,
+    userImport: state.userImport,
     organizationImport: state.organizationImport,
-    userImport: state.userImport
   }
 }
 

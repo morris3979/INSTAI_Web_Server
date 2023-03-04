@@ -35,6 +35,7 @@ import {
   GetS3Image,
   ResetS3ImageData,
   UploadImageFile,
+  DataImport
 } from '../../store/actionCreater'
 
 const DataWarehouse = (props) => {
@@ -47,7 +48,8 @@ const DataWarehouse = (props) => {
     s3Image,
     resetS3ImageData,
     uploadImageFile,
-    projectImport
+    projectImport,
+    dataImport
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -629,6 +631,7 @@ const DataWarehouse = (props) => {
                             onClick={() => {
                               // console.log('id', item.id)
                               getDataItem(item.id)
+                              dataImport(item.id)
                               setTimeout(() => {
                                 navigate('/Annotation')
                               }, 300)
@@ -717,6 +720,10 @@ const mapStateToProps = (state) => {
       },
       uploadImageFile(file) {
         const action = UploadImageFile(file)
+        dispatch(action)
+      },
+      dataImport(id) {
+        const action = DataImport(id)
         dispatch(action)
       },
     }
