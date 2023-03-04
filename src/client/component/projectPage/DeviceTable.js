@@ -33,7 +33,8 @@ import MuiInput from '@mui/material/Input';
 import {
   AddDevice,
   GetDeviceList,
-  PatchDeviceData
+  PatchDeviceData,
+  PostDeviceMQTT
 } from '../../store/actionCreater'
 
 const columns = [
@@ -49,7 +50,8 @@ const DeviceTable = (props) => {
     addDevice,
     getDeviceList,
     patchDeviceData,
-    projectImport
+    projectImport,
+    postDeviceMQTT
   } = props
 
   useEffect(() => {
@@ -157,7 +159,7 @@ const DeviceTable = (props) => {
       var message = ''
     }
     setOpenCommand(false)
-    patchDeviceData(modifyValue.id,{ command: command })
+    patchDeviceData(modifyValue.id, { command: command })
   }
 
   const handleSerialNumberOpen = (value) => {
@@ -370,16 +372,23 @@ const DeviceTable = (props) => {
     return e.serialNumber.includes(searchName) || e.deviceName.includes(searchName)
   })
 
-  const actionBtn = (
-    <ButtonGroup variant="outlined" aria-label="outlined button group">
-      <Button aria-label='delete'>
-        <DeleteIcon style={{ color: 'white' }} />
-      </Button>
-      <Button aria-label='send'>
-        <RocketLaunchIcon style={{ color: 'white' }} />
-      </Button>
-    </ButtonGroup>
-  )
+  const actionBtn = (row) => {
+    return (
+      <ButtonGroup variant="outlined" aria-label="outlined button group">
+        <Button aria-label='delete'>
+          <DeleteIcon style={{ color: 'white' }} />
+        </Button>
+        <Button
+          aria-label='send'
+          onClick={() => {
+            postDeviceMQTT(row)
+          }}
+        >
+          <RocketLaunchIcon style={{ color: 'white' }} />
+        </Button>
+      </ButtonGroup>
+    )
+  }
 
   return (
       <Box
@@ -477,18 +486,18 @@ const DeviceTable = (props) => {
                       >
                         Action
                       </TableCell>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{
-                            minWidth: column.minWidth,
-                            fontSize: '14pt'
-                        }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{
+                              minWidth: column.minWidth,
+                              fontSize: '14pt'
+                          }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -499,7 +508,7 @@ const DeviceTable = (props) => {
                         return (
                           <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                             <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
-                              {actionBtn}
+                              {actionBtn(row)}
                             </TableCell>
                             <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.serialNumber}
@@ -560,7 +569,7 @@ const DeviceTable = (props) => {
                         return (
                           <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                             <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
-                              {actionBtn}
+                              {actionBtn(row)}
                             </TableCell>
                             <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.serialNumber}
@@ -1074,6 +1083,10 @@ const mapStateToProps = (state) => {
       },
       patchDeviceData(id, data) {
         const action = PatchDeviceData(id, data)
+        dispatch(action)
+      },
+      postDeviceMQTT(data) {
+        const action = PostDeviceMQTT(data)
         dispatch(action)
       }
     }

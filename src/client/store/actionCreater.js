@@ -546,6 +546,31 @@ export const DownloadJSON = (filename) => {
   )
 }
 
+
+export const PostDeviceMQTT = (data) => {
+  const sendData = {
+    'command': data.command
+  }
+  return (
+    async (dispatch) => {
+      try {
+        await axios.post('/api/aws/iot/publish', sendData, {
+          params: {
+            topic: data.serialNumber,
+            deviceName: data.deviceName
+          }
+        })
+        alert(`Packet sent to (${data.serialNumber} - ${data.deviceName}) successfully!`)
+        setTimeout(() => {
+          location.reload()
+        }, 300)
+      } catch (error) {
+        alert(error)
+      }
+    }
+  )
+}
+
 // >>>
 
 // <<< Import

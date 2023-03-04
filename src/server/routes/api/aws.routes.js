@@ -60,22 +60,16 @@ awsRouter.delete("/s3/deleteFile/:folder/:files", (req, res) => {
 
 // AWS IOT MQTT publish message for OTA Device
 awsRouter.post("/iot/publish", async(req, res) => {
-    const { topic, hostName, type } = req.query;
-    const { deviceId, deviceName, command } = req.body;
+    const { topic, deviceName } = req.query;
+    const { command } = req.body;
     const today = new Date();
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     const dateTime = date + ' ' + time;
-    const sendContent = {
-        deviceId: deviceId,
-        deviceName: deviceName,
-        command: command,
-    }
     const IoTDevice = {
         serialNumber: topic,
-        hostName: hostName, // RaspberryPi
-        type: type, // OTADevice
-        request: {...sendContent},
+        deviceName: deviceName,
+        command: command,
         dateTime
     }
     try {
@@ -92,12 +86,9 @@ awsRouter.post("/iot/publish/AIServer", async(req, res) => {
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     const dateTime = date + ' ' + time;
-    const sendContent = {
-        command: command,
-    }
     const toServer = {
         server: 'AIServer',
-        request: {...sendContent},
+        command: command,
         dateTime
     }
     try {
