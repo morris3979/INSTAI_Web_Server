@@ -69,15 +69,15 @@ const DataWarehouse = (props) => {
     toTrain: false
   })
   const [ open, setOpen ] = useState(false)
-  const [ file, setFile ] = useState([])          //File that has been upload to S3
-  const [ fileNum ,setFileNum ] = useState(0)     //Number of selected files 
+  const [ file, setFile ] = useState([])  // File that has been upload to S3
+  const [ fileNum ,setFileNum ] = useState(0) // Number of selected files
   const navigate = useNavigate()
   const mounted = useRef();
 
   useEffect(() => {
+    getDataList(projectImport)
     if(mounted.current === false) {
       mounted.current = true
-      getDataList(projectImport)
       resetS3ImageData()
     } else {
       if(s3Image.filename) {
@@ -496,12 +496,12 @@ const DataWarehouse = (props) => {
               </Grid>
               <Grid item hidden={(selectItem.length == 0) || (!menuItem.cleaned)}>
                 <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelCleanTag} startIcon={<ImageIcon />}>
-                  CANCEL CLEAN
+                  DETAG CLEAN
                 </Button>
               </Grid>
               <Grid item hidden={(selectItem.length == 0) || (!menuItem.toTrain)}>
                 <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelTrainTag} startIcon={<ImageIcon />}>
-                  CANCEL TO TRAIN
+                  DETAG TO TRAIN
                 </Button>
               </Grid>
               <Grid
