@@ -32,7 +32,8 @@ const InvitePeopleTable = (props) => {
     getProjectList,
     getOrganizationMembers,
     membersList,
-    inviteMember
+    inviteMember,
+    organizationImport
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -46,8 +47,8 @@ const InvitePeopleTable = (props) => {
 
   useEffect(() => {
     projectList
-    getProjectList(projectList.id)
-    getOrganizationMembers(projectList.id)
+    getProjectList(organizationImport)
+    getOrganizationMembers(organizationImport)
   },[input])
 
   const onCreate = () => {
@@ -249,7 +250,8 @@ const mapStateToProps = (state) => {
   return {
     userInformation: state.userInformation,
     projectList: state.projectList,
-    membersList: state.membersList
+    membersList: state.membersList,
+    organizationImport: state.organizationImport
   }
 }
 

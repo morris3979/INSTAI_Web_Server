@@ -117,7 +117,7 @@ const ProjectAppBar = (props) => {
     } else {
       setActiveStep(0)
     }
-  }, [activeStep, setActiveStep])
+  }, [activeStep])
 
   const onSaveEditProject = async () => {
     const converted = {}

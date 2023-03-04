@@ -58,6 +58,7 @@ const SelectOrganization = (props) => {
               align='center'
               onClick={() => {
                 getProjectList(c.id)
+                organizationImport(c.id)
                 setTimeout(() => {
                   navigate('/Home')
                 }, 300)

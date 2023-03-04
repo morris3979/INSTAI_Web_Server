@@ -56,16 +56,15 @@ const ResponsiveAppBar = (props) => {
     onClick,
     userInformation,
     projectList,
-    getOrganizationMembers
+    getOrganizationMembers,
+    organizationImport
   } = props
 
   const [ anchorElUser, setAnchorElUser ] = useState(null);
 
   useEffect(() => {
     projectList
-    if (projectList) {
-      getOrganizationMembers(projectList.id)
-    }
+    getOrganizationMembers(organizationImport)
   }, [])
 
   const navigate = useNavigate();
@@ -181,7 +180,8 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     userInformation: state.userInformation,
-    projectList: state.projectList
+    projectList: state.projectList,
+    organizationImport: state.organizationImport
   }
 }
 

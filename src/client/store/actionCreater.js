@@ -71,6 +71,8 @@ export const LoginFormData = (data) => {
         if (response.data.token) {
           const action = LoginToken(response.data)
           dispatch(action)
+          const user = UserImport(response.data.id)
+          dispatch(user)
         }
       } catch (e) {
         alert(e.response.data.message)

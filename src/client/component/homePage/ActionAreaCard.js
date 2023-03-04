@@ -34,23 +34,25 @@ const ActionAreaCard = (props) => {
     getProjectList,
     createProject,
     projectImport,
-    organizationImport
+    organizationImport,
+    userImport
   } = props
 
   const [ open, setOpen ] = useState(false)
   const [ searchName, setSearchName] = useState('')
   const [ input, setInput ] = useState({
-    project: '',
+    project: 'New Project',
     type: 'Object Detection',
-    OrganizationId: projectList.id,
-    UserId: userInformation.id
+    OrganizationId: organizationImport,
+    UserId: userImport
   })
 
   const navigate = useNavigate()
 
   useEffect(() => {
+    userInformation
     projectList
-    getProjectList(projectList.id)
+    getProjectList(organizationImport)
   },[input])
 
   const onCreate = async () => {
@@ -263,6 +265,7 @@ const ActionAreaCard = (props) => {
               color='info'
               sx={{ width: 300 }}
               placeholder='Project Name'
+              defaultValue='New Project'
               InputProps={{
                 style: { color: 'white' }
               }}
@@ -302,7 +305,8 @@ const mapStateToProps = (state) => {
   return {
     userInformation: state.userInformation,
     projectList: state.projectList,
-    organizationImport: state.organizationImport
+    organizationImport: state.organizationImport,
+    userImport: state.userImport
   }
 }
 
