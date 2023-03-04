@@ -70,7 +70,7 @@ const DeviceTable = (props) => {
   const [ input, setInput ] = useState({
     serialNumber: '',
     deviceName: '',
-    ProjectId: deviceList.id
+    ProjectId: projectImport
   })
   const [ page, setPage ] = useState(0)
   const [ rowsPerPage, setRowsPerPage ] = useState(5)
@@ -172,7 +172,7 @@ const DeviceTable = (props) => {
     setInput({
       serialNumber: '',
       deviceName: '',
-      ProjectId: deviceList.id
+      ProjectId: projectImport
     })
     setOpenSerialNumber(false)
   }
@@ -189,7 +189,7 @@ const DeviceTable = (props) => {
     setInput({
       serialNumber: '',
       deviceName: '',
-      ProjectId: deviceList.id
+      ProjectId: projectImport
     })
     setOpenDeviceName(false)
   }
