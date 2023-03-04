@@ -4,7 +4,7 @@ import {
   Logout_Information, User_Information,
   Project_List, Data_List, Members_List,
   Device_List, Label_List, Model_List,
-  Data_Item, Project_Item,
+  Data_Item, Project_Item, S3_Image,
   User_Import, Organization_Import,
   Project_Import, Data_Import
 } from './actionType'
@@ -29,6 +29,7 @@ const defaultState = {
   organizationImport: {},
   projectImport: {},
   dataImport: {},
+  s3Image: {}
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -112,6 +113,9 @@ const Reducer = (state = defaultState, action) => {
     }
     case Data_Import: {
       newState.dataImport = action.value
+    }
+    case S3_Image: {
+      newState.s3Image = action.value
       return newState
     }
     default: {

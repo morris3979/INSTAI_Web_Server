@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
@@ -14,6 +14,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -28,6 +32,8 @@ import {
   GetDataItem,
   PostDataItem,
   PatchDataItem,
+  GetS3Image,
+  ResetS3ImageData,
   UploadImageFile,
   DataImport
 } from '../../store/actionCreater'
@@ -39,6 +45,8 @@ const DataWarehouse = (props) => {
     getDataItem,
     postDataItem,
     patchDataItem,
+    s3Image,
+    resetS3ImageData,
     uploadImageFile,
     projectImport,
     dataImport
@@ -60,11 +68,26 @@ const DataWarehouse = (props) => {
     labeled: false,
     toTrain: false
   })
+  const [ open, setOpen ] = useState(false)
+  const [ file, setFile ] = useState([])          //File that has been upload to S3
+  const [ fileNum ,setFileNum ] = useState(0)     //Number of selected files 
   const navigate = useNavigate()
+  const mounted = useRef();
 
   useEffect(() => {
-    getDataList(projectImport)
-  },[])
+    if(mounted.current === false) {
+      mounted.current = true
+      getDataList(projectImport)
+      resetS3ImageData()
+    } else {
+      if(s3Image.filename) {
+        let currentS3file = s3Image
+        setFile([...file, currentS3file])
+      } else {
+        return
+      }
+    }
+  },[s3Image])
 
   const handleClickFilter = (event) => {
     setAnchorEl_Filter(event.currentTarget)
@@ -88,6 +111,17 @@ const DataWarehouse = (props) => {
 
   const handleCloseTag = () => {
     setAnchorEl_Tag(null)
+  }
+
+  const handleClose = () => {
+    mounted.current = false
+    resetS3ImageData()
+    setOpen(false)
+    file.forEach((data) => {
+      const newName = data.filename
+      postDataItem({ data:newName.slice(0, newName.indexOf('.')), image:1, ProjectId: dataList.id })
+    })
+    setTimeout(() => {location.reload()}, 1000)
   }
 
   const handleSelectItem = (id, value) => {
@@ -168,6 +202,7 @@ const DataWarehouse = (props) => {
   }
 
   const handleUploadImage = (e) => {
+    setFile([])
     var now = new Date()
     var localTime = now.getFullYear().toString() + '-' +
         (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
@@ -175,14 +210,13 @@ const DataWarehouse = (props) => {
         now.getHours().toString().padStart(2, '0') + ':' +
         now.getMinutes().toString().padStart(2, '0') + ':' +
         now.getSeconds().toString().padStart(2, '0')
-
     if(e.target.files.length < 6) {
+      setFileNum(e.target.files.length)
       for(var i = 0; i < e.target.files.length; i++) {
         var newName = `${dataList.project}_${localTime}_${('000' + (i + 1)).slice(-3)}_${e.target.files[i].name}`
         uploadImageFile(new File([e.target.files[i]], newName, { type: e.target.files[i].type }))
-        postDataItem({ data:newName.slice(0, newName.indexOf('.')), image:1, ProjectId: dataList.id })
       }
-      setTimeout(() => {location.reload()}, 500)
+      setTimeout(() => {setOpen(true)}, 500)
     } else {
       alert('Uploaded limit. (Max: 5)')
     }
@@ -638,6 +672,15 @@ const DataWarehouse = (props) => {
           </div>
           }
         </div>
+        <Dialog open={open} onClose={handleClose}>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Image Upload</DialogContent>
+        <DialogTitle id="alert-dialog-title" textAlign={'center'} style={{ backgroundColor: '#444950', color: 'white', width: '30vh' }}>
+          Image Uploading {file.length}/{fileNum}, Please Wait...
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950' }}>
+          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}} disabled={file.length != fileNum}>OK</Button>
+        </DialogActions>
+      </Dialog>
       </Box>
   )
 }
@@ -647,6 +690,7 @@ const mapStateToProps = (state) => {
     return {
       dataList: state.dataList,
       dataItem: state.dataItem,
+      s3Image: state.s3Image,
       projectImport: state.projectImport
     }
   }
@@ -668,6 +712,14 @@ const mapStateToProps = (state) => {
       },
       patchDataItem(id ,data) {
         const action = PatchDataItem(id, data)
+        dispatch(action)
+      },
+      getS3Image(file) {
+        const action = GetS3Image(file)
+        dispatch(action)
+      },
+      resetS3ImageData() {
+        const action = ResetS3ImageData()
         dispatch(action)
       },
       uploadImageFile(file) {
