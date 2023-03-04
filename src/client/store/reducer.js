@@ -5,7 +5,8 @@ import {
   Project_List, Data_List, Members_List,
   Device_List, Label_List, Model_List,
   Data_Item, Project_Item,
-  User_Import, Organization_Import, Project_Import
+  User_Import, Organization_Import,
+  Project_Import, Data_Import
 } from './actionType'
 
 const defaultState = {
@@ -27,6 +28,7 @@ const defaultState = {
   userImport: {},
   organizationImport: {},
   projectImport: {},
+  dataImport: {},
 }
 
 const Reducer = (state = defaultState, action) => {
@@ -106,6 +108,10 @@ const Reducer = (state = defaultState, action) => {
     }
     case Project_Import: {
       newState.projectImport = action.value
+      return newState
+    }
+    case Data_Import: {
+      newState.dataImport = action.value
       return newState
     }
     default: {

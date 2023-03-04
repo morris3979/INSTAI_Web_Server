@@ -27,7 +27,8 @@ import {
   GetProjectList,
   PatchProjectItem,
   GetProjectItem,
-  GetDataList
+  GetDataList,
+  GetLabelList
 } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
@@ -40,14 +41,17 @@ const ProjectAppBar = (props) => {
     getProjectItem,
     dataList,
     projectImport,
-    getDataList
+    getDataList,
+    labelList,
+    organizationImport,
+    getLabelList
   } = props
 
   const [ openEditProject, setOpenEditProject ] = useState(false)
   const [ input, setInput ] = useState({
     project: '',
     type: 'Object Detection',
-    OrganizationId: projectList.id,
+    OrganizationId: organizationImport,
   })
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
@@ -78,26 +82,29 @@ const ProjectAppBar = (props) => {
   const trainData = JSON.stringify({
     "project": projectItem.project,
     "filename": projectItem.project+'_'+localTime,
-    "trainData": dataList.Data?.filter(item => item.trainTag === true),
+    "labels": labelList.Labels?.map((value) => {return value.labelClass}),
+    "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
     "timestamp": localTime
   }, replacer, 2)
 
   useEffect(() => {
     dataList
+    labelList
     projectItem
     projectList
     getDataList(projectImport)
+    getLabelList(projectImport)
     getProjectItem(projectImport)
     if (dataList.Data?.length) {
       const step1 = (skipped.size == 0) &&
-                    (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
-                    (dataList.Data.map((e) => e.json).indexOf(true) == -1)
+                    (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                    (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
       const step2 = (skipped.size == 0) &&
-                    (dataList.Data.map((e) => e.cleanTag).indexOf(true) != -1) &&
-                    (dataList.Data.map((e) => e.json).indexOf(true) == -1)
+                    (dataList.Data?.map((e) => e.cleanTag).indexOf(true) != -1) &&
+                    (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
       const step2_skip = (skipped.size == 0) &&
-                    (dataList.Data.map((e) => e.cleanTag).indexOf(true) == -1) &&
-                    (dataList.Data.map((e) => e.json).indexOf(true) != -1)
+                    (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                    (dataList.Data?.map((e) => e.json).indexOf(true) != -1)
       if (step1) {
         setActiveStep(1)
       } else {
@@ -123,12 +130,12 @@ const ProjectAppBar = (props) => {
     const converted = {}
     converted.project = input.project
     converted.type = input.type
-    if(input.project&&input.type) {
+    if(input.project && input.type) {
       patchProjectItem(projectItem.id, converted)
       setInput({
         project: '',
         type: 'Object Detection',
-        OrganizationId: projectList.id,
+        OrganizationId: organizationImport,
       })
       setOpenEditProject(false)
     }else{
@@ -149,7 +156,7 @@ const ProjectAppBar = (props) => {
     setInput({
       project: '',
       type: 'Object Detection',
-      OrganizationId: projectList.id,
+      OrganizationId: organizationImport,
     })
     setOpenEditProject(false)
   }
@@ -368,7 +375,9 @@ const mapStateToProps = (state) => {
     projectList: state.projectList,
     projectItem: state.projectItem,
     dataList: state.dataList,
-    projectImport: state.projectImport
+    labelList: state.labelList,
+    projectImport: state.projectImport,
+    organizationImport: state.organizationImport,
   }
 }
 
@@ -393,6 +402,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getDataList(id, text) {
       const action = GetDataList(id)
+      dispatch(action)
+    },
+    getLabelList(id, text) {
+      const action = GetLabelList(id)
       dispatch(action)
     },
   }

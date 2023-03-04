@@ -6,7 +6,8 @@ import {
   Project_List, Data_List, Members_List,
   Device_List, Label_List, Model_List,
   Data_Item, Project_Item,
-  User_Import, Organization_Import, Project_Import
+  User_Import, Organization_Import,
+  Project_Import, Data_Import
 } from './actionType'
 
 //共用Function <<<
@@ -597,6 +598,15 @@ export const ProjectImport = (id) => {
   return (
     async (dispatch) => {
       const action = DeliverData(id, Project_Import)
+      dispatch(action)
+    }
+  )
+}
+
+export const DataImport = (id) => {
+  return (
+    async (dispatch) => {
+      const action = DeliverData(id, Data_Import)
       dispatch(action)
     }
   )
