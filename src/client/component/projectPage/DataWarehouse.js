@@ -492,6 +492,16 @@ const DataWarehouse = (props) => {
                 :null
                 }
               </Grid>
+              <Grid item hidden={(selectItem.length == 0) || (!menuItem.cleaned)}>
+                <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelCleanTag} startIcon={<ImageIcon />}>
+                  CANCEL CLEAN
+                </Button>
+              </Grid>
+              <Grid item hidden={(selectItem.length == 0) || (!menuItem.toTrain)}>
+                <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelTrainTag} startIcon={<ImageIcon />}>
+                  CANCEL TO TRAIN
+                </Button>
+              </Grid>
               <Grid
                 item
                 style={{ position: 'absolute', right: 160, marginRight: 5 }}
@@ -533,23 +543,9 @@ const DataWarehouse = (props) => {
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
                     disabled={selectItem.length == 0}
-                    onClick={handleCancelCleanTag}
-                  >
-                    CENCEL CLEAN
-                  </MenuItem>
-                  <MenuItem
-                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    disabled={selectItem.length == 0}
                     onClick={handleClickTrainTag}
                   >
                     TO TRAIN
-                  </MenuItem>
-                  <MenuItem
-                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    disabled={selectItem.length == 0}
-                    onClick={handleCancelTrainTag}
-                  >
-                    CANCEL TO TRAIN
                   </MenuItem>
                 </Menu>
               </Grid>
