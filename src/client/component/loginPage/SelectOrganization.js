@@ -18,13 +18,14 @@ const SelectOrganization = (props) => {
     onClick,
     userInformation,
     getProjectList,
-    organizationImport
+    organizationImport,
+    userImport
   } = props
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    getLoginUser(userInformation.id)
+    getLoginUser(userImport)
     userInformation
   },[])
 
@@ -114,7 +115,8 @@ const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
     userInformation: state.userInformation,
-    projectList: state.projectList
+    projectList: state.projectList,
+    userImport: state.userImport
   }
 }
 

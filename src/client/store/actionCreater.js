@@ -134,6 +134,8 @@ export const RegisterFormData = (data) => {
         if(response.data){
           const action = DeliverData(response.data, User_Information)
           dispatch(action)
+          const user = UserImport(response.data.id)
+          dispatch(user)
           return
         }
       } catch (e) {
@@ -157,8 +159,8 @@ export const CreateNewOrganization = (data, id) => {
           dispatch(action)
           const second = GetProjectList(response.data.id)
           dispatch(second)
-          const third = GetLoginUser(id)
-          dispatch(third)
+          const user = UserImport(id)
+          dispatch(user)
           setTimeout(() => {
             location.reload()
           }, 300)
