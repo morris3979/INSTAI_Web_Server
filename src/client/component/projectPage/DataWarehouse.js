@@ -75,9 +75,9 @@ const DataWarehouse = (props) => {
   const mounted = useRef();
 
   useEffect(() => {
-    getDataList(projectImport)
     if(mounted.current === false) {
       mounted.current = true
+      getDataList(projectImport)
       resetS3ImageData()
     } else {
       if(s3Image.filename) {
@@ -119,7 +119,7 @@ const DataWarehouse = (props) => {
     setOpen(false)
     file.forEach((data) => {
       const newName = data.filename
-      postDataItem({ data:newName.slice(0, newName.indexOf('.')), image:1, ProjectId: dataList.id })
+      postDataItem({ data: newName.slice(0, newName.indexOf('.')), image: 1, ProjectId: projectImport })
     })
     setTimeout(() => {location.reload()}, 1000)
   }
