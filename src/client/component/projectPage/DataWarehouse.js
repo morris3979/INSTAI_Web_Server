@@ -497,12 +497,12 @@ const DataWarehouse = (props) => {
               </Grid>
               <Grid item hidden={(selectItem.length == 0) || (!menuItem.cleaned)}>
                 <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelCleanTag} startIcon={<ImageIcon />}>
-                  DETAG CLEAN
+                  DETAG (CLEAN)
                 </Button>
               </Grid>
               <Grid item hidden={(selectItem.length == 0) || (!menuItem.toTrain)}>
                 <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelTrainTag} startIcon={<ImageIcon />}>
-                  DETAG TO TRAIN
+                  DETAG (TO TRAIN)
                 </Button>
               </Grid>
               <Grid

@@ -223,8 +223,6 @@ export const GetDeviceList = (id) => {
 export const GetLabelList = (id) => {
   return (
     async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
       try {
         const response = await axios.get(`/api/project/${id}/label`)
         const action = DeliverData(response.data, Label_List)
@@ -329,10 +327,12 @@ export const PatchDataItem = (id, data) => {
       try {
         const response = await axios.patch(`/api/data/${id}`, data)
         if (response.data) {
-          const action = GetDataItem(response.data.id)
+          const response_dataItem = await axios.get(`/api/data/${id}`)
+          const action = DeliverData(response_dataItem.data, Data_Item)
           dispatch(action)
-          const second = GetDataList(response.data.ProjectId)
-          dispatch(second)
+          const response_dataList = await axios.get(`/api/project/${response.data.ProjectId}/data`)
+          const secondAction = DeliverData(response_dataList.data, Data_List)
+          dispatch(secondAction)
           setTimeout(() => {
             location.reload()
           }, 300)
@@ -415,8 +415,6 @@ export const PatchDeviceData = (id, data) => {
 export const GetDataItem = (id) => {
   return (
     async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
       try {
         const response = await axios.get(`/api/data/${id}`)
         // console.log(response.data)
@@ -437,12 +435,12 @@ export const AddLabel = (data) => {
       try {
         const response = await axios.post('/api/label', data)
         if (response.data) {
-          const action = GetLabelList(response.data.ProjectId)
+          const response_labelList = await axios.get(`/api/project/${response.data.ProjectId}/label`)
+          const action = DeliverData(response_labelList.data, Label_List)
           dispatch(action)
           setTimeout(() => {
             location.reload()
           }, 300)
-          // console.log('response', response.data)
           return
         }
       } catch (e) {
