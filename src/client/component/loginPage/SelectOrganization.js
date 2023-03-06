@@ -39,13 +39,12 @@ const SelectOrganization = (props) => {
         fontSize='30px'
         align='center'
         color='lightblue'
-        style={{ marginBottom: 10 }}
+        style={{ marginBottom: 15 }}
       >
         Select Your Organization
       </Typography>
       <div style={{ marginBottom: 10 }}>
-      {userInformation.Organizations?
-        userInformation.Organizations?.map((c) => {
+        {userInformation.Organizations?.map((c) => {
           return (
             <Button
               variant="outlined"
@@ -68,8 +67,7 @@ const SelectOrganization = (props) => {
               {c.organization}
             </Button>
           )
-        }): null
-      }
+        })}
       </div>
       <Divider
         sx={{

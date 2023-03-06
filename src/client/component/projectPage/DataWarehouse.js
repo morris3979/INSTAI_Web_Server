@@ -27,6 +27,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import ImageIcon from '@mui/icons-material/Image';
 import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   GetDataList,
   GetDataItem,
@@ -210,7 +211,7 @@ const DataWarehouse = (props) => {
         now.getHours().toString().padStart(2, '0') + ':' +
         now.getMinutes().toString().padStart(2, '0') + ':' +
         now.getSeconds().toString().padStart(2, '0')
-    if(e.target.files.length < 6) {
+    if(e.target.files.length < 11) {
       setFileNum(e.target.files.length)
       for(var i = 0; i < e.target.files.length; i++) {
         var newName = `${dataList.project}_${localTime}_${('000' + (i + 1)).slice(-3)}_${e.target.files[i].name}`
@@ -218,7 +219,7 @@ const DataWarehouse = (props) => {
       }
       setTimeout(() => {setOpen(true)}, 500)
     } else {
-      alert('Uploaded limit. (Max: 5)')
+      alert('Upload limit. (Max: 10)')
     }
   }
 
@@ -668,13 +669,23 @@ const DataWarehouse = (props) => {
           </div>
           }
         </div>
-        <Dialog open={open} onClose={handleClose}>
-        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Image Upload</DialogContent>
-        <DialogTitle id="alert-dialog-title" textAlign={'center'} style={{ backgroundColor: '#444950', color: 'white', width: '30vh' }}>
-          Image Uploading {file.length}/{fileNum}, Please Wait...
+        <Dialog open={open}>
+        {file.length < fileNum?
+        <DialogContent style={{ backgroundColor: '#444950' }}>
+          <CircularProgress color="info" size={20} />
+        </DialogContent>:
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>From InstAI</DialogContent>
+        }
+        {file.length < fileNum?
+        <DialogTitle id="alert-dialog-title" textAlign={'center'} style={{ backgroundColor: '#444950', color: 'white', width: '30vw' }}>
+          Image uploading {file.length}/{fileNum}, please wait...
+        </DialogTitle>:
+        <DialogTitle id="alert-dialog-title" textAlign={'center'} style={{ backgroundColor: '#444950', color: 'white', width: '30vw' }}>
+          Uploaded successfully!
         </DialogTitle>
+        }
         <DialogActions style={{ backgroundColor: '#444950' }}>
-          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}} disabled={file.length != fileNum}>OK</Button>
+          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}} disabled={file.length < fileNum}>OK</Button>
         </DialogActions>
       </Dialog>
       </Box>

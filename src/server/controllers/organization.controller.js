@@ -83,9 +83,9 @@ exports.findUsers = (req, res) => {
         exclude: ['createdAt', 'updatedAt', 'deletedAt']
       }
     }).then(data => {
-      if (!data) {
-        return res.status(404).send({ message: "Organization Not found." });
-      }
+      // if (!data) {
+      //   return res.status(404).send({ message: "Organization Not found." });
+      // }
 
       const replacer = (key, value) => {
         if (key == 'password') return undefined

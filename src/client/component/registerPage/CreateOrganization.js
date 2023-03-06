@@ -8,7 +8,7 @@ import InstAI from '../../icon image/instai.png'
 import { CreateNewOrganization } from '../../store/actionCreater'
 
 const CreateOrganization = (props) => {
-  const { createNewOrganization, userInformation } = props
+  const { createNewOrganization, userInformation, userImport } = props
 
   const [ organizationName, setOrganizationName ] = useState('')
 
@@ -26,7 +26,7 @@ const CreateOrganization = (props) => {
       alert('Organization can not be empty!')
       location.reload()
     } else {
-      createNewOrganization(organizationName, userInformation.id)
+      createNewOrganization(organizationName, userImport)
       navigate('/Organization/Select')
     }
   }
@@ -84,7 +84,8 @@ const CreateOrganization = (props) => {
 const mapStateToProps = (state) => {
   //state指的是store裡的數據
   return {
-    userInformation: state.userInformation
+    userInformation: state.userInformation,
+    userImport: state.userImport
   }
 }
 

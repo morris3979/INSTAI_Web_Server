@@ -104,23 +104,19 @@ export const LogoutData = () => {
   })
 }
 
-export const GetLoginUser = (id, data) => {
+export const GetLoginUser = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
       dispatch(action)
       try {
         const response = await axios.get(`/api/user/${id}`)
-        // console.log(response.data)
         const action = DeliverData(response.data, User_Information)
         dispatch(action)
       } catch (e) {
         alert(e.response.data.message)
         location.reload()
         return
-      } finally {
-        const action = TableStatus(false)
-        dispatch(action)
       }
     }
   )
@@ -150,20 +146,15 @@ export const CreateNewOrganization = (data, id) => {
   return (
     async (dispatch) => {
       try {
-        const converted = {}
         const response = await axios.post('/api/organization', data)
+        const converted = {}
         converted.userId = id
-        converted.organizationId = `${response.data.id}`
+        converted.organizationId = response.data.id
         if(converted) {
-          const action = UserBindOrganization(converted)
+          await axios.post('/api/user/group', converted)
+          const user = await axios.get(`/api/user/${id}`)
+          const action = DeliverData(user.data, User_Information)
           dispatch(action)
-          const second = GetProjectList(response.data.id)
-          dispatch(second)
-          const user = UserImport(id)
-          dispatch(user)
-          setTimeout(() => {
-            location.reload()
-          }, 300)
           return
         }
       } catch (e) {
@@ -173,19 +164,7 @@ export const CreateNewOrganization = (data, id) => {
   )
 }
 
-export const UserBindOrganization = (data) => {
-  return(
-    async () => {
-      try {
-        await axios.post('/api/user/group', data)
-      } catch (e) {
-        alert(e.response.data.message)
-      }
-    }
-  )
-}
-
-export const GetProjectList = (id, data) => {
+export const GetProjectList = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -204,7 +183,7 @@ export const GetProjectList = (id, data) => {
   )
 }
 
-export const GetDataList = (id, data) => {
+export const GetDataList = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -223,7 +202,7 @@ export const GetDataList = (id, data) => {
   )
 }
 
-export const GetDeviceList = (id, data) => {
+export const GetDeviceList = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -241,7 +220,7 @@ export const GetDeviceList = (id, data) => {
   )
 }
 
-export const GetLabelList = (id, data) => {
+export const GetLabelList = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -259,7 +238,7 @@ export const GetLabelList = (id, data) => {
   )
 }
 
-export const GetModelList = (id, data) => {
+export const GetModelList = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -311,7 +290,7 @@ export const PatchProjectItem = (id, data) => {
   )
 }
 
-export const GetProjectItem = (id, data) => {
+export const GetProjectItem = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -366,7 +345,7 @@ export const PatchDataItem = (id, data) => {
   )
 }
 
-export const GetOrganizationMembers = (id, data) => {
+export const GetOrganizationMembers = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -433,7 +412,7 @@ export const PatchDeviceData = (id, data) => {
   )
 }
 
-export const GetDataItem = (id, data) => {
+export const GetDataItem = (id) => {
   return (
     async (dispatch) => {
       const action = TableStatus(true)
@@ -507,7 +486,7 @@ export const UploadImageFile = (file) => {
       return axios.post(
         `/api/data/uploadToS3`, formData
       ).then(response => {
-        console.log('response', response)
+        // console.log('response', response)
         if(response.data){
           const action = GetS3Image(response.data.filename)
           dispatch(action)
