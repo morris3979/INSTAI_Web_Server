@@ -58,11 +58,16 @@ const ProjectAppBar = (props) => {
   const [ openTrainData, setOpenTrainData ] = useState(false)
 
   var now = new Date()
-  var localTime = now.getFullYear().toString() + '-' +
-      (now.getMonth() + 1).toString().padStart(2, '0') + '-' +
-      now.getDate().toString().padStart(2, '0') + '_' +
+  var localTime = now.getFullYear().toString() + '.' +
+      (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+      now.getDate().toString().padStart(2, '0') + ' ' +
       now.getHours().toString().padStart(2, '0') + ':' +
       now.getMinutes().toString().padStart(2, '0') + ':' +
+      now.getSeconds().toString().padStart(2, '0')
+  var fileVersion = (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+      now.getDate().toString().padStart(2, '0') + '.' +
+      now.getHours().toString().padStart(2, '0') +
+      now.getMinutes().toString().padStart(2, '0') +
       now.getSeconds().toString().padStart(2, '0')
 
   const replacer = (key, value) => {
@@ -81,7 +86,7 @@ const ProjectAppBar = (props) => {
 
   const trainData = JSON.stringify({
     "project": projectItem.project,
-    "filename": projectItem.project+'_'+localTime,
+    "filename": 'Model V1.'+fileVersion,
     "labels": labelList.Labels?.map((value) => {return value.labelClass}),
     "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
     "timestamp": localTime
