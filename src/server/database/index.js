@@ -43,6 +43,7 @@ db.Project.hasMany(db.Model, {foreignKey: 'ProjectId'});
 db.Device.hasMany(db.Data, {foreignKey: 'DeviceId'});
 db.User.hasMany(db.Project, {foreignKey: 'UserId'});
 db.User.hasMany(db.Data, {foreignKey: 'UserId'});
+db.User.hasMany(db.Model, {foreignKey: 'UserId'});
 db.Device.hasMany(db.HwUpdateLog, {foreignKey: 'DeviceId'});
 
 // Many to One
@@ -54,6 +55,7 @@ db.Data.belongsTo(db.Project, {foreignKey: 'ProjectId'});
 db.Data.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 db.Project.belongsTo(db.User, {foreignKey: 'UserId'});
 db.Data.belongsTo(db.User, {foreignKey: 'UserId'});
+db.Model.belongsTo(db.User, {foreignKey: 'UserId'});
 db.HwUpdateLog.belongsTo(db.Device, {foreignKey: 'DeviceId'});
 
 // Many to Many

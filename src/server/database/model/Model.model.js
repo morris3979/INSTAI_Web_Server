@@ -40,6 +40,7 @@ module.exports = (sequelize, Sequelize) => {
     });
     Model.associate = function (models) {
         Model.belongsTo(models.Project);
+        Model.belongsTo(models.User);
     };
     return Model;
 };
