@@ -55,7 +55,8 @@ const ResponsiveDrawer = (props) => {
     downloadJSON,
     getDataList,
     dataList,
-    projectImport
+    projectImport,
+    dataImport
   } = props
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
@@ -69,6 +70,7 @@ const ResponsiveDrawer = (props) => {
 
   useEffect(() => {
     dataItem
+    getDataItem(dataImport)
     getLabelList(projectImport)
     // console.log('dataItem', dataItem)
   },[])
@@ -106,14 +108,8 @@ const ResponsiveDrawer = (props) => {
     setOpen(false)
   }
 
-  const onSave = () => {
-    patchDataItem(dataItem.id, { json: 1, UserId: userInformation.id })
-    getDataItem(dataItem.id)
-    location.reload()
-  }
-
   const onCloseLabel = () => {
-    getDataList(dataList.id)
+    getDataList(projectImport)
     setTimeout(() => {
         navigate('/Project/Data')
     }, 300)
@@ -130,24 +126,6 @@ const ResponsiveDrawer = (props) => {
             <CloseIcon />
         </IconButton>
         {/* <Toolbar /> */}
-        <List>
-            <ListItem style={{ marginTop: 4 }}>
-                <ListItemButton
-                    style={{
-                        backgroundColor: 'darkorange',
-                        color: '#0A1929',
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontWeight: 'bold',
-                        borderRadius: 5
-                    }}
-                    onClick={onSave}
-                >
-                    <SaveIcon style={{ marginRight: 5 }} />
-                    Save labeled
-                </ListItemButton>
-            </ListItem>
-        </List>
         <Divider
             sx={{
                 '&.MuiDivider-root': {
@@ -157,8 +135,7 @@ const ResponsiveDrawer = (props) => {
                     "&::after": {
                       borderTop: "thin solid blue"
                     }
-                },
-                marginTop: 2
+                }, marginTop: 1
             }}
         >
             <Typography
@@ -301,8 +278,7 @@ const ResponsiveDrawer = (props) => {
                     "&::after": {
                       borderTop: "thin solid green"
                     }
-                },
-                marginTop: 3
+                }, marginTop: 1
             }}
         >
             <Typography
@@ -521,6 +497,7 @@ const mapStateToProps = (state) => {
         userInformation: state.userInformation,
         dataList: state.dataList,
         projectImport: state.projectImport,
+        dataImport: state.dataImport,
     }
 }
 

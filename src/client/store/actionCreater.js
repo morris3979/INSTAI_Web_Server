@@ -503,13 +503,48 @@ export const UploadJsonFile = (file) => {
       let formData = new FormData();
       formData.append('file', file)
       return axios.post(
-        `/api/aws/s3/upload/json`, formData
+        `/api/aws/s3/upload/json/label`, formData
       ).then(response => {
         console.log('response', response)
         // JSON responses are automatically parsed.
       }).catch(e => {
         this.errors.push(e);
       });
+    }
+  )
+}
+
+export const UploadTrainData = (file) => {
+  return (
+    async () => {
+      let formData = new FormData();
+      formData.append('file', file)
+      return axios.post(
+        `/api/aws/s3/upload/json/train`, formData
+      ).then(response => {
+        console.log('response', response)
+        // JSON responses are automatically parsed.
+      }).catch(e => {
+        this.errors.push(e);
+      });
+    }
+  )
+}
+
+export const PostTrainData = (data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.post('/api/model', data)
+        if (response.data) {
+          const response_modelList = await axios.get(`/api/project/${data.ProjectId}/model`)
+          const action = DeliverData(response_modelList.data, Model_List)
+          dispatch(action)
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
     }
   )
 }

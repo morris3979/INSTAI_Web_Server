@@ -5,10 +5,24 @@ const s3 = require("../../controllers/cloud service/aws.s3.controller");
 const IotController = require('../../controllers/cloud service/aws.iot.controller');
 
 // upload labeled json file
-awsRouter.post("/s3/upload/json", (req, res) => {
+awsRouter.post("/s3/upload/json/label", (req, res) => {
     async.parallel([
         function(callback) {
-            s3.uploadToS3(req, res, 'file', callback);
+            s3.uploadLabelDataToS3(req, res, 'file', callback);
+        }], function(err, result){
+        if (err) {
+            return res.status(422).send(err);
+        } else {
+            res.status(200).send(result[0]);
+        }}
+    )
+});
+
+// upload trainData json file
+awsRouter.post("/s3/upload/json/train", (req, res) => {
+    async.parallel([
+        function(callback) {
+            s3.uploadTrainDataToS3(req, res, 'file', callback);
         }], function(err, result){
         if (err) {
             return res.status(422).send(err);

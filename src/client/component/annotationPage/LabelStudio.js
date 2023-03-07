@@ -13,7 +13,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {
   GetLabelList,
   UploadJsonFile,
-  GetDataItem
+  GetDataItem,
+  PatchDataItem
 } from '../../store/actionCreater'
 
 const LabelStudioWrapper = (props) => {
@@ -25,7 +26,9 @@ const LabelStudioWrapper = (props) => {
     downloadImage,
     getDataItem,
     projectImport,
-    dataImport
+    dataImport,
+    patchDataItem,
+    userImport
   } = props
 
   // we need a reference to a DOM node here so LSF knows where to render
@@ -183,9 +186,14 @@ const LabelStudioWrapper = (props) => {
     }
   }, [ path, setAdditionalLabels ])
 
-  const onConfirm = () => {
+  const onSave = () => {
     uploadJsonFile(fileList[0])
+    patchDataItem(dataImport, { json: 1, UserId: userImport })
+    getDataItem(dataImport)
     setOpen(false)
+    setTimeout(() => {
+      location.reload()
+    }, 300)
   }
 
   const onCancel = () => {
@@ -195,13 +203,13 @@ const LabelStudioWrapper = (props) => {
   const exportJson = () => {
     if (json4Training) {
       const jsonData = JSON.parse(json4Training)
-      const fileName = dataItem.data+'.json'
+      const fileName = dataItem.data + '.json'
       const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
       // console.log('export file', file)
       setFileList([...fileList, file])
       setOpen(true)
     } else {
-      alert('Please Label first!')
+      alert('Please Label and click Submit!')
     }
   }
 
@@ -249,10 +257,10 @@ const LabelStudioWrapper = (props) => {
           <Button
             size='small'
             variant="contained"
-            onClick={onConfirm}
+            onClick={onSave}
             sx={{ margin: 1 }}
           >
-            CONFIRM
+            Save
           </Button>
         </DialogActions>
       </Dialog>
@@ -267,6 +275,7 @@ const mapStateToProps = (state) => {
     labelList: state.labelList,
     projectImport: state.projectImport,
     dataImport: state.dataImport,
+    userImport: state.userImport,
   }
 }
 
@@ -283,6 +292,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getDataItem(id, text) {
       const action = GetDataItem(id)
+      dispatch(action)
+    },
+    patchDataItem(id ,data) {
+      const action = PatchDataItem(id, data)
       dispatch(action)
     },
   }

@@ -10,6 +10,14 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        status: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        available: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
         createdAt: {
             field: 'created_at',
             type: Sequelize.DATE,

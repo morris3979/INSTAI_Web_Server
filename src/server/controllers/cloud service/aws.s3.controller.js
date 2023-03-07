@@ -18,7 +18,7 @@ const constantParams = {
 }
 
 // upload labeled json file to s3
-exports.uploadToS3 = async(req, res, key, callback) => {
+exports.uploadLabelDataToS3 = async(req, res, key, callback) => {
     const upload = multer({
         storage: multerS3({
             s3: s3,
@@ -29,6 +29,31 @@ exports.uploadToS3 = async(req, res, key, callback) => {
             },
             key: (req, file, cb) => {
                 cb(null, 'json' + '/' + file.originalname); // file.originalname
+            }
+        })
+    });
+    const singleUpload = upload.single(key);
+    singleUpload(req, res, function(err) {
+        if (err) {
+            callback({error: {title: 'File Upload Error', detail: err.message}});
+        } else {
+            callback(null, { url: req.file.location, key: req.file.key });
+        }
+    });
+};
+
+// upload trainData json file to s3
+exports.uploadTrainDataToS3 = async(req, res, key, callback) => {
+    const upload = multer({
+        storage: multerS3({
+            s3: s3,
+            // acl: 'public-read',
+            bucket: process.env.AWS_BUCKET_NAME,
+            metadata: (req, file, cb) => {
+                cb(null, { fieldName: file.fieldname });
+            },
+            key: (req, file, cb) => {
+                cb(null, 'train' + '/' + file.originalname); // file.originalname
             }
         })
     });

@@ -283,13 +283,16 @@ const ProjectAppBar = (props) => {
                   <Button
                     onClick={handleSubmit}
                     variant='outlined'
-                    sx={{ margin: 1 }}
+                    sx={{ marginLeft: 2 }}
                     endIcon={<ChevronRightIcon />}
                   >
                     Submit
                   </Button>
                 </div>
               ):null}
+              <Button variant="contained" sx={{ marginLeft: 2 }}>
+                Models
+              </Button>
             </Grid>
         </Toolbar>
       </Container>
