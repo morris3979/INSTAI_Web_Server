@@ -282,7 +282,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    getLabelList(id, text) {
+    getLabelList(id) {
       const action = GetLabelList(id)
       dispatch(action)
     },
@@ -290,7 +290,7 @@ const mapDispatchToProps = (dispatch) => {
       const action = UploadJsonFile(file)
       dispatch(action)
     },
-    getDataItem(id, text) {
+    getDataItem(id) {
       const action = GetDataItem(id)
       dispatch(action)
     },

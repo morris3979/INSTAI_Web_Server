@@ -508,7 +508,7 @@ const mapDispatchToProps = (dispatch) => {
           const action = AddLabel(value)
           dispatch(action)
         },
-        getLabelList(id, text) {
+        getLabelList(id) {
           const action = GetLabelList(id)
           dispatch(action)
         },
@@ -520,7 +520,7 @@ const mapDispatchToProps = (dispatch) => {
           const action = DownloadImage(filename)
           dispatch(action)
         },
-        getDataItem(id, text) {
+        getDataItem(id) {
           const action = GetDataItem(id)
           dispatch(action)
         },
@@ -528,7 +528,7 @@ const mapDispatchToProps = (dispatch) => {
           const action = DownloadJSON(filename)
           dispatch(action)
         },
-        getDataList(id, text) {
+        getDataList(id) {
           const action = GetDataList(id)
           dispatch(action)
         },

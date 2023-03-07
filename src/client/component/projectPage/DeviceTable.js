@@ -1077,7 +1077,7 @@ const mapStateToProps = (state) => {
         const action = AddDevice(value)
         dispatch(action)
       },
-      getDeviceList(id, text) {
+      getDeviceList(id) {
         const action = GetDeviceList(id)
         dispatch(action)
       },

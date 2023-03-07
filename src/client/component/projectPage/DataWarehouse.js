@@ -705,11 +705,11 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
     return {
-      getDataList(id, text) {
+      getDataList(id) {
         const action = GetDataList(id)
         dispatch(action)
       },
-      getDataItem(id, text) {
+      getDataItem(id) {
         const action = GetDataItem(id)
         dispatch(action)
       },

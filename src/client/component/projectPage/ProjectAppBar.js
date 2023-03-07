@@ -391,7 +391,7 @@ const mapDispatchToProps = (dispatch) => {
       const action = LogoutData()
       dispatch(action)
     },
-    getProjectList(id, text) {
+    getProjectList(id) {
       const action = GetProjectList(id)
       dispatch(action)
     },
@@ -399,15 +399,15 @@ const mapDispatchToProps = (dispatch) => {
       const action = PatchProjectItem(id, data)
       dispatch(action)
     },
-    getProjectItem(id, text) {
+    getProjectItem(id) {
       const action = GetProjectItem(id)
       dispatch(action)
     },
-    getDataList(id, text) {
+    getDataList(id) {
       const action = GetDataList(id)
       dispatch(action)
     },
-    getLabelList(id, text) {
+    getLabelList(id) {
       const action = GetLabelList(id)
       dispatch(action)
     },

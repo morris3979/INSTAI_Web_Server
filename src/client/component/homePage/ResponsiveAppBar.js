@@ -142,10 +142,7 @@ const ResponsiveAppBar = (props) => {
                 </MenuItem>
                 <Divider />
                 <Typography sx={{ fontWeight: 'bold', marginLeft: 2, color: 'grey' }}>
-                  {projectList.id != undefined
-                  ? projectList.organization.toUpperCase()
-                  : []
-                  }
+                  {projectList?.organization?.toUpperCase()}
                 </Typography>
                 <MenuItem onClick={onInvitePeople}>
                   <ListItemIcon>

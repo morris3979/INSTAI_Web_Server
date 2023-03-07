@@ -40,7 +40,7 @@ const InvitePeopleTable = (props) => {
   const [ searchName, setSearchName] = useState('')
   const [ input, setInput ] = useState({
     email: '',
-    organizationId: projectList.id
+    organizationId: organizationImport
   })
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);

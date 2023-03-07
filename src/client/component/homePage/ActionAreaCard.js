@@ -79,225 +79,220 @@ const ActionAreaCard = (props) => {
     }))
   }
 
+  const filterProjectList = projectList.Projects.filter((e) => {
+    return e.type.includes(searchName) || e.project.includes(searchName) || e.User.username.includes(searchName)
+  })
 
-  if(projectList.id) {
-    const filterProjectList = projectList.Projects.filter((e) => {
-      return e.type.includes(searchName) || e.project.includes(searchName) || e.User.username.includes(searchName)
-    })
-
-    return (
-      <div style={{ marginTop: 20, marginBottom: 40 }}>
-        <div style={{ marginBottom: 10, display: 'flex', justifyContent:'space-between', alignItems: 'center', width: '90vw' }}>
-          <div style={{ float: 'left' }}>
-            <Typography variant="h5" gutterBottom color={'white'} sx={{fontFamily: 'monospace', fontWeight: 'bold'}}>
-              {`Welcome, ${userInformation.username}`}
-            </Typography>
-          </div>
-          <div style={{ float: 'right' }}>
-            <Button variant="contained" onClick={handleClickOpen}>Create Project</Button>
-          </div>
+  return (
+    <div style={{ marginTop: 20, marginBottom: 40 }}>
+      <div style={{ marginBottom: 10, display: 'flex', justifyContent:'space-between', alignItems: 'center', width: '90vw' }}>
+        <div style={{ float: 'left' }}>
+          <Typography variant="h5" gutterBottom color={'white'} sx={{fontFamily: 'monospace', fontWeight: 'bold'}}>
+            {`Welcome, ${userInformation.username}`}
+          </Typography>
         </div>
-        <div style={{ marginBottom: 5, display: 'flex', justifyContent:'right', width: '90vw' }}>
+        <div style={{ float: 'right' }}>
+          <Button variant="contained" onClick={handleClickOpen}>Create Project</Button>
+        </div>
+      </div>
+      <div style={{ marginBottom: 5, display: 'flex', justifyContent:'right', width: '90vw' }}>
+        <TextField
+          focused
+          id="outlined-start-adornment"
+          label="Search"
+          size='small'
+          color='info'
+          onChange={handleChange}
+          sx={{ width: 400 }}
+          placeholder='by project name, project type, or creator'
+          InputProps={{
+            style: { color: 'white' },
+            endAdornment: <SearchIcon style={{ color: 'white' }} />,
+          }}
+        />
+      </div>
+      <div style={{ marginBottom: 10, display: 'flex', justifyContent:'left', alignItems: 'center', width: '90vw' }}>
+        <div style={{ float: 'left' }}>
+          <Typography variant="h6" gutterBottom color={'white'} sx={{fontWeight: 'bold'}}>
+            All Projects
+          </Typography>
+        </div>
+      </div>
+      {projectList.Projects.length === 0
+      ? <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
+          <CardActionArea>
+            <CardContent>
+              <div style={{ display: 'flex' }}>
+                <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
+                  <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
+                    Object Detection
+                  </Typography>
+                </Box>
+              </div>
+              <Typography gutterBottom variant="h5" component="div">
+                Sample Project
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Created by {userInformation.username}
+              </Typography>
+              <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                style={{ marginTop: 60, justifyContent: 'space-between' }}
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Last opened Jan 01, 2023
+                </Typography>
+                <PublicIcon />
+              </Grid>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      : <Box sx={{ flexGrow: 1 }}>
+          <Grid container maxWidth='90vw' spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 6, md: 16 }}>
+            {searchName.length == 0
+            ? projectList.Projects?.map((value, key) => {
+              return(
+                <Grid item xs={2} sm={6} md={4} key={key}>
+                  <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
+                    <CardActionArea
+                      key={key}
+                      onClick={() => {
+                        projectImport(value.id)
+                        setTimeout(() => {
+                          navigate('/Project/Overview')
+                        }, 500)
+                      }}
+                    >
+                      <CardContent>
+                        <div style={{ display: 'flex' }}>
+                          <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
+                            <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
+                              {value.type}
+                            </Typography>
+                          </Box>
+                        </div>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {value.project}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Created by {value.User.username}
+                        </Typography>
+                        <Grid
+                          container
+                          direction="row"
+                          justifyContent="center"
+                          alignItems="center"
+                          style={{ marginTop: 60, justifyContent: 'space-between' }}
+                        >
+                        <Typography variant="body2" color="text.secondary">
+                          Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
+                        </Typography>
+                          {value.accessAuth ? <PublicIcon style={{ color: 'grey' }} /> : <LockIcon style={{ color: 'grey' }} />}
+                        </Grid>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              )})
+            : filterProjectList?.map((value, key) => {
+              return(
+                <Grid item xs={2} sm={6} md={4} key={key}>
+                  <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
+                    <CardActionArea
+                      key={key}
+                      onClick={() => {
+                        projectImport(value.id)
+                        setTimeout(() => {
+                          navigate('/Project/Overview')
+                        }, 500)
+                      }}
+                    >
+                      <CardContent>
+                        <div style={{ display: 'flex' }}>
+                          <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
+                            <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
+                              {value.type}
+                            </Typography>
+                          </Box>
+                        </div>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {value.project}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Created by {value.User.username}
+                        </Typography>
+                        <Grid
+                          container
+                          direction="row"
+                          justifyContent="center"
+                          alignItems="center"
+                          style={{ marginTop: 60, justifyContent: 'space-between' }}
+                        >
+                        <Typography variant="body2" color="text.secondary">
+                          Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
+                        </Typography>
+                          {value.accessAuth ? <PublicIcon style={{ color: 'grey' }} /> : <LockIcon style={{ color: 'grey' }} />}
+                        </Grid>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              )})
+            }
+          </Grid>
+        </Box>
+      }
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>New Project</DialogContent>
+        <DialogTitle style={{ backgroundColor: '#444950' }}>
+        <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+        >
           <TextField
             focused
             id="outlined-start-adornment"
-            label="Search"
+            label="Project"
+            name='project'
             size='small'
             color='info'
-            onChange={handleChange}
-            sx={{ width: 400 }}
-            placeholder='by project name, project type, or creator'
+            sx={{ width: 300 }}
+            placeholder='Project Name'
+            defaultValue='New Project'
             InputProps={{
-              style: { color: 'white' },
-              endAdornment: <SearchIcon style={{ color: 'white' }} />,
+              style: { color: 'white' }
             }}
+            onChange={onChangeProject}
           />
-        </div>
-        <div style={{ marginBottom: 10, display: 'flex', justifyContent:'left', alignItems: 'center', width: '90vw' }}>
-          <div style={{ float: 'left' }}>
-            <Typography variant="h6" gutterBottom color={'white'} sx={{fontWeight: 'bold'}}>
-              All Projects
-            </Typography>
-          </div>
-        </div>
-        {projectList.Projects.length === 0
-        ? <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
-            <CardActionArea>
-              <CardContent>
-                <div style={{ display: 'flex' }}>
-                  <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
-                    <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
-                      Object Detection
-                    </Typography>
-                  </Box>
-                </div>
-                <Typography gutterBottom variant="h5" component="div">
-                  Sample Project
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Created by {userInformation.username}
-                </Typography>
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  style={{ marginTop: 60, justifyContent: 'space-between' }}
-                >
-                  <Typography variant="body2" color="text.secondary">
-                    Last opened Jan 01, 2023
-                  </Typography>
-                  <PublicIcon />
-                </Grid>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        : <Box sx={{ flexGrow: 1 }}>
-            <Grid container maxWidth='90vw' spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 6, md: 16 }}>
-              {searchName.length == 0
-              ? projectList.Projects?.map((value, key) => {
-                return(
-                  <Grid item xs={2} sm={6} md={4} key={key}>
-                    <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
-                      <CardActionArea
-                        key={key}
-                        onClick={() => {
-                          projectImport(value.id)
-                          setTimeout(() => {
-                            navigate('/Project/Overview')
-                          }, 500)
-                        }}
-                      >
-                        <CardContent>
-                          <div style={{ display: 'flex' }}>
-                            <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
-                              <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
-                                {value.type}
-                              </Typography>
-                            </Box>
-                          </div>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {value.project}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Created by {value.User.username}
-                          </Typography>
-                          <Grid
-                            container
-                            direction="row"
-                            justifyContent="center"
-                            alignItems="center"
-                            style={{ marginTop: 60, justifyContent: 'space-between' }}
-                          >
-                          <Typography variant="body2" color="text.secondary">
-                            Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
-                          </Typography>
-                            {value.accessAuth ? <PublicIcon style={{ color: 'grey' }} /> : <LockIcon style={{ color: 'grey' }} />}
-                          </Grid>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </Grid>
-                )})
-              : filterProjectList?.map((value, key) => {
-                return(
-                  <Grid item xs={2} sm={6} md={4} key={key}>
-                    <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
-                      <CardActionArea
-                        key={key}
-                        onClick={() => {
-                          projectImport(value.id)
-                          setTimeout(() => {
-                            navigate('/Project/Overview')
-                          }, 500)
-                        }}
-                      >
-                        <CardContent>
-                          <div style={{ display: 'flex' }}>
-                            <Box style={{ backgroundColor: 'grey' }} borderRadius={2}>
-                              <Typography variant="body2" textAlign={'center'} style={{ marginLeft: 10, marginRight: 10, color: 'lightblue' }}>
-                                {value.type}
-                              </Typography>
-                            </Box>
-                          </div>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {value.project}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Created by {value.User.username}
-                          </Typography>
-                          <Grid
-                            container
-                            direction="row"
-                            justifyContent="center"
-                            alignItems="center"
-                            style={{ marginTop: 60, justifyContent: 'space-between' }}
-                          >
-                          <Typography variant="body2" color="text.secondary">
-                            Last updated {value.updatedAt.slice(0, -5).replace('T', ' ')}
-                          </Typography>
-                            {value.accessAuth ? <PublicIcon style={{ color: 'grey' }} /> : <LockIcon style={{ color: 'grey' }} />}
-                          </Grid>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </Grid>
-                )})
-              }
-            </Grid>
-          </Box>
-        }
-        <Dialog open={open} onClose={handleClose}>
-          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>New Project</DialogContent>
-          <DialogTitle style={{ backgroundColor: '#444950' }}>
-          <Grid
-              container
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-          >
-            <TextField
-              focused
-              id="outlined-start-adornment"
-              label="Project"
-              name='project'
-              size='small'
-              color='info'
-              sx={{ width: 300 }}
-              placeholder='Project Name'
-              defaultValue='New Project'
-              InputProps={{
-                style: { color: 'white' }
-              }}
-              onChange={onChangeProject}
-            />
-            <TextField
-              focused
-              id="outlined-start-adornment"
-              label="Type"
-              name='type'
-              size='small'
-              color='info'
-              sx={{ width: 300 }}
-              defaultValue='Object Detection'
-              InputProps={{
-                style: { color: 'white' }
-              }}
-              style={{ marginTop: 20 }}
-              onChange={onChangeProject}
-            />
-          </Grid>
-          </DialogTitle>
-          <DialogActions style={{ backgroundColor: '#444950' }}>
-            <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
-            <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>Create</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    )
-  } else {
-    return
-  }
+          <TextField
+            focused
+            id="outlined-start-adornment"
+            label="Type"
+            name='type'
+            size='small'
+            color='info'
+            sx={{ width: 300 }}
+            defaultValue='Object Detection'
+            InputProps={{
+              style: { color: 'white' }
+            }}
+            style={{ marginTop: 20 }}
+            onChange={onChangeProject}
+          />
+        </Grid>
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950' }}>
+          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>Create</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => {
@@ -313,7 +308,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   //dispatch指store.dispatch這個方法
   return {
-    getProjectList(id, text) {
+    getProjectList(id) {
       const action = GetProjectList(id)
       dispatch(action)
     },
@@ -321,27 +316,27 @@ const mapDispatchToProps = (dispatch) => {
       const action = CreateProject(value)
       dispatch(action)
     },
-    getDataList(id, text) {
+    getDataList(id) {
       const action = GetDataList(id)
       dispatch(action)
     },
-    getDeviceList(id, text) {
+    getDeviceList(id) {
       const action = GetDeviceList(id)
       dispatch(action)
     },
-    getLabelList(id, text) {
+    getLabelList(id) {
       const action = GetLabelList(id)
       dispatch(action)
     },
-    getModelList(id, text) {
+    getModelList(id) {
       const action = GetModelList(id)
       dispatch(action)
     },
-    getProjectItem(id, text) {
+    getProjectItem(id) {
       const action = GetProjectItem(id)
       dispatch(action)
     },
-    projectImport(id, text) {
+    projectImport(id) {
       const action = ProjectImport(id)
       dispatch(action)
     },
