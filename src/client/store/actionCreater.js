@@ -104,24 +104,6 @@ export const LogoutData = () => {
   })
 }
 
-export const GetLoginUser = (id) => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get(`/api/user/${id}`)
-        const action = DeliverData(response.data, User_Information)
-        dispatch(action)
-      } catch (e) {
-        alert(e.response.data.message)
-        location.reload()
-        return
-      }
-    }
-  )
-}
-
 export const RegisterFormData = (data) => {
   return (
     async (dispatch) => {
@@ -159,6 +141,24 @@ export const CreateNewOrganization = (data, id) => {
         }
       } catch (e) {
         alert(e.response.data.message)
+      }
+    }
+  )
+}
+
+export const GetLoginUser = (id) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/user/${id}`)
+        const action = DeliverData(response.data, User_Information)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
       }
     }
   )
@@ -254,6 +254,60 @@ export const GetModelList = (id) => {
   )
 }
 
+export const GetProjectItem = (id) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/project/${id}`)
+        const action = DeliverData(response.data, Project_Item)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const GetOrganizationMembers = (id) => {
+  return (
+    async (dispatch) => {
+      const action = TableStatus(true)
+      dispatch(action)
+      try {
+        const response = await axios.get(`/api/organization/${id}/users`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Members_List)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
+export const GetDataItem = (id) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.get(`/api/data/${id}`)
+        // console.log(response.data)
+        const action = DeliverData(response.data, Data_Item)
+        dispatch(action)
+      } catch (e) {
+        alert(e.response.data.message)
+        location.reload()
+        return
+      }
+    }
+  )
+}
+
 export const CreateProject = (data) => {
   return (
     async (dispatch) => {
@@ -283,24 +337,6 @@ export const PatchProjectItem = (id, data) => {
         }
       } catch (e) {
         alert(e.response.data.message)
-      }
-    }
-  )
-}
-
-export const GetProjectItem = (id) => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get(`/api/project/${id}`)
-        const action = DeliverData(response.data, Project_Item)
-        dispatch(action)
-      } catch (e) {
-        alert(e.response.data.message)
-        location.reload()
-        return
       }
     }
   )
@@ -340,25 +376,6 @@ export const PatchDataItem = (id, data) => {
         }
       } catch (e) {
         alert(e.response.data.message)
-      }
-    }
-  )
-}
-
-export const GetOrganizationMembers = (id) => {
-  return (
-    async (dispatch) => {
-      const action = TableStatus(true)
-      dispatch(action)
-      try {
-        const response = await axios.get(`/api/organization/${id}/users`)
-        // console.log(response.data)
-        const action = DeliverData(response.data, Members_List)
-        dispatch(action)
-      } catch (e) {
-        alert(e.response.data.message)
-        location.reload()
-        return
       }
     }
   )
@@ -407,23 +424,6 @@ export const PatchDeviceData = (id, data) => {
         }
       } catch (e) {
         alert(e.response.data.message)
-      }
-    }
-  )
-}
-
-export const GetDataItem = (id) => {
-  return (
-    async (dispatch) => {
-      try {
-        const response = await axios.get(`/api/data/${id}`)
-        // console.log(response.data)
-        const action = DeliverData(response.data, Data_Item)
-        dispatch(action)
-      } catch (e) {
-        alert(e.response.data.message)
-        location.reload()
-        return
       }
     }
   )
