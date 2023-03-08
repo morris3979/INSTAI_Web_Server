@@ -79,7 +79,7 @@ const ActionAreaCard = (props) => {
     }))
   }
 
-  const filterProjectList = projectList.Projects.filter((e) => {
+  const filterProjectList = projectList.Projects?.filter((e) => {
     return e.type.includes(searchName) || e.project.includes(searchName) || e.User.username.includes(searchName)
   })
 
