@@ -232,7 +232,13 @@ exports.findModel = (req, res) => {
           id: req.params.id
       },
       include: [{
-          model: Model
+          model: Model,
+          include: [{
+              model: User,
+              attributes: {
+                exclude: ['password', 'admin', 'user', 'token']
+              },
+          }]
       }],
       attributes: {
           exclude: ['createdAt', 'updatedAt', 'deletedAt']

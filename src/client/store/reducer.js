@@ -24,7 +24,7 @@ const defaultState = {
   dataItem: {},
   labelList: {},
   projectItem: {},
-  ModelList: {},
+  modelList: {},
   userImport: {},
   organizationImport: {},
   projectImport: {},

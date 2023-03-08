@@ -15,6 +15,7 @@ import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ScienceIcon from '@mui/icons-material/Science';
 import DvrIcon from '@mui/icons-material/Dvr';
+import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 
 const drawerWidth = '120';
 
@@ -107,7 +108,7 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <ScienceIcon style={{ color: 'white' }} />
+                                    <ModelTrainingIcon style={{ color: 'white' }} />
                                     <ListItemText
                                         primary={'Model'}
                                         style={{

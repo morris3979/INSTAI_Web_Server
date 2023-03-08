@@ -1,10 +1,11 @@
 const db = require('../database');
 const Model = db.Model;
 const Project = db.Project;
+const User = db.User;
 
 // Create and Save a new Model
 exports.create = async (req, res) => {
-    const {modelName, ProjectId} = req.body;
+    const {modelName, status, ProjectId, UserId} = req.body;
 
     // Validate request
     if (!modelName) {
@@ -22,11 +23,22 @@ exports.create = async (req, res) => {
       })
       return
     }
+    const findUser = await User.findOne({
+      where: { id: UserId },
+    })
+    if (!findUser) {
+      res.status(400).send({
+        message: "User not existed, please create a new User!"
+      })
+      return
+    }
 
     // Create a Model
     const newModel = {
       modelName: modelName,
-      ProjectId: ProjectId
+      status: status,
+      ProjectId: ProjectId,
+      UserId: UserId
     };
 
     // Save Model in the database
