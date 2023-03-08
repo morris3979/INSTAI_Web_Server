@@ -13,6 +13,7 @@ const HomePage = lazy(() => import('./page/homePage'))
 const ProjectOverviewPage = lazy(() => import('./page/project/overviewPage'))
 const ProjectDataPage = lazy(() => import('./page/project/dataPage'))
 const ProjectDevicePage = lazy(() => import('./page/project/devicePage'))
+const ProjectModelPage = lazy(() => import('./page/project/modelPage'))
 const ProjectDetectorPage = lazy(() => import('./page/project/detectorPage'))
 const AnnotationPage = lazy(() => import('./page/annotationPage'))
 const InitialPage = lazy(() => import('./page/initialPage'))
@@ -40,6 +41,7 @@ const App = (props) => {
           <Route path='/Project/Overview' element={<ProjectOverviewPage/>} />
           <Route path='/Project/Data' element={<ProjectDataPage/>} />
           <Route path='/Project/Device' element={<ProjectDevicePage/>} />
+          <Route path='/Project/Model' element={<ProjectModelPage/>} />
           <Route path='/Project/Detector' element={<ProjectDetectorPage/>} />
           <Route path='/Annotation' element={<AnnotationPage/>} />
           <Route path='/Initial' element={<InitialPage/>} />
