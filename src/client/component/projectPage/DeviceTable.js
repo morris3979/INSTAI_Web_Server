@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { io } from 'socket.io-client'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -34,14 +35,15 @@ import {
   AddDevice,
   GetDeviceList,
   PatchDeviceData,
-  PostDeviceMQTT
+  PostDeviceMQTT,
+  ReceiveDeviceMessage
 } from '../../store/actionCreater'
 
 const columns = [
   { id: 'serialNumber', label: 'SerialNumber', minWidth: '20vw' },
   { id: 'deviceName', label: 'Device Name', minWidth: '20vw' },
   { id: 'command', label: 'Command', minWidth: '20vw' },
-  { id: 'message', label: 'Response', minWidth: '20vw' }
+  { id: 'message', label: 'Message', minWidth: '20vw' }
 ]
 
 const DeviceTable = (props) => {
@@ -51,12 +53,25 @@ const DeviceTable = (props) => {
     getDeviceList,
     patchDeviceData,
     projectImport,
-    postDeviceMQTT
+    postDeviceMQTT,
+    receiveDeviceMessage
   } = props
 
   useEffect(() => {
-    // console.log('deviceList', deviceList)
     getDeviceList(projectImport)
+    const HTTP = ":8080";
+    const httpSocket = io(HTTP)
+    httpSocket.on('connect', () => console.log(httpSocket.id))
+    httpSocket.on('connect_error', () => {
+      setTimeout(() => httpSocket.connect(), 5000)
+    })
+    httpSocket.on('device', (data) => {
+      receiveDeviceMessage(data.serialNumber, { message: data.message })
+      console.log(data)
+    })
+    httpSocket.on('disconnect', () => {
+      console.log('http socket disconnected ...')
+    })
   },[])
 
   const [ open, setOpen ] = useState(false)
@@ -1088,7 +1103,11 @@ const mapStateToProps = (state) => {
       postDeviceMQTT(data) {
         const action = PostDeviceMQTT(data)
         dispatch(action)
-      }
+      },
+      receiveDeviceMessage(id, data) {
+        const action = ReceiveDeviceMessage(id, data)
+        dispatch(action)
+      },
     }
   }
 

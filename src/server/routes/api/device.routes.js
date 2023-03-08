@@ -8,4 +8,7 @@ deviceRouter.post("/", Device.create);
 // Update a Device with id
 deviceRouter.patch("/:id", Device.update);
 
+// Update a Device with serialNumber
+deviceRouter.patch("/message/:serialNumber", Device.receive);
+
 module.exports = [ deviceRouter ];

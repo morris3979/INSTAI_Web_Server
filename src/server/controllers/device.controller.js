@@ -76,3 +76,28 @@ exports.update = (req, res) => {
       });
     });
 };
+
+// Update a Device by the serialNumber in the request
+exports.receive = (req, res) => {
+  const serialNumber = req.params.serialNumber;
+
+  Device.update(req.body, {
+    where: { serialNumber: serialNumber }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Device was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Device with serialNumber=${serialNumber}. Maybe Device was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Device with serialNumber=" + serialNumber
+      });
+    });
+};
