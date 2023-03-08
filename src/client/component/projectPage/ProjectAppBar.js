@@ -18,10 +18,7 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
   LogoutData,
   GetProjectList,
@@ -295,9 +292,6 @@ const ProjectAppBar = (props) => {
                   </Button>
                 </div>
               ):null}
-              <Button variant="contained" sx={{ marginLeft: 2 }}>
-                Models
-              </Button>
             </Grid>
         </Toolbar>
       </Container>

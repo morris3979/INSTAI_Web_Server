@@ -22,7 +22,7 @@ const ProjectDetectorPage = () => {
         }}
       >
         <Helmet>
-          <title>Device - InstAI</title>
+          <title>Detector - InstAI</title>
         </Helmet>
         <ResponsiveAppBar />
         <ProjectAppBar />

@@ -250,8 +250,7 @@ exports.findModel = (req, res) => {
       // }
 
       const replacer = (key, value) => {
-          if (key == 'createdAt') return undefined
-          else if (key == 'updatedAt') return undefined
+          if (key == 'updatedAt') return undefined
           else if (key == 'deletedAt') return undefined
           else if (key == 'type') return undefined
           else if (key == 'accessAuth') return undefined

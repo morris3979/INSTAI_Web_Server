@@ -14,41 +14,30 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slider from '@mui/material/Slider';
-import Switch from '@mui/material/Switch';
-import MenuItem from '@mui/material/MenuItem';
 import { Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import {
-  AddDevice,
-  GetDeviceList,
-  PatchDeviceData,
-  PostDeviceMQTT
+  PostDeviceMQTT,
+  GetModelList
 } from '../../store/actionCreater'
 
 const columns = [
   { id: 'modelName', label: 'Model Name', minWidth: '20vw' },
   { id: 'status', label: 'Status', minWidth: '20vw' },
-  { id: 'user', label: 'Trained By', minWidth: '20vw' },
-  { id: 'create_at', label: 'Trained On', minWidth: '20vw' }
+  { id: 'User.username', label: 'Trained By', minWidth: '17.5vw' },
+  { id: 'createdAt', label: 'Trained On', minWidth: '17.5vw' }
 ]
 
 const ModelTable = (props) => {
   const {
-    deviceList,
-    getDeviceList,
     projectImport,
-    modelList
+    modelList,
+    getModelList
   } = props
 
   useEffect(() => {
-    // console.log('deviceList', deviceList)
-    getDeviceList(projectImport)
+    getModelList(projectImport)
   },[])
 
   const [ searchName, setSearchName] = useState('')
@@ -68,15 +57,17 @@ const ModelTable = (props) => {
     setSearchName(e.target.value)
   }
 
-  const filterDeviceList = modelList.Models?.filter((e) => {
-    return e.serialNumber.includes(searchName) || e.deviceName.includes(searchName)
+  const filterModelList = modelList.Models?.filter((e) => {
+    return e.modelName.includes(searchName)
   })
 
   const actionBtn = (row) => {
     return (
         <Button
-          aria-label='send'
+          variant='contained'
+          aria-label='retrain'
           startIcon={<RepeatIcon />}
+          style={{ width: 120 }}
         >
           retrain
         </Button>
@@ -100,7 +91,7 @@ const ModelTable = (props) => {
             container
             minWidth='90vw'
             direction="row"
-            sx={{ marginTop: 4, marginBottom: 3, justifyContent: 'space-between' }}
+            sx={{ marginTop: 4, marginBottom: 2, justifyContent: 'space-between' }}
           >
             <Typography
               noWrap
@@ -109,16 +100,6 @@ const ModelTable = (props) => {
             >
               Model
             </Typography>
-          </Grid>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent:'flex-end',
-              alignItems: 'center',
-              width: '90vw',
-              marginLeft: 35
-            }}
-          >
             <TextField
                 focused
                 id="outlined-start-adornment"
@@ -126,14 +107,14 @@ const ModelTable = (props) => {
                 size='small'
                 color='info'
                 onChange={handleChangeText}
-                sx={{ width: 400 }}
-                placeholder='by model name or user'
+                sx={{ width: 400, marginRight: 5 }}
+                placeholder='by model name'
                 InputProps={{
                     style: { color: 'white' },
                     endAdornment: <SearchIcon style={{ color: 'white' }} />,
                 }}
             />
-          </div>
+          </Grid>
           <div>
             <Container
               style={{
@@ -145,7 +126,7 @@ const ModelTable = (props) => {
                 justifyContent: 'center'
               }}
             >
-              <TableContainer sx={{ minHeight: '50vh', minWidth: '90vw', marginTop: 3 }}>
+              <TableContainer sx={{ minHeight: '60vh', minWidth: '90vw', marginTop: 2 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead
                     sx={{
@@ -159,7 +140,7 @@ const ModelTable = (props) => {
                       <TableCell
                         key={'action'}
                         style={{
-                          minWidth: '10vw',
+                          minWidth: '15vw',
                           fontSize: '14pt'
                         }}
                       >
@@ -189,22 +170,22 @@ const ModelTable = (props) => {
                             <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
                               {actionBtn(row)}
                             </TableCell>
-                            <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.serialNumber}
+                            <TableCell key={'modelName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.modelName}
                             </TableCell>
-                            <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.deviceName}
+                            <TableCell key={'status'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.status}
                             </TableCell>
-                            <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.command}
+                            <TableCell key={'User.username'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.User.username}
                             </TableCell>
-                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.message}
+                            <TableCell key={'createdAt'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.createdAt?.slice(0, -5).replace('T', ' ')}
                             </TableCell>
                           </TableRow>
                         )
                       })
-                    : filterDeviceList
+                    : filterModelList
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => {
                         return (
@@ -212,17 +193,17 @@ const ModelTable = (props) => {
                             <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
                               {actionBtn(row)}
                             </TableCell>
-                            <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.serialNumber}
+                            <TableCell key={'modelName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.modelName}
                             </TableCell>
-                            <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.deviceName}
+                            <TableCell key={'status'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.status}
                             </TableCell>
-                            <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.command}
+                            <TableCell key={'User.username'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.User.username}
                             </TableCell>
-                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.message}
+                            <TableCell key={'createdAt'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.createdAt?.slice(0, -5).replace('T', ' ')}
                             </TableCell>
                           </TableRow>
                         )
@@ -250,7 +231,6 @@ const ModelTable = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
-      deviceList: state.deviceList,
       projectImport: state.projectImport,
       modelList: state.modelList,
     }
@@ -259,22 +239,14 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
     return {
-      addDevice(value) {
-        const action = AddDevice(value)
-        dispatch(action)
-      },
-      getDeviceList(id) {
-        const action = GetDeviceList(id)
-        dispatch(action)
-      },
-      patchDeviceData(id, data) {
-        const action = PatchDeviceData(id, data)
-        dispatch(action)
-      },
       postDeviceMQTT(data) {
         const action = PostDeviceMQTT(data)
         dispatch(action)
-      }
+      },
+      getModelList(id) {
+        const action = GetModelList(id)
+        dispatch(action)
+      },
     }
   }
 
