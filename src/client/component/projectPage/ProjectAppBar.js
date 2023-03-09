@@ -27,7 +27,8 @@ import {
   GetDataList,
   GetLabelList,
   UploadTrainData,
-  PostTrainData
+  PostTrainData,
+  PostAIServerMQTT
 } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
@@ -47,7 +48,8 @@ const ProjectAppBar = (props) => {
     getLabelList,
     uploadTrainData,
     postTrainData,
-    s3Train
+    s3Train,
+    postAIServerMQTT
   } = props
 
   const [ openEditProject, setOpenEditProject ] = useState(false)
@@ -178,17 +180,18 @@ const ProjectAppBar = (props) => {
         now.getHours().toString().padStart(2, '0') +
         now.getMinutes().toString().padStart(2, '0') +
         now.getSeconds().toString().padStart(2, '0')
+    const modelName = 'Model_V1.' + fileVersion
     const trainJsonData = JSON.stringify({
       "project": projectItem.project,
-      "filename": 'Model V1.'+fileVersion,
+      "filename": modelName,
       "labels": labelList.Labels?.map((value) => {return value.labelClass}),
       "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
       "timestamp": localTime
     }, replacer, 2)
     setTrainData(trainJsonData)
-    setTrainDataName('Model V1.'+fileVersion)
+    setTrainDataName(modelName)
     const jsonData = JSON.parse(trainJsonData)
-    const fileName = 'Model V1.'+fileVersion + '.json'
+    const fileName = modelName + '.json'
     const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
     uploadTrainData(file)
     setOpenTrainData(true)
@@ -196,12 +199,21 @@ const ProjectAppBar = (props) => {
 
   const handleSendTrainData = () => {
     setOpenTrainData(false)
-    const data = {modelName:trainDataName, ProjectId: projectImport, UserId: userImport, status: 'in progress'}
-    console.log(data)
+    const data = {
+      modelName: trainDataName,
+      ProjectId: projectImport,
+      UserId: userImport,
+      status: 'in progress'
+    }
+    const sendData = {
+      "project": projectItem.project,
+      "modelName": trainDataName
+    }
+    // console.log(data)
     postTrainData(data)
+    postAIServerMQTT(sendData)
     setTimeout(() => {location.reload()}, 500)
   }
-
 
   const handleCloseTrainData = () => {
     setOpenTrainData(false)
@@ -439,6 +451,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     postTrainData(data) {
       const action = PostTrainData(data)
+      dispatch(action)
+    },
+    postAIServerMQTT(data) {
+      const action = PostAIServerMQTT(data)
       dispatch(action)
     }
   }

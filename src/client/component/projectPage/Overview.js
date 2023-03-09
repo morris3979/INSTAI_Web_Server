@@ -345,7 +345,7 @@ const Overview = (props) => {
                                         display: 'grid',
                                         columnGap: 3,
                                         rowGap: 3,
-                                        gridTemplateColumns: 'repeat(3, 1fr)',
+                                        gridTemplateColumns: 'repeat(2, 1fr)',
                                     }}
                                 >
                                     {modelList?.Models?.map((Models) => {

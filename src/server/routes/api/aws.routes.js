@@ -95,14 +95,15 @@ awsRouter.post("/iot/publish", async(req, res) => {
 
 // AWS IOT MQTT publish message for AI Server
 awsRouter.post("/iot/publish/AIServer", async(req, res) => {
-    const { command } = req.body;
+    const { project, modelName } = req.body;
     const today = new Date();
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     const dateTime = date + ' ' + time;
     const toServer = {
-        server: 'AIServer',
-        command: command,
+        action: 'Train',
+        project: project,
+        modelName: modelName,
         dateTime
     }
     try {

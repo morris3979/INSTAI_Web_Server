@@ -635,9 +635,7 @@ export const DownloadJSON = (filename) => {
 
 
 export const PostDeviceMQTT = (data) => {
-  const sendData = {
-    'command': data.command
-  }
+  const sendData = { 'command': data.command }
   return (
     async (dispatch) => {
       try {
@@ -651,6 +649,24 @@ export const PostDeviceMQTT = (data) => {
         setTimeout(() => {
           location.reload()
         }, 300)
+      } catch (error) {
+        alert(error)
+      }
+    }
+  )
+}
+
+
+export const PostAIServerMQTT = (data) => {
+  const sendData = {
+    'project': data.project,
+    'modelName': data.modelName
+  }
+  return (
+    async (dispatch) => {
+      try {
+        await axios.post('/api/aws/iot/publish/AIServer', sendData)
+        alert(`Packet sent to AIServer successfully!`)
       } catch (error) {
         alert(error)
       }

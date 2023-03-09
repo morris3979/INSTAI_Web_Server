@@ -18,8 +18,8 @@ import { Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import {
-  PostDeviceMQTT,
-  GetModelList
+  GetModelList,
+  PostAIServerMQTT
 } from '../../store/actionCreater'
 
 const columns = [
@@ -33,7 +33,8 @@ const ModelTable = (props) => {
   const {
     projectImport,
     modelList,
-    getModelList
+    getModelList,
+    postAIServerMQTT
   } = props
 
   useEffect(() => {
@@ -61,6 +62,10 @@ const ModelTable = (props) => {
     return e.modelName.includes(searchName)
   })
 
+  const onRetrain = (row) => {
+    console.log('row', row)
+  }
+
   const actionBtn = (row) => {
     return (
         <Button
@@ -68,6 +73,15 @@ const ModelTable = (props) => {
           aria-label='retrain'
           startIcon={<RepeatIcon />}
           style={{ width: 120 }}
+          onClick={() => onRetrain(row)}
+          sx={{
+            "&:disabled": {
+              border: 'thin solid grey',
+              color: 'grey',
+              opacity: .5,
+            }
+          }}
+          disabled={row.available === false}
         >
           retrain
         </Button>
@@ -239,12 +253,12 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
     return {
-      postDeviceMQTT(data) {
-        const action = PostDeviceMQTT(data)
-        dispatch(action)
-      },
       getModelList(id) {
         const action = GetModelList(id)
+        dispatch(action)
+      },
+      postAIServerMQTT(data) {
+        const action = PostAIServerMQTT(data)
         dispatch(action)
       },
     }
