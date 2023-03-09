@@ -60,7 +60,9 @@ const DeviceTable = (props) => {
   useEffect(() => {
     getDeviceList(projectImport)
     const HTTP = ":8080";
+    const HTTPS = ":8443";
     const httpSocket = io(HTTP)
+    const httpsSocket = io(HTTPS)
     httpSocket.on('connect', () => console.log(httpSocket.id))
     httpSocket.on('connect_error', () => {
       setTimeout(() => httpSocket.connect(), 5000)
@@ -71,6 +73,17 @@ const DeviceTable = (props) => {
     })
     httpSocket.on('disconnect', () => {
       console.log('http socket disconnected ...')
+    })
+    httpsSocket.on('connect', () => console.log(httpsSocket.id))
+    httpsSocket.on('connect_error', () => {
+      setTimeout(() => httpsSocket.connect(), 5000)
+    })
+    httpsSocket.on('device', (data) => {
+      receiveDeviceMessage(data.serialNumber, { message: data.message })
+      console.log(data)
+    })
+    httpsSocket.on('disconnect', () => {
+      console.log('https socket disconnected ...')
     })
   },[])
 

@@ -44,7 +44,7 @@ exports.connect = (app) => {
     }
 
     device.on('connect', () => {
-        console.log('=> Connecting to AWS IoT Core!');
+        console.log('=> http connecting to AWS IoT Core!');
         io.to('room').emit('message', 'fetching AI Server message ...')
         device.subscribe('fromAIServer', (err) => {
             if (err) console.log('AWS IoT Core ...err: ', err);
