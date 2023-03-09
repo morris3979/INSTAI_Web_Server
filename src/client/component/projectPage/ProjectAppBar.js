@@ -25,7 +25,9 @@ import {
   PatchProjectItem,
   GetProjectItem,
   GetDataList,
-  GetLabelList
+  GetLabelList,
+  UploadTrainData,
+  PostTrainData
 } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
@@ -37,11 +39,15 @@ const ProjectAppBar = (props) => {
     patchProjectItem,
     getProjectItem,
     dataList,
+    userImport,
     projectImport,
     getDataList,
     labelList,
     organizationImport,
-    getLabelList
+    getLabelList,
+    uploadTrainData,
+    postTrainData,
+    s3Train
   } = props
 
   const [ openEditProject, setOpenEditProject ] = useState(false)
@@ -53,20 +59,9 @@ const ProjectAppBar = (props) => {
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
   const [ openTrainData, setOpenTrainData ] = useState(false)
-
-  var now = new Date()
-  var localTime = now.getFullYear().toString() + '.' +
-      (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
-      now.getDate().toString().padStart(2, '0') + ' ' +
-      now.getHours().toString().padStart(2, '0') + ':' +
-      now.getMinutes().toString().padStart(2, '0') + ':' +
-      now.getSeconds().toString().padStart(2, '0')
-  var fileVersion = (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
-      now.getDate().toString().padStart(2, '0') + '.' +
-      now.getHours().toString().padStart(2, '0') +
-      now.getMinutes().toString().padStart(2, '0') +
-      now.getSeconds().toString().padStart(2, '0')
-
+  const [ trainData, setTrainData ] = useState()
+  const [ trainDataName, setTrainDataName ] = useState()
+  
   const replacer = (key, value) => {
     if (key == 'id') return undefined
     else if (key == 'image') return undefined
@@ -80,14 +75,6 @@ const ProjectAppBar = (props) => {
     else if (key == 'UserId') return undefined
     else return value
   }
-
-  const trainData = JSON.stringify({
-    "project": projectItem.project,
-    "filename": 'Model V1.'+fileVersion,
-    "labels": labelList.Labels?.map((value) => {return value.labelClass}),
-    "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
-    "timestamp": localTime
-  }, replacer, 2)
 
   useEffect(() => {
     dataList
@@ -179,8 +166,42 @@ const ProjectAppBar = (props) => {
   }
 
   const handleSubmit = () => {
+    var now = new Date()
+    var localTime = now.getFullYear().toString() + '.' +
+        (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+        now.getDate().toString().padStart(2, '0') + ' ' +
+        now.getHours().toString().padStart(2, '0') + ':' +
+        now.getMinutes().toString().padStart(2, '0') + ':' +
+        now.getSeconds().toString().padStart(2, '0')
+    var fileVersion = (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+        now.getDate().toString().padStart(2, '0') + '.' +
+        now.getHours().toString().padStart(2, '0') +
+        now.getMinutes().toString().padStart(2, '0') +
+        now.getSeconds().toString().padStart(2, '0')
+    const trainJsonData = JSON.stringify({
+      "project": projectItem.project,
+      "filename": 'Model V1.'+fileVersion,
+      "labels": labelList.Labels?.map((value) => {return value.labelClass}),
+      "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
+      "timestamp": localTime
+    }, replacer, 2)
+    setTrainData(trainJsonData)
+    setTrainDataName('Model V1.'+fileVersion)
+    const jsonData = JSON.parse(trainJsonData)
+    const fileName = 'Model V1.'+fileVersion + '.json'
+    const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
+    uploadTrainData(file)
     setOpenTrainData(true)
   }
+
+  const handleSendTrainData = () => {
+    setOpenTrainData(false)
+    const data = {modelName:trainDataName, ProjectId: projectImport, UserId: userImport, status: 'in progress'}
+    console.log(data)
+    postTrainData(data)
+    setTimeout(() => {location.reload()}, 500)
+  }
+
 
   const handleCloseTrainData = () => {
     setOpenTrainData(false)
@@ -363,7 +384,7 @@ const ProjectAppBar = (props) => {
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
           <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Send</Button>
+          <Button variant="contained" size='small' onClick={handleSendTrainData} style={{marginTop: 10}} disabled={trainDataName+'.json' != s3Train.filename}>Send</Button>
         </DialogActions>
       </Dialog>
     </AppBar>
@@ -378,8 +399,10 @@ const mapStateToProps = (state) => {
     projectItem: state.projectItem,
     dataList: state.dataList,
     labelList: state.labelList,
+    userImport: state.userImport,
     projectImport: state.projectImport,
     organizationImport: state.organizationImport,
+    s3Train: state.s3Train
   }
 }
 
@@ -410,6 +433,14 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetLabelList(id)
       dispatch(action)
     },
+    uploadTrainData(file) {
+      const action = UploadTrainData(file)
+      dispatch(action)
+    },
+    postTrainData(data) {
+      const action = PostTrainData(data)
+      dispatch(action)
+    }
   }
 }
 

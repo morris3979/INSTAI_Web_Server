@@ -6,7 +6,7 @@ import {
   Project_List, Data_List, Members_List,
   Device_List, Label_List, Model_List,
   Data_Item, Project_Item, S3_Image,
-  User_Import, Organization_Import,
+  S3_Train, User_Import, Organization_Import,
   Project_Import, Data_Import
 } from './actionType'
 
@@ -533,9 +533,28 @@ export const UploadJsonFile = (file) => {
   )
 }
 
+export const GetS3TrainData = (filename) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.get(
+          `/api/aws/s3/getFile/train/${filename}`, //AWS
+          { responseType: 'blob' }
+        )
+        if(response.data){
+          const action = DeliverData({filename: filename}, S3_Train)
+          dispatch(action)
+        }
+      } catch (error) {
+        alert(error)
+      }
+    }
+  )
+}
+
 export const UploadTrainData = (file) => {
   return (
-    async () => {
+    async (dispatch) => {
       let formData = new FormData();
       formData.append('file', file)
       return axios.post(
@@ -543,6 +562,10 @@ export const UploadTrainData = (file) => {
       ).then(response => {
         console.log('response', response)
         // JSON responses are automatically parsed.
+        if(response.data){
+          const action = GetS3TrainData(response.data.key.slice(6))
+          dispatch(action)
+        }
       }).catch(e => {
         this.errors.push(e);
       });
