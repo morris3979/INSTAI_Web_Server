@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { io } from 'socket.io-client'
 import Box from '@mui/material/Box';
@@ -57,34 +57,40 @@ const DeviceTable = (props) => {
     receiveDeviceMessage
   } = props
 
+  const mounted = useRef()
+
   useEffect(() => {
-    getDeviceList(projectImport)
-    const HTTP = ":8080";
-    const HTTPS = ":8443";
-    const httpSocket = io(HTTP)
-    const httpsSocket = io(HTTPS)
-    httpSocket.on('connect', () => console.log(httpSocket.id))
-    httpSocket.on('connect_error', () => {
-      setTimeout(() => httpSocket.connect(), 5000)
-    })
-    httpSocket.on('device', (data) => {
-      receiveDeviceMessage(data.serialNumber, { message: data.message })
-      console.log(data)
-    })
-    httpSocket.on('disconnect', () => {
-      console.log('http socket disconnected ...')
-    })
-    httpsSocket.on('connect', () => console.log(httpsSocket.id))
-    httpsSocket.on('connect_error', () => {
-      setTimeout(() => httpsSocket.connect(), 5000)
-    })
-    httpsSocket.on('device', (data) => {
-      receiveDeviceMessage(data.serialNumber, { message: data.message })
-      console.log(data)
-    })
-    httpsSocket.on('disconnect', () => {
-      console.log('https socket disconnected ...')
-    })
+    if(mounted.current === false) {
+      mounted.current = true
+      const HTTP = ":8080";
+      const HTTPS = ":8443";
+      const httpSocket = io(HTTP)
+      const httpsSocket = io(HTTPS)
+      httpSocket.on('connect', () => console.log(httpSocket.id))
+      httpSocket.on('connect_error', () => {
+        setTimeout(() => httpSocket.connect(), 5000)
+      })
+      httpSocket.on('device', (data) => {
+        getDeviceList(projectImport)
+        // console.log(data)
+      })
+      httpSocket.on('disconnect', () => {
+        console.log('http socket disconnected ...')
+      })
+      httpsSocket.on('connect', () => console.log(httpsSocket.id))
+      httpsSocket.on('connect_error', () => {
+        setTimeout(() => httpsSocket.connect(), 5000)
+      })
+      httpsSocket.on('device', (data) => {
+        getDeviceList(projectImport)
+        // console.log(data)
+      })
+      httpsSocket.on('disconnect', () => {
+        console.log('https socket disconnected ...')
+      })
+    } else {
+      getDeviceList(projectImport)
+    }
   },[])
 
   const [ open, setOpen ] = useState(false)

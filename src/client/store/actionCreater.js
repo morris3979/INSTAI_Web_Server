@@ -211,6 +211,7 @@ export const GetDeviceList = (id) => {
         const response = await axios.get(`/api/project/${id}/device`)
         const action = DeliverData(response.data, Device_List)
         dispatch(action)
+        return
       } catch (e) {
         alert(e.response.data.message)
         location.reload()
@@ -429,13 +430,15 @@ export const PatchDeviceData = (id, data) => {
   )
 }
 
-export const ReceiveDeviceMessage = (serialNumber, data) => {
+export const ReceiveDeviceMessage = (serialNumber, projectId, data) => {
   return (
     async (dispatch) => {
       try {
         const response = await axios.patch(`/api/device/message/${serialNumber}`, data)
         if (response.data) {
-          location.reload()
+          const new_response = await axios.get(`/api/project/${projectId}/device`)
+          const action = DeliverData(new_response.data, Device_List)
+          dispatch(action)
           return
         }
       } catch (e) {

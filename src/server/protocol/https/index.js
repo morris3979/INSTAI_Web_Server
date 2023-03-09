@@ -4,6 +4,8 @@ exports.connect = (app) => {
     const https = require('https'); // nodejs https
     const httpsPort = process.env.HTTPS_PORT;
     const fs = require('fs');
+    const db = require('../../database');
+    const Device = db.Device;
 
     const privateKey = fs.readFileSync(__dirname + '/ssl/privatekey.pem');
     const certificate = fs.readFileSync(__dirname + '/ssl/certificate.pem');
@@ -47,17 +49,18 @@ exports.connect = (app) => {
     const onMessage = () => {
         device.on('message', async (topic, message) => {
             const messageJson = JSON.parse(message.toString());
-            io.to('room').emit('device', messageJson);
+            // console.log('messageJson', messageJson)
+            Device.update({
+                message: messageJson.message
+            }, {
+                where: { serialNumber: messageJson.serialNumber }
+            });
+            io.to('room').emit('device', 'update');
         })
     }
 
     device.on('connect', () => {
         console.log('=> https connecting to AWS IoT Core!');
-        io.to('room').emit('message', 'fetching AI Server message ...')
-        device.subscribe('fromAIServer', (err) => {
-            if (err) console.log('AWS IoT Core ...err: ', err);
-            onMessage();
-        })
         device.subscribe('lobby', (err) => {
             if (err) console.log('AWS IoT Core ...err: ', err);
             onMessage();

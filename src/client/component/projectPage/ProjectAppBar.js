@@ -279,8 +279,8 @@ const ProjectAppBar = (props) => {
                 })}
               </Stepper>
               {activeStep == 3 &&
-              ((dataList.Data.map((e) => e.trainTag).indexOf(true) != -1) &&
-              (dataList.Data.map((e) => e.json).indexOf(true) != -1))?(
+              ((dataList.Data?.map((e) => e.trainTag).indexOf(true) != -1) &&
+              (dataList.Data?.map((e) => e.json).indexOf(true) != -1))?(
                 <div>
                   <Button
                     onClick={handleSubmit}

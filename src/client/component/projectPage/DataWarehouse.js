@@ -73,7 +73,7 @@ const DataWarehouse = (props) => {
   const [ file, setFile ] = useState([])  // File that has been upload to S3
   const [ fileNum ,setFileNum ] = useState(0) // Number of selected files
   const navigate = useNavigate()
-  const mounted = useRef();
+  const mounted = useRef()
 
   useEffect(() => {
     if(mounted.current === false) {

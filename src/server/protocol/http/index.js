@@ -4,6 +4,8 @@ exports.connect = (app) => {
     const http = require('http'); // nodejs http
     const httpPort = process.env.HTTP_PORT;
     const httpServer = http.createServer(app);
+    const db = require('../../database');
+    const Device = db.Device;
 
     const socketIo = require('socket.io')
     const io = socketIo(httpServer, {
@@ -39,17 +41,17 @@ exports.connect = (app) => {
     const onMessage = () => {
         device.on('message', async (topic, message) => {
             const messageJson = JSON.parse(message.toString());
-            io.to('room').emit('device', messageJson);
+            Device.update({
+                message: messageJson.message
+            }, {
+                where: { serialNumber: messageJson.serialNumber }
+            });
+            io.to('room').emit('device', 'update');
         })
     }
 
     device.on('connect', () => {
         console.log('=> http connecting to AWS IoT Core!');
-        io.to('room').emit('message', 'fetching AI Server message ...')
-        device.subscribe('fromAIServer', (err) => {
-            if (err) console.log('AWS IoT Core ...err: ', err);
-            onMessage();
-        })
         device.subscribe('lobby', (err) => {
             if (err) console.log('AWS IoT Core ...err: ', err);
             onMessage();
