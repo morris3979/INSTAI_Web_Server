@@ -63,7 +63,7 @@ const ProjectAppBar = (props) => {
   const [ openTrainData, setOpenTrainData ] = useState(false)
   const [ trainData, setTrainData ] = useState()
   const [ trainDataName, setTrainDataName ] = useState()
-  
+
   const replacer = (key, value) => {
     if (key == 'id') return undefined
     else if (key == 'image') return undefined
@@ -115,7 +115,7 @@ const ProjectAppBar = (props) => {
     } else {
       setActiveStep(0)
     }
-  }, [activeStep])
+  }, [activeStep, steps])
 
   const onSaveEditProject = async () => {
     const converted = {}

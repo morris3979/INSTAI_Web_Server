@@ -50,20 +50,20 @@ exports.connect = (app) => {
         device.on('message', async (topic, message) => {
             const messageJson = JSON.parse(message.toString());
             // console.log('messageJson', messageJson)
-            Device.update({
+            await Device.update({
                 message: messageJson.message
             }, {
                 where: { serialNumber: messageJson.serialNumber }
             });
-            io.to('room').emit('device', 'update');
+            io.to('room').emit('lobby', messageJson.serialNumber);
         })
     }
 
     device.on('connect', () => {
-        console.log('=> https connecting to AWS IoT Core!');
-        device.subscribe('lobby', (err) => {
+        console.log('=> Connecting to AWS IoT Core!');
+        device.subscribe('lobby', async (err) => {
             if (err) console.log('AWS IoT Core ...err: ', err);
-            onMessage();
+            await onMessage();
         })
     });
 

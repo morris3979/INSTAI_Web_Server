@@ -17,11 +17,10 @@ exports.connect = (app) => {
     })
 
     io.on('connection', (socket) => {
-        // console.log('client connected: ', socket.id)
+        console.log('client connected: ', socket.id)
         socket.join('room')
         socket.on('disconnect', (reason) => {
-            // console.log(reason)
-            return
+          console.log(reason)
         })
     })
 
@@ -41,17 +40,18 @@ exports.connect = (app) => {
     const onMessage = () => {
         device.on('message', async (topic, message) => {
             const messageJson = JSON.parse(message.toString());
-            Device.update({
+            // console.log('messageJson', messageJson)
+            await Device.update({
                 message: messageJson.message
             }, {
                 where: { serialNumber: messageJson.serialNumber }
             });
-            io.to('room').emit('device', 'update');
+            io.to('room').emit('lobby');
         })
     }
 
     device.on('connect', () => {
-        console.log('=> http connecting to AWS IoT Core!');
+        console.log('=> Connecting to AWS IoT Core!');
         device.subscribe('lobby', (err) => {
             if (err) console.log('AWS IoT Core ...err: ', err);
             onMessage();
