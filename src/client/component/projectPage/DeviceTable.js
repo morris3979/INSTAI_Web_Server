@@ -36,7 +36,6 @@ import {
   GetDeviceList,
   PatchDeviceData,
   PostDeviceMQTT,
-  ReceiveDeviceMessage
 } from '../../store/actionCreater'
 
 const columns = [
@@ -53,8 +52,7 @@ const DeviceTable = (props) => {
     getDeviceList,
     patchDeviceData,
     projectImport,
-    postDeviceMQTT,
-    receiveDeviceMessage
+    postDeviceMQTT
   } = props
 
   const mounted = useRef()
@@ -70,7 +68,6 @@ const DeviceTable = (props) => {
       setTimeout(() => httpSocket.connect(), 5000)
     })
     httpSocket.on('lobby', (data) => {
-      // console.log('http', data)
       getDeviceList(projectImport)
     })
     httpSocket.on('disconnect', () => {
@@ -81,7 +78,6 @@ const DeviceTable = (props) => {
       setTimeout(() => httpsSocket.connect(), 5000)
     })
     httpsSocket.on('lobby', (data) => {
-      // console.log('https', data)
       getDeviceList(projectImport)
     })
     httpsSocket.on('disconnect', () => {
@@ -129,9 +125,9 @@ const DeviceTable = (props) => {
     setPage(0);
   }
 
-  const onCreateDevice = async () => {
+  const onCreateDevice = () => {
     if(modifyValue.id) {
-      if(input.serialNumber||input.deviceName){
+      if(input.serialNumber || input.deviceName){
         if(modifyValue.text == 'serialNumber') {
           patchDeviceData(modifyValue.id, { serialNumber: input.serialNumber })
           setOpenSerialNumber(false)
@@ -140,7 +136,7 @@ const DeviceTable = (props) => {
           setOpenDeviceName(false)
         }
       }else{
-        alert(`Invalid Value ! Please Check Again`)
+        alert('Invalid Value! Please Check Again')
       }
     }else{
       addDevice(input)
@@ -148,7 +144,7 @@ const DeviceTable = (props) => {
     }
   }
 
-  const onCreateCommand = async () => {
+  const onSaveCommand = () => {
     if(commandValue.Mode == 'CNN' || commandValue.Mode == 'S_MOTION_CNN'){
       var command = `mode: ${commandValue.Mode}`
       var message = ''
@@ -189,7 +185,7 @@ const DeviceTable = (props) => {
       var message = ''
     }
     setOpenCommand(false)
-    patchDeviceData(modifyValue.id, { command: command })
+    patchDeviceData(modifyValue.id, { command: command, message: message })
   }
 
   const handleSerialNumberOpen = (value) => {
@@ -785,12 +781,12 @@ const DeviceTable = (props) => {
           open={openCommand}
           onClose={handleCloseCommand}
           PaperProps={{
-            sx: {
-            width: "100%",
-            maxWidth: "550px",
-            },
-          }}>
-          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Command</DialogContent>
+            sx: { width: "100%", maxWidth: "550px" }
+          }}
+        >
+          <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>
+            Command
+          </DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
             <Grid
               container
@@ -1085,7 +1081,7 @@ const DeviceTable = (props) => {
           </DialogTitle>
           <DialogActions style={{ backgroundColor: '#444950' }}>
             <Button variant="contained" size='small' onClick={handleCloseCommand} style={{marginTop: 10}}>Cancel</Button>
-            <Button variant="contained" size='small' onClick={onCreateCommand} style={{marginTop: 10}}>Save</Button>
+            <Button variant="contained" size='small' onClick={onSaveCommand} style={{marginTop: 10}}>Save</Button>
           </DialogActions>
         </Dialog>
       </Box>
@@ -1117,10 +1113,6 @@ const mapStateToProps = (state) => {
       },
       postDeviceMQTT(data) {
         const action = PostDeviceMQTT(data)
-        dispatch(action)
-      },
-      receiveDeviceMessage(id, data) {
-        const action = ReceiveDeviceMessage(id, data)
         dispatch(action)
       },
     }
