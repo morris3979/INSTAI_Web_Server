@@ -118,7 +118,7 @@ const ActionAreaCard = (props) => {
           </Typography>
         </div>
       </div>
-      {projectList.Projects.length === 0
+      {projectList.Projects?.length === 0
       ? <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
           <CardActionArea>
             <CardContent>
