@@ -28,6 +28,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import CircularProgress from '@mui/material/CircularProgress';
+import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import {
   GetDataList,
   GetDataItem,
@@ -36,11 +37,17 @@ import {
   GetS3Image,
   ResetS3ImageData,
   UploadImageFile,
-  DataImport
+  DataImport,
+  UploadTrainData,
+  PostTrainData,
+  PostAIServerMQTT
 } from '../../store/actionCreater'
 
 const DataWarehouse = (props) => {
   const {
+    projectItem,
+    userImport,
+    labelList,
     dataList,
     getDataList,
     getDataItem,
@@ -50,7 +57,11 @@ const DataWarehouse = (props) => {
     resetS3ImageData,
     uploadImageFile,
     projectImport,
-    dataImport
+    dataImport,
+    uploadTrainData,
+    postTrainData,
+    s3Train,
+    postAIServerMQTT
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -72,6 +83,24 @@ const DataWarehouse = (props) => {
   const [ open, setOpen ] = useState(false)
   const [ file, setFile ] = useState([])  // File that has been upload to S3
   const [ fileNum ,setFileNum ] = useState(0) // Number of selected files
+  const [ openTrainData, setOpenTrainData ] = useState(false)
+  const [ trainData, setTrainData ] = useState()
+  const [ trainDataName, setTrainDataName ] = useState()
+
+  const replacer = (key, value) => {
+    if (key == 'id') return undefined
+    else if (key == 'image') return undefined
+    else if (key == 'video') return undefined
+    else if (key == 'csv') return undefined
+    else if (key == 'json') return undefined
+    else if (key == 'cleanTag') return undefined
+    else if (key == 'trainTag') return undefined
+    else if (key == 'ProjectId') return undefined
+    else if (key == 'DeviceId') return undefined
+    else if (key == 'UserId') return undefined
+    else return value
+  }
+
   const navigate = useNavigate()
   const mounted = useRef()
 
@@ -222,6 +251,57 @@ const DataWarehouse = (props) => {
       alert('Upload limit. (Max: 10)')
     }
   }
+  const handleSubmit = () => {
+    var now = new Date()
+    var localTime = now.getFullYear().toString() + '.' +
+        (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+        now.getDate().toString().padStart(2, '0') + ' ' +
+        now.getHours().toString().padStart(2, '0') + ':' +
+        now.getMinutes().toString().padStart(2, '0') + ':' +
+        now.getSeconds().toString().padStart(2, '0')
+    var fileVersion = (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+        now.getDate().toString().padStart(2, '0') + '.' +
+        now.getHours().toString().padStart(2, '0') +
+        now.getMinutes().toString().padStart(2, '0') +
+        now.getSeconds().toString().padStart(2, '0')
+    const modelName = 'Model_V1.' + fileVersion
+    const trainJsonData = JSON.stringify({
+      "project": projectItem.project,
+      "filename": modelName,
+      "labels": labelList.Labels?.map((value) => {return value.labelClass}),
+      "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
+      "timestamp": localTime
+    }, replacer, 2)
+    setTrainData(trainJsonData)
+    setTrainDataName(modelName)
+    const jsonData = JSON.parse(trainJsonData)
+    const fileName = modelName + '.json'
+    const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
+    uploadTrainData(file)
+    setOpenTrainData(true)
+  }
+
+  const handleSendTrainData = () => {
+    setOpenTrainData(false)
+    const data = {
+      modelName: trainDataName,
+      ProjectId: projectImport,
+      UserId: userImport,
+      status: 'in progress'
+    }
+    const sendData = {
+      "project": projectItem.project,
+      "modelName": trainDataName
+    }
+    // console.log(data)
+    postTrainData(data)
+    postAIServerMQTT(sendData)
+    setTimeout(() => {location.reload()}, 500)
+  }
+
+  const handleCloseTrainData = () => {
+    setOpenTrainData(false)
+  }
 
   const filterData = dataList.Data?.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled && menuItem.toTrain) {
@@ -350,16 +430,34 @@ const DataWarehouse = (props) => {
               >
                 Data
               </Typography>
-              <Button
-                aria-label='upload'
-                variant="contained"
-                component="label"
-                sx={{ marginRight: 5 }}
-                startIcon={<CloudUploadIcon />}
-              >
-                Upload
-                <input hidden accept="image/*" multiple type="file" onChange={handleUploadImage}/>
-              </Button>
+              <div>
+                <Button
+                  aria-label='train'
+                  variant="contained"
+                  sx={{
+                    "&:disabled": {
+                      border: 'thin solid grey',
+                      color: 'grey',
+                      opacity: .3,
+                    },
+                    marginRight: 2
+                  }}
+                  onClick={handleSubmit}
+                  startIcon={<ModelTrainingIcon />}
+                  disabled={!dataList.Data?.some(item => item.trainTag === true)}
+                >
+                  Train
+                </Button>
+                <Button
+                  aria-label='upload'
+                  variant="contained"
+                  component="label"
+                  sx={{ marginRight: 5 }}
+                >
+                  <CloudUploadIcon />
+                  <input hidden accept="image/*" multiple type="file" onChange={handleUploadImage}/>
+                </Button>
+              </div>
             </Grid>
             <Grid
               minWidth='90vw'
@@ -688,6 +786,32 @@ const DataWarehouse = (props) => {
           <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}} disabled={file.length < fileNum}>OK</Button>
         </DialogActions>
       </Dialog>
+      <Dialog open={openTrainData} onClose={handleCloseTrainData}>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>To AIServer</DialogContent>
+        <DialogTitle style={{ backgroundColor: '#444950' }}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <div
+            style={{
+              borderRadius: 5,
+              backgroundColor: 'lightgrey',
+            }}
+          >
+            <Typography style={{ margin: 5 }}>
+              {trainData}
+            </Typography>
+          </div>
+        </Grid>
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950' }}>
+          <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={handleSendTrainData} style={{marginTop: 10}} disabled={trainDataName+'.json' != s3Train.filename}>Send</Button>
+        </DialogActions>
+      </Dialog>
       </Box>
   )
 }
@@ -695,9 +819,13 @@ const DataWarehouse = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
+      userImport: state.userImport,
       dataList: state.dataList,
+      labelList: state.labelList,
       dataItem: state.dataItem,
       s3Image: state.s3Image,
+      s3Train: state.s3Train,
+      projectItem: state.projectItem,
       projectImport: state.projectImport
     }
   }
@@ -737,6 +865,18 @@ const mapStateToProps = (state) => {
         const action = DataImport(id)
         dispatch(action)
       },
+      uploadTrainData(file) {
+        const action = UploadTrainData(file)
+        dispatch(action)
+      },
+      postTrainData(data) {
+        const action = PostTrainData(data)
+        dispatch(action)
+      },
+      postAIServerMQTT(data) {
+        const action = PostAIServerMQTT(data)
+        dispatch(action)
+      }
     }
   }
 

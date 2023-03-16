@@ -542,7 +542,7 @@ export const UploadTrainData = (file) => {
       return axios.post(
         `/api/aws/s3/upload/json/train`, formData
       ).then(response => {
-        console.log('response', response)
+        // console.log('response', response)
         // JSON responses are automatically parsed.
         if(response.data){
           const action = GetS3TrainData(response.data.key.slice(6))

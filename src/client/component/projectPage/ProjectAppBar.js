@@ -26,9 +26,6 @@ import {
   GetProjectItem,
   GetDataList,
   GetLabelList,
-  UploadTrainData,
-  PostTrainData,
-  PostAIServerMQTT
 } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
@@ -40,16 +37,11 @@ const ProjectAppBar = (props) => {
     patchProjectItem,
     getProjectItem,
     dataList,
-    userImport,
     projectImport,
     getDataList,
     labelList,
     organizationImport,
     getLabelList,
-    uploadTrainData,
-    postTrainData,
-    s3Train,
-    postAIServerMQTT
   } = props
 
   const [ openEditProject, setOpenEditProject ] = useState(false)
@@ -60,23 +52,6 @@ const ProjectAppBar = (props) => {
   })
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
-  const [ openTrainData, setOpenTrainData ] = useState(false)
-  const [ trainData, setTrainData ] = useState()
-  const [ trainDataName, setTrainDataName ] = useState()
-
-  const replacer = (key, value) => {
-    if (key == 'id') return undefined
-    else if (key == 'image') return undefined
-    else if (key == 'video') return undefined
-    else if (key == 'csv') return undefined
-    else if (key == 'json') return undefined
-    else if (key == 'cleanTag') return undefined
-    else if (key == 'trainTag') return undefined
-    else if (key == 'ProjectId') return undefined
-    else if (key == 'DeviceId') return undefined
-    else if (key == 'UserId') return undefined
-    else return value
-  }
 
   useEffect(() => {
     dataList
@@ -130,7 +105,7 @@ const ProjectAppBar = (props) => {
       })
       setOpenEditProject(false)
     }else{
-      alert('Empty Value ! Please Check Again')
+      alert('Empty Value! Please Check Again')
     }
   }
 
@@ -165,58 +140,6 @@ const ProjectAppBar = (props) => {
 
   const isStepSkipped = (step) => {
     return skipped.has(step)
-  }
-
-  const handleSubmit = () => {
-    var now = new Date()
-    var localTime = now.getFullYear().toString() + '.' +
-        (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
-        now.getDate().toString().padStart(2, '0') + ' ' +
-        now.getHours().toString().padStart(2, '0') + ':' +
-        now.getMinutes().toString().padStart(2, '0') + ':' +
-        now.getSeconds().toString().padStart(2, '0')
-    var fileVersion = (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
-        now.getDate().toString().padStart(2, '0') + '.' +
-        now.getHours().toString().padStart(2, '0') +
-        now.getMinutes().toString().padStart(2, '0') +
-        now.getSeconds().toString().padStart(2, '0')
-    const modelName = 'Model_V1.' + fileVersion
-    const trainJsonData = JSON.stringify({
-      "project": projectItem.project,
-      "filename": modelName,
-      "labels": labelList.Labels?.map((value) => {return value.labelClass}),
-      "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
-      "timestamp": localTime
-    }, replacer, 2)
-    setTrainData(trainJsonData)
-    setTrainDataName(modelName)
-    const jsonData = JSON.parse(trainJsonData)
-    const fileName = modelName + '.json'
-    const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
-    uploadTrainData(file)
-    setOpenTrainData(true)
-  }
-
-  const handleSendTrainData = () => {
-    setOpenTrainData(false)
-    const data = {
-      modelName: trainDataName,
-      ProjectId: projectImport,
-      UserId: userImport,
-      status: 'in progress'
-    }
-    const sendData = {
-      "project": projectItem.project,
-      "modelName": trainDataName
-    }
-    // console.log(data)
-    postTrainData(data)
-    postAIServerMQTT(sendData)
-    setTimeout(() => {location.reload()}, 500)
-  }
-
-  const handleCloseTrainData = () => {
-    setOpenTrainData(false)
   }
 
   return (
@@ -311,20 +234,6 @@ const ProjectAppBar = (props) => {
                   )
                 })}
               </Stepper>
-              {activeStep == 3 &&
-              ((dataList.Data?.map((e) => e.trainTag).indexOf(true) != -1) &&
-              (dataList.Data?.map((e) => e.json).indexOf(true) != -1))?(
-                <div>
-                  <Button
-                    onClick={handleSubmit}
-                    variant='outlined'
-                    sx={{ marginLeft: 2 }}
-                    endIcon={<ChevronRightIcon />}
-                  >
-                    Submit
-                  </Button>
-                </div>
-              ):null}
             </Grid>
         </Toolbar>
       </Container>
@@ -373,32 +282,6 @@ const ProjectAppBar = (props) => {
           <Button variant="contained" size='small' onClick={onSaveEditProject} style={{marginTop: 10}}>Save</Button>
         </DialogActions>
       </Dialog>
-      <Dialog open={openTrainData} onClose={handleCloseTrainData}>
-        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>To AIServer</DialogContent>
-        <DialogTitle style={{ backgroundColor: '#444950' }}>
-        <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <div
-            style={{
-              borderRadius: 5,
-              backgroundColor: 'lightgrey',
-            }}
-          >
-            <Typography style={{ margin: 5 }}>
-              {trainData}
-            </Typography>
-          </div>
-        </Grid>
-        </DialogTitle>
-        <DialogActions style={{ backgroundColor: '#444950' }}>
-          <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={handleSendTrainData} style={{marginTop: 10}} disabled={trainDataName+'.json' != s3Train.filename}>Send</Button>
-        </DialogActions>
-      </Dialog>
     </AppBar>
   );
 }
@@ -411,10 +294,8 @@ const mapStateToProps = (state) => {
     projectItem: state.projectItem,
     dataList: state.dataList,
     labelList: state.labelList,
-    userImport: state.userImport,
     projectImport: state.projectImport,
     organizationImport: state.organizationImport,
-    s3Train: state.s3Train
   }
 }
 
@@ -445,18 +326,6 @@ const mapDispatchToProps = (dispatch) => {
       const action = GetLabelList(id)
       dispatch(action)
     },
-    uploadTrainData(file) {
-      const action = UploadTrainData(file)
-      dispatch(action)
-    },
-    postTrainData(data) {
-      const action = PostTrainData(data)
-      dispatch(action)
-    },
-    postAIServerMQTT(data) {
-      const action = PostAIServerMQTT(data)
-      dispatch(action)
-    }
   }
 }
 
