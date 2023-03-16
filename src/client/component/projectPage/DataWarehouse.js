@@ -444,7 +444,10 @@ const DataWarehouse = (props) => {
                   }}
                   onClick={handleSubmit}
                   startIcon={<ModelTrainingIcon />}
-                  disabled={!dataList.Data?.some(item => item.trainTag === true)}
+                  disabled={
+                    !(dataList.Data?.some(item => item.json === true)
+                    && dataList.Data?.some(item => item.trainTag === true))
+                  }
                 >
                   Train
                 </Button>
