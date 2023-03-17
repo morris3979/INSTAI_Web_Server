@@ -267,7 +267,7 @@ const DataWarehouse = (props) => {
     const modelName = 'Model_V1.' + fileVersion
     const trainJsonData = JSON.stringify({
       "project": projectItem.project,
-      "filename": modelName,
+      "modelName": modelName,
       "labels": labelList.Labels?.map((value) => {return value.labelClass}),
       "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
       "timestamp": localTime
@@ -281,7 +281,7 @@ const DataWarehouse = (props) => {
     setOpenTrainData(true)
   }
 
-  const handleSendTrainData = () => {
+  const handleConfirmTrainData = () => {
     setOpenTrainData(false)
     const data = {
       modelName: trainDataName,
@@ -790,7 +790,7 @@ const DataWarehouse = (props) => {
         </DialogActions>
       </Dialog>
       <Dialog open={openTrainData} onClose={handleCloseTrainData}>
-        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>To AIServer</DialogContent>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>AI Server</DialogContent>
         <DialogTitle style={{ backgroundColor: '#444950' }}>
         <Grid
           container
@@ -812,7 +812,7 @@ const DataWarehouse = (props) => {
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
           <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Cancel</Button>
-          <Button variant="contained" size='small' onClick={handleSendTrainData} style={{marginTop: 10}} disabled={trainDataName+'.json' != s3Train.filename}>Send</Button>
+          <Button variant="contained" size='small' onClick={handleConfirmTrainData} style={{marginTop: 10}} disabled={trainDataName+'.json' != s3Train.filename}>Confirm</Button>
         </DialogActions>
       </Dialog>
       </Box>
