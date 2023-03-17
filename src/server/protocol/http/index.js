@@ -52,9 +52,17 @@ exports.connect = (app) => {
 
     device.on('connect', () => {
         console.log('=> Connecting to AWS IoT Core!');
-        device.subscribe('lobby', (err) => {
+        device.subscribe('lobby', async (err) => {
             if (err) console.log('AWS IoT Core ...err: ', err);
-            onMessage();
+            await onMessage();
+        })
+        device.subscribe('AIServer', async (err) => {
+            if (err) console.log('AWS IoT Core ...err: ', err);
+            device.on('message', async (topic, message) => {
+                const messageJson = JSON.parse(message.toString());
+                // console.log('messageJson', messageJson)
+                io.to('room').emit('AIServer', messageJson);
+            })
         })
     });
 

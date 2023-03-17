@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { io } from 'socket.io-client'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -39,6 +40,26 @@ const ModelTable = (props) => {
 
   useEffect(() => {
     getModelList(projectImport)
+    const HTTP = ":8080";
+    const HTTPS = ":8443";
+    const httpSocket = io(HTTP)
+    const httpsSocket = io(HTTPS)
+    httpSocket.on('connect', () => console.log(httpSocket.id))
+    httpSocket.on('connect_error', () => {
+      setTimeout(() => httpSocket.connect(), 5000)
+    })
+    httpSocket.on('AIServer', () => getModelList(projectImport))
+    httpSocket.on('disconnect', () => {
+      console.log('http socket disconnected ...')
+    })
+    httpsSocket.on('connect', () => console.log(httpsSocket.id))
+    httpsSocket.on('connect_error', () => {
+      setTimeout(() => httpsSocket.connect(), 5000)
+    })
+    httpsSocket.on('AIServer', () => getModelList(projectImport))
+    httpsSocket.on('disconnect', () => {
+      console.log('https socket disconnected ...')
+    })
   },[])
 
   const [ searchName, setSearchName] = useState('')

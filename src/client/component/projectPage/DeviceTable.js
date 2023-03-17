@@ -67,9 +67,7 @@ const DeviceTable = (props) => {
     httpSocket.on('connect_error', () => {
       setTimeout(() => httpSocket.connect(), 5000)
     })
-    httpSocket.on('lobby', (data) => {
-      getDeviceList(projectImport)
-    })
+    httpSocket.on('lobby', () => getDeviceList(projectImport))
     httpSocket.on('disconnect', () => {
       console.log('http socket disconnected ...')
     })
@@ -77,9 +75,7 @@ const DeviceTable = (props) => {
     httpsSocket.on('connect_error', () => {
       setTimeout(() => httpsSocket.connect(), 5000)
     })
-    httpsSocket.on('lobby', (data) => {
-      getDeviceList(projectImport)
-    })
+    httpsSocket.on('lobby', () => getDeviceList(projectImport))
     httpsSocket.on('disconnect', () => {
       console.log('https socket disconnected ...')
     })
