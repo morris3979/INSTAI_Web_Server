@@ -520,7 +520,11 @@ const DataWarehouse = (props) => {
                       }))
                     }}
                   >
-                    <Checkbox sx={{ color: 'white' }} checked={menuItem.all} indeterminate={menuItem.cleaned || menuItem.labeled} />
+                    <Checkbox
+                      sx={{ color: 'white' }}
+                      checked={menuItem.all}
+                      indeterminate={menuItem.cleaned || menuItem.labeled || menuItem.toTrain}
+                    />
                     <ListItemText primary={'All'} sx={{ marginRight: 3 }} />
                   </MenuItem>
                   <MenuItem
