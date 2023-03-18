@@ -34,6 +34,7 @@ import MuiInput from '@mui/material/Input';
 import {
   AddDevice,
   GetDeviceList,
+  GetModelList,
   PatchDeviceData,
   PostDeviceMQTT,
 } from '../../store/actionCreater'
@@ -48,8 +49,10 @@ const columns = [
 const DeviceTable = (props) => {
   const {
     deviceList,
+    modelList,
     addDevice,
     getDeviceList,
+    getModelList,
     patchDeviceData,
     projectImport,
     postDeviceMQTT
@@ -59,6 +62,7 @@ const DeviceTable = (props) => {
 
   useEffect(() => {
     getDeviceList(projectImport)
+    getModelList(projectImport)
     const HTTP = ":8080";
     const HTTPS = ":8443";
     const httpSocket = io(HTTP)
@@ -102,6 +106,7 @@ const DeviceTable = (props) => {
   const [ commandValue, setCommandValue ] = useState({
     Enable: false,
     Mode: '',
+    Model: '',
     related_params: false,
     rec_after_event_switch: false,
     upload_all_pictures_switch: true,
@@ -170,6 +175,10 @@ const DeviceTable = (props) => {
     else if(commandValue.Mode == 'CNN_JPEG' || commandValue.Mode == 'CONT_JPEG_CNN'){
       var command = `mode: ${commandValue.Mode},\n`+
                     `upload_to_server: ${convertedValue(commandValue.upload_all_files_switch)}`
+      var message = ''
+    }
+    else if(commandValue.Mode == 'UPDATE_MODEL'){
+      var command = `update_model: ${commandValue.Model}`
       var message = ''
     }
     else if(selected){
@@ -379,6 +388,13 @@ const DeviceTable = (props) => {
         }))
       }
     }
+  }
+
+  const handleModelChange = (e) => {
+    setCommandValue((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
   }
 
   const convertedValue = (value) => {
@@ -1074,6 +1090,33 @@ const DeviceTable = (props) => {
                   />
               </FormControl>
             </Grid>
+            <Grid
+              justifyContent="left"
+              alignItems="left"
+              style={{ marginTop: 20 }}
+              hidden={commandValue.Mode != 'UPDATE_MODEL'}
+            >
+              <TextField
+                focused
+                id="outlined-basic"
+                label="Please Select a Model to Deploy"
+                name="Model"
+                select
+                size='small'
+                color='info'
+                sx={{ width: 300 }}
+                InputProps={{
+                  style: { color: 'white' }
+                }}
+                onChange={handleModelChange}
+              >
+                {modelList.Models.map((c) => {
+                  return(
+                    <MenuItem value={c.modelName} disabled={!c.available}>{c.modelName}</MenuItem>
+                  )
+                })}
+              </TextField>
+            </Grid>
           </DialogTitle>
           <DialogActions style={{ backgroundColor: '#444950' }}>
             <Button variant="contained" size='small' onClick={handleCloseCommand} style={{marginTop: 10}}>Cancel</Button>
@@ -1088,6 +1131,7 @@ const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
       deviceList: state.deviceList,
+      modelList: state.modelList,
       projectImport: state.projectImport
     }
   }
@@ -1101,6 +1145,10 @@ const mapStateToProps = (state) => {
       },
       getDeviceList(id) {
         const action = GetDeviceList(id)
+        dispatch(action)
+      },
+      getModelList(id) {
+        const action = GetModelList(id)
         dispatch(action)
       },
       patchDeviceData(id, data) {
