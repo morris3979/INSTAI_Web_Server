@@ -53,44 +53,50 @@ const ProjectAppBar = (props) => {
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
 
+  const mounted = useRef()
+  
   useEffect(() => {
-    dataList
-    labelList
-    projectItem
-    projectList
-    getDataList(projectImport)
-    getLabelList(projectImport)
-    getProjectItem(projectImport)
-    if (dataList.Data?.length) {
-      const step1 = (skipped.size == 0) &&
-                    (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
-                    (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
-      const step2 = (skipped.size == 0) &&
-                    (dataList.Data?.map((e) => e.cleanTag).indexOf(true) != -1) &&
-                    (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
-      const step2_skip = (skipped.size == 0) &&
-                    (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
-                    (dataList.Data?.map((e) => e.json).indexOf(true) != -1)
-      if (step1) {
-        setActiveStep(1)
-      } else {
-        if (step2) {
-          setActiveStep(2)
-        } else if (step2_skip) {
-          setActiveStep(3)
-          setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values())
-            newSkipped.add(1)
-            return newSkipped
-          })
-        } else {
-          setActiveStep(3)
-        }
-      }
+    if(mounted.current === false) {
+      mounted.current = true
+      dataList
+      labelList
+      projectItem
+      projectList
+      getLabelList(projectImport)
+      getProjectItem(projectImport)
+      getDataList(projectImport)
     } else {
-      setActiveStep(0)
+      if (dataList.Data?.length) {
+        const step1 = (skipped.size == 0) &&
+                      (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                      (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
+        const step2 = (skipped.size == 0) &&
+                      (dataList.Data?.map((e) => e.cleanTag).indexOf(true) != -1) &&
+                      (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
+        const step2_skip = (skipped.size == 0) &&
+                      (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                      (dataList.Data?.map((e) => e.json).indexOf(true) != -1)
+        if (step1) {
+          setActiveStep(1)
+        } else {
+          if (step2) {
+            setActiveStep(2)
+          } else if (step2_skip) {
+            setActiveStep(3)
+            setSkipped((prevSkipped) => {
+              const newSkipped = new Set(prevSkipped.values())
+              newSkipped.add(1)
+              return newSkipped
+            })
+          } else {
+            setActiveStep(3)
+          }
+        }
+      } else {
+        setActiveStep(0)
+      }
     }
-  }, [activeStep, steps])
+  }, [activeStep, steps, dataList])
 
   const onSaveEditProject = async () => {
     const converted = {}
