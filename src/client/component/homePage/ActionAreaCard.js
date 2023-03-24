@@ -25,7 +25,8 @@ import {
   GetProjectItem,
   GetModelList,
   ProjectImport,
-  SetClippedDrawer
+  SetClippedDrawer,
+  FilterItem
 } from '../../store/actionCreater'
 
 const ActionAreaCard = (props) => {
@@ -37,7 +38,8 @@ const ActionAreaCard = (props) => {
     projectImport,
     organizationImport,
     userImport,
-    setClippedDrawer
+    setClippedDrawer,
+    filterItem
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -164,6 +166,7 @@ const ActionAreaCard = (props) => {
                       key={key}
                       onClick={() => {
                         projectImport(value.id)
+                        filterItem('')
                         setTimeout(() => {
                           navigate('/Project/Overview')
                         }, 500)
@@ -347,6 +350,10 @@ const mapDispatchToProps = (dispatch) => {
       const action = SetClippedDrawer(text)
       dispatch(action)
     },
+    filterItem(text) {
+      const action = FilterItem(text)
+      dispatch(action)
+    }
   }
 }
 

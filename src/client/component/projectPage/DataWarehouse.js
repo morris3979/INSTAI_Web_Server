@@ -61,7 +61,8 @@ const DataWarehouse = (props) => {
     uploadTrainData,
     postTrainData,
     s3Train,
-    postAIServerMQTT
+    postAIServerMQTT,
+    filteritem
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -76,8 +77,8 @@ const DataWarehouse = (props) => {
   const [ selectText, setSelectText ] = useState('Select All')
   const [ menuItem, setMenuItem ] = useState({
     all: true,
-    cleaned: false,
-    labeled: false,
+    cleaned: filteritem=='clean',
+    labeled: filteritem=='annotation',
     toTrain: false
   })
   const [ open, setOpen ] = useState(false)
@@ -251,6 +252,7 @@ const DataWarehouse = (props) => {
       alert('Upload limit. (Max: 10)')
     }
   }
+
   const handleSubmit = () => {
     var now = new Date()
     var localTime = now.getFullYear().toString() + '.' +
@@ -568,6 +570,33 @@ const DataWarehouse = (props) => {
                   </MenuItem>
                 </Menu>
               </Grid>
+              <Grid item hidden={!menuItem.cleaned}>
+                <Typography 
+                  sx={{
+                    color: 'white'
+                  }}
+                >
+                    Sampling
+                </Typography>
+              </Grid>
+              <Grid item hidden={!menuItem.labeled}>
+                <Typography 
+                  sx={{
+                    color: 'white'
+                  }}
+                >
+                    Annotation
+                </Typography>
+              </Grid>
+              <Grid item hidden={!menuItem.toTrain}>
+                <Typography 
+                  sx={{
+                    color: 'white'
+                  }}
+                >
+                    Train
+                </Typography>
+              </Grid>
               <Grid
                 item
                 style={{ marginLeft: 2 }}
@@ -833,7 +862,8 @@ const mapStateToProps = (state) => {
       s3Image: state.s3Image,
       s3Train: state.s3Train,
       projectItem: state.projectItem,
-      projectImport: state.projectImport
+      projectImport: state.projectImport,
+      filteritem: state.filteritem
     }
   }
 

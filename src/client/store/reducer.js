@@ -1,12 +1,12 @@
 import {
   Modal_File, Which_Modal, Table_Status,
   Which_Project, Which_Host, Which_Device,
-  Set_ClippedDrawer, Logout_Information, User_Information,
-  Project_List, Data_List, Members_List,
-  Device_List, Label_List, Model_List,
-  Data_Item, Project_Item, S3_Image,
-  S3_Train, User_Import, Organization_Import,
-  Project_Import, Data_Import
+  Set_ClippedDrawer, Filter_Item, Logout_Information, 
+  User_Information, Project_List, Data_List, 
+  Members_List, Device_List, Label_List, 
+  Model_List, Data_Item, Project_Item, 
+  S3_Image, S3_Train, User_Import, 
+  Organization_Import, Project_Import, Data_Import
 } from './actionType'
 
 const defaultState = {
@@ -17,6 +17,7 @@ const defaultState = {
   whichHostName:[],
   whichDeviceName:[],
   clippedDrawer: 'Overview',
+  filteritem: '',
   userInformation: {},
   projectList: {},
   dataList: {},
@@ -63,6 +64,10 @@ const Reducer = (state = defaultState, action) => {
     }
     case Set_ClippedDrawer: {
       newState.clippedDrawer = action.value
+      return newState
+    }
+    case Filter_Item: {
+      newState.filteritem = action.value
       return newState
     }
     case User_Information: {

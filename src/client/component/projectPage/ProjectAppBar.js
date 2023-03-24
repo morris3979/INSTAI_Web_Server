@@ -30,10 +30,11 @@ import {
   GetProjectItem,
   GetDataList,
   GetLabelList,
-  SetClippedDrawer
+  SetClippedDrawer,
+  FilterItem
 } from '../../store/actionCreater'
 
-const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
+const steps = ['Data collection', 'Data Sampling', 'Annotation', 'Model Training']
 
 const ProjectAppBar = (props) => {
   const {
@@ -47,7 +48,8 @@ const ProjectAppBar = (props) => {
     labelList,
     organizationImport,
     getLabelList,
-    setClippedDrawer
+    setClippedDrawer,
+    filterItem
   } = props
 
   const [ openEditProject, setOpenEditProject ] = useState(false)
@@ -268,8 +270,23 @@ const ProjectAppBar = (props) => {
                             setClippedDrawer('Device')
                             setTimeout(() => {navigate('/Project/Device')},300)
                           }
-                        }}>
-                          {label}
+                          else if(label == 'Data Sampling'){
+                            setClippedDrawer('Data')
+                            filterItem('clean')
+                            setTimeout(() => {navigate('/Project/Data')},300)
+                          }
+                          else if(label == 'Annotation'){
+                            setClippedDrawer('Data')
+                            filterItem('annotation')
+                            setTimeout(() => {navigate('/Project/Data')},300)
+                          }
+                          else if(label == 'Model Training'){
+                            setClippedDrawer('Model')
+                            setTimeout(() => {navigate('/Project/Model')},300)
+                          }
+                        }}
+                      >
+                        {label}
                       </StepLabel>
                       </div>
                     </Step>
@@ -372,6 +389,10 @@ const mapDispatchToProps = (dispatch) => {
       const action = SetClippedDrawer(text)
       dispatch(action)
     },
+    filterItem(text) {
+      const action = FilterItem(text)
+      dispatch(action)
+    }
   }
 }
 

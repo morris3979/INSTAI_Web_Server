@@ -2,12 +2,12 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  Set_ClippedDrawer, User_Information, Logout_Information,
-  Project_List, Data_List, Members_List,
-  Device_List, Label_List, Model_List,
-  Data_Item, Project_Item, S3_Image,
-  S3_Train, User_Import, Organization_Import,
-  Project_Import, Data_Import
+  Set_ClippedDrawer, Filter_Item, User_Information, 
+  Logout_Information, Project_List, Data_List, 
+  Members_List, Device_List, Label_List, 
+  Model_List, Data_Item, Project_Item, 
+  S3_Image, S3_Train, User_Import, 
+  Organization_Import, Project_Import, Data_Import
 } from './actionType'
 
 //共用Function <<<
@@ -65,6 +65,13 @@ export const WhichDevice = (text) => {
 export const SetClippedDrawer = (text) => {
   return({
     type: Set_ClippedDrawer,
+    value: text
+  })
+}
+
+export const FilterItem = (text) => {
+  return({
+    type: Filter_Item,
     value: text
   })
 }
