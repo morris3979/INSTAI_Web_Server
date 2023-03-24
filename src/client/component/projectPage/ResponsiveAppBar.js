@@ -61,7 +61,6 @@ const ResponsiveAppBar = (props) => {
     dataList,
     getOrganizationMembers,
     projectImport
-    // getProjectList
   } = props
 
   const [ anchorElUser, setAnchorElUser ] = useState(null)

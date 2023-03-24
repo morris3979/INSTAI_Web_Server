@@ -141,7 +141,7 @@ const Overview = (props) => {
                                     bottom: 15
                                 }}
                             >
-                                {dataList.Data?.filter(item => item.json === true).length === undefined? 0: dataList.Data?.filter(item => item.json === true).length}
+                                {dataList.Data?.filter(item => item.annotation !== null).length === undefined? 0: dataList.Data?.filter(item => item.annotation !== null).length}
                             </Typography>
                         </Box>
                     </Grid>

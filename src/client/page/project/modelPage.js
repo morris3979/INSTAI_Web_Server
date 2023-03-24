@@ -19,14 +19,21 @@ const ProjectModelPage = () => {
           alignItems: 'center',
           // justifyContent: 'center',
           backgroundColor: '#1c2127',
+          position: 'relative'
         }}
       >
         <Helmet>
           <title>Model - InstAI</title>
         </Helmet>
-        <ResponsiveAppBar />
-        <ProjectAppBar />
-        <ClippedDrawer />
+        <div style={{ position: 'absolute', zIndex: 3 }}>
+          <ResponsiveAppBar />
+        </div>
+        <div style={{ position: 'absolute', zIndex: 1 }}>
+          <ProjectAppBar />
+        </div>
+        <div style={{ position: 'absolute', zIndex: 2 }}>
+          <ClippedDrawer />
+        </div>
         <ModelTable />
       </div>
     </Suspense>

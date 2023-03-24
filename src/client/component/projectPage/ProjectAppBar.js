@@ -15,13 +15,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import CheckIcon from '@mui/icons-material/Check';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HMobiledataIcon from '@mui/icons-material/HMobiledata';
 import {
   LogoutData,
@@ -63,10 +61,12 @@ const ProjectAppBar = (props) => {
 
   const navigate = useNavigate()
   const mounted = useRef()
-  
+
   useEffect(() => {
     if(mounted.current === false) {
       mounted.current = true
+    } else {
+      projectItem
       dataList
       labelList
       projectItem
@@ -74,7 +74,7 @@ const ProjectAppBar = (props) => {
       getLabelList(projectImport)
       getProjectItem(projectImport)
       getDataList(projectImport)
-    } else {
+      getProjectItem(projectImport)
       if (dataList.Data?.length) {
         const step1 = (skipped.size == 0) &&
                       (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
@@ -106,7 +106,7 @@ const ProjectAppBar = (props) => {
       }
     }
     return () => {setSkipped(new Set())}
-  }, [activeStep, steps, dataList])
+  }, [activeStep, steps])
 
   const onSaveEditProject = async () => {
     const converted = {}
@@ -246,18 +246,19 @@ const ProjectAppBar = (props) => {
                             color: 'darkgrey',
                           },
                         }:
-                        { 
-                        "& .MuiSvgIcon-root": { 
-                          color: "red"
-                        },
-                        '& .MuiStepLabel-label': {
-                          color: 'red', 
-                        },
-                        }}
+                        {
+                          "& .MuiSvgIcon-root": {
+                            color: "red"
+                          },
+                          '& .MuiStepLabel-label': {
+                            color: 'red',
+                          },
+                        }
+                      }
                     >
                       <div>
-                      <StepLabel 
-                        {...labelProps} 
+                      <StepLabel
+                        {...labelProps}
                         icon={
                           activeStep==index
                           ?<AutorenewIcon color='Cyan'/>

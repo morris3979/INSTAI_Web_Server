@@ -401,7 +401,6 @@ const DataWarehouse = (props) => {
                 >
                   Train
                 </Button>
-                {console.log(dataList.Data?.findIndex(item => item.annotation != null))}
                 <Button
                   aria-label='upload'
                   variant="contained"

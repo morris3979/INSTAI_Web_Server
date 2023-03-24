@@ -40,7 +40,7 @@ const ClippedDrawer = (props) => {
                     },
                 }}
             >
-                <Toolbar />
+                {/* <Toolbar /> */}
                 <Toolbar />
                 <Box sx={{ overflow: 'auto' }}>
                     <List
@@ -51,7 +51,7 @@ const ClippedDrawer = (props) => {
                         }}
                     >
                         <ListItem key={'Overview'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton 
+                            <ListItemButton
                                 onClick={() => {
                                     setClippedDrawer('Overview')
                                     setTimeout(() => {navigate('/Project/Overview')},300)
@@ -70,7 +70,7 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Device'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton 
+                            <ListItemButton
                                 onClick={() => {
                                     setClippedDrawer('Device')
                                     setTimeout(() => {navigate('/Project/Device')},300)
@@ -98,7 +98,7 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Data'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton 
+                            <ListItemButton
                                 onClick={() => {
                                     setClippedDrawer('Data')
                                     setTimeout(() => {navigate('/Project/Data')},300)
@@ -117,7 +117,7 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Model'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton 
+                            <ListItemButton
                                 onClick={() => {
                                     setClippedDrawer('Model')
                                     setTimeout(() => {navigate('/Project/Model')},300)
@@ -145,7 +145,7 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Detector'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton 
+                            <ListItemButton
                                 onClick={() => {
                                     setClippedDrawer('Detector')
                                     setTimeout(() => {navigate('/Project/Detector')},300)
