@@ -125,26 +125,12 @@ const LabelStudioWrapper = (props) => {
               `<Label value="${annotation.serializeAnnotation()[index].value.rectanglelabels[0]}"/>`
               )
             annotationArr.push(
-              `{
-                  "category_id": ${categoryId+1},
-                  "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
-                }`
+              `{"category_id":${categoryId+1},"bbox":[${x_min}.0,${y_min}.0,${x_max_min}.0,${y_max_min}.0]}`
             )
           }
-          setJson4Training(`
-            {
-              "image":
-              {
-                "file_name": "${dataItem.data}",
-                "width": ${originalWidth},
-                "height": ${originalHeight}
-              },
-              "annotation":
-              [
-                ${annotationArr.length > 0? annotationArr: null}
-              ]
-            }
-          `)
+          setJson4Training(
+            `{"image":{"file_name":"${dataItem.data}","width":${originalWidth},"height":${originalHeight}},"annotation":[${annotationArr.length > 0? annotationArr: null}]}`
+          )
           setOpen(true)
         },
 
@@ -162,26 +148,12 @@ const LabelStudioWrapper = (props) => {
               `<Label value="${annotation.serializeAnnotation()[index].value.rectanglelabels[0]}"/>`
               )
             annotationArr.push(
-              `{
-                  "category_id": ${categoryId+1},
-                  "bbox": [${x_min}.0, ${y_min}.0, ${x_max_min}.0, ${y_max_min}.0]
-                }`
+              `{"category_id":${categoryId+1},"bbox":[${x_min}.0,${y_min}.0,${x_max_min}.0,${y_max_min}.0]}`
             )
           }
-          setJson4Training(`
-            {
-              "image":
-              {
-                "file_name": "${dataItem.data}",
-                "width": ${originalWidth},
-                "height": ${originalHeight}
-              },
-              "annotation":
-              [
-                ${annotationArr.length > 0? annotationArr: null}
-              ]
-            }
-          `)
+          setJson4Training(
+            `{"image":{"file_name":"${dataItem.data}","width":${originalWidth},"height":${originalHeight}},"annotation":[${annotationArr.length > 0? annotationArr: null}]}`
+          )
           setOpen(true)
         }
       })
@@ -213,7 +185,7 @@ const LabelStudioWrapper = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogContent style={{ backgroundColor: '#444950', width: '50vh' }}>
+        <DialogContent style={{ backgroundColor: '#444950', width: '45vw' }}>
           <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
             {dataItem.data}
           </DialogContentText>
@@ -221,12 +193,11 @@ const LabelStudioWrapper = (props) => {
         <DialogTitle
           id="alert-dialog-title"
           textAlign={'center'}
-          style={{ backgroundColor: '#444950', color: 'white', width: '50vh' }}>
-          <div>
-            <p>{json4Training}</p>
-          </div>
+          style={{ backgroundColor: '#444950', color: 'white', width: '45vw' }}
+        >
+          {json4Training}
         </DialogTitle>
-        <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
+        <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue', width: '45vw' }}>
           <Button
             size='small'
             variant="contained"

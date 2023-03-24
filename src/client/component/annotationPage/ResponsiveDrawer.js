@@ -248,10 +248,10 @@ const ResponsiveDrawer = (props) => {
                     >
                         <MenuItem
                             sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                            onClick={() => patchDataItem(dataItem.id, { json: 0, trainTag: 0, UserId: null })}
-                            disabled={dataItem.json == 0}
+                            onClick={() => patchDataItem(dataItem.id, { annotation: null, UserId: null })}
+                            disabled={dataItem.annotation == null}
                         >
-                            Label file (.json)
+                            Annotation
                         </MenuItem>
                     </Menu>
                     <IconButton

@@ -67,8 +67,6 @@ const DataWarehouse = (props) => {
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
   const openSelect = Boolean(anchorEl_Select)
-  const [ anchorEl_Tag, setAnchorEl_Tag ] = useState(null)
-  const openTag = Boolean(anchorEl_Tag)
 
   const [ anchorEl_Filter, setAnchorEl_Filter ] = useState(null)
   const openFilter = Boolean(anchorEl_Filter)
@@ -77,8 +75,8 @@ const DataWarehouse = (props) => {
   const [ selectText, setSelectText ] = useState('Select All')
   const [ menuItem, setMenuItem ] = useState({
     all: true,
-    cleaned: filteritem=='clean',
-    labeled: filteritem=='annotation',
+    cleaned: filteritem == 'clean',
+    labeled: filteritem == 'annotation',
     toTrain: false
   })
   const [ open, setOpen ] = useState(false)
@@ -136,14 +134,6 @@ const DataWarehouse = (props) => {
     setAnchorEl_Select(null)
   }
 
-  const handleClickTag = (event) => {
-    setAnchorEl_Tag(event.currentTarget)
-  }
-
-  const handleCloseTag = () => {
-    setAnchorEl_Tag(null)
-  }
-
   const handleClose = () => {
     mounted.current = false
     resetS3ImageData()
@@ -190,46 +180,6 @@ const DataWarehouse = (props) => {
     setTimeout(() => {
       setSelectText('Select All')
     }, 100)
-  }
-
-  const handleClickCleanTag = () => {
-    if(selectItem.length) {
-      selectItem.forEach((data) => {
-        patchDataItem(data.id, { cleanTag: 1 })
-      })
-    } else {
-      return
-    }
-  }
-
-  const handleCancelCleanTag = () => {
-    if(selectItem.length) {
-      selectItem.forEach((data) => {
-        patchDataItem(data.id, { cleanTag: 0 })
-      })
-    } else {
-      return
-    }
-  }
-
-  const handleClickTrainTag = () => {
-    if(selectItem.length) {
-      selectItem.forEach((data) => {
-        patchDataItem(data.id, { trainTag: 1 })
-      })
-    } else {
-      return
-    }
-  }
-
-  const handleCancelTrainTag = () => {
-    if(selectItem.length) {
-      selectItem.forEach((data) => {
-        patchDataItem(data.id, { trainTag: 0 })
-      })
-    } else {
-      return
-    }
   }
 
   const handleUploadImage = (e) => {
@@ -306,17 +256,14 @@ const DataWarehouse = (props) => {
   }
 
   const filterData = dataList.Data?.filter((data) => {
-    if (menuItem.cleaned && menuItem.labeled && menuItem.toTrain) {
-      return data.cleanTag == true && data.json == true && data.trainTag == true
+    if (menuItem.cleaned && menuItem.labeled) {
+      return data.cleanTag == true && data.annotation !== null
     }
     else if (menuItem.cleaned) {
       return data.cleanTag == true
     }
     else if (menuItem.labeled) {
-      return data.json == true
-    }
-    else if (menuItem.toTrain) {
-      return data.trainTag == true
+      return data.annotation !== null
     } else {
       return data
     }
@@ -447,12 +394,14 @@ const DataWarehouse = (props) => {
                   onClick={handleSubmit}
                   startIcon={<ModelTrainingIcon />}
                   disabled={
-                    !(dataList.Data?.some(item => item.json === true)
-                    && dataList.Data?.some(item => item.trainTag === true))
+                    !(selectItem.length > 0
+                    && dataList.Data?.findIndex(item => item.annotation != null) !== -1
+                    && menuItem.labeled)
                   }
                 >
                   Train
                 </Button>
+                {console.log(dataList.Data?.findIndex(item => item.annotation != null))}
                 <Button
                   aria-label='upload'
                   variant="contained"
@@ -628,63 +577,6 @@ const DataWarehouse = (props) => {
                 </Grid>
                 :null
                 }
-              </Grid>
-              <Grid item hidden={(selectItem.length == 0) || (!menuItem.cleaned)}>
-                <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelCleanTag} startIcon={<ImageIcon />}>
-                  DETAG (CLEAN)
-                </Button>
-              </Grid>
-              <Grid item hidden={(selectItem.length == 0) || (!menuItem.toTrain)}>
-                <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelTrainTag} startIcon={<ImageIcon />}>
-                  DETAG (TO TRAIN)
-                </Button>
-              </Grid>
-              <Grid
-                item
-                style={{ position: 'absolute', right: 160, marginRight: 5 }}
-              >
-                <Button
-                  id="basic-button"
-                  variant="outlined"
-                  aria-controls={openTag ? 'basic-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={openTag ? 'true' : undefined}
-                  onClick={handleClickTag}
-                  color='primary'
-                  endIcon={<ExpandCircleDownIcon />}
-                >
-                  Tag
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl_Tag}
-                  open={openTag}
-                  onClose={handleCloseTag}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button'
-                  }}
-                  PaperProps={{
-                    sx: {
-                      color: 'white',
-                      backgroundColor: '#1c2127'
-                    }
-                  }}
-                >
-                  <MenuItem
-                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    disabled={selectItem.length == 0}
-                    onClick={handleClickCleanTag}
-                  >
-                    CLEAN
-                  </MenuItem>
-                  <MenuItem
-                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    disabled={selectItem.length == 0}
-                    onClick={handleClickTrainTag}
-                  >
-                    TO TRAIN
-                  </MenuItem>
-                </Menu>
               </Grid>
               <Grid item style={{ position: 'absolute', right: 35, marginRight: 5 }}>
                 <Button
