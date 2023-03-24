@@ -145,6 +145,7 @@ const LabelStudioWrapper = (props) => {
               ]
             }
           `)
+          setOpen(true)
         },
 
         onUpdateAnnotation: (ls, annotation) => {
@@ -181,14 +182,15 @@ const LabelStudioWrapper = (props) => {
               ]
             }
           `)
+          setOpen(true)
         }
       })
     }
   }, [ path, setAdditionalLabels ])
 
   const onSave = () => {
-    uploadJsonFile(fileList[0])
-    patchDataItem(dataImport, { json: 1, UserId: userImport })
+    // uploadJsonFile(fileList[0])
+    patchDataItem(dataImport, { annotation: json4Training, UserId: userImport })
     getDataItem(dataImport)
     setOpen(false)
     setTimeout(() => {
@@ -200,32 +202,11 @@ const LabelStudioWrapper = (props) => {
     setOpen(false)
   }
 
-  const exportJson = () => {
-    if (json4Training) {
-      const jsonData = JSON.parse(json4Training)
-      const fileName = dataItem.data + '.json'
-      const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
-      // console.log('export file', file)
-      setFileList([...fileList, file])
-      setOpen(true)
-    } else {
-      alert('Please Label and click Submit!')
-    }
-  }
-
   // just a wrapper node to place LSF into
   return (
     <div>
       <Box style={{ width: '85vw' }}>
         <div style={{ margin: 5 }} ref={rootRef} />
-        <Button
-          variant="contained"
-          style={{margin: 10}}
-          startIcon={<ExitToAppIcon />}
-          onClick={exportJson}
-        >
-          export
-        </Button>
       </Box>
       <Dialog
         open={open}
@@ -234,7 +215,7 @@ const LabelStudioWrapper = (props) => {
       >
         <DialogContent style={{ backgroundColor: '#444950', width: '50vh' }}>
           <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
-            {dataItem.data+'.json'}
+            {dataItem.data}
           </DialogContentText>
         </DialogContent>
         <DialogTitle

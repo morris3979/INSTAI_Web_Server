@@ -571,7 +571,7 @@ const DataWarehouse = (props) => {
                 </Menu>
               </Grid>
               <Grid item hidden={!menuItem.cleaned}>
-                <Typography 
+                <Typography
                   sx={{
                     color: 'white'
                   }}
@@ -580,7 +580,7 @@ const DataWarehouse = (props) => {
                 </Typography>
               </Grid>
               <Grid item hidden={!menuItem.labeled}>
-                <Typography 
+                <Typography
                   sx={{
                     color: 'white'
                   }}
@@ -589,7 +589,7 @@ const DataWarehouse = (props) => {
                 </Typography>
               </Grid>
               <Grid item hidden={!menuItem.toTrain}>
-                <Typography 
+                <Typography
                   sx={{
                     color: 'white'
                   }}
@@ -790,7 +790,7 @@ const DataWarehouse = (props) => {
                                 fontSize: '12px'
                               }}
                             >
-                              {item.json == '0'? 'Unlabeled': null}
+                              {item.annotation == null? 'Unlabeled': null}
                             </Typography>
                           </Box>
                         </CardActionArea>

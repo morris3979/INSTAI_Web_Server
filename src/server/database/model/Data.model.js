@@ -22,16 +22,12 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
-        json: {
+        sampling: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
         },
-        cleanTag: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false,
-        },
-        trainTag: {
-            type: Sequelize.BOOLEAN,
+        annotation: {
+            type: Sequelize.JSON,
             defaultValue: false,
         },
         createdAt: {

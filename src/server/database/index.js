@@ -33,6 +33,7 @@ db.Device = require("./model/Device.model")(sequelize, Sequelize);
 db.Data = require("./model/Data.model")(sequelize, Sequelize);
 db.Label = require("./model/Label.model")(sequelize, Sequelize);
 db.Model = require("./model/Model.model")(sequelize, Sequelize);
+db.ModelGroup = require("./model/ModelGroup.model")(sequelize, Sequelize);
 
 // One to Many
 db.Organization.hasMany(db.Project, {foreignKey: 'OrganizationId'});
@@ -63,5 +64,7 @@ db.Organization.belongsToMany(db.User, { through: db.UserGroup });
 db.User.belongsToMany(db.Organization, { through: db.UserGroup });
 db.Device.belongsToMany(db.Model, { through: db.HwUpdateLog });
 db.Model.belongsToMany(db.Device, { through: db.HwUpdateLog });
+db.Data.belongsToMany(db.Model, { through: db.ModelGroup });
+db.Model.belongsToMany(db.Data, { through: db.ModelGroup });
 
 module.exports = db;
