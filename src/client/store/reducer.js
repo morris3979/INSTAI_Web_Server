@@ -1,7 +1,7 @@
 import {
   Modal_File, Which_Modal, Table_Status,
   Which_Project, Which_Host, Which_Device,
-  Logout_Information, User_Information,
+  Set_ClippedDrawer, Logout_Information, User_Information,
   Project_List, Data_List, Members_List,
   Device_List, Label_List, Model_List,
   Data_Item, Project_Item, S3_Image,
@@ -16,6 +16,7 @@ const defaultState = {
   whichProjectName:[],
   whichHostName:[],
   whichDeviceName:[],
+  clippedDrawer: {},
   userInformation: {},
   projectList: {},
   dataList: {},
@@ -58,6 +59,10 @@ const Reducer = (state = defaultState, action) => {
     }
     case Which_Device:{
       newState.whichDeviceName = action.value
+      return newState
+    }
+    case Set_ClippedDrawer: {
+      newState.clippedDrawer = action.value
       return newState
     }
     case User_Information: {

@@ -2,7 +2,7 @@ import axios from 'axios'
 import {
   Table_Status, Modal_File, Which_Modal,
   Which_Project, Which_Host, Which_Device,
-  User_Information, Logout_Information,
+  Set_ClippedDrawer, User_Information, Logout_Information,
   Project_List, Data_List, Members_List,
   Device_List, Label_List, Model_List,
   Data_Item, Project_Item, S3_Image,
@@ -58,6 +58,13 @@ export const WhichHost = (text) => {
 export const WhichDevice = (text) => {
   return({
     type: Which_Device,
+    value: text
+  })
+}
+
+export const SetClippedDrawer = (text) => {
+  return({
+    type: Set_ClippedDrawer,
     value: text
   })
 }

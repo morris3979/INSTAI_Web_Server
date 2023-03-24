@@ -16,10 +16,12 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ScienceIcon from '@mui/icons-material/Science';
 import DvrIcon from '@mui/icons-material/Dvr';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
+import { SetClippedDrawer } from '../../store/actionCreater';
 
 const drawerWidth = '120';
 
 const ClippedDrawer = (props) => {
+    const {setClippedDrawer, clippedDrawer} = props
     const navigate = useNavigate()
 
     return (
@@ -49,7 +51,12 @@ const ClippedDrawer = (props) => {
                         }}
                     >
                         <ListItem key={'Overview'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton onClick={() => navigate('/Project/Overview')}>
+                            <ListItemButton 
+                                onClick={() => {
+                                    setClippedDrawer('Overview')
+                                    setTimeout(() => {navigate('/Project/Overview')},300)
+                                }}
+                            >
                                 <Grid
                                     container
                                     direction="column"
@@ -57,27 +64,18 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <DvrIcon style={{ color: 'white' }} />
+                                    <DvrIcon style={clippedDrawer=='Overview'||''?{ color: 'Cyan' }:{ color: 'white' }} />
                                     <ListItemText primary={'Overview'} style={{ color: 'white' }} />
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Data'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton onClick={() => navigate('/Project/Data')}>
-                                <Grid
-                                    container
-                                    direction="column"
-                                    justifyContent="center"
-                                    alignItems="center"
-                                    width={drawerWidth}
-                                >
-                                    <PermMediaIcon style={{ color: 'white' }} />
-                                    <ListItemText primary={'Data'} style={{ color: 'white' }} />
-                                </Grid>
-                            </ListItemButton>
-                        </ListItem>
                         <ListItem key={'Device'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton onClick={() => navigate('/Project/Device')}>
+                            <ListItemButton 
+                                onClick={() => {
+                                    setClippedDrawer('Device')
+                                    setTimeout(() => {navigate('/Project/Device')},300)
+                                }}
+                            >
                                 <Grid
                                     container
                                     direction="column"
@@ -85,7 +83,7 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <SettingsRemoteIcon style={{ color: 'white' }} />
+                                    <SettingsRemoteIcon style={clippedDrawer=='Device'?{ color: 'Cyan' }:{ color: 'white' }} />
                                     <ListItemText
                                         primary={'Device'}
                                         style={{
@@ -99,8 +97,13 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Model'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton onClick={() => navigate('/Project/Model')}>
+                        <ListItem key={'Data'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
+                            <ListItemButton 
+                                onClick={() => {
+                                    setClippedDrawer('Data')
+                                    setTimeout(() => {navigate('/Project/Data')},300)
+                                }}
+                            >
                                 <Grid
                                     container
                                     direction="column"
@@ -108,7 +111,26 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <ModelTrainingIcon style={{ color: 'white' }} />
+                                    <PermMediaIcon style={clippedDrawer=='Data'?{ color: 'Cyan' }:{ color: 'white' }} />
+                                    <ListItemText primary={'Data'} style={{ color: 'white' }} />
+                                </Grid>
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem key={'Model'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
+                            <ListItemButton 
+                                onClick={() => {
+                                    setClippedDrawer('Model')
+                                    setTimeout(() => {navigate('/Project/Model')},300)
+                                }}
+                            >
+                                <Grid
+                                    container
+                                    direction="column"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    width={drawerWidth}
+                                >
+                                    <ModelTrainingIcon style={clippedDrawer=='Model'?{ color: 'Cyan' }:{ color: 'white' }} />
                                     <ListItemText
                                         primary={'Model'}
                                         style={{
@@ -123,7 +145,12 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Detector'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
-                            <ListItemButton onClick={() => navigate('/Project/Detector')}>
+                            <ListItemButton 
+                                onClick={() => {
+                                    setClippedDrawer('Detector')
+                                    setTimeout(() => {navigate('/Project/Detector')},300)
+                                }}
+                            >
                                 <Grid
                                     container
                                     direction="column"
@@ -131,7 +158,7 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <ScienceIcon style={{ color: 'white' }} />
+                                    <ScienceIcon style={clippedDrawer=='Detector'?{ color: 'Cyan' }:{ color: 'white' }} />
                                     <ListItemText
                                         primary={'Detector'}
                                         style={{
@@ -177,12 +204,19 @@ const ClippedDrawer = (props) => {
 
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
-    return {}
+    return {
+        clippedDrawer: state.clippedDrawer
+    }
   }
 
   const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
-    return {}
+    return {
+        setClippedDrawer(text) {
+            const action = SetClippedDrawer(text)
+            dispatch(action)
+          },
+    }
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClippedDrawer)
