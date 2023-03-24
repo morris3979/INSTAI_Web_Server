@@ -16,7 +16,7 @@ const defaultState = {
   whichProjectName:[],
   whichHostName:[],
   whichDeviceName:[],
-  clippedDrawer: {},
+  clippedDrawer: 'Overview',
   userInformation: {},
   projectList: {},
   dataList: {},

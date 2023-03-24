@@ -24,7 +24,8 @@ import {
   GetLabelList,
   GetProjectItem,
   GetModelList,
-  ProjectImport
+  ProjectImport,
+  SetClippedDrawer
 } from '../../store/actionCreater'
 
 const ActionAreaCard = (props) => {
@@ -35,7 +36,8 @@ const ActionAreaCard = (props) => {
     createProject,
     projectImport,
     organizationImport,
-    userImport
+    userImport,
+    setClippedDrawer
   } = props
 
   const [ open, setOpen ] = useState(false)
@@ -53,6 +55,7 @@ const ActionAreaCard = (props) => {
     userInformation
     projectList
     getProjectList(organizationImport)
+    setClippedDrawer('Overview')
   },[input])
 
   const onCreate = async () => {
@@ -338,6 +341,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     projectImport(id) {
       const action = ProjectImport(id)
+      dispatch(action)
+    },
+    setClippedDrawer(text) {
+      const action = SetClippedDrawer(text)
       dispatch(action)
     },
   }

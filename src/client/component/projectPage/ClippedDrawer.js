@@ -64,7 +64,7 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <DvrIcon style={clippedDrawer=='Overview'||''?{ color: 'Cyan' }:{ color: 'white' }} />
+                                    <DvrIcon style={clippedDrawer=='Overview'?{ color: 'Cyan' }:{ color: 'white' }} />
                                     <ListItemText primary={'Overview'} style={{ color: 'white' }} />
                                 </Grid>
                             </ListItemButton>
