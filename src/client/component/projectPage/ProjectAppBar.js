@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -18,7 +19,10 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import CheckIcon from '@mui/icons-material/Check';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import HMobiledataIcon from '@mui/icons-material/HMobiledata';
 import {
   LogoutData,
   GetProjectList,
@@ -26,6 +30,7 @@ import {
   GetProjectItem,
   GetDataList,
   GetLabelList,
+  SetClippedDrawer
 } from '../../store/actionCreater'
 
 const steps = ['Data collection', 'Clean data', 'Annotation', 'Train']
@@ -42,6 +47,7 @@ const ProjectAppBar = (props) => {
     labelList,
     organizationImport,
     getLabelList,
+    setClippedDrawer
   } = props
 
   const [ openEditProject, setOpenEditProject ] = useState(false)
@@ -53,6 +59,7 @@ const ProjectAppBar = (props) => {
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
 
+  const navigate = useNavigate()
   const mounted = useRef()
   
   useEffect(() => {
@@ -96,6 +103,7 @@ const ProjectAppBar = (props) => {
         setActiveStep(0)
       }
     }
+    return () => {setSkipped(new Set())}
   }, [activeStep, steps, dataList])
 
   const onSaveEditProject = async () => {
@@ -211,31 +219,59 @@ const ProjectAppBar = (props) => {
                     <Step
                       key={label}
                       {...stepProps}
-                      sx={{
-                        '& .MuiStepLabel-root .Mui-completed': {
-                          color: 'grey', // circle color (COMPLETED)
-                        },
-                        '& .MuiStepLabel-label .Mui-completed .MuiStepLabel-alternativeLabel': {
-                          color: 'grey', // Just text label (COMPLETED)
-                        },
-                        '& .MuiStepLabel-root .Mui-active': {
-                          color: 'green', // circle color (ACTIVE)
-                        },
-                        '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
-                          fill: 'common.white', // circle's number (ACTIVE)
+                      sx={
+                        activeStep>=index?
+                        {
+                          '& .MuiStepLabel-root .Mui-completed': {
+                            color: 'green', // circle color (COMPLETED)
+                          },
+                          '& .MuiStepLabel-label .Mui-completed .MuiStepLabel-alternativeLabel': {
+                            color: 'grey', // Just text label (COMPLETED)
+                          },
+                          '& .MuiStepLabel-root .Mui-active': {
+                            color: 'grey', // circle color (ACTIVE)
+                          },
+                          '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                            fill: 'common.white',// circle's number (ACTIVE)
+                          },
+                          '& .MuiStepLabel-label': {
+                            color: 'darkgrey', // Just text label (SKIP)
+                          },
+                          '& .MuiStepIcon-root .Mui-disabled': {
+                            color: 'darkgrey'
+                          },
+                          '& .MuiStepLabel-root .Mui-disabled': {
+                            color: 'darkgrey',
+                          },
+                        }:
+                        { 
+                        "& .MuiSvgIcon-root": { 
+                          color: "red"
                         },
                         '& .MuiStepLabel-label': {
-                          color: 'darkgrey', // Just text label (SKIP)
+                          color: 'red', 
                         },
-                        '& .MuiStepIcon-root .Mui-disabled': {
-                          color: 'darkgrey'
-                        },
-                        '& .MuiStepLabel-root .Mui-disabled': {
-                          color: 'darkgrey',
-                        },
-                      }}
+                        }}
                     >
-                      <StepLabel {...labelProps}>{label}</StepLabel>
+                      <div>
+                      <StepLabel 
+                        {...labelProps} 
+                        icon={
+                          activeStep==index
+                          ?<AutorenewIcon color='Cyan'/>
+                          :activeStep<index
+                          ?<HMobiledataIcon color='red'/>
+                          :<CheckIcon color='green'/>
+                        }
+                        onClick={() => {
+                          if(label == 'Data collection'){
+                            setClippedDrawer('Device')
+                            setTimeout(() => {navigate('/Project/Device')},300)
+                          }
+                        }}>
+                          {label}
+                      </StepLabel>
+                      </div>
                     </Step>
                   )
                 })}
@@ -330,6 +366,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     getLabelList(id) {
       const action = GetLabelList(id)
+      dispatch(action)
+    },
+    setClippedDrawer(text) {
+      const action = SetClippedDrawer(text)
       dispatch(action)
     },
   }
