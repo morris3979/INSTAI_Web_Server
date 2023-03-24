@@ -64,8 +64,17 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <DvrIcon style={clippedDrawer=='Overview'?{ color: 'Cyan' }:{ color: 'white' }} />
-                                    <ListItemText primary={'Overview'} style={{ color: 'white' }} />
+                                    <DvrIcon style={{ color: clippedDrawer=='Overview'? 'Cyan' : 'darkcyan' }} />
+                                    <ListItemText
+                                        primary={'Overview'}
+                                        style={{
+                                            color: clippedDrawer=='Overview'? 'Cyan' : 'darkcyan',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            flexDirection: 'column',
+                                            textAlign: 'center'
+                                        }}
+                                    />
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
@@ -83,11 +92,11 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <SettingsRemoteIcon style={clippedDrawer=='Device'?{ color: 'Cyan' }:{ color: 'white' }} />
+                                    <SettingsRemoteIcon style={{ color: clippedDrawer=='Device'? 'Cyan' : 'darkcyan' }} />
                                     <ListItemText
                                         primary={'Device'}
                                         style={{
-                                            color: 'white',
+                                            color: clippedDrawer=='Device'? 'Cyan' : 'darkcyan',
                                             display: 'flex',
                                             justifyContent: 'center',
                                             flexDirection: 'column',
@@ -111,8 +120,17 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <PermMediaIcon style={clippedDrawer=='Data'?{ color: 'Cyan' }:{ color: 'white' }} />
-                                    <ListItemText primary={'Data'} style={{ color: 'white' }} />
+                                    <PermMediaIcon style={{ color: clippedDrawer=='Data'? 'Cyan' : 'darkcyan' }} />
+                                    <ListItemText
+                                        primary={'Data'}
+                                        style={{
+                                            color: clippedDrawer=='Data'? 'Cyan' : 'darkcyan',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            flexDirection: 'column',
+                                            textAlign: 'center'
+                                        }}
+                                    />
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
@@ -130,11 +148,11 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <ModelTrainingIcon style={clippedDrawer=='Model'?{ color: 'Cyan' }:{ color: 'white' }} />
+                                    <ModelTrainingIcon style={{ color: clippedDrawer=='Model'? 'Cyan' : 'darkcyan' }} />
                                     <ListItemText
                                         primary={'Model'}
                                         style={{
-                                            color: 'white',
+                                            color: clippedDrawer=='Model'? 'Cyan' : 'darkcyan',
                                             display: 'flex',
                                             justifyContent: 'center',
                                             flexDirection: 'column',
@@ -158,11 +176,11 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <ScienceIcon style={clippedDrawer=='Detector'?{ color: 'Cyan' }:{ color: 'white' }} />
+                                    <ScienceIcon style={{ color: clippedDrawer=='Detector'? 'Cyan' : 'darkcyan' }} />
                                     <ListItemText
                                         primary={'Detector'}
                                         style={{
-                                            color: 'white',
+                                            color: clippedDrawer=='Detector'? 'Cyan' : 'darkcyan',
                                             display: 'flex',
                                             justifyContent: 'center',
                                             flexDirection: 'column',
@@ -181,11 +199,11 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <SettingsIcon style={{ color: 'white' }} />
+                                    <SettingsIcon style={{ color: 'Cyan' }} />
                                     <ListItemText
                                         primary={'Settings'}
                                         style={{
-                                            color: 'white',
+                                            color: 'Cyan',
                                             display: 'flex',
                                             justifyContent: 'center',
                                             flexDirection: 'column',

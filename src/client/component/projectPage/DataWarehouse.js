@@ -503,19 +503,6 @@ const DataWarehouse = (props) => {
                     <Checkbox sx={{ color: 'white' }} checked={menuItem.labeled} />
                     <ListItemText primary={'labeled'} sx={{ marginRight: 3 }} />
                   </MenuItem>
-                  <MenuItem
-                    key={'toTrain'}
-                    sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={(e) => {
-                      setMenuItem((prevState) => ({
-                        ...prevState,
-                        toTrain: e.target.checked
-                      }))
-                    }}
-                  >
-                    <Checkbox sx={{ color: 'white' }} checked={menuItem.toTrain} />
-                    <ListItemText primary={'to train'} sx={{ marginRight: 3 }} />
-                  </MenuItem>
                 </Menu>
               </Grid>
               <Grid item hidden={!menuItem.cleaned}>
