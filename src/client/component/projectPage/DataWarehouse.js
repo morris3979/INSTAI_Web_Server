@@ -269,6 +269,22 @@ const DataWarehouse = (props) => {
     }
   })
 
+  const dataSlice = (text) => {
+    if(text != null){
+      const annotation = JSON.parse(text.slice(text.indexOf('annotation')-1,-1).replace('"annotation":',''))
+      const height = (JSON.parse(text.slice(text.indexOf('image')-1,text.indexOf('annotation')-2).replace('"image":',''))).height
+      const width = (JSON.parse(text.slice(text.indexOf('image')-1,text.indexOf('annotation')-2).replace('"image":',''))).width
+      return [annotation, height, width]
+    } else {
+      return [null, null, null]
+    }
+  }
+
+  const generateRandomCode = (id) => {
+    var myRandomColor = '#'+(Math.floor(id*56).toString(16)).slice(0,1)+(Math.floor(id*14).toString(16)).slice(0,1)+(Math.floor(id*9584).toString(16)).slice(0,1);
+    return myRandomColor;
+  }
+
   return (
       <Box
         style={{ borderRadius: 20, marginLeft: 100, marginTop: 130 }}
@@ -615,11 +631,15 @@ const DataWarehouse = (props) => {
                 style={{ marginLeft: 10 }}
               >
                 {filterData?.map((item, key) => {
+                  const annotation = dataSlice(item.annotation)[0]
+                  const height = dataSlice(item.annotation)[1]
+                  const width = dataSlice(item.annotation)[2]
                   return(
                     <Grid item xs={2} sm={4} md={4} key={key}>
                       <Card
                         sx={{
                           maxWidth: 280,
+                          maxHeight: 210,
                           border: selectItem.some(value => value.id == item.id)? '2px solid green': null,
                           "&:hover": { border: '2px solid lightblue' }
                         }}
@@ -650,27 +670,48 @@ const DataWarehouse = (props) => {
                               }, 300)
                             }}
                           />
-                          <Box
-                            style={{
-                              position: 'absolute',
-                              right: 5,
-                              bottom: 5,
-                              backgroundColor: '#000',
-                              color: '#fff',
-                              opacity: .5,
-                              borderRadius: 5
-                            }}
-                          >
-                            <Typography
+                          {item.annotation != null
+                          ? <Grid>
+                              {annotation.map((c) => {
+                                return (
+                                  <Box
+                                    style={{
+                                      position: 'absolute',
+                                      left: `${c.bbox[0]*(280/width)}px`,
+                                      top: `${c.bbox[1]*(210/height)}px`
+                                    }}
+                                    sx={{
+                                      width: `${c.bbox[2]*(280/width)}px`,
+                                      height: `${c.bbox[3]*(210/height)}px`,
+                                      border: `1px solid ${generateRandomCode(c.category_id)}`
+                                    }}
+                                  >
+                                  </Box>
+                                )
+                              })}
+                            </Grid>
+                          : <Box
                               style={{
-                                marginLeft: 5,
-                                marginRight: 5,
-                                fontSize: '12px'
+                                position: 'absolute',
+                                right: 5,
+                                bottom: 5,
+                                backgroundColor: '#000',
+                                color: '#fff',
+                                opacity: .5,
+                                borderRadius: 5
                               }}
                             >
-                              {item.annotation == null? 'Unlabeled': null}
-                            </Typography>
-                          </Box>
+                              <Typography
+                                style={{
+                                  marginLeft: 5,
+                                  marginRight: 5,
+                                  fontSize: '12px'
+                                }}
+                              >
+                                Unlabeled
+                              </Typography>
+                            </Box>
+                          }
                         </CardActionArea>
                       </Card>
                     </Grid>
