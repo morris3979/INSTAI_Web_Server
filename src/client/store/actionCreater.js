@@ -75,6 +75,13 @@ export const FilterItem = (text) => {
     value: text
   })
 }
+
+export const CleanFilterItem = () => {
+  return({
+    type: Filter_Item,
+    value: {}
+  })
+}
 // >>>
 
 //API <<<

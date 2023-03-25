@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import { io } from 'socket.io-client'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -21,7 +22,9 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import {
   GetModelList,
-  PostAIServerMQTT
+  PostAIServerMQTT,
+  SetClippedDrawer,
+  FilterItem
 } from '../../store/actionCreater'
 
 const columns = [
@@ -36,7 +39,9 @@ const ModelTable = (props) => {
     projectImport,
     modelList,
     getModelList,
-    postAIServerMQTT
+    postAIServerMQTT,
+    setClippedDrawer,
+    filterItem
   } = props
 
   useEffect(() => {
@@ -62,6 +67,8 @@ const ModelTable = (props) => {
       console.log('https socket disconnected ...')
     })
   },[])
+
+  const navigate = useNavigate()
 
   const [ searchName, setSearchName] = useState('')
   const [ page, setPage ] = useState(0)
@@ -90,6 +97,15 @@ const ModelTable = (props) => {
 
   const onDataset = (row) => {
     console.log('row', row)
+    setClippedDrawer('Data')
+    filterItem({
+      filter: 'annotation',
+      modelName: row.modelName,
+      dataset: row.dataset.replace(/"/g, '').split(',')
+    })
+    setTimeout(() => {
+      navigate('/Project/Data')
+    },300)
   }
 
   const actionBtn = (row) => {
@@ -295,6 +311,14 @@ const mapStateToProps = (state) => {
         const action = PostAIServerMQTT(data)
         dispatch(action)
       },
+      setClippedDrawer(text) {
+        const action = SetClippedDrawer(text)
+        dispatch(action)
+      },
+      filterItem(text) {
+        const action = FilterItem(text)
+        dispatch(action)
+      }
     }
   }
 

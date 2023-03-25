@@ -128,7 +128,7 @@ const Overview = (props) => {
                                     marginLeft: 3
                                 }}
                             >
-                                Data Labeled
+                                Data Sampled
                             </Typography>
                             <Typography
                                 noWrap
@@ -141,7 +141,7 @@ const Overview = (props) => {
                                     bottom: 15
                                 }}
                             >
-                                {dataList.Data?.filter(item => item.annotation !== null).length === undefined? 0: dataList.Data?.filter(item => item.annotation !== null).length}
+                                {dataList.Data?.filter(item => item.sampling === true).length === undefined? 0: dataList.Data?.filter(item => item.sampling === true).length}
                             </Typography>
                         </Box>
                     </Grid>
@@ -165,7 +165,7 @@ const Overview = (props) => {
                                     marginLeft: 3
                                 }}
                             >
-                                Data to Train
+                                Data Labeled
                             </Typography>
                             <Typography
                                 noWrap
@@ -178,7 +178,7 @@ const Overview = (props) => {
                                     bottom: 15
                                 }}
                             >
-                                {dataList.Data?.filter(item => item.trainTag === true).length === undefined? 0: dataList.Data?.filter(item => item.trainTag === true).length}
+                                {dataList.Data?.filter(item => item.annotation !== null).length === undefined? 0: dataList.Data?.filter(item => item.annotation !== null).length}
                             </Typography>
                         </Box>
                     </Grid>

@@ -39,6 +39,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import CancelIcon from '@mui/icons-material/Cancel';
 import {
   GetDataList,
   GetDataItem,
@@ -50,7 +51,8 @@ import {
   DataImport,
   UploadTrainData,
   PostTrainData,
-  PostAIServerMQTT
+  PostAIServerMQTT,
+  CleanFilterItem
 } from '../../store/actionCreater'
 
 const columns = [
@@ -80,7 +82,8 @@ const DataWarehouse = (props) => {
     postTrainData,
     s3Train,
     postAIServerMQTT,
-    filteritem
+    filterItem,
+    cleanFilterItem
   } = props
 
   const [ anchorEl_Select, setAnchorEl_Select ] = useState(null)
@@ -93,8 +96,8 @@ const DataWarehouse = (props) => {
   const [ selectText, setSelectText ] = useState('Select All')
   const [ menuItem, setMenuItem ] = useState({
     all: true,
-    cleaned: filteritem == 'clean',
-    labeled: filteritem == 'annotation',
+    cleaned: filterItem.filter == 'clean',
+    labeled: filterItem.filter == 'annotation',
     toTrain: false
   })
   const [ open, setOpen ] = useState(false)
@@ -135,6 +138,7 @@ const DataWarehouse = (props) => {
   const mounted = useRef()
 
   useEffect(() => {
+    console.log('filterItem', filterItem)
     if(mounted.current === false) {
       mounted.current = true
       getDataList(projectImport)
@@ -602,7 +606,7 @@ const DataWarehouse = (props) => {
                 direction="row"
                 justifyContent="flex-start"
                 alignItems="center"
-                width={'30vw'}
+                width={'60vw'}
               >
                 <Grid item>
                   <Typography
@@ -630,6 +634,39 @@ const DataWarehouse = (props) => {
                   >
                     - Annotation
                   </Typography>
+                </Grid>
+                <Grid item hidden={filterItem.filter === 'annotation'? false: true}>
+                  <Grid
+                    container
+                    direction="row"
+                    alignItems="center"
+                  >
+                    <Typography
+                      noWrap
+                      variant="h5"
+                      sx={{ color: 'white', fontWeight: 'bold', marginLeft: 1 }}
+                    >
+                      - {filterItem.modelName}
+                    </Typography>
+                    <IconButton
+                      size='small'
+                      aria-label="close"
+                      component="label"
+                      style={{
+                        marginLeft: 2,
+                        color: 'red',
+                        // border: '1px solid red'
+                      }}
+                      onClick={()=>{
+                        cleanFilterItem()
+                        setTimeout(() => {
+                          location.reload()
+                        },100)
+                      }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  </Grid>
                 </Grid>
               </Grid>
               <div>
@@ -913,7 +950,7 @@ const mapStateToProps = (state) => {
       s3Train: state.s3Train,
       projectItem: state.projectItem,
       projectImport: state.projectImport,
-      filteritem: state.filteritem
+      filterItem: state.filterItem
     }
   }
 
@@ -962,6 +999,10 @@ const mapStateToProps = (state) => {
       },
       postAIServerMQTT(data) {
         const action = PostAIServerMQTT(data)
+        dispatch(action)
+      },
+      cleanFilterItem() {
+        const action = CleanFilterItem()
         dispatch(action)
       }
     }

@@ -17,7 +17,7 @@ const defaultState = {
   whichHostName:[],
   whichDeviceName:[],
   clippedDrawer: 'Overview',
-  filteritem: '',
+  filterItem: '',
   userInformation: {},
   projectList: {},
   dataList: {},
@@ -68,7 +68,7 @@ const Reducer = (state = defaultState, action) => {
       return newState
     }
     case Filter_Item: {
-      newState.filteritem = action.value
+      newState.filterItem = action.value
       return newState
     }
     case User_Information: {

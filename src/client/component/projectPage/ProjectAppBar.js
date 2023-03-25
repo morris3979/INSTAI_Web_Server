@@ -46,8 +46,6 @@ const ProjectAppBar = (props) => {
     labelList,
     organizationImport,
     getLabelList,
-    setClippedDrawer,
-    filterItem
   } = props
 
   const [ openEditProject, setOpenEditProject ] = useState(false)
@@ -59,7 +57,6 @@ const ProjectAppBar = (props) => {
   const [ activeStep, setActiveStep ] = useState(0)
   const [ skipped, setSkipped ] = useState(new Set())
 
-  const navigate = useNavigate()
   const mounted = useRef()
 
   useEffect(() => {
@@ -75,16 +72,17 @@ const ProjectAppBar = (props) => {
       getProjectItem(projectImport)
       getDataList(projectImport)
       getProjectItem(projectImport)
+      console.log('clean', dataList.Data?.map((e) => e.sampling).indexOf(true))
       if (dataList.Data?.length) {
         const step1 = (skipped.size == 0) &&
                       (dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) &&
-                      (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
+                      (dataList.Data?.map((e) => e.annotation !== null).indexOf(true) == -1)
         const step2 = (skipped.size == 0) &&
                       (dataList.Data?.map((e) => e.sampling).indexOf(true) != -1) &&
-                      (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
+                      (dataList.Data?.map((e) => e.annotation !== null).indexOf(true) == -1)
         const step2_skip = (skipped.size == 0) &&
                       (dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) &&
-                      (dataList.Data?.map((e) => e.json).indexOf(true) != -1)
+                      (dataList.Data?.map((e) => e.annotation !== null).indexOf(true) != -1)
         if (step1) {
           setActiveStep(1)
         } else {
@@ -105,7 +103,6 @@ const ProjectAppBar = (props) => {
         setActiveStep(0)
       }
     }
-    return () => {setSkipped(new Set())}
   }, [activeStep, steps])
 
   const onSaveEditProject = async () => {
@@ -221,75 +218,42 @@ const ProjectAppBar = (props) => {
                     <Step
                       key={label}
                       {...stepProps}
-                      sx={
-                        activeStep>=index?
-                        {
+                      sx={{
                           '& .MuiStepLabel-root .Mui-completed': {
                             color: 'green', // circle color (COMPLETED)
                           },
                           '& .MuiStepLabel-label .Mui-completed .MuiStepLabel-alternativeLabel': {
-                            color: 'grey', // Just text label (COMPLETED)
+                            color: 'darkgrey', // Just text label (COMPLETED)
                           },
                           '& .MuiStepLabel-root .Mui-active': {
-                            color: 'grey', // circle color (ACTIVE)
+                            color: 'darkgrey', // circle color (ACTIVE)
                           },
                           '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
-                            fill: 'common.white',// circle's number (ACTIVE)
+                            fill: 'darkgrey',// circle's number (ACTIVE)
                           },
                           '& .MuiStepLabel-label': {
                             color: 'darkgrey', // Just text label (SKIP)
                           },
                           '& .MuiStepIcon-root .Mui-disabled': {
-                            color: 'darkgrey'
+                            color: 'red'
                           },
                           '& .MuiStepLabel-root .Mui-disabled': {
-                            color: 'darkgrey',
-                          },
-                        }:
-                        {
-                          "& .MuiSvgIcon-root": {
-                            color: "red"
-                          },
-                          '& .MuiStepLabel-label': {
                             color: 'red',
                           },
-                        }
-                      }
+                      }}
                     >
-                      <div>
                       <StepLabel
                         {...labelProps}
                         icon={
-                          activeStep==index
+                          activeStep == index
                           ?<AutorenewIcon color='Cyan'/>
-                          :activeStep<index
+                          :activeStep < index
                           ?<HMobiledataIcon color='red'/>
                           :<CheckIcon color='green'/>
                         }
-                        onClick={() => {
-                          if(label == 'Data collection'){
-                            setClippedDrawer('Device')
-                            setTimeout(() => {navigate('/Project/Device')},300)
-                          }
-                          else if(label == 'Data Sampling'){
-                            setClippedDrawer('Data')
-                            filterItem('clean')
-                            setTimeout(() => {navigate('/Project/Data')},300)
-                          }
-                          else if(label == 'Annotation'){
-                            setClippedDrawer('Data')
-                            filterItem('annotation')
-                            setTimeout(() => {navigate('/Project/Data')},300)
-                          }
-                          else if(label == 'Model Training'){
-                            setClippedDrawer('Model')
-                            setTimeout(() => {navigate('/Project/Model')},300)
-                          }
-                        }}
                       >
                         {label}
                       </StepLabel>
-                      </div>
                     </Step>
                   )
                 })}

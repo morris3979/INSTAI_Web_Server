@@ -28,7 +28,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         annotation: {
             type: Sequelize.STRING,
-            defaultValue: false,
+            allowNull: true,
         },
         createdAt: {
             field: 'created_at',
