@@ -77,13 +77,13 @@ const ProjectAppBar = (props) => {
       getProjectItem(projectImport)
       if (dataList.Data?.length) {
         const step1 = (skipped.size == 0) &&
-                      (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                      (dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) &&
                       (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
         const step2 = (skipped.size == 0) &&
-                      (dataList.Data?.map((e) => e.cleanTag).indexOf(true) != -1) &&
+                      (dataList.Data?.map((e) => e.sampling).indexOf(true) != -1) &&
                       (dataList.Data?.map((e) => e.json).indexOf(true) == -1)
         const step2_skip = (skipped.size == 0) &&
-                      (dataList.Data?.map((e) => e.cleanTag).indexOf(true) == -1) &&
+                      (dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) &&
                       (dataList.Data?.map((e) => e.json).indexOf(true) != -1)
         if (step1) {
           setActiveStep(1)

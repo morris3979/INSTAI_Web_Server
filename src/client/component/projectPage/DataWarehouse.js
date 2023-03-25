@@ -14,6 +14,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import { Container } from '@mui/material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -25,10 +33,12 @@ import ListItemText from '@mui/material/ListItemText';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ImageIcon from '@mui/icons-material/Image';
-import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import CircularProgress from '@mui/material/CircularProgress';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   GetDataList,
   GetDataItem,
@@ -42,6 +52,14 @@ import {
   PostTrainData,
   PostAIServerMQTT
 } from '../../store/actionCreater'
+
+const columns = [
+  { id: 'space', label: '', minWidth: '2vw' },
+  { id: 'data', label: 'File Name', minWidth: '30vw' },
+  { id: 'sampling', label: 'Sampled', minWidth: '20vw' },
+  { id: 'annotation', label: 'Annotated', minWidth: '20vw' },
+  { id: 'createdAt', label: 'Time Uploaded', minWidth: '25vw' },
+]
 
 const DataWarehouse = (props) => {
   const {
@@ -85,6 +103,19 @@ const DataWarehouse = (props) => {
   const [ openTrainData, setOpenTrainData ] = useState(false)
   const [ trainData, setTrainData ] = useState()
   const [ trainDataName, setTrainDataName ] = useState()
+  const [ view, setView ] = useState(true)
+
+  const [ page, setPage ] = useState(0)
+  const [ rowsPerPage, setRowsPerPage ] = useState(10)
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  }
 
   const replacer = (key, value) => {
     if (key == 'id') return undefined
@@ -290,6 +321,179 @@ const DataWarehouse = (props) => {
     return myRandomColor;
   }
 
+  const ImageView = (
+    <Box sx={{ flexGrow: 1 }} style={{ marginBottom: 20 }}>
+      <Grid container
+        maxWidth='90vw'
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 20 }}
+        style={{ marginLeft: 10 }}
+      >
+        {filterData?.map((item, key) => {
+          const annotation = dataSlice(item.annotation)[0]
+          const height = dataSlice(item.annotation)[1]
+          const width = dataSlice(item.annotation)[2]
+          return(
+            <Grid item xs={2} sm={4} md={4} key={key}>
+              <Card
+                sx={{
+                  maxWidth: 280,
+                  maxHeight: 210,
+                  border: selectItem.some(value => value.id == item.id)? '2px solid green': null,
+                  "&:hover": { border: '2px solid lightblue' }
+                }}
+              >
+                <CardActionArea
+                  key={key}
+                  style={{ position: 'relative' }}
+                >
+                  <Checkbox
+                    inputProps={{ 'aria-label': 'data-checkbox' }}
+                    style={{ position: 'absolute', top: 0 }}
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
+                    icon={<CheckCircleIcon color='disabled' />}
+                    checkedIcon={<CheckCircleIcon color='primary' />}
+                    checked={selectItem.some(value => value.id == item.id)}
+                    onClick={() => { handleSelectItem(item.id, item.data)} }
+                  />
+                  <CardMedia
+                    title='Image'
+                    component="img"
+                    image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
+                    onClick={() => {
+                      // console.log('id', item.id)
+                      getDataItem(item.id)
+                      dataImport(item.id)
+                      setTimeout(() => {
+                        navigate('/Annotation')
+                      }, 300)
+                    }}
+                  />
+                  {item.annotation != null
+                  ?annotation.map((c) => {
+                    return (
+                        <Box
+                          style={{
+                            position: 'absolute',
+                            left: `${c.bbox[0]*(280/width)}px`,
+                            top: `${c.bbox[1]*(210/height)}px`
+                          }}
+                          sx={{
+                            width: `${c.bbox[2]*(280/width)}px`,
+                            height: `${c.bbox[3]*(210/height)}px`,
+                            border: `2px solid ${generateRandomCode(c.category_id)}`
+                          }}
+                        >
+                        </Box>
+                    )})
+                  :<Box
+                      style={{
+                        position: 'absolute',
+                        right: 5,
+                        bottom: 5,
+                        backgroundColor: '#000',
+                        color: '#fff',
+                        opacity: .5,
+                        borderRadius: 5
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          marginLeft: 5,
+                          marginRight: 5,
+                          fontSize: '12px'
+                        }}
+                      >
+                        Unlabeled
+                      </Typography>
+                    </Box>
+                  }
+                </CardActionArea>
+              </Card>
+            </Grid>
+          )
+        })}
+      </Grid>
+    </Box>
+  )
+
+  const ListView = (
+    <div>
+      <Container
+        style={{
+          marginBottom: 10,
+          width: '90vw',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <TableContainer sx={{ minHeight: '60vh', minWidth: '90vw' }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead
+              sx={{
+                [`& .MuiTableCell-head`]: {
+                  backgroundColor: 'lightblue',
+                  fontWeight: 'bold'
+                },
+              }}
+            >
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{
+                        minWidth: column.minWidth,
+                        fontSize: '14pt'
+                    }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {dataList.Data
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableCell key={'space'} align={'2vw'}/>
+                      <TableCell key={'data'} align={'30vw'} style={{ color: 'white', fontSize: '11pt' }}>
+                        {row.data}
+                      </TableCell>
+                      <TableCell key={'sampling'} align={'20vw'} style={{ color: 'white', fontSize: '10pt' }}>
+                        {row.sampling === true? <DoneIcon />: <CloseIcon />}
+                      </TableCell>
+                      <TableCell key={'annotation'} align={'20vw'} style={{ color: 'white', fontSize: '10pt' }}>
+                        {row.annotation !== null? <DoneIcon />: <CloseIcon />}
+                      </TableCell>
+                      <TableCell key={'createdAt'} align={'25vw'} style={{ color: 'white', fontSize: '11pt' }}>
+                        {row.createdAt?.slice(0, -5).replace('T', ' ')}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              }
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 20, 50]}
+          component="div"
+          count={filterData?.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          style={{ fontSize: '12pt', backgroundColor: 'lightblue', minWidth: '90vw' }}
+        />
+      </Container>
+    </div>
+  )
+
   return (
       <Box
         style={{ borderRadius: 20, marginLeft: 100, marginTop: 130 }}
@@ -473,15 +677,30 @@ const DataWarehouse = (props) => {
             >
               <Grid item>
                 <ButtonGroup aria-label="button group-2" sx={{ marginLeft: 5 }}>
-                  <Button aria-label='image' variant="outlined" component="label" startIcon={<ImageIcon />}>
+                  <Button
+                    aria-label='image'
+                    variant="outlined"
+                    component="label"
+                    startIcon={<ImageIcon />}
+                    onClick={() => setView(true)}
+                  >
                     Image View
                   </Button>
-                  <Button aria-label='video' variant="outlined" component="label" startIcon={<VideoCameraBackIcon />}>
-                    Video View
+                  <Button
+                    aria-label='video'
+                    variant="outlined"
+                    component="label"
+                    startIcon={<ViewListIcon />}
+                    onClick={() => setView(false)}
+                  >
+                    List View
                   </Button>
                 </ButtonGroup>
               </Grid>
-              <Grid item>
+              <Grid
+                item
+                hidden={!view}
+              >
                 <Button
                   id="basic-button"
                   variant="outlined"
@@ -583,7 +802,11 @@ const DataWarehouse = (props) => {
                 :null
                 }
               </Grid>
-              <Grid item style={{ position: 'absolute', right: 35, marginRight: 5 }}>
+              <Grid
+                item
+                hidden={!view}
+                style={{ position: 'absolute', right: 35, marginRight: 5 }}
+              >
                 <Button
                   id="basic-button"
                   variant="outlined"
@@ -626,99 +849,7 @@ const DataWarehouse = (props) => {
                 </Menu>
               </Grid>
             </Grid>
-            <Box sx={{ flexGrow: 1 }} style={{ marginBottom: 20 }}>
-              <Grid container
-                maxWidth='90vw'
-                spacing={{ xs: 2, md: 3 }}
-                columns={{ xs: 4, sm: 8, md: 20 }}
-                style={{ marginLeft: 10 }}
-              >
-                {filterData?.map((item, key) => {
-                  const annotation = dataSlice(item.annotation)[0]
-                  const height = dataSlice(item.annotation)[1]
-                  const width = dataSlice(item.annotation)[2]
-                  return(
-                    <Grid item xs={2} sm={4} md={4} key={key}>
-                      <Card
-                        sx={{
-                          maxWidth: 280,
-                          maxHeight: 210,
-                          border: selectItem.some(value => value.id == item.id)? '2px solid green': null,
-                          "&:hover": { border: '2px solid lightblue' }
-                        }}
-                      >
-                        <CardActionArea
-                          key={key}
-                          style={{ position: 'relative' }}
-                        >
-                          <Checkbox
-                            inputProps={{ 'aria-label': 'data-checkbox' }}
-                            style={{ position: 'absolute', top: 0 }}
-                            sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
-                            icon={<CheckCircleIcon color='disabled' />}
-                            checkedIcon={<CheckCircleIcon color='primary' />}
-                            checked={selectItem.some(value => value.id == item.id)}
-                            onClick={() => { handleSelectItem(item.id, item.data)} }
-                          />
-                          <CardMedia
-                            title='Image'
-                            component="img"
-                            image={`https://d20cmf4o2f77jz.cloudfront.net/image/${item.data}.jpg`}
-                            onClick={() => {
-                              // console.log('id', item.id)
-                              getDataItem(item.id)
-                              dataImport(item.id)
-                              setTimeout(() => {
-                                navigate('/Annotation')
-                              }, 300)
-                            }}
-                          />
-                          {item.annotation != null
-                          ?annotation.map((c) => {
-                            return (
-                                <Box
-                                  style={{
-                                    position: 'absolute',
-                                    left: `${c.bbox[0]*(280/width)}px`,
-                                    top: `${c.bbox[1]*(210/height)}px`
-                                  }}
-                                  sx={{
-                                    width: `${c.bbox[2]*(280/width)}px`,
-                                    height: `${c.bbox[3]*(210/height)}px`,
-                                    border: `2px solid ${generateRandomCode(c.category_id)}`
-                                  }}
-                                >
-                                </Box>
-                            )})
-                          :<Box
-                              style={{
-                                position: 'absolute',
-                                right: 5,
-                                bottom: 5,
-                                backgroundColor: '#000',
-                                color: '#fff',
-                                opacity: .5,
-                                borderRadius: 5
-                              }}
-                            >
-                              <Typography
-                                style={{
-                                  marginLeft: 5,
-                                  marginRight: 5,
-                                  fontSize: '12px'
-                                }}
-                              >
-                                Unlabeled
-                              </Typography>
-                            </Box>
-                          }
-                        </CardActionArea>
-                      </Card>
-                    </Grid>
-                  )
-                })}
-              </Grid>
-            </Box>
+            {view === true? ImageView: ListView}
           </div>
           }
         </div>
