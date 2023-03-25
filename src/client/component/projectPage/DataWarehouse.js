@@ -221,7 +221,7 @@ const DataWarehouse = (props) => {
       "project": projectItem.project,
       "modelName": modelName,
       "labels": labelList.Labels?.map((value) => {return value.labelClass}),
-      "trainData": dataList.Data?.filter(item => item.trainTag === true)?.map((value) => {return value.data}),
+      "trainData": selectItem.map((item) => item.value),
       "timestamp": localTime
     }, replacer, 2)
     setTrainData(trainJsonData)
@@ -231,6 +231,7 @@ const DataWarehouse = (props) => {
     const file = new File([JSON.stringify(jsonData)], fileName, { type: 'application/json' })
     uploadTrainData(file)
     setOpenTrainData(true)
+    console.log('selectItem', selectItem)
   }
 
   const handleConfirmTrainData = () => {
@@ -683,7 +684,7 @@ const DataWarehouse = (props) => {
                                     sx={{
                                       width: `${c.bbox[2]*(280/width)}px`,
                                       height: `${c.bbox[3]*(210/height)}px`,
-                                      border: `1px solid ${generateRandomCode(c.category_id)}`
+                                      border: `2px solid ${generateRandomCode(c.category_id)}`
                                     }}
                                   >
                                   </Box>
