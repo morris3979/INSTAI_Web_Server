@@ -18,6 +18,7 @@ import TextField from '@mui/material/TextField';
 import { Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RepeatIcon from '@mui/icons-material/Repeat';
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import {
   GetModelList,
   PostAIServerMQTT
@@ -87,13 +88,24 @@ const ModelTable = (props) => {
     console.log('row', row)
   }
 
+  const onDataset = (row) => {
+    console.log('row', row)
+  }
+
   const actionBtn = (row) => {
     return (
+      <ButtonGroup variant="outlined" aria-label="outlined button group">
         <Button
-          variant='contained'
+          variant='outlined'
+          aria-label='dataset'
+          onClick={() => onDataset(row)}
+        >
+          <ImageSearchIcon />
+        </Button>
+        <Button
+          variant='outlined'
           aria-label='retrain'
           startIcon={<RepeatIcon />}
-          style={{ width: 120 }}
           onClick={() => onRetrain(row)}
           sx={{
             "&:disabled": {
@@ -106,6 +118,7 @@ const ModelTable = (props) => {
         >
           retrain
         </Button>
+      </ButtonGroup>
     )
   }
 

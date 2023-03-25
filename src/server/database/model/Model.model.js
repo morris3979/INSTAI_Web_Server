@@ -10,6 +10,10 @@ module.exports = (sequelize, Sequelize) => {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        dataset: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
         status: {
           type: Sequelize.STRING,
           allowNull: false,

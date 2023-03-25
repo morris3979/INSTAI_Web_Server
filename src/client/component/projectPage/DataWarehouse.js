@@ -238,9 +238,10 @@ const DataWarehouse = (props) => {
     setOpenTrainData(false)
     const data = {
       modelName: trainDataName,
+      dataset: `${selectItem.map((item) => item.value)}`,
+      status: 'in progress',
       ProjectId: projectImport,
       UserId: userImport,
-      status: 'in progress'
     }
     const sendData = {
       "project": projectItem.project,
