@@ -191,16 +191,16 @@ const DataWarehouse = (props) => {
         now.getHours().toString().padStart(2, '0') + ':' +
         now.getMinutes().toString().padStart(2, '0') + ':' +
         now.getSeconds().toString().padStart(2, '0')
-    if(e.target.files.length < 11) {
-      setFileNum(e.target.files.length)
-      for(var i = 0; i < e.target.files.length; i++) {
-        var newName = `${dataList.project}_${localTime}_${('000' + (i + 1)).slice(-3)}_${e.target.files[i].name}`
-        uploadImageFile(new File([e.target.files[i]], newName, { type: e.target.files[i].type }))
-      }
-      setTimeout(() => {setOpen(true)}, 500)
-    } else {
-      alert('Upload limit. (Max: 10)')
+    // if(e.target.files.length < 11) {
+    setFileNum(e.target.files.length)
+    for(var i = 0; i < e.target.files.length; i++) {
+      var newName = `${dataList.project}_${localTime}_${('000' + (i + 1)).slice(-3)}_${e.target.files[i].name}`
+      uploadImageFile(new File([e.target.files[i]], newName, { type: e.target.files[i].type }))
     }
+    setTimeout(() => {setOpen(true)}, 500)
+    // } else {
+    //   alert('Upload limit. (Max: 10)')
+    // }
   }
 
   const handleSubmit = () => {
@@ -283,7 +283,10 @@ const DataWarehouse = (props) => {
   }
 
   const generateRandomCode = (id) => {
-    var myRandomColor = '#'+(Math.floor(id*56).toString(16)).slice(0,1)+(Math.floor(id*14).toString(16)).slice(0,1)+(Math.floor(id*9584).toString(16)).slice(0,1);
+    var myRandomColor = '#'+
+                        (Math.floor(id*9).toString(16)).slice(0,1)+
+                        (Math.floor(id*99).toString(16)).slice(0,1)+
+                        (Math.floor(id*999).toString(16)).slice(0,1)
     return myRandomColor;
   }
 
@@ -390,13 +393,41 @@ const DataWarehouse = (props) => {
               direction="row"
               sx={{ marginTop: 4, marginBottom: 2, justifyContent: 'space-between' }}
             >
-              <Typography
-                noWrap
-                variant="h5"
-                sx={{ color: 'white', fontWeight: 'bold', marginLeft: 5 }}
+              <Grid
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                width={'30vw'}
               >
-                Data
-              </Typography>
+                <Grid item>
+                  <Typography
+                    noWrap
+                    variant="h5"
+                    sx={{ color: 'white', fontWeight: 'bold', marginLeft: 5 }}
+                  >
+                    Data
+                  </Typography>
+                </Grid>
+                <Grid item hidden={!menuItem.cleaned}>
+                  <Typography
+                    noWrap
+                    variant="h5"
+                    sx={{ color: 'white', fontWeight: 'bold', marginLeft: 1 }}
+                  >
+                    - Sampling
+                  </Typography>
+                </Grid>
+                <Grid item hidden={!menuItem.labeled}>
+                  <Typography
+                    noWrap
+                    variant="h5"
+                    sx={{ color: 'white', fontWeight: 'bold', marginLeft: 1 }}
+                  >
+                    - Annotation
+                  </Typography>
+                </Grid>
+              </Grid>
               <div>
                 <Button
                   aria-label='train'
@@ -491,7 +522,7 @@ const DataWarehouse = (props) => {
                     <Checkbox
                       sx={{ color: 'white' }}
                       checked={menuItem.all}
-                      indeterminate={menuItem.cleaned || menuItem.labeled || menuItem.toTrain}
+                      indeterminate={menuItem.cleaned || menuItem.labeled}
                     />
                     <ListItemText primary={'All'} sx={{ marginRight: 3 }} />
                   </MenuItem>
@@ -523,37 +554,7 @@ const DataWarehouse = (props) => {
                   </MenuItem>
                 </Menu>
               </Grid>
-              <Grid item hidden={!menuItem.cleaned}>
-                <Typography
-                  sx={{
-                    color: 'white'
-                  }}
-                >
-                    Sampling
-                </Typography>
-              </Grid>
-              <Grid item hidden={!menuItem.labeled}>
-                <Typography
-                  sx={{
-                    color: 'white'
-                  }}
-                >
-                    Annotation
-                </Typography>
-              </Grid>
-              <Grid item hidden={!menuItem.toTrain}>
-                <Typography
-                  sx={{
-                    color: 'white'
-                  }}
-                >
-                    Train
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                style={{ marginLeft: 2 }}
-              >
+              <Grid item style={{ marginLeft: 2 }} >
                 {selectItem.length > 0?
                 <Grid
                   container
@@ -673,26 +674,23 @@ const DataWarehouse = (props) => {
                             }}
                           />
                           {item.annotation != null
-                          ? <Grid>
-                              {annotation.map((c) => {
-                                return (
-                                  <Box
-                                    style={{
-                                      position: 'absolute',
-                                      left: `${c.bbox[0]*(280/width)}px`,
-                                      top: `${c.bbox[1]*(210/height)}px`
-                                    }}
-                                    sx={{
-                                      width: `${c.bbox[2]*(280/width)}px`,
-                                      height: `${c.bbox[3]*(210/height)}px`,
-                                      border: `2px solid ${generateRandomCode(c.category_id)}`
-                                    }}
-                                  >
-                                  </Box>
-                                )
-                              })}
-                            </Grid>
-                          : <Box
+                          ?annotation.map((c) => {
+                            return (
+                                <Box
+                                  style={{
+                                    position: 'absolute',
+                                    left: `${c.bbox[0]*(280/width)}px`,
+                                    top: `${c.bbox[1]*(210/height)}px`
+                                  }}
+                                  sx={{
+                                    width: `${c.bbox[2]*(280/width)}px`,
+                                    height: `${c.bbox[3]*(210/height)}px`,
+                                    border: `2px solid ${generateRandomCode(c.category_id)}`
+                                  }}
+                                >
+                                </Box>
+                            )})
+                          :<Box
                               style={{
                                 position: 'absolute',
                                 right: 5,
