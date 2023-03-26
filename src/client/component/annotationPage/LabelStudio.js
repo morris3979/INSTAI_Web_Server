@@ -9,7 +9,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import {
   GetLabelList,
   UploadJsonFile,
@@ -185,7 +186,7 @@ const LabelStudioWrapper = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogContent style={{ backgroundColor: '#444950', width: '45vw' }}>
+        <DialogContent style={{ backgroundColor: '#444950' }}>
           <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
             {dataItem.data}
           </DialogContentText>
@@ -193,25 +194,21 @@ const LabelStudioWrapper = (props) => {
         <DialogTitle
           id="alert-dialog-title"
           textAlign={'center'}
-          style={{ backgroundColor: '#444950', color: 'white', width: '45vw' }}
+          style={{ backgroundColor: '#444950' }}
         >
-          {json4Training}
+          <Grid container direction="column" justifyContent="center" alignItems="center">
+            <div style={{ borderRadius: 5, backgroundColor: 'lightgrey' }}>
+              <Typography style={{ margin: 5 }}>
+                {json4Training}
+              </Typography>
+            </div>
+          </Grid>
         </DialogTitle>
-        <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue', width: '45vw' }}>
-          <Button
-            size='small'
-            variant="contained"
-            onClick={onCancel}
-            sx={{ margin: 1 }}
-          >
+        <DialogActions style={{ backgroundColor: '#444950', color: 'lightblue' }}>
+          <Button size='small' variant="contained" onClick={onCancel} sx={{ margin: 1 }}>
             CANCEL
           </Button>
-          <Button
-            size='small'
-            variant="contained"
-            onClick={onSave}
-            sx={{ margin: 1 }}
-          >
+          <Button size='small' variant="contained" onClick={onSave} sx={{ margin: 1 }}>
             Save
           </Button>
         </DialogActions>

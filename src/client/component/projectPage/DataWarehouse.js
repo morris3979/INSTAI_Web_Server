@@ -91,8 +91,9 @@ const DataWarehouse = (props) => {
 
   const [ anchorEl_Filter, setAnchorEl_Filter ] = useState(null)
   const openFilter = Boolean(anchorEl_Filter)
+  const defaultSelect = filterItem?.dataset?.length > 0? filterItem?.dataset: []
 
-  const [ selectItem, setSelectItem ] = useState(filterItem !== null? filterItem?.dataset: [])
+  const [ selectItem, setSelectItem ] = useState(defaultSelect)
   const [ selectText, setSelectText ] = useState('Select All')
   const [ menuItem, setMenuItem ] = useState({
     all: true,
