@@ -96,12 +96,11 @@ const ModelTable = (props) => {
   }
 
   const onDataset = (row) => {
-    console.log('row', row)
     setClippedDrawer('Data')
     filterItem({
       filter: 'annotation',
       modelName: row.modelName,
-      dataset: row.dataset.replace(/"/g, '').split(',')
+      dataset: JSON.parse(row.dataset)
     })
     setTimeout(() => {
       navigate('/Project/Data')

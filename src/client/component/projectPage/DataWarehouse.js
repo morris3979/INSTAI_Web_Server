@@ -92,12 +92,12 @@ const DataWarehouse = (props) => {
   const [ anchorEl_Filter, setAnchorEl_Filter ] = useState(null)
   const openFilter = Boolean(anchorEl_Filter)
 
-  const [ selectItem, setSelectItem ] = useState([])
+  const [ selectItem, setSelectItem ] = useState(filterItem !== null? filterItem?.dataset: [])
   const [ selectText, setSelectText ] = useState('Select All')
   const [ menuItem, setMenuItem ] = useState({
     all: true,
-    cleaned: filterItem.filter == 'clean',
-    labeled: filterItem.filter == 'annotation',
+    cleaned: filterItem?.filter == 'clean',
+    labeled: filterItem?.filter == 'annotation',
     toTrain: false
   })
   const [ open, setOpen ] = useState(false)
@@ -138,7 +138,7 @@ const DataWarehouse = (props) => {
   const mounted = useRef()
 
   useEffect(() => {
-    console.log('filterItem', filterItem)
+    // console.log('filterItem', filterItem)
     if(mounted.current === false) {
       mounted.current = true
       getDataList(projectImport)
@@ -273,7 +273,7 @@ const DataWarehouse = (props) => {
     setOpenTrainData(false)
     const data = {
       modelName: trainDataName,
-      dataset: `${selectItem.map((item) => item.value)}`,
+      dataset: JSON.stringify(selectItem),
       status: 'in progress',
       ProjectId: projectImport,
       UserId: userImport,
@@ -343,7 +343,7 @@ const DataWarehouse = (props) => {
                 sx={{
                   maxWidth: 280,
                   maxHeight: 210,
-                  border: selectItem.some(value => value.id == item.id)? '2px solid green': null,
+                  border: selectItem?.some(value => value.id == item.id)? '2px solid green': null,
                   "&:hover": { border: '2px solid lightblue' }
                 }}
               >
@@ -357,7 +357,7 @@ const DataWarehouse = (props) => {
                     sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
                     icon={<CheckCircleIcon color='disabled' />}
                     checkedIcon={<CheckCircleIcon color='primary' />}
-                    checked={selectItem.some(value => value.id == item.id)}
+                    checked={selectItem?.some(value => value.id == item.id)}
                     onClick={() => { handleSelectItem(item.id, item.data)} }
                   />
                   <CardMedia
@@ -635,7 +635,7 @@ const DataWarehouse = (props) => {
                     - Annotation
                   </Typography>
                 </Grid>
-                <Grid item hidden={filterItem.filter === 'annotation'? false: true}>
+                <Grid item hidden={filterItem?.filter === 'annotation'? false: true}>
                   <Grid
                     container
                     direction="row"
@@ -646,7 +646,7 @@ const DataWarehouse = (props) => {
                       variant="h5"
                       sx={{ color: 'white', fontWeight: 'bold', marginLeft: 1 }}
                     >
-                      - {filterItem.modelName}
+                      - {filterItem?.modelName}
                     </Typography>
                     <IconButton
                       size='small'
@@ -659,6 +659,7 @@ const DataWarehouse = (props) => {
                       }}
                       onClick={()=>{
                         cleanFilterItem()
+                        setSelectItem([])
                         setTimeout(() => {
                           location.reload()
                         },100)
@@ -684,7 +685,7 @@ const DataWarehouse = (props) => {
                   onClick={handleSubmit}
                   startIcon={<ModelTrainingIcon />}
                   disabled={
-                    !(selectItem.length > 0
+                    !(selectItem?.length > 0
                     && dataList.Data?.findIndex(item => item.annotation != null) !== -1
                     && menuItem.labeled)
                   }
@@ -811,7 +812,7 @@ const DataWarehouse = (props) => {
                 </Menu>
               </Grid>
               <Grid item style={{ marginLeft: 2 }} >
-                {selectItem.length > 0?
+                {selectItem?.length > 0?
                 <Grid
                   container
                   direction="row"
@@ -826,7 +827,7 @@ const DataWarehouse = (props) => {
                       fontWeight: 'bold'
                     }}
                   >
-                    {`Selected ${selectItem.length} items`}
+                    {`Selected ${selectItem?.length} items`}
                   </Typography>
                   <Button
                     variant="contained"

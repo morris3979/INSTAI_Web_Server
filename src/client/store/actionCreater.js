@@ -79,7 +79,7 @@ export const FilterItem = (text) => {
 export const CleanFilterItem = () => {
   return({
     type: Filter_Item,
-    value: {}
+    value: null
   })
 }
 // >>>

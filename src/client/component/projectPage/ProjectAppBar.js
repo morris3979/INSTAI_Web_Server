@@ -72,7 +72,7 @@ const ProjectAppBar = (props) => {
       getProjectItem(projectImport)
       getDataList(projectImport)
       getProjectItem(projectImport)
-      console.log('clean', dataList.Data?.map((e) => e.sampling).indexOf(true))
+      // console.log('clean', dataList.Data?.map((e) => e.sampling).indexOf(true))
       if (dataList.Data?.length) {
         const step1 = (skipped.size == 0) &&
                       (dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) &&
