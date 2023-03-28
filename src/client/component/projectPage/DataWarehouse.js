@@ -154,6 +154,25 @@ const DataWarehouse = (props) => {
     }
   },[s3Image])
 
+  const handleClickSampleTag = () => {
+    if(selectItem.length) {
+      selectItem.forEach((data) => {
+        patchDataItem(data.id, { sampling: 1 })
+      })
+    }
+    return
+  }
+
+  const handleCancelSampleTag = () => {
+    if(selectItem.length) {
+      selectItem.forEach((data) => {
+        patchDataItem(data.id, { sampling: 0 })
+      })
+    } else {
+      return
+    }
+  }
+
   const handleClickFilter = (event) => {
     setAnchorEl_Filter(event.currentTarget)
   }
@@ -295,10 +314,10 @@ const DataWarehouse = (props) => {
 
   const filterData = dataList.Data?.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled) {
-      return data.cleanTag == true && data.annotation !== null
+      return data.sampling == true && data.annotation !== null
     }
     else if (menuItem.cleaned) {
-      return data.cleanTag == true
+      return data.sampling == true
     }
     else if (menuItem.labeled) {
       return data.annotation !== null
@@ -840,6 +859,25 @@ const DataWarehouse = (props) => {
                 </Grid>
                 :null
                 }
+              </Grid>
+              <Grid item hidden={(selectItem.length == 0) || (!menuItem.cleaned)}>
+                <Button aria-label='image' variant="outlined" component="label" onClick={handleCancelSampleTag}>
+                  DETAG - SAMPLE
+                </Button>
+              </Grid>
+              <Grid
+                item
+                hidden={selectItem.length == 0}
+                style={{ position: 'absolute', right: 160, marginRight: 5 }}
+              >
+                <Button
+                  aria-label='clean'
+                  variant="outlined"
+                  component="label"
+                  onClick={handleClickSampleTag}
+                >
+                  TAG - SAMPLE
+                </Button>
               </Grid>
               <Grid
                 item
