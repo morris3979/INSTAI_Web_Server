@@ -220,7 +220,7 @@ const DataWarehouse = (props) => {
     setSelectItem(filterData)
   }
 
-  const handleAutoSampling = () => {
+  const handleAutoSelect = () => {
     handleCloseSelect();
     setSelectItem([])
     const item = filterData
@@ -919,9 +919,9 @@ const DataWarehouse = (props) => {
                   </MenuItem>
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleAutoSampling}
+                    onClick={handleAutoSelect}
                   >
-                    Auto Sampling
+                    Auto Select
                   </MenuItem>
                 </Menu>
               </Grid>
