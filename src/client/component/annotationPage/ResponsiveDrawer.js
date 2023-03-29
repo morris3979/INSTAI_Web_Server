@@ -57,8 +57,8 @@ const ResponsiveDrawer = (props) => {
 
   const [ anchorEl_Download, setAnchorEl_Download ] = useState(null)
   const openSelectDownload = Boolean(anchorEl_Download)
-  const [ anchorEl_Delete, setAnchorEl_Delete ] = useState(null)
-  const openSelectDelete = Boolean(anchorEl_Delete)
+//   const [ anchorEl_Delete, setAnchorEl_Delete ] = useState(null)
+//   const openSelectDelete = Boolean(anchorEl_Delete)
   const [ open, setOpen ] = useState(false)
 
   const navigate = useNavigate()
@@ -79,13 +79,13 @@ const ResponsiveDrawer = (props) => {
     setAnchorEl_Download(null)
   }
 
-  const handleClickDelete = (event) => {
-    setAnchorEl_Delete(event.currentTarget)
-  }
+//   const handleClickDelete = (event) => {
+//     setAnchorEl_Delete(event.currentTarget)
+//   }
 
-  const handleCloseDelete = () => {
-    setAnchorEl_Delete(null)
-  }
+//   const handleCloseDelete = () => {
+//     setAnchorEl_Delete(null)
+//   }
 
   const onAddLabel = () => {
     if (labelRef.current.value != '') {
@@ -220,7 +220,7 @@ const ResponsiveDrawer = (props) => {
                             Label file (.json)
                         </MenuItem>
                     </Menu>
-                    <IconButton
+                    {/* <IconButton
                         aria-label="delete label"
                         component="label"
                         aria-controls={openSelectDelete ? 'basic-menu' : undefined}
@@ -253,7 +253,7 @@ const ResponsiveDrawer = (props) => {
                         >
                             Annotation
                         </MenuItem>
-                    </Menu>
+                    </Menu> */}
                     <IconButton
                         aria-label="add label"
                         component="label"
