@@ -121,7 +121,7 @@ const LabelStudioWrapper = (props) => {
             const x_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.x / 100))
             const y_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.y / 100))
             const x_max_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.width / 100))
-            const y_max_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[0].value.height / 100))
+            const y_max_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.height / 100))
             const categoryId = additionalLabels.indexOf(
               `<Label value="${annotation.serializeAnnotation()[index].value.rectanglelabels[0]}"/>`
               )
@@ -144,7 +144,7 @@ const LabelStudioWrapper = (props) => {
             const x_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.x / 100))
             const y_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.y / 100))
             const x_max_min = Math.round(annotation.serializeAnnotation()[index].original_width * (annotation.serializeAnnotation()[index].value.width / 100))
-            const y_max_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[0].value.height / 100))
+            const y_max_min = Math.round(annotation.serializeAnnotation()[index].original_height * (annotation.serializeAnnotation()[index].value.height / 100))
             const categoryId = additionalLabels.indexOf(
               `<Label value="${annotation.serializeAnnotation()[index].value.rectanglelabels[0]}"/>`
               )

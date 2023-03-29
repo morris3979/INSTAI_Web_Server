@@ -124,7 +124,13 @@ exports.findData = (req, res) => {
           id: req.params.id
       },
       include: [{
-          model: Data
+          model: Data,
+          include: [{
+              model: Device,
+              attributes: {
+                exclude: ['command', 'message', 'accessKey', 'secretKey']
+              },
+          }]
       }],
       order: [
         [Data, 'id', 'DESC']
