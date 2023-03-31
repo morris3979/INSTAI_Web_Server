@@ -231,16 +231,21 @@ const ProjectAppBar = (props) => {
                           '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
                             fill: 'darkgrey',// circle's number (ACTIVE)
                           },
-                          '& .MuiStepLabel-label': {
-                            color: 'darkgrey', // Just text label (SKIP)
-                          },
+                          '& .MuiStepLabel-label': 
+                          (!(dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) && (activeStep > index == 1))
+                          ?{color: 'green'}:{color: 'dimgrey'}
+                          ,
+                          '& .MuiStepLabel-root': 
+                          (!(dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) && (activeStep > index == 1))
+                          ?{color: 'green'}:{color: 'dimgrey'}
+                          ,
                           '& .MuiStepIcon-root .Mui-disabled': {
                             color: 'red'
                           },
                           '& .MuiStepLabel-root .Mui-disabled': {
                             color: 'red',
                           },
-                      }}
+                      }} 
                     >
                       <StepLabel
                         {...labelProps}
@@ -248,6 +253,8 @@ const ProjectAppBar = (props) => {
                           activeStep == index
                           ?<AutorenewIcon color='Cyan'/>
                           :activeStep < index
+                          ?<HMobiledataIcon color='red'/>
+                          :(dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) && (activeStep > index == 1)
                           ?<HMobiledataIcon color='red'/>
                           :<CheckIcon color='green'/>
                         }

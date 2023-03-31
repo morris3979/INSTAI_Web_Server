@@ -29,7 +29,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import MuiInput from '@mui/material/Input';
 import ListItemText from '@mui/material/ListItemText';
+import Slider from '@mui/material/Slider';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ImageIcon from '@mui/icons-material/Image';
@@ -60,6 +62,7 @@ const columns = [
   { id: 'data', label: 'File Name', minWidth: '30vw' },
   { id: 'sampling', label: 'Sampled', minWidth: '20vw' },
   { id: 'annotation', label: 'Annotated', minWidth: '20vw' },
+  { id: 'uploaded', label: 'Uploaded By', minWidth: '20vw' },
   { id: 'createdAt', label: 'Time Uploaded', minWidth: '25vw' },
 ]
 
@@ -108,9 +111,10 @@ const DataWarehouse = (props) => {
   const [ trainData, setTrainData ] = useState()
   const [ trainDataName, setTrainDataName ] = useState()
   const [ view, setView ] = useState(true)
-
+  const [ sampleDialog, setSampleDialog ] = useState(false)
   const [ page, setPage ] = useState(0)
   const [ rowsPerPage, setRowsPerPage ] = useState(10)
+  const [ sampleNumber, setSampleNumber ] = useState(1)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -221,12 +225,13 @@ const DataWarehouse = (props) => {
   }
 
   const handleAutoSelect = () => {
+    setSampleDialog(false)
     handleCloseSelect();
     setSelectItem([])
     const item = filterData
     var newItems = [];
 
-    for (var i = 0; i < item.length; i++) {
+    for (var i = 0; i < sampleNumber; i++) {
       var idx = Math.floor(Math.random() * item.length);
       newItems.push(item[idx]);
       item.splice(idx, 1);
@@ -312,6 +317,10 @@ const DataWarehouse = (props) => {
     setOpenTrainData(false)
   }
 
+  const handleCloseSampleDialog = () => {
+    setSampleDialog(false)
+  }
+
   const filterData = dataList.Data?.filter((data) => {
     if (menuItem.cleaned && menuItem.labeled) {
       return data.sampling == true && data.annotation !== null
@@ -325,6 +334,24 @@ const DataWarehouse = (props) => {
       return data
     }
   })
+
+  const handleSliderChange = (event, newValue) => {
+    setSampleNumber(newValue);
+  };
+
+  const handleNumberChange = (event) => {
+    if(event.target.value != ''){
+      setSampleNumber(Number(event.target.value));
+    }
+  };
+
+  const handleBlur = () => {
+    if (sampleNumber < 1) {
+      setSampleNumber(0);
+    } else if (sampleNumber > filterData.length) {
+      setSampleNumber(filterData.length);
+    }
+  };
 
   const dataSlice = (text) => {
     if(text != null){
@@ -407,7 +434,15 @@ const DataWarehouse = (props) => {
                             height: `${c.bbox[3]*(210/height)}px`,
                             border: `2px solid ${generateRandomCode(c.category_id)}`
                           }}
-                        >
+                          onClick={() => {
+                            // console.log('id', item.id)
+                            getDataItem(item.id)
+                            dataImport(item.id)
+                            setTimeout(() => {
+                              navigate('/Annotation')
+                            }, 300)
+                          }}
+                          >
                         </Box>
                     )})
                   :<Box
@@ -426,6 +461,14 @@ const DataWarehouse = (props) => {
                           marginLeft: 5,
                           marginRight: 5,
                           fontSize: '12px'
+                        }}
+                        onClick={() => {
+                          // console.log('id', item.id)
+                          getDataItem(item.id)
+                          dataImport(item.id)
+                          setTimeout(() => {
+                            navigate('/Annotation')
+                          }, 300)
                         }}
                       >
                         Unlabeled
@@ -493,6 +536,9 @@ const DataWarehouse = (props) => {
                       </TableCell>
                       <TableCell key={'annotation'} align={'20vw'} style={{ color: 'white', fontSize: '10pt' }}>
                         {row.annotation !== null? <DoneIcon />: <CloseIcon />}
+                      </TableCell>
+                      <TableCell key={'uploaded'} align={'20vw'} style={{ color: 'white', fontSize: '11pt' }}>
+                        {row.Device !== null? row.Device.serialNumber: 'Local' }
                       </TableCell>
                       <TableCell key={'createdAt'} align={'25vw'} style={{ color: 'white', fontSize: '11pt' }}>
                         {row.createdAt?.slice(0, -5).replace('T', ' ')}
@@ -919,7 +965,10 @@ const DataWarehouse = (props) => {
                   </MenuItem>
                   <MenuItem
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
-                    onClick={handleAutoSelect}
+                    onClick={() => {
+                      setSampleDialog(true)
+                      setAnchorEl_Select(null)
+                    }}
                   >
                     Auto Select
                   </MenuItem>
@@ -973,6 +1022,59 @@ const DataWarehouse = (props) => {
         <DialogActions style={{ backgroundColor: '#444950' }}>
           <Button variant="contained" size='small' onClick={handleCloseTrainData} style={{marginTop: 10}}>Cancel</Button>
           <Button variant="contained" size='small' onClick={handleConfirmTrainData} style={{marginTop: 10}} disabled={trainDataName+'.json' != s3Train.filename}>Confirm</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog 
+        open={sampleDialog} 
+        onClose={handleCloseSampleDialog} 
+        PaperProps={{
+            sx: { width: "100%", maxWidth: "550px" }
+          }}>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Auto Sampling</DialogContent>
+        <DialogTitle style={{ backgroundColor: '#444950' }}>
+        <Grid style={{ marginTop: 20 }}>
+              <Typography id="input-slider" gutterBottom style={{ color: 'white' }}>
+                Please select the number of data to be sampled -{filterData.length}
+              </Typography>
+              <Typography id="input-slider" gutterBottom style={{ color: 'white' }}>
+                There are currently {filterData.length} pictures
+              </Typography>
+              <Grid spacing={2} sx={{ width: 400 }} container>
+                <Grid item xs={9}>
+                  <Slider
+                    name='sampleNumber'
+                    value={typeof sampleNumber === 'number' ? sampleNumber : 1}
+                    onChange={handleSliderChange}
+                    aria-labelledby="input-slider"
+                    size='small'
+                    min={1}
+                    max={filterData.length}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <MuiInput
+                    name='sampleNumber'
+                    value={sampleNumber}
+                    size="small"
+                    onChange={handleNumberChange}
+                    onBlur={handleBlur}
+                    disableUnderline
+                    inputProps={{
+                      step: 1,
+                      min: 1,
+                      max: filterData.length,
+                      type: 'number',
+                      'aria-labelledby': 'input-slider',
+                      style: { color: 'white' },
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950' }}>
+          <Button variant="contained" size='small' onClick={handleCloseSampleDialog} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={handleAutoSelect}style={{marginTop: 10}}>OK</Button>
         </DialogActions>
       </Dialog>
       </Box>
