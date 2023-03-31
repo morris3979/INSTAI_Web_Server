@@ -43,7 +43,7 @@ const columns = [
   { id: 'serialNumber', label: 'SerialNumber', minWidth: '20vw' },
   { id: 'deviceName', label: 'Device Name', minWidth: '20vw' },
   { id: 'command', label: 'Command', minWidth: '20vw' },
-  { id: 'message', label: 'Message', minWidth: '20vw' }
+  { id: 'message', label: 'Status', minWidth: '20vw' }
 ]
 
 const DeviceTable = (props) => {

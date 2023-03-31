@@ -59,11 +59,11 @@ import {
 
 const columns = [
   { id: 'space', label: '', minWidth: '2vw' },
-  { id: 'data', label: 'File Name', minWidth: '30vw' },
-  { id: 'sampling', label: 'Sampled', minWidth: '20vw' },
-  { id: 'annotation', label: 'Annotated', minWidth: '20vw' },
+  { id: 'data', label: 'File Name', minWidth: '25vw' },
   { id: 'uploaded', label: 'Uploaded By', minWidth: '20vw' },
-  { id: 'createdAt', label: 'Time Uploaded', minWidth: '25vw' },
+  { id: 'createdAt', label: 'Uploaded On', minWidth: '20vw' },
+  { id: 'sampling', label: 'Sampled', minWidth: '10vw' },
+  { id: 'annotation', label: 'Annotated', minWidth: '10vw' },
 ]
 
 const DataWarehouse = (props) => {
@@ -100,9 +100,8 @@ const DataWarehouse = (props) => {
   const [ selectText, setSelectText ] = useState('Select All')
   const [ menuItem, setMenuItem ] = useState({
     all: true,
-    cleaned: filterItem?.filter == 'clean',
+    cleaned: filterItem?.filter == 'sample',
     labeled: filterItem?.filter == 'annotation',
-    toTrain: false
   })
   const [ open, setOpen ] = useState(false)
   const [ file, setFile ] = useState([])  // File that has been upload to S3
@@ -326,7 +325,7 @@ const DataWarehouse = (props) => {
       return data.sampling == true && data.annotation !== null
     }
     else if (menuItem.cleaned) {
-      return data.sampling == true
+      return data.sampling == true && data.annotation == null
     }
     else if (menuItem.labeled) {
       return data.annotation !== null
@@ -531,17 +530,17 @@ const DataWarehouse = (props) => {
                       <TableCell key={'data'} align={'30vw'} style={{ color: 'white', fontSize: '11pt' }}>
                         {row.data}
                       </TableCell>
-                      <TableCell key={'sampling'} align={'20vw'} style={{ color: 'white', fontSize: '10pt' }}>
-                        {row.sampling === true? <DoneIcon />: <CloseIcon />}
-                      </TableCell>
-                      <TableCell key={'annotation'} align={'20vw'} style={{ color: 'white', fontSize: '10pt' }}>
-                        {row.annotation !== null? <DoneIcon />: <CloseIcon />}
-                      </TableCell>
                       <TableCell key={'uploaded'} align={'20vw'} style={{ color: 'white', fontSize: '11pt' }}>
                         {row.Device !== null? row.Device.serialNumber: 'Local' }
                       </TableCell>
                       <TableCell key={'createdAt'} align={'25vw'} style={{ color: 'white', fontSize: '11pt' }}>
                         {row.createdAt?.slice(0, -5).replace('T', ' ')}
+                      </TableCell>
+                      <TableCell key={'sampling'} align={'20vw'} style={{ color: 'white', fontSize: '10pt' }}>
+                        {row.sampling === true? <DoneIcon />: <CloseIcon />}
+                      </TableCell>
+                      <TableCell key={'annotation'} align={'20vw'} style={{ color: 'white', fontSize: '10pt' }}>
+                        {row.annotation !== null? <DoneIcon />: <CloseIcon />}
                       </TableCell>
                     </TableRow>
                   )
@@ -832,6 +831,7 @@ const DataWarehouse = (props) => {
                     }
                   }}
                 >
+                  {console.log('menuItem', menuItem)}
                   <MenuItem
                     key={'All'}
                     sx={{ color: 'white', backgroundColor: '#1c2127' }}
@@ -857,6 +857,9 @@ const DataWarehouse = (props) => {
                         ...prevState,
                         cleaned: e.target.checked
                       }))
+                      if (menuItem.cleaned === true) {
+                        cleanFilterItem()
+                      }
                     }}
                   >
                     <Checkbox sx={{ color: 'white' }} checked={menuItem.cleaned} />
@@ -870,6 +873,9 @@ const DataWarehouse = (props) => {
                         ...prevState,
                         labeled: e.target.checked
                       }))
+                      if (menuItem.labeled === true) {
+                        cleanFilterItem()
+                      }
                     }}
                   >
                     <Checkbox sx={{ color: 'white' }} checked={menuItem.labeled} />
@@ -917,7 +923,7 @@ const DataWarehouse = (props) => {
                 style={{ position: 'absolute', right: 160, marginRight: 5 }}
               >
                 <Button
-                  aria-label='clean'
+                  aria-label='sample'
                   variant="outlined"
                   component="label"
                   onClick={handleClickSampleTag}
@@ -1025,8 +1031,8 @@ const DataWarehouse = (props) => {
         </DialogActions>
       </Dialog>
       <Dialog 
-        open={sampleDialog} 
-        onClose={handleCloseSampleDialog} 
+        open={sampleDialog}
+        onClose={handleCloseSampleDialog}
         PaperProps={{
             sx: { width: "100%", maxWidth: "550px" }
           }}>
@@ -1034,10 +1040,10 @@ const DataWarehouse = (props) => {
         <DialogTitle style={{ backgroundColor: '#444950' }}>
         <Grid style={{ marginTop: 20 }}>
               <Typography id="input-slider" gutterBottom style={{ color: 'white' }}>
-                Please select the number of data to be sampled -{filterData.length}
+                Please select the number of data to be sampled -{filterData?.length}
               </Typography>
               <Typography id="input-slider" gutterBottom style={{ color: 'white' }}>
-                There are currently {filterData.length} pictures
+                There are currently {filterData?.length} pictures
               </Typography>
               <Grid spacing={2} sx={{ width: 400 }} container>
                 <Grid item xs={9}>
@@ -1048,7 +1054,7 @@ const DataWarehouse = (props) => {
                     aria-labelledby="input-slider"
                     size='small'
                     min={1}
-                    max={filterData.length}
+                    max={filterData?.length}
                   />
                 </Grid>
                 <Grid item xs={3}>
@@ -1062,7 +1068,7 @@ const DataWarehouse = (props) => {
                     inputProps={{
                       step: 1,
                       min: 1,
-                      max: filterData.length,
+                      max: filterData?.length,
                       type: 'number',
                       'aria-labelledby': 'input-slider',
                       style: { color: 'white' },

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import { connect } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 import Box from '@mui/material/Box';
@@ -15,7 +16,9 @@ import {
   GetLabelList,
   UploadJsonFile,
   GetDataItem,
-  PatchDataItem
+  PatchDataItem,
+  SetClippedDrawer,
+  FilterItem
 } from '../../store/actionCreater'
 
 const LabelStudioWrapper = (props) => {
@@ -29,9 +32,12 @@ const LabelStudioWrapper = (props) => {
     projectImport,
     dataImport,
     patchDataItem,
-    userImport
+    userImport,
+    setClippedDrawer,
+    filterItem
   } = props
 
+  const navigate = useNavigate()
   // we need a reference to a DOM node here so LSF knows where to render
   const rootRef = useRef()
   // this reference will be populated when LSF initialized and can be used somewhere else
@@ -166,6 +172,9 @@ const LabelStudioWrapper = (props) => {
     patchDataItem(dataImport, { annotation: json4Training, UserId: userImport })
     getDataItem(dataImport)
     setOpen(false)
+    setClippedDrawer('Data')
+    filterItem({ filter: 'sample' })
+    navigate('/Project/Data')
     setTimeout(() => {
       location.reload()
     }, 300)
@@ -188,7 +197,7 @@ const LabelStudioWrapper = (props) => {
       >
         <DialogContent style={{ backgroundColor: '#444950' }}>
           <DialogContentText id="alert-dialog-description" style={{ color: 'lightgrey' }}>
-            {dataItem.data}
+            Annotation
           </DialogContentText>
         </DialogContent>
         <DialogTitle
@@ -199,7 +208,8 @@ const LabelStudioWrapper = (props) => {
           <Grid container direction="column" justifyContent="center" alignItems="center">
             <div style={{ borderRadius: 5, backgroundColor: 'lightgrey' }}>
               <Typography style={{ margin: 5 }}>
-                {json4Training}
+                {/* {json4Training} */}
+                Please confirm to save this annotation file - {dataItem.data}
               </Typography>
             </div>
           </Grid>
@@ -209,7 +219,7 @@ const LabelStudioWrapper = (props) => {
             CANCEL
           </Button>
           <Button size='small' variant="contained" onClick={onSave} sx={{ margin: 1 }}>
-            Save
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>
@@ -247,6 +257,14 @@ const mapDispatchToProps = (dispatch) => {
       const action = PatchDataItem(id, data)
       dispatch(action)
     },
+    setClippedDrawer(text) {
+      const action = SetClippedDrawer(text)
+      dispatch(action)
+    },
+    filterItem(text) {
+      const action = FilterItem(text)
+      dispatch(action)
+    }
   }
 }
 

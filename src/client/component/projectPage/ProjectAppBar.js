@@ -231,13 +231,13 @@ const ProjectAppBar = (props) => {
                           '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
                             fill: 'darkgrey',// circle's number (ACTIVE)
                           },
-                          '& .MuiStepLabel-label': 
+                          '& .MuiStepLabel-label':
                           (!(dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) && (activeStep > index == 1))
-                          ?{color: 'green'}:{color: 'dimgrey'}
+                          ?{color: 'green'}:{color: 'darkgrey'}
                           ,
-                          '& .MuiStepLabel-root': 
+                          '& .MuiStepLabel-root':
                           (!(dataList.Data?.map((e) => e.sampling).indexOf(true) == -1) && (activeStep > index == 1))
-                          ?{color: 'green'}:{color: 'dimgrey'}
+                          ?{color: 'green'}:{color: 'darkgrey'}
                           ,
                           '& .MuiStepIcon-root .Mui-disabled': {
                             color: 'red'
@@ -245,7 +245,7 @@ const ProjectAppBar = (props) => {
                           '& .MuiStepLabel-root .Mui-disabled': {
                             color: 'red',
                           },
-                      }} 
+                      }}
                     >
                       <StepLabel
                         {...labelProps}
