@@ -42,6 +42,7 @@ import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import CancelIcon from '@mui/icons-material/Cancel';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import {
   GetDataList,
   GetDataItem,
@@ -325,7 +326,7 @@ const DataWarehouse = (props) => {
       return data.sampling == true && data.annotation !== null
     }
     else if (menuItem.cleaned) {
-      return data.sampling == true && data.annotation == null
+      return data.sampling == true
     }
     else if (menuItem.labeled) {
       return data.annotation !== null
@@ -389,8 +390,8 @@ const DataWarehouse = (props) => {
                 sx={{
                   maxWidth: 280,
                   maxHeight: 210,
-                  border: selectItem?.some(value => value.id == item.id)? '2px solid green': null,
-                  "&:hover": { border: '2px solid lightblue' }
+                  border: selectItem?.some(value => value.id == item.id)? '4px solid green': null,
+                  "&:hover": { border: '4px solid lightblue' }
                 }}
               >
                 <CardActionArea
@@ -400,9 +401,11 @@ const DataWarehouse = (props) => {
                   <Checkbox
                     inputProps={{ 'aria-label': 'data-checkbox' }}
                     style={{ position: 'absolute', top: 0 }}
-                    sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
+                    sx={{
+                      '& .MuiSvgIcon-root': { fontSize: 28 }
+                    }}
                     icon={<CheckCircleIcon color='disabled' />}
-                    checkedIcon={<CheckCircleIcon color='primary' />}
+                    checkedIcon={<CheckCircleIcon style={{color: 'green'}} />}
                     checked={selectItem?.some(value => value.id == item.id)}
                     onClick={() => { handleSelectItem(item.id, item.data)} }
                   />
@@ -419,6 +422,18 @@ const DataWarehouse = (props) => {
                       }, 300)
                     }}
                   />
+                  {item.sampling === true?
+                  <Box
+                    style={{
+                      position: 'absolute',
+                      right: 2,
+                      top: -5,
+                    }}
+                  >
+                    <BookmarkIcon fontSize='large' color='primary'/>
+                  </Box>:
+                  <Box />
+                  }
                   {item.annotation != null
                   ?annotation.map((c) => {
                     return (
@@ -441,8 +456,7 @@ const DataWarehouse = (props) => {
                               navigate('/Annotation')
                             }, 300)
                           }}
-                          >
-                        </Box>
+                        />
                     )})
                   :<Box
                       style={{
