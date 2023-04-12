@@ -451,6 +451,22 @@ export const PatchDeviceData = (id, data) => {
   )
 }
 
+export const DeleteDeviceData = (id) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.delete(`/api/device/${id}`)
+        if (response.data) {
+          location.reload()
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
 export const AddLabel = (data) => {
   return (
     async (dispatch) => {

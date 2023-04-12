@@ -101,3 +101,28 @@ exports.receive = (req, res) => {
       });
     });
 };
+
+// Delete a Device with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Device.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Device was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Device with id=${id}. Maybe Device was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Device with id=" + id
+      });
+    });
+};

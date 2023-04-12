@@ -36,6 +36,7 @@ import {
   GetDeviceList,
   GetModelList,
   PatchDeviceData,
+  DeleteDeviceData,
   PostDeviceMQTT,
 } from '../../store/actionCreater'
 
@@ -54,6 +55,7 @@ const DeviceTable = (props) => {
     getDeviceList,
     getModelList,
     patchDeviceData,
+    deleteDeviceData,
     projectImport,
     postDeviceMQTT
   } = props
@@ -413,7 +415,11 @@ const DeviceTable = (props) => {
   const actionBtn = (row) => {
     return (
       <ButtonGroup variant="outlined" aria-label="outlined button group">
-        <Button aria-label='delete'>
+        <Button 
+          aria-label='delete'
+          onClick={() => {
+            deleteDeviceData(row.id)
+          }}>
           <DeleteIcon style={{ color: 'white' }} />
         </Button>
         <Button
@@ -1153,6 +1159,10 @@ const mapStateToProps = (state) => {
       },
       patchDeviceData(id, data) {
         const action = PatchDeviceData(id, data)
+        dispatch(action)
+      },
+      deleteDeviceData(id) {
+        const action = DeleteDeviceData(id)
         dispatch(action)
       },
       postDeviceMQTT(data) {

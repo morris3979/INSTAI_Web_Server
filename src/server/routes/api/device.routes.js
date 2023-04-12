@@ -11,4 +11,7 @@ deviceRouter.patch("/:id", Device.update);
 // Update a Device with serialNumber
 deviceRouter.patch("/message/:serialNumber", Device.receive);
 
+// Delete a Device with id
+deviceRouter.delete("/:id", Device.delete);
+
 module.exports = [ deviceRouter ];
