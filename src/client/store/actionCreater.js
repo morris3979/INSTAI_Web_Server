@@ -145,6 +145,22 @@ export const RegisterFormData = (data) => {
   )
 }
 
+export const PatchUserInfo = (id, data) => {
+  return (
+    async (dispatch) => {
+      try {
+        const response = await axios.patch(`/api/user/${id}`, data)
+        if (response.data) {
+          location.reload()
+          return
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+      }
+    }
+  )
+}
+
 export const CreateNewOrganization = (data, id) => {
   return (
     async (dispatch) => {

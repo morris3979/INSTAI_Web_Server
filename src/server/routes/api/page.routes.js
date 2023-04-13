@@ -22,6 +22,10 @@ pageRouter.get("/Organization/Management", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });
 
+pageRouter.get("/Organization/User", async (req, res) => {
+    res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
+});
+
 pageRouter.get("/Initial", async (req, res) => {
     res.sendFile("index.html", { root: path.join(__dirname, "../../../../dist") });
 });

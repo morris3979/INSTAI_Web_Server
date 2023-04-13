@@ -264,3 +264,34 @@ exports.inviteMember = async (req, res) => {
       })
   })
 }
+
+exports.update = (req, res) => {
+  const id = req.params.id
+  const username = req.body.username
+  // Validate request
+  if (!username) {
+    res.status(400).send({
+      message: "Username can not be empty!"
+    })
+    return
+  }
+
+  User.update(req.body, {
+    where: { id: id }
+  }).then(num => {
+      if (num == 1) {
+        res.send({
+          message: "UserInfo was updated successfully."
+        })
+      } else {
+        res.send({
+          message: `Cannot update UserInfo with id=${id}. Maybe UserInfo was not found or req.body is empty!`
+        })
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating UserInfo with id=" + id
+      })
+    })
+}

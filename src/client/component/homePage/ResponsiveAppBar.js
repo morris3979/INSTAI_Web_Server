@@ -77,6 +77,11 @@ const ResponsiveAppBar = (props) => {
     setAnchorElUser(null)
   }
 
+  const PatchUserData = () => {
+    navigate('/Organization/User')
+    location.reload()
+  }
+
   const onSwitchOrganization = () => {
     navigate('/Organization/Select')
     location.reload()
@@ -124,7 +129,7 @@ const ResponsiveAppBar = (props) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem>
+                <MenuItem onClick={PatchUserData}>
                   <ListItemIcon>
                     <PersonIcon fontSize="small" />
                   </ListItemIcon>
