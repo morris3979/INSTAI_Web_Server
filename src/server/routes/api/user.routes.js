@@ -25,6 +25,9 @@ userRouter.post("/welcome", auth, (req, res) => {
 userRouter.get("/:id", User.findOrganizations);
 
 // Update a User with id
-userRouter.patch("/:id", User.update)
+userRouter.patch("/:id", User.update);
+
+// Update a UserGroup with id
+userRouter.patch("/modify/:id", User.ModifyPermissions);
 
 module.exports = [userRouter];

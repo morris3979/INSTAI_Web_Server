@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import Dialog from '@mui/material/Dialog';
@@ -16,8 +17,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Switch from '@mui/material/Switch';
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import EditIcon from '@mui/icons-material/Edit';
 import { Container } from '@mui/material';
-import { GetProjectList, GetOrganizationMembers, InviteMember } from '../../store/actionCreater'
+import { GetProjectList, GetOrganizationMembers, InviteMember, ModifyMemberAdmin } from '../../store/actionCreater'
 
 const columns = [
     { id: 'username', label: 'User Name', minWidth: '15vw' },
@@ -28,15 +34,22 @@ const columns = [
 
 const InvitePeopleTable = (props) => {
   const {
+    userInformation,
     projectList,
     getProjectList,
     getOrganizationMembers,
     membersList,
     inviteMember,
-    organizationImport
+    organizationImport,
+    modifyMemberAdmin
   } = props
 
   const [ open, setOpen ] = useState(false)
+  const [ authorizeOpen, setAuthorizeOpen ] = useState(false)
+  const [ memberAuthorize, setMemberAuthorize ] = useState({
+    id: '',
+    authorize: false
+  })
   const [ searchName, setSearchName] = useState('')
   const [ input, setInput ] = useState({
     email: '',
@@ -62,6 +75,11 @@ const InvitePeopleTable = (props) => {
 
   const handleClose = () => {
     setOpen(false)
+    setAuthorizeOpen(false)
+    setMemberAuthorize({
+      id: '',
+      authorize: false
+    })
   }
 
   const onChangeMember = (e) => {
@@ -82,6 +100,31 @@ const InvitePeopleTable = (props) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  }
+
+  const OpenAuthorizeDialog = (id) => {
+    setAuthorizeOpen(true)
+    setMemberAuthorize((prevState) => ({
+      ...prevState,
+      id: id
+    }))
+  } 
+  
+  const PatchAuthorize = () => {
+    const converted = memberAuthorize.authorize?{authorize: 'admin'}:{authorize: 'user'}
+    modifyMemberAdmin(memberAuthorize.id, converted)
+    setAuthorizeOpen(false)
+    setMemberAuthorize({
+      id: '',
+      authorize: false
+    })
+  }
+
+  const handleSwitchChange = (e) => {
+    setMemberAuthorize((prevState) => ({
+      ...prevState,
+      authorize: e.target.checked
+    }))
   }
 
   const filterMemberList = membersList.Users.filter((e) => {
@@ -155,6 +198,19 @@ const InvitePeopleTable = (props) => {
                       {column.label}
                     </TableCell>
                   ))}
+                  {(membersList.Users.find(data => data.id == userInformation.id)) != undefined
+                  ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'}>
+                      <TableCell
+                        style={{
+                          minWidth: '15vw',
+                          fontSize: '16pt'
+                        }}
+                      >
+                      Action
+                    </TableCell>
+                  </Grid>
+                  :null
+                  }
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -174,6 +230,28 @@ const InvitePeopleTable = (props) => {
                             </TableCell>
                           )
                         })}
+                        {(membersList.Users.find(data => data.id == userInformation.id)) != undefined
+                        ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'}>
+                            <TableCell
+                              style={{
+                                minWidth: '15vw',
+                                fontSize: '12pt'
+                              }}
+                            >
+                              <IconButton
+                                size='small'
+                                color="primary"
+                                component="label"
+                                style={{ marginLeft: 15 }}
+                                disabled={row.UserGroup.authorize == 'admin'}
+                                onClick={() => OpenAuthorizeDialog(row.UserGroup.id)}
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                          </Grid>
+                          :null
+                        }
                       </TableRow>
                     )
                   })
@@ -192,6 +270,28 @@ const InvitePeopleTable = (props) => {
                             </TableCell>
                           )
                         })}
+                        {(membersList.Users.find(data => data.id == userInformation.id)) != undefined
+                        ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'}>
+                            <TableCell
+                              style={{
+                                minWidth: '15vw',
+                                fontSize: '12pt'
+                              }}
+                            >
+                              <IconButton
+                                size='small'
+                                color="primary"
+                                component="label"
+                                style={{ marginLeft: 15 }}
+                                disabled={row.UserGroup.authorize == 'admin'}
+                                onClick={() => OpenAuthorizeDialog(row.UserGroup.id)}
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </TableCell>
+                          </Grid>
+                          :null
+                        }
                       </TableRow>
                     )
                   })
@@ -241,6 +341,34 @@ const InvitePeopleTable = (props) => {
           <Button variant="contained" size='small' onClick={onCreate} style={{marginTop: 10}}>INVITE</Button>
         </DialogActions>
       </Dialog>
+      <Dialog open={authorizeOpen} onClose={handleClose}>
+        <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Members Authorize</DialogContent>
+        <DialogTitle style={{ backgroundColor: '#444950' }}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="left"
+          sx={{ width: 300 }}
+        >
+          <FormControl component="fieldset" variant="standard">
+            <FormLabel component="legend" style={{ color: 'white' }}>Authorize Admin</FormLabel>
+              <FormControlLabel
+                control={
+                  <Switch
+                  name='memberAuthorize'
+                  checked={memberAuthorize.authorize}
+                  onChange={handleSwitchChange} />
+                }
+              />
+          </FormControl>
+        </Grid>
+        </DialogTitle>
+        <DialogActions style={{ backgroundColor: '#444950' }}>
+          <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
+          <Button variant="contained" size='small' onClick={PatchAuthorize} style={{marginTop: 10}}>OK</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }
@@ -270,6 +398,10 @@ const mapDispatchToProps = (dispatch) => {
       const action = InviteMember(data, id)
       dispatch(action)
     },
+    modifyMemberAdmin(id, data) {
+      const action = ModifyMemberAdmin(id, data)
+      dispatch(action)
+    }
   }
 }
 
