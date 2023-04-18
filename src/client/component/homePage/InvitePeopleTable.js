@@ -26,7 +26,7 @@ import { Container } from '@mui/material';
 import { GetProjectList, GetOrganizationMembers, InviteMember, ModifyMemberAdmin } from '../../store/actionCreater'
 
 const columns = [
-    { id: 'username', label: 'User Name', minWidth: '15vw' },
+    { id: 'username', label: 'Username', minWidth: '15vw' },
     { id: 'email', label: 'Email', minWidth: '20vw' },
     { id: 'authorize', label: 'Authorize', minWidth: '15vw' },
     { id: 'status', label: 'Status', minWidth: '15vw' }
@@ -108,8 +108,8 @@ const InvitePeopleTable = (props) => {
       ...prevState,
       id: id
     }))
-  } 
-  
+  }
+
   const PatchAuthorize = () => {
     const converted = memberAuthorize.authorize?{authorize: 'admin'}:{authorize: 'user'}
     modifyMemberAdmin(memberAuthorize.id, converted)
@@ -156,7 +156,7 @@ const InvitePeopleTable = (props) => {
             color='info'
             onChange={handleChangeText}
             sx={{ width: 400 }}
-            placeholder='by user name or email'
+            placeholder='by username or email'
             InputProps={{
               style: { color: 'white' },
               endAdornment: <SearchIcon style={{ color: 'white' }} />,

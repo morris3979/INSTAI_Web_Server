@@ -43,7 +43,7 @@ import {
 const columns = [
   { id: 'serialNumber', label: 'SerialNumber', minWidth: '20vw' },
   { id: 'deviceName', label: 'Device Name', minWidth: '20vw' },
-  { id: 'command', label: 'Command', minWidth: '20vw' },
+  { id: 'command', label: 'Mode', minWidth: '20vw' },
   { id: 'message', label: 'Status', minWidth: '20vw' }
 ]
 
@@ -803,7 +803,7 @@ const DeviceTable = (props) => {
           }}
         >
           <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>
-            Command
+            Mode
           </DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
             <Grid
