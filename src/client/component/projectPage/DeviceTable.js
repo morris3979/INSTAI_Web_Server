@@ -22,6 +22,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import { Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -31,6 +33,8 @@ import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiInput from '@mui/material/Input';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 import {
   AddDevice,
   GetDeviceList,
@@ -41,10 +45,9 @@ import {
 } from '../../store/actionCreater'
 
 const columns = [
-  { id: 'serialNumber', label: 'SerialNumber', minWidth: '20vw' },
-  { id: 'deviceName', label: 'Device Name', minWidth: '20vw' },
-  { id: 'command', label: 'Mode', minWidth: '20vw' },
-  { id: 'message', label: 'Status', minWidth: '20vw' }
+  { id: 'device', label: 'DEVICE', minWidth: '20vw' },
+  { id: 'message', label: 'STATUS', minWidth: '20vw' },
+  { id: 'command', label: 'MODE', minWidth: '20vw' }
 ]
 
 const DeviceTable = (props) => {
@@ -407,14 +410,22 @@ const DeviceTable = (props) => {
       return 'OFF'
     }
   }
-
+  
   const filterDeviceList = deviceList.Devices?.filter((e) => {
     return e.serialNumber.includes(searchName) || e.deviceName.includes(searchName)
   })
 
   const actionBtn = (row) => {
     return (
-      <ButtonGroup variant="outlined" aria-label="outlined button group">
+      <Grid>
+        <Button 
+          variant="contained"
+          onClick={() => {
+            postDeviceMQTT(row)
+          }}
+        >
+          START
+        </Button>
         <Button 
           aria-label='delete'
           onClick={() => {
@@ -422,15 +433,12 @@ const DeviceTable = (props) => {
           }}>
           <DeleteIcon style={{ color: 'white' }} />
         </Button>
-        <Button
-          aria-label='send'
-          onClick={() => {
-            postDeviceMQTT(row)
-          }}
+        <Button 
+          aria-label='morehoriz'
         >
-          <RocketLaunchIcon style={{ color: 'white' }} />
+          <MoreHorizIcon style={{ color: 'white' }} />
         </Button>
-      </ButtonGroup>
+      </Grid>
     )
   }
 
@@ -522,13 +530,13 @@ const DeviceTable = (props) => {
                   >
                     <TableRow>
                       <TableCell
-                        key={'action'}
+                        key={'number'}
                         style={{
                           minWidth: '10vw',
                           fontSize: '14pt'
                         }}
                       >
-                        Action
+                        #
                       </TableCell>
                       {columns.map((column) => (
                         <TableCell
@@ -542,6 +550,15 @@ const DeviceTable = (props) => {
                           {column.label}
                         </TableCell>
                       ))}
+                      <TableCell
+                        key={'action'}
+                        style={{
+                          minWidth: '10vw',
+                          fontSize: '14pt'
+                        }}
+                      >
+                        Action
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -550,41 +567,37 @@ const DeviceTable = (props) => {
                       ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => {
                         return (
-                          <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
-                              {actionBtn(row)}
+                          <TableRow hover role="checkbox" tabIndex={-1} key={row.id} style={{ minHeight: '50px'}}>
+                            <TableCell key={'number'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {(deviceList.Devices?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).indexOf(row))+1}
                             </TableCell>
-                            <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.serialNumber}
-                              <IconButton
-                                size='small'
-                                color="primary"
-                                aria-label="edit serialNumber"
-                                component="label"
-                                style={{ marginLeft: 15 }}
-                                onClick={() => {
-                                  setModifyValue({ id: row.id, text: 'serialNumber', command: null })
-                                  handleSerialNumberOpen(row.serialNumber)
-                                }}
-                              >
-                                <EditIcon/>
-                              </IconButton>
+                            <TableCell key={'device'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              <div style={{float: 'left'}}>
+                                <DeveloperBoardIcon style={{ marginRight:'10', fontSize: '60', color:'lightblue' }}/>
+                              </div>
+                              <div>
+                                {row.deviceName}
+                                <IconButton
+                                    size='small'
+                                    color="primary"
+                                    aria-label="edit deviceName"
+                                    component="label"
+                                    style={{ marginLeft: 15 }}
+                                    onClick={()=>{
+                                      setModifyValue({ id: row.id, text: 'deviceName', command: null })
+                                      handleDeviceNameOpen(row.deviceName)
+                                    }}
+                                  >
+                                  <EditIcon />
+                                </IconButton>
+                                <br/>
+                                <div style={{ color: 'grey', fontSize: '5px'}}>
+                                  {row.serialNumber}
+                                </div>
+                              </div>
                             </TableCell>
-                            <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.deviceName}
-                              <IconButton
-                                size='small'
-                                color="primary"
-                                aria-label="edit deviceName"
-                                component="label"
-                                style={{ marginLeft: 15 }}
-                                onClick={()=>{
-                                  setModifyValue({ id: row.id, text: 'deviceName', command: null })
-                                  handleDeviceNameOpen(row.deviceName)
-                                }}
-                              >
-                                <EditIcon />
-                              </IconButton>
+                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.message}
                             </TableCell>
                             <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.command}
@@ -601,8 +614,8 @@ const DeviceTable = (props) => {
                                 <EditIcon />
                               </IconButton>
                             </TableCell>
-                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.message}
+                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100px' }}>
+                              {actionBtn(row)}
                             </TableCell>
                           </TableRow>
                         )
@@ -611,41 +624,37 @@ const DeviceTable = (props) => {
                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => {
                         return (
-                          <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center' }}>
-                              {actionBtn(row)}
+                          <TableRow hover role="checkbox" tabIndex={-1} key={row.id} style={{ minHeight: '50px'}}>
+                            <TableCell key={'number'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {(deviceList.Devices?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).indexOf(row))+1}
                             </TableCell>
-                            <TableCell key={'serialNumber'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.serialNumber}
-                              <IconButton
-                                size='small'
-                                color="primary"
-                                aria-label="edit serialNumber"
-                                component="label"
-                                style={{ marginLeft: 15 }}
-                                onClick={()=>{
-                                  setModifyValue({ id: row.id, text: 'serialNumber', command: null })
-                                  handleSerialNumberOpen(row.serialNumber)
-                                }}
-                              >
-                                <EditIcon />
-                              </IconButton>
+                            <TableCell key={'device'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              <div style={{float: 'left'}}>
+                                <DeveloperBoardIcon style={{ marginRight:'10', fontSize: '60', color:'lightblue' }}/>
+                              </div>
+                              <div>
+                                {row.deviceName}
+                                <IconButton
+                                    size='small'
+                                    color="primary"
+                                    aria-label="edit deviceName"
+                                    component="label"
+                                    style={{ marginLeft: 15 }}
+                                    onClick={()=>{
+                                      setModifyValue({ id: row.id, text: 'deviceName', command: null })
+                                      handleDeviceNameOpen(row.deviceName)
+                                    }}
+                                  >
+                                  <EditIcon />
+                                </IconButton>
+                                <br/>
+                                <div style={{ color: 'grey', fontSize: '5px'}}>
+                                  {row.serialNumber}
+                                </div>
+                              </div>
                             </TableCell>
-                            <TableCell key={'deviceName'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.deviceName}
-                              <IconButton
-                                size='small'
-                                color="primary"
-                                aria-label="edit deviceName"
-                                component="label"
-                                style={{ marginLeft: 15 }}
-                                onClick={()=>{
-                                  setModifyValue({ id: row.id, text: 'deviceName', command: null })
-                                  handleDeviceNameOpen(row.deviceName)
-                                }}
-                              >
-                                <EditIcon />
-                              </IconButton>
+                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                              {row.message}
                             </TableCell>
                             <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.command}
@@ -662,8 +671,8 @@ const DeviceTable = (props) => {
                                 <EditIcon />
                               </IconButton>
                             </TableCell>
-                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
-                              {row.message}
+                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100px' }}>
+                              {actionBtn(row)}
                             </TableCell>
                           </TableRow>
                         )
@@ -806,9 +815,44 @@ const DeviceTable = (props) => {
             Mode
           </DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+              >
+                <FormControlLabel 
+                  value="general" 
+                  checked={ !commandValue.Enable } 
+                  control={ <Radio style={{ color:'lightblue' }} /> } 
+                  label="General" 
+                  style={{ color: 'white' }}
+                  onClick={() => {
+                    setCommandValue((prevState) => ({
+                      ...prevState,
+                      Enable: false
+                    }))
+                  }}
+                />
+                <FormControlLabel 
+                  value="advance" 
+                  checked={ commandValue.Enable } 
+                  control={ <Radio style={{ color:'lightblue' }} /> } 
+                  label="Advance" 
+                  style={{ color: 'white' }}
+                  onClick={() => {
+                    setCommandValue((prevState) => ({
+                      ...prevState,
+                      Enable: true
+                    }))
+                  }}
+                  />
+              </RadioGroup>
+            </FormControl>
             <Grid
-              container
               direction="column"
+              style={{ marginTop: 20 }}
+              hidden={ commandValue.Enable }
             >
               <TextField
                 focused
@@ -831,23 +875,6 @@ const DeviceTable = (props) => {
                 <MenuItem value='progress?'>progress?</MenuItem>
                 <MenuItem value='current_model?'>current_model?</MenuItem>
               </TextField>
-            </Grid>
-            <Grid
-              justifyContent="left"
-              alignItems="left"
-              style={{ marginTop: 20 }}
-            >
-              <FormControl component="fieldset" variant="standard">
-                <FormLabel component="legend" style={{ color: 'white' }}>Change Mode</FormLabel>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        name="Enable"
-                        checked={commandValue.Enable}
-                        onChange={handleSwitchChange}/>
-                    }
-                  />
-              </FormControl>
             </Grid>
             <Grid
               justifyContent="left"
@@ -927,6 +954,7 @@ const DeviceTable = (props) => {
                     value={typeof commandValue.rec_time === 'number' ? commandValue.rec_time : 5}
                     onChange={handleSliderChange}
                     aria-labelledby="input-slider"
+                    valueLabelDisplay='auto'
                     size='small'
                     min={1}
                     max={60}
@@ -963,6 +991,7 @@ const DeviceTable = (props) => {
                     value={typeof commandValue.rec_fps === 'number' ? commandValue.rec_fps : 15}
                     onChange={handleSliderChange}
                     aria-labelledby="input-slider"
+                    valueLabelDisplay='auto'
                     size='small'
                     min={1}
                     max={15}
@@ -999,6 +1028,7 @@ const DeviceTable = (props) => {
                     value={typeof commandValue.rec_after_event_cycle === 'number' ? commandValue.rec_after_event_cycle : 1}
                     onChange={handleSliderChange}
                     aria-labelledby="input-slider"
+                    valueLabelDisplay='auto'
                     size='small'
                     min={1}
                     max={15}
@@ -1033,6 +1063,7 @@ const DeviceTable = (props) => {
                     value={typeof commandValue.rec_after_event_duration === 'number' ? commandValue.rec_after_event_duration : 5}
                     onChange={handleSliderChange}
                     aria-labelledby="input-slider"
+                    valueLabelDisplay='auto'
                     size='small'
                     min={1}
                     max={60}
