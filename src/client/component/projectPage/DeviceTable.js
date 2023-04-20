@@ -46,8 +46,8 @@ import {
 
 const columns = [
   { id: 'device', label: 'DEVICE', minWidth: '20vw' },
-  { id: 'message', label: 'STATUS', minWidth: '20vw' },
-  { id: 'command', label: 'MODE', minWidth: '20vw' }
+  { id: 'message', label: 'STATUS', minWidth: '25vw' },
+  { id: 'command', label: 'MODE', minWidth: '25vw' }
 ]
 
 const DeviceTable = (props) => {
@@ -410,7 +410,7 @@ const DeviceTable = (props) => {
       return 'OFF'
     }
   }
-  
+
   const filterDeviceList = deviceList.Devices?.filter((e) => {
     return e.serialNumber.includes(searchName) || e.deviceName.includes(searchName)
   })
@@ -418,26 +418,33 @@ const DeviceTable = (props) => {
   const actionBtn = (row) => {
     return (
       <Grid>
-        <Button 
+        <Button
           variant="contained"
+          size='large'
           onClick={() => {
             postDeviceMQTT(row)
           }}
         >
           START
         </Button>
-        <Button 
-          aria-label='delete'
+        <IconButton
+          size='large'
+          color="primary"
+          aria-label="delete"
+          style={{ margin: 5 }}
           onClick={() => {
             deleteDeviceData(row.id)
-          }}>
-          <DeleteIcon style={{ color: 'white' }} />
-        </Button>
-        <Button 
-          aria-label='morehoriz'
+          }}
+        >
+          <DeleteIcon style={{ color: 'red' }} />
+        </IconButton>
+        <IconButton
+          size='large'
+          color="primary"
+          aria-label="morehoriz"
         >
           <MoreHorizIcon style={{ color: 'white' }} />
-        </Button>
+        </IconButton>
       </Grid>
     )
   }
@@ -532,7 +539,7 @@ const DeviceTable = (props) => {
                       <TableCell
                         key={'number'}
                         style={{
-                          minWidth: '10vw',
+                          minWidth: '3vw',
                           fontSize: '14pt'
                         }}
                       >
@@ -553,7 +560,7 @@ const DeviceTable = (props) => {
                       <TableCell
                         key={'action'}
                         style={{
-                          minWidth: '10vw',
+                          minWidth: '20vw',
                           fontSize: '14pt'
                         }}
                       >
@@ -591,15 +598,15 @@ const DeviceTable = (props) => {
                                   <EditIcon />
                                 </IconButton>
                                 <br/>
-                                <div style={{ color: 'grey', fontSize: '5px'}}>
+                                <div style={{ color: 'grey', fontSize: '10'}}>
                                   {row.serialNumber}
                                 </div>
                               </div>
                             </TableCell>
-                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            <TableCell key={'message'} align={'25vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.message}
                             </TableCell>
-                            <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            <TableCell key={'command'} align={'25vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.command}
                               <IconButton
                                 size='small' color="primary"
@@ -648,15 +655,15 @@ const DeviceTable = (props) => {
                                   <EditIcon />
                                 </IconButton>
                                 <br/>
-                                <div style={{ color: 'grey', fontSize: '5px'}}>
+                                <div style={{ color: 'grey', fontSize: '10'}}>
                                   {row.serialNumber}
                                 </div>
                               </div>
                             </TableCell>
-                            <TableCell key={'message'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            <TableCell key={'message'} align={'25vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.message}
                             </TableCell>
-                            <TableCell key={'command'} align={'20vw'} style={{ color: 'white', fontSize: '12pt' }}>
+                            <TableCell key={'command'} align={'25vw'} style={{ color: 'white', fontSize: '12pt' }}>
                               {row.command}
                               <IconButton
                                 size='small' color="primary"
@@ -821,11 +828,11 @@ const DeviceTable = (props) => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
               >
-                <FormControlLabel 
-                  value="general" 
-                  checked={ !commandValue.Enable } 
-                  control={ <Radio style={{ color:'lightblue' }} /> } 
-                  label="General" 
+                <FormControlLabel
+                  value="general"
+                  checked={ !commandValue.Enable }
+                  control={ <Radio style={{ color:'lightblue' }} /> }
+                  label="General"
                   style={{ color: 'white' }}
                   onClick={() => {
                     setCommandValue((prevState) => ({
@@ -834,11 +841,11 @@ const DeviceTable = (props) => {
                     }))
                   }}
                 />
-                <FormControlLabel 
-                  value="advance" 
-                  checked={ commandValue.Enable } 
-                  control={ <Radio style={{ color:'lightblue' }} /> } 
-                  label="Advance" 
+                <FormControlLabel
+                  value="advance"
+                  checked={ commandValue.Enable }
+                  control={ <Radio style={{ color:'lightblue' }} /> }
+                  label="Advance"
                   style={{ color: 'white' }}
                   onClick={() => {
                     setCommandValue((prevState) => ({
