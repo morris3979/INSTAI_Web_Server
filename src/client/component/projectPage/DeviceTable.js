@@ -47,7 +47,7 @@ import {
 const columns = [
   { id: 'device', label: 'DEVICE', minWidth: '20vw' },
   { id: 'message', label: 'STATUS', minWidth: '25vw' },
-  { id: 'command', label: 'MODE', minWidth: '25vw' }
+  { id: 'command', label: 'TASK', minWidth: '25vw' }
 ]
 
 const DeviceTable = (props) => {
@@ -147,6 +147,7 @@ const DeviceTable = (props) => {
     }else{
       addDevice(input)
       setOpen(false)
+      handleClickOpenCommand()
     }
   }
 
@@ -420,7 +421,7 @@ const DeviceTable = (props) => {
       <Grid>
         <Button
           variant="contained"
-          size='large'
+          sx={{ width: 200 }}
           onClick={() => {
             postDeviceMQTT(row)
           }}
@@ -560,11 +561,11 @@ const DeviceTable = (props) => {
                       <TableCell
                         key={'action'}
                         style={{
-                          minWidth: '20vw',
+                          minWidth: '15vw',
                           fontSize: '14pt'
                         }}
                       >
-                        Action
+                        ACTIONS
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -621,7 +622,7 @@ const DeviceTable = (props) => {
                                 <EditIcon />
                               </IconButton>
                             </TableCell>
-                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100px' }}>
+                            <TableCell key={'action'} align={'15vw'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100px' }}>
                               {actionBtn(row)}
                             </TableCell>
                           </TableRow>
@@ -678,7 +679,7 @@ const DeviceTable = (props) => {
                                 <EditIcon />
                               </IconButton>
                             </TableCell>
-                            <TableCell key={'action'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100px' }}>
+                            <TableCell key={'action'} align={'15vw'} style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center', height: '100px' }}>
                               {actionBtn(row)}
                             </TableCell>
                           </TableRow>
@@ -819,7 +820,7 @@ const DeviceTable = (props) => {
           }}
         >
           <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>
-            Mode
+            TASK
           </DialogContent>
           <DialogTitle style={{ backgroundColor: '#444950' }}>
             <FormControl>
