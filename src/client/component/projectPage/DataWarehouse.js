@@ -765,8 +765,7 @@ const DataWarehouse = (props) => {
                   startIcon={<ModelTrainingIcon />}
                   disabled={
                     !(selectItem?.length > 0
-                    && dataList.Data?.findIndex(item => item.annotation != null) !== -1
-                    && menuItem.labeled)
+                    && dataList.Data?.findIndex(item => item.annotation != null) !== -1)
                   }
                 >
                   Train
@@ -1044,53 +1043,48 @@ const DataWarehouse = (props) => {
           <Button variant="contained" size='small' onClick={handleConfirmTrainData} style={{marginTop: 10}} disabled={trainDataName+'.json' != s3Train.filename}>Confirm</Button>
         </DialogActions>
       </Dialog>
-      <Dialog 
+      <Dialog
         open={sampleDialog}
         onClose={handleCloseSampleDialog}
-        PaperProps={{
-            sx: { width: "100%", maxWidth: "550px" }
-          }}>
+      >
         <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Auto Sampling</DialogContent>
         <DialogTitle style={{ backgroundColor: '#444950' }}>
-        <Grid style={{ marginTop: 20 }}>
-              <Typography id="input-slider" gutterBottom style={{ color: 'white' }}>
-                Please select the number of data to be sampled -{filterData?.length}
-              </Typography>
-              <Typography id="input-slider" gutterBottom style={{ color: 'white' }}>
-                There are currently {filterData?.length} pictures
-              </Typography>
-              <Grid spacing={2} sx={{ width: 400 }} container>
-                <Grid item xs={9}>
-                  <Slider
-                    name='sampleNumber'
-                    value={typeof sampleNumber === 'number' ? sampleNumber : 1}
-                    onChange={handleSliderChange}
-                    aria-labelledby="input-slider"
-                    size='small'
-                    min={1}
-                    max={filterData?.length}
-                  />
-                </Grid>
-                <Grid item xs={3}>
-                  <MuiInput
-                    name='sampleNumber'
-                    value={sampleNumber}
-                    size="small"
-                    onChange={handleNumberChange}
-                    onBlur={handleBlur}
-                    disableUnderline
-                    inputProps={{
-                      step: 1,
-                      min: 1,
-                      max: filterData?.length,
-                      type: 'number',
-                      'aria-labelledby': 'input-slider',
-                      style: { color: 'white' },
-                    }}
-                  />
-                </Grid>
+          <Grid style={{ marginTop: 5 }}>
+            <Typography id="input-slider" gutterBottom style={{ color: 'white' }}>
+              Please select the number of data to be sampled
+            </Typography>
+            <Grid container spacing={2} sx={{ width: 400, marginTop: 1 }}>
+              <Grid item xs={9}>
+                <Slider
+                  name='sampleNumber'
+                  value={typeof sampleNumber === 'number' ? sampleNumber : 1}
+                  onChange={handleSliderChange}
+                  aria-labelledby="input-slider"
+                  size='small'
+                  min={1}
+                  max={filterData?.length}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <MuiInput
+                  name='sampleNumber'
+                  value={sampleNumber}
+                  size="small"
+                  onChange={handleNumberChange}
+                  onBlur={handleBlur}
+                  disableUnderline
+                  inputProps={{
+                    step: 1,
+                    min: 1,
+                    max: filterData?.length,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                    style: { color: 'white' },
+                  }}
+                />
               </Grid>
             </Grid>
+          </Grid>
         </DialogTitle>
         <DialogActions style={{ backgroundColor: '#444950' }}>
           <Button variant="contained" size='small' onClick={handleCloseSampleDialog} style={{marginTop: 10}}>Cancel</Button>
