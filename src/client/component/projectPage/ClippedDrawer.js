@@ -7,6 +7,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -16,13 +25,53 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ScienceIcon from '@mui/icons-material/Science';
 import DvrIcon from '@mui/icons-material/Dvr';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
-import { SetClippedDrawer } from '../../store/actionCreater';
+import { GetProjectItem, PatchProjectItem, GetOrganizationMembers, SetClippedDrawer } from '../../store/actionCreater';
 
 const drawerWidth = '120';
 
 const ClippedDrawer = (props) => {
-    const {setClippedDrawer, clippedDrawer} = props
+    const {
+      userInformation,
+      projectImport,
+      organizationImport,
+      membersList,
+      projectItem, 
+      getProjectItem, 
+      patchProjectItem,
+      getOrganizationMembers,
+      setClippedDrawer, 
+      clippedDrawer
+     } = props
+    
+    useEffect(() => {
+      projectItem
+      getProjectItem(projectImport)
+      getOrganizationMembers(organizationImport)
+    },[])
+
+    const [ open, setOpen ] = useState(false)
+    const [ permissioned, setPermissioned ] = useState(null)
     const navigate = useNavigate()
+
+    const handleClickOpen = () => {
+      setOpen(true)
+    }
+
+    const handleClose = () => {
+      setOpen(false)
+      setPermissioned(null)
+    }
+
+    const onSave = () => {
+      if(permissioned!=null) {
+        const converted = {}
+        converted.project = projectItem.project
+        converted.accessAuth = permissioned? 0 : 1
+        patchProjectItem(projectItem.id,converted)
+      }
+      setOpen(false)
+      setPermissioned(null)
+    }
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -191,7 +240,10 @@ const ClippedDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <ListItem key={'Settings'} disablePadding style={{ position: 'fixed', bottom: 15, maxWidth: drawerWidth }}>
-                            <ListItemButton disabled={true}>
+                            <ListItemButton 
+                                onClick={handleClickOpen}
+                                disabled={(membersList.Users?.find(data => data.id == userInformation.id))?.UserGroup.authorize != 'admin'}
+                            >
                                 <Grid
                                     container
                                     direction="column"
@@ -199,11 +251,11 @@ const ClippedDrawer = (props) => {
                                     alignItems="center"
                                     width={drawerWidth}
                                 >
-                                    <SettingsIcon style={{ color: 'Cyan' }} />
+                                    <SettingsIcon style={{ color: 'darkcyan' }} />
                                     <ListItemText
                                         primary={'Settings'}
                                         style={{
-                                            color: 'Cyan',
+                                            color: 'darkcyan',
                                             display: 'flex',
                                             justifyContent: 'center',
                                             flexDirection: 'column',
@@ -216,6 +268,42 @@ const ClippedDrawer = (props) => {
                     </List>
                 </Box>
             </Drawer>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogContent style={{ backgroundColor: '#444950', color: 'white' }}>Modify Project Authorize</DialogContent>
+              <DialogTitle style={{ backgroundColor: '#444950' }}>
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    defaultValue={!projectItem.accessAuth?"permissioned":"nonpermissioned" }
+                  >
+                    <FormControlLabel 
+                      value="nonpermissioned" 
+                      control={ <Radio style={{ color:'lightblue' }} /> } 
+                      label="For All User" 
+                      style={{ color: 'white' }}
+                      onClick={() => {
+                        setPermissioned(false)
+                      }}
+                    />
+                    <FormControlLabel 
+                      value="permissioned" 
+                      control={ <Radio style={{ color:'lightblue' }} /> } 
+                      label="Only Admin" 
+                      style={{ color: 'white' }}
+                      onClick={() => {
+                        setPermissioned(true)
+                      }}
+                      />
+                  </RadioGroup>
+                </FormControl>
+              </DialogTitle>
+              <DialogActions style={{ backgroundColor: '#444950' }}>
+                <Button variant="contained" size='small' onClick={handleClose} style={{marginTop: 10}}>Cancel</Button>
+                <Button variant="contained" size='small' onClick={onSave} style={{marginTop: 10}}>OK</Button>
+              </DialogActions>
+            </Dialog>
         </Box>
     )
 }
@@ -223,6 +311,11 @@ const ClippedDrawer = (props) => {
 const mapStateToProps = (state) => {
     //state指的是store裡的數據
     return {
+        userInformation: state.userInformation,
+        projectImport: state.projectImport,
+        organizationImport: state.organizationImport,
+        projectItem: state.projectItem,
+        membersList: state.membersList,
         clippedDrawer: state.clippedDrawer
     }
   }
@@ -230,10 +323,22 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     //dispatch指store.dispatch這個方法
     return {
+        getProjectItem(id) {
+            const action = GetProjectItem(id)
+            dispatch(action)
+        },
+        patchProjectItem(id, data) {
+            const action = PatchProjectItem(id, data)
+            dispatch(action)
+        },
+        getOrganizationMembers(id) {
+            const action = GetOrganizationMembers(id)
+            dispatch(action)
+        },
         setClippedDrawer(text) {
             const action = SetClippedDrawer(text)
             dispatch(action)
-          },
+        },
     }
   }
 
