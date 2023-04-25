@@ -35,6 +35,7 @@ const ActionAreaCard = (props) => {
     projectList,
     getProjectList,
     createProject,
+    membersList,
     projectImport,
     organizationImport,
     userImport,
@@ -164,6 +165,7 @@ const ActionAreaCard = (props) => {
                   <Card sx={{ maxWidth: 430, backgroundColor: 'lightblue' }}>
                     <CardActionArea
                       key={key}
+                      disabled={(membersList.Users?.find(data => data.id == userInformation.id))?.UserGroup.authorize!='admin'&&!value.accessAuth}
                       onClick={() => {
                         projectImport(value.id)
                         filterItem('')
@@ -306,6 +308,7 @@ const mapStateToProps = (state) => {
   return {
     userInformation: state.userInformation,
     projectList: state.projectList,
+    membersList: state.membersList,
     userImport: state.userImport,
     organizationImport: state.organizationImport,
   }
