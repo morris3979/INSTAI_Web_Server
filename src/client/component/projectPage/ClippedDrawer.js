@@ -162,7 +162,7 @@ const ClippedDrawer = (props) => {
                                 </Grid>
                             </ListItemButton>
                         </ListItem>
-                        <ListItem key={'Detector'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
+                        {/* <ListItem key={'Detector'} disablePadding style={{ marginTop: 10, marginBottom: 5 }}>
                             <ListItemButton
                                 onClick={() => {
                                     setClippedDrawer('Detector')
@@ -189,7 +189,7 @@ const ClippedDrawer = (props) => {
                                     />
                                 </Grid>
                             </ListItemButton>
-                        </ListItem>
+                        </ListItem> */}
                         <ListItem key={'Settings'} disablePadding style={{ position: 'fixed', bottom: 15, maxWidth: drawerWidth }}>
                             <ListItemButton disabled={true}>
                                 <Grid

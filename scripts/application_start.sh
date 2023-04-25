@@ -19,3 +19,5 @@ pm2 stop all
 pm2 delete all
 # start our node app in the background
 pm2 start npm --name my_project -- start
+
+
