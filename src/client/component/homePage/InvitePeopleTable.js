@@ -198,19 +198,6 @@ const InvitePeopleTable = (props) => {
                       {column.label}
                     </TableCell>
                   ))}
-                  {(membersList.Users.find(data => data.id == userInformation.id)) != undefined
-                  ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'}>
-                      <TableCell
-                        style={{
-                          minWidth: '15vw',
-                          fontSize: '16pt'
-                        }}
-                      >
-                      Action
-                    </TableCell>
-                  </Grid>
-                  :null
-                  }
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -223,35 +210,32 @@ const InvitePeopleTable = (props) => {
                         {columns.map((column) => {
                           const value = row[column.id] || row.UserGroup[column.id]
                           return (
-                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
-                            {column.format && typeof value === 'number'
-                              ? column.format(value)
-                              : value}
+                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt', height: '40px'}}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={4}>
+                                  {column.format && typeof value === 'number'
+                                    ? column.format(value)
+                                    : value}
+                                </Grid>
+                                  {column.id == 'authorize'
+                                    ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'} item xs={6}>
+                                        <IconButton
+                                          size='small'
+                                          color="primary"
+                                          component="label"
+                                          style={{ marginLeft: 15 }}
+                                          disabled={row.UserGroup.authorize == 'admin'}
+                                          onClick={() => OpenAuthorizeDialog(row.UserGroup.id)}
+                                        >
+                                          <EditIcon />
+                                        </IconButton>
+                                      </Grid>
+                                    : null
+                                  }
+                              </Grid>
                             </TableCell>
                           )
                         })}
-                        {(membersList.Users.find(data => data.id == userInformation.id)) != undefined
-                        ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'}>
-                            <TableCell
-                              style={{
-                                minWidth: '15vw',
-                                fontSize: '12pt'
-                              }}
-                            >
-                              <IconButton
-                                size='small'
-                                color="primary"
-                                component="label"
-                                style={{ marginLeft: 15 }}
-                                disabled={row.UserGroup.authorize == 'admin'}
-                                onClick={() => OpenAuthorizeDialog(row.UserGroup.id)}
-                              >
-                                <EditIcon />
-                              </IconButton>
-                            </TableCell>
-                          </Grid>
-                          :null
-                        }
                       </TableRow>
                     )
                   })
@@ -263,35 +247,32 @@ const InvitePeopleTable = (props) => {
                         {columns.map((column) => {
                           const value = row[column.id] || row.UserGroup[column.id]
                           return (
-                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt' }}>
-                            {column.format && typeof value === 'number'
-                              ? column.format(value)
-                              : value}
+                            <TableCell key={column.id} align={column.align} style={{ color: 'white', fontSize: '12pt', height: '40px' }}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={4}>
+                                  {column.format && typeof value === 'number'
+                                    ? column.format(value)
+                                    : value}
+                                </Grid>
+                                  {column.id == 'authorize'
+                                    ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'} item xs={6}>
+                                        <IconButton
+                                          size='small'
+                                          color="primary"
+                                          component="label"
+                                          style={{ marginLeft: 15 }}
+                                          disabled={row.UserGroup.authorize == 'admin'}
+                                          onClick={() => OpenAuthorizeDialog(row.UserGroup.id)}
+                                        >
+                                          <EditIcon />
+                                        </IconButton>
+                                      </Grid>
+                                    : null
+                                  }
+                              </Grid>
                             </TableCell>
                           )
                         })}
-                        {(membersList.Users.find(data => data.id == userInformation.id)) != undefined
-                        ? <Grid hidden={(membersList.Users.find(data => data.id == userInformation.id)).UserGroup.authorize != 'admin'}>
-                            <TableCell
-                              style={{
-                                minWidth: '15vw',
-                                fontSize: '12pt'
-                              }}
-                            >
-                              <IconButton
-                                size='small'
-                                color="primary"
-                                component="label"
-                                style={{ marginLeft: 15 }}
-                                disabled={row.UserGroup.authorize == 'admin'}
-                                onClick={() => OpenAuthorizeDialog(row.UserGroup.id)}
-                              >
-                                <EditIcon />
-                              </IconButton>
-                            </TableCell>
-                          </Grid>
-                          :null
-                        }
                       </TableRow>
                     )
                   })
