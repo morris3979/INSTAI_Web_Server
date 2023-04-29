@@ -63,8 +63,6 @@ const DeviceTable = (props) => {
     postDeviceMQTT
   } = props
 
-  const mounted = useRef()
-
   useEffect(() => {
     getDeviceList(projectImport)
     getModelList(projectImport)
@@ -418,7 +416,7 @@ const DeviceTable = (props) => {
 
   const actionBtn = (row) => {
     return (
-      <Grid>
+      <div>
         <Button
           variant="contained"
           sx={{ width: 200 }}
@@ -439,14 +437,14 @@ const DeviceTable = (props) => {
         >
           <DeleteIcon style={{ color: 'red' }} />
         </IconButton>
-        <IconButton
+        {/* <IconButton
           size='large'
           color="primary"
           aria-label="morehoriz"
         >
           <MoreHorizIcon style={{ color: 'white' }} />
-        </IconButton>
-      </Grid>
+        </IconButton> */}
+      </div>
     )
   }
 

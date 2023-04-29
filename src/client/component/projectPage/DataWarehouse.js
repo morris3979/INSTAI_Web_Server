@@ -446,7 +446,7 @@ const DataWarehouse = (props) => {
                           sx={{
                             width: `${c.bbox[2]*(280/width)}px`,
                             height: `${c.bbox[3]*(210/height)}px`,
-                            border: `2px solid ${generateRandomCode(c.category_id)}`
+                            border: `4px solid ${generateRandomCode(c.category_id)}`
                           }}
                           onClick={() => {
                             // console.log('id', item.id)
