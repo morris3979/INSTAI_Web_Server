@@ -9,7 +9,7 @@ const Model = db.Model;
 
 // Create and Save a new Project
 exports.create = async (req, res) => {
-  const {project, type, OrganizationId, UserId} = req.body;
+  const {project, type, OrganizationId, UserId} = req.body
 
   // Validate request
   if (!(project && type && OrganizationId && UserId)) {
@@ -101,7 +101,7 @@ exports.findProject = (req, res) => {
       }
   }).then(data => {
       if (!data) {
-          return res.status(404).send({ message: "Project Not found." });
+          return res.status(404).send({ message: "Project Not found." })
       }
 
       const replacer = (key, value) => {

@@ -77,7 +77,7 @@ exports.bindOrganization = async (req, res) => {
   }
   const findUser = await User.findOne({
     where: { id: userId },
-  });
+  })
   if (!findUser) {
     res.status(400).send({
       message: "No User existed, Please create a new User!"
@@ -169,9 +169,11 @@ exports.login = async(req, res) => {
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'deletedAt']
         }
-      }).then(data => {
+      })
+      .then(data => {
         res.send(JSON.parse(JSON.stringify(data, replacer)))
-      }).catch(err => {
+      })
+      .catch(err => {
         res.status(500).send({
           message: "No User existed, Please create a new User!"
         });

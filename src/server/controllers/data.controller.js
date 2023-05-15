@@ -19,7 +19,7 @@ const s3 = new aws.S3();
 
 // Create and Save a new Data
 exports.upload = async (req, res) => {
-  const {data, image, ProjectId} = req.body;
+  const {data, image, ProjectId} = req.body
 
   // Validate request
   if (!(data && image)) {
@@ -84,7 +84,7 @@ exports.uploadToS3 = async(req, res, key, callback) => {
 }
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id
 
   Data.update(req.body, {
     where: { id: id }
@@ -121,7 +121,7 @@ exports.findData = (req, res) => {
       }
   }).then(data => {
       if (!data) {
-          return res.status(404).send({ message: "Data Not found." });
+          return res.status(404).send({ message: "Data Not found." })
       }
 
       const replacer = (key, value) => {
