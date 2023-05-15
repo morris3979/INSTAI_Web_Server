@@ -149,34 +149,39 @@ exports.login = async(req, res) => {
       }
     )
 
-    User.update({                                                  // Update User Table
+    User.update({   // Update User Table
       token: token
     }, {
-      where: { email: email }
-    }).then( data => {                                             // Find The User Information If it's success
-          User.findOne({
-            where: {
-              email: email,
-              token: token
-            },
-            include: [{
-              model: db.Organization
-            }],
-            attributes: {
-                exclude: ['createdAt', 'updatedAt', 'deletedAt']
-            }
-          }).then( data => {
-            res.send(JSON.parse(JSON.stringify(data, replacer)))   // Send The User Information
-          }).catch( err => {
-            res.status(500).send({
-              message: "No User existed, Please create a new User!"
-            });
-          })
-    }).catch( err => {
-          res.status(500).send({
-            message: "Error updating User, Please try again!"
-          });
+      where: {
+        email: email
+      }
+    })
+    .then(data => {
+      // Find The User Information If it's success
+      User.findOne({
+        where: {
+          email: email,
+          token: token
+        },
+        include: [{
+          model: db.Organization
+        }],
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'deletedAt']
+        }
+      }).then(data => {
+        res.send(JSON.parse(JSON.stringify(data, replacer)))
+      }).catch(err => {
+        res.status(500).send({
+          message: "No User existed, Please create a new User!"
+        });
       })
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating User, Please try again!"
+      });
+    })
 
     const replacer = (key, value) => {
       if (key == 'password') return undefined
