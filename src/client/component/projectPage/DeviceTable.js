@@ -150,42 +150,44 @@ const DeviceTable = (props) => {
   }
 
   const onSaveCommand = () => {
-    if(commandValue.Mode == 'CNN' || commandValue.Mode == 'S_MOTION_CNN'){
-      var command = `mode: ${commandValue.Mode}`
-      var message = ''
-    }
-    else if(commandValue.Mode == 'S_MOTION_CNN_JPEG' || commandValue.Mode == 'JPEG_REC'){
-      if (commandValue.Mode == 'S_MOTION_CNN_JPEG') {
-        var rec_value = commandValue.rec_after_event_switch == true ?
-                          `rec_fps: ${commandValue.rec_fps},\n`+
-                          `rec_after_event_cycle: ${commandValue.rec_after_event_cycle},\n`+
-                          `rec_after_event_duration: ${commandValue.rec_after_event_duration},\n` : ''
+    if(commandValue.Enable){
+      if(commandValue.Mode == 'CNN' || commandValue.Mode == 'S_MOTION_CNN'){
+        var command = `mode: ${commandValue.Mode}`
+        var message = ''
+      }
+      else if(commandValue.Mode == 'S_MOTION_CNN_JPEG' || commandValue.Mode == 'JPEG_REC'){
+        if (commandValue.Mode == 'S_MOTION_CNN_JPEG') {
+          var rec_value = commandValue.rec_after_event_switch == true ?
+                            `rec_fps: ${commandValue.rec_fps},\n`+
+                            `rec_after_event_cycle: ${commandValue.rec_after_event_cycle},\n`+
+                            `rec_after_event_duration: ${commandValue.rec_after_event_duration},\n` : ''
+          var command = `mode: ${commandValue.Mode},\n`+
+                        `rec_after_event_switch: ${convertedValue(commandValue.rec_after_event_switch)},\n`+
+                        rec_value+
+                        `upload_all_pics: ${convertedValue(commandValue.upload_all_pictures_switch)},\n`+
+                        `upload_to_server: ${convertedValue(commandValue.upload_all_files_switch)}`
+          var message = ''
+        }
+        else if (commandValue.Mode == 'JPEG_REC') {
+          var command = `mode: ${commandValue.Mode},\n`+
+                        `rec_fps: ${commandValue.rec_fps},\n`+
+                        `upload_all_pics: ${convertedValue(commandValue.upload_all_pictures_switch)},\n`+
+                        `upload_to_server: ${convertedValue(commandValue.upload_all_files_switch)},\n`+
+                        `rec: ${commandValue.rec_time}`
+          var message = ''
+        }
+      }
+      else if(commandValue.Mode == 'CNN_JPEG' || commandValue.Mode == 'CONT_JPEG_CNN'){
         var command = `mode: ${commandValue.Mode},\n`+
-                      `rec_after_event_switch: ${convertedValue(commandValue.rec_after_event_switch)},\n`+
-                      rec_value+
-                      `upload_all_pics: ${convertedValue(commandValue.upload_all_pictures_switch)},\n`+
                       `upload_to_server: ${convertedValue(commandValue.upload_all_files_switch)}`
         var message = ''
       }
-      else if (commandValue.Mode == 'JPEG_REC') {
-        var command = `mode: ${commandValue.Mode},\n`+
-                      `rec_fps: ${commandValue.rec_fps},\n`+
-                      `upload_all_pics: ${convertedValue(commandValue.upload_all_pictures_switch)},\n`+
-                      `upload_to_server: ${convertedValue(commandValue.upload_all_files_switch)},\n`+
-                      `rec: ${commandValue.rec_time}`
+      else if(commandValue.Mode == 'UPDATE_MODEL'){
+        var command = `update_model: ${commandValue.Model}`
         var message = ''
       }
     }
-    else if(commandValue.Mode == 'CNN_JPEG' || commandValue.Mode == 'CONT_JPEG_CNN'){
-      var command = `mode: ${commandValue.Mode},\n`+
-                    `upload_to_server: ${convertedValue(commandValue.upload_all_files_switch)}`
-      var message = ''
-    }
-    else if(commandValue.Mode == 'UPDATE_MODEL'){
-      var command = `update_model: ${commandValue.Model}`
-      var message = ''
-    }
-    else if(selected){
+    else if(selected && !commandValue.Enable){
       var command = selected
       var message = ''
     }
@@ -829,14 +831,18 @@ const DeviceTable = (props) => {
               >
                 <FormControlLabel
                   value="general"
-                  checked={ !commandValue.Enable }
+                  checked={ !commandValue.Enable }    
                   control={ <Radio style={{ color:'lightblue' }} /> }
                   label="General"
                   style={{ color: 'white' }}
                   onClick={() => {
                     setCommandValue((prevState) => ({
                       ...prevState,
-                      Enable: false
+                      Enable: false,
+                      related_params: false,
+                      rec_after_event_switch: false,
+                      upload_all_pictures_switch: true,
+                      upload_all_files_switch: true,
                     }))
                   }}
                 />
