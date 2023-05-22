@@ -4,14 +4,14 @@ const Project = db.Project;
 
 // Create and Save a new Device
 exports.create = async (req, res) => {
-    const {serialNumber, deviceName, ProjectId} = req.body;
+    const {serialNumber, deviceName, ProjectId} = req.body
 
     // Validate request
     if (!(serialNumber && deviceName)) {
       res.status(400).send({
         message: "serialNumber and deviceName can not be empty!"
-      });
-      return;
+      })
+      return
     }
     const findProject = await Project.findOne({
       where: { id: ProjectId },
@@ -54,7 +54,7 @@ exports.create = async (req, res) => {
 
 // Update a Device by the id in the request
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id
 
   Device.update(req.body, {
     where: { id: id }
@@ -79,7 +79,7 @@ exports.update = (req, res) => {
 
 // Delete a Device with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id
 
   Device.destroy({
     where: { id: id }

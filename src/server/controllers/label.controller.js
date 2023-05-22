@@ -4,7 +4,7 @@ const Project = db.Project;
 
 // Create and Save a new Label
 exports.create = async (req, res) => {
-    const {labelClass, ProjectId} = req.body;
+    const {labelClass, ProjectId} = req.body
 
     // Validate request
     if (!labelClass) {

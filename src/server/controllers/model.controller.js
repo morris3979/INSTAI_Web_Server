@@ -5,7 +5,7 @@ const User = db.User;
 
 // Create and Save a new Model
 exports.create = async (req, res) => {
-    const {modelName, dataset, status, ProjectId, UserId} = req.body;
+    const {modelName, dataset, status, ProjectId, UserId} = req.body
 
     // Validate request
     if (!modelName) {
