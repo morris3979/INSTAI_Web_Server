@@ -145,7 +145,7 @@ const DeviceTable = (props) => {
     }else{
       addDevice(input)
       setOpen(false)
-      handleClickOpenCommand()
+      // handleClickOpenCommand()
     }
   }
 
